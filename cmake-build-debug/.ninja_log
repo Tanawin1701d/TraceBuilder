@@ -1,9 +1,0 @@
-# ninja log v5
-2	1280	1672909350438848152	CMakeFiles/traceBuilder.dir/components/memMap/memMap.cpp.o	60c76ecdd068580b
-4631	4930	1672930256321780958	traceBuilder	2f78a47653efdc55
-2	4631	1672930256021779631	CMakeFiles/traceBuilder.dir/components/inst/instr.cpp.o	1db2ed67007b64a0
-0	150	0	clean	56d6596da61dcad8
-1	4102	1672930255441777064	CMakeFiles/traceBuilder.dir/tracers/tracer.cpp.o	522d387bc84991f5
-1	3227	1672930254617773421	CMakeFiles/traceBuilder.dir/main.cpp.o	355856ad9457dc15
-2	1162	1672909350322847358	CMakeFiles/traceBuilder.dir/tracers/statPool.cpp.o	106a564e46722f4c
-1	3197	1672930254581773261	CMakeFiles/traceBuilder.dir/components/regMap/regMapper.cpp.o	1c84dd3dbd777015

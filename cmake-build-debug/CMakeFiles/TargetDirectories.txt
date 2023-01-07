@@ -1,3 +1,0 @@
-/media/tanawin/tanawin1701d/Project/sms/pintool/msmsPin/traceBuilder/cmake-build-debug/CMakeFiles/traceBuilder.dir
-/media/tanawin/tanawin1701d/Project/sms/pintool/msmsPin/traceBuilder/cmake-build-debug/CMakeFiles/edit_cache.dir
-/media/tanawin/tanawin1701d/Project/sms/pintool/msmsPin/traceBuilder/cmake-build-debug/CMakeFiles/rebuild_cache.dir
