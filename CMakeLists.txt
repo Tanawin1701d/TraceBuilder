@@ -44,9 +44,17 @@ add_executable(traceBuilder
         components/regMap/regMapper.cpp
         components/inst/instr.cpp
         components/inst/instr.h
-        components/memMap/memMap.h
-        components/memMap/memMap.cpp
+#        components/memMap/memMap.h
+#        components/memMap/memMap.cpp
         tracers/statPool.h
-        tracers/statPool.cpp components/inst/instr_model.cpp components/inst/instr_model.h ioHelp/strHelp.cpp ioHelp/strHelp.h tracers/instrWd.cpp)
+        tracers/statPool.cpp
+        components/inst/instr_model.cpp
+        components/inst/instr_model.h
+        ioHelp/strHelp.cpp
+        ioHelp/strHelp.h
+        tracers/instrWd.cpp
+        components/memMap/MemMng.cpp
+        components/memMap/MemMng.h
+        )
 
 TARGET_LINK_LIBRARIES( traceBuilder LINK_PUBLIC ${Boost_LIBRARIES} )

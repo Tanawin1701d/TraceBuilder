@@ -12,7 +12,7 @@
 #include "../../tracers/statPool.h"
 #include<boost/algorithm/string.hpp>
 #include "../regMap/regMapper.h"
-#include "../memMap/memMap.h"
+#include "../memMap/MemMng.h"
 #include "../../ioHelp/strHelp.h"
 
 
@@ -59,8 +59,9 @@ protected:
     const int   addr_Idx     = 1;
     const int   memop_Idx    = 2;
     const string unusedReg   = "-1";
-    ADDR        effAddr{}; // effective address
-    int         effAddrSize{};
+    ADDR        phyAddr{};
+    ADDR        virAddr{}; // effective address
+    int         addrSize{};
     int         memop{};
 
 public:
@@ -92,10 +93,6 @@ public:
 };
 
 class COMP_INSTR : public INSTR{
-protected:
-    const int   C_Idx       = 0;
-    const int   desSrc_Idx  = 1;
-    const int   firstReg_Idx   = 2;
 
 public:
     COMP_INSTR(ETRACER* _reader, uint64_t _instrMdId);
@@ -110,8 +107,8 @@ protected:
     const int   F_MdIdx      = 1;
 
     const TICK  compDelay    = 500;
-    ADDR                startEffAddr;
-    int                 startEffSize;
+    ADDR                virAddr;
+    int                 virSize;
     // address and size
     vector<ADAS>        addrASizes;
     TICK        executeTick;

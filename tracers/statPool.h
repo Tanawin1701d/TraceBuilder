@@ -25,8 +25,9 @@ static std::unordered_map<string, uint64_t> statPoolCount = {
         {"count_fetchSplit", 0},
         {"max_fetchSplit", 0},
 
-        {"count_memMapIgnore", 0},
-        {"count_regMapNewCreate", 0}
+        {"count_regMapNewCreate", 0},
+
+        {"max_memory_used", 0},
 
 };
 

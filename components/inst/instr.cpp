@@ -49,11 +49,16 @@ MEM_INSTR::MEM_INSTR(ETRACER *_reader,
     memop = decStr2int(splitedInstr[memop_Idx]);
     INSTR_MODEL* instrModel = _reader->instrModelMng->getInstrModel(_instrMdId);
     auto srcRegAndEffSize = instrModel->getSrcRegLS(robModeDepIsLoad, memop);
-    effAddr = ETRACER::memMapper(hexStr2uint(splitedInstr[addr_Idx]));
-    effAddrSize = srcRegAndEffSize.second;
+    virAddr = hexStr2uint(splitedInstr[addr_Idx]);
+    addrSize = srcRegAndEffSize.second;
+    vector<ADAS> tempPhyAddrResults;
+    _reader->memMng->v2pConvert(virAddr, addrSize, tempPhyAddrResults);
+    assert(!tempPhyAddrResults.empty());
+        //// TODO for now we assume that only addresss alignment is match only one cache block and page too
+    phyAddr = tempPhyAddrResults[0].addr;
     /////////////////////////////////////////////////////////
     /// deal with rob dependency
-    _reader->instrWindow.assignMemDepHelp(robDependency, effAddr, effAddrSize, false);
+    _reader->instrWindow.assignMemDepHelp(robDependency, phyAddr, addrSize, false);
     /// dela with reg dependency
     for (auto srcRegNum: srcRegAndEffSize.first)
         _reader->instrWindow.assignRegDepHelp(regDependency, srcRegNum);
@@ -65,11 +70,11 @@ MEM_INSTR::MEM_INSTR(ETRACER *_reader,
 bool
 MEM_INSTR::isOverLapAddr(ADDR _newAddr, int _newSize) const {
     assert( (_newAddr + (uintptr_t)_newSize) > _newAddr); /// to Prevent overflow and size is 0
-    ADDR _effLastAddr = effAddr + (uintptr_t)effAddrSize;
+    ADDR _effLastAddr = phyAddr + (uintptr_t)addrSize;
     ADDR _newLastAddr = _newAddr + (uintptr_t)_newSize;
 
-    return ( ( _newAddr    >= effAddr ) && ( _newAddr <  _effLastAddr)) ||
-           ( ( effAddr     >= _newAddr ) && ( effAddr <  _newLastAddr));
+    return ((_newAddr >= phyAddr ) && (_newAddr < _effLastAddr)) ||
+           ((phyAddr  >= _newAddr) && (phyAddr  < _newLastAddr));
 
 }
 
@@ -94,7 +99,7 @@ LOAD_INSTR::LOAD_INSTR(ETRACER *_reader, string rawData, uint64_t _instrMdId)
 string LOAD_INSTR::genAscLine() {
     /////# seq_num,[pc],[weight,]type,[p_addr,size,flags,]comp_delay:[rob_dep]:[reg_dep]
     string instrstr = to_string(seqNum) + ",0,1,LOAD," +
-                      to_string(effAddr) + "," + to_string(effAddrSize) +
+                      to_string(phyAddr) + "," + to_string(addrSize) +
                       ",0,500:";
 
     for (auto robDepSeqN: robDependency){
@@ -136,7 +141,7 @@ string
 STORE_INSTR::genAscLine() {
     /////# seq_num,[pc],[weight,]type,[p_addr,size,flags,]comp_delay:[rob_dep]:[reg_dep]
     string instrstr = to_string(seqNum) + ",0,1,STORE," +
-                      to_string(effAddr) + "," + to_string(effAddrSize) +
+                      to_string(phyAddr) + "," + to_string(addrSize) +
                       ",0,500:";
 
     for (auto robDepSeqN: robDependency){
@@ -213,12 +218,12 @@ INSTR(_reader, -1, false)
     instrMdId = decStr2uint(splitedInstr[F_MdIdx]);
     INSTR_MODEL* instrModel = _reader->instrModelMng->getInstrModel(instrMdId);
 
-    startEffAddr = instrModel->getInstrAddr();
-    startEffSize = instrModel->getInstrSize();
-
-    addrASizes   = ETRACER::memMapAndSplit(startEffAddr, startEffSize);
+    virAddr = instrModel->getInstrAddr();
+    virSize = instrModel->getInstrSize();
+    /////////// get physical address and its alignment
+    _reader->memMng->v2pConvert(virAddr, virSize, addrASizes);
     executeTick  = _reader->stepInstrExeTick(compDelay); // get current tick before next tick
-    
+
     if (addrASizes.size() > 1) {
         uint64_t &maxfetCount = getstatPoolCount("max_fetchSplit");
         maxfetCount = max(maxfetCount, addrASizes.size());
@@ -234,14 +239,14 @@ FETCH_INSTR::genAscLine() {
     string printStr;
     int adsI = 0;
     for (; (adsI+1) < addrASizes.size(); adsI++){
-        printStr += "r, " + to_string(addrASizes[adsI].effAddr)+
-                    ", "  + to_string(addrASizes[adsI].effSize)+
+        printStr += "r, " + to_string(addrASizes[adsI].addr)+
+                    ", "  + to_string(addrASizes[adsI].size)+
                     ", "  + to_string(executeTick) +
                     "\n";
     }
     if (adsI < addrASizes.size()){
-        printStr += "r, " + to_string(addrASizes[adsI].effAddr)+
-                    ", "  + to_string(addrASizes[adsI].effSize)+
+        printStr += "r, " + to_string(addrASizes[adsI].addr)+
+                    ", "  + to_string(addrASizes[adsI].size)+
                     ", "  + to_string(executeTick);
     }
 

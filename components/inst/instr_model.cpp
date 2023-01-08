@@ -40,7 +40,8 @@ unordered_set<REGNUM> INSTR_MODEL::getDesRegComp() {
 
 pair<unordered_set<REGNUM>, int> INSTR_MODEL::getSrcRegLS(bool isLoad, int memop) {
     assert(memop < MAXMEMOP);
-    int idxSearch = (MAXMEMOP * (int)isLoad) + memop;
+    int idxSearch = (MAXMEMOP * (int)(!isLoad)) + memop;
+                                        ////////// for store we use after load
     return {srcReg[idxSearch], effSize[idxSearch] };
 }
 
@@ -50,11 +51,13 @@ void INSTR_MODEL::handleComInstr(vector<string>& raw) {
     bool mark = false;
     assert(raw[C_CMD_IDX] == "C");
     if (raw[C_SD_IDX] == "S" || raw[C_SD_IDX] == "SD"){
-        srcReg[R_COMP].insert(regMapAutoAdd(raw[C_REG_IDX]));
+        if (raw[C_REG_IDX] != "-1")
+            srcReg[R_COMP].insert(regMapAutoAdd(raw[C_REG_IDX]));
         mark = true;
     }
     if (raw[C_SD_IDX] == "D" || raw[C_SD_IDX] == "SD"){
-        desReg[R_COMP].insert(regMapAutoAdd(raw[C_REG_IDX]));
+        if (raw[C_REG_IDX] != "-1")
+            desReg[R_COMP].insert(regMapAutoAdd(raw[C_REG_IDX]));
         mark = true;
     }
     if (!mark){
@@ -68,20 +71,24 @@ void INSTR_MODEL::handleLSInstr(vector<string>& raw) {
     bool isLoad  = raw[C_CMD_IDX] == "L" || raw[C_CMD_IDX] == "LS";
     bool isStore = raw[C_CMD_IDX] == "S" || raw[C_CMD_IDX] == "LS";
     int memop    = decStr2int(raw[LS_MEMOP]);
+    assert(decStr2int(raw[LS_SIZE]) > 0);
     assert(isLoad || isStore);
+    if (isLoad) {
+        effSize[memop] = decStr2int(raw[LS_SIZE]);
+    }
+    if (isStore) {
+        effSize[MAXMEMOP+memop] = decStr2int(raw[LS_SIZE]);
+    }
+
 
     for (int regId = LS_REG_IDX1; regId <= LS_REG_IDX2; regId++){
         if (raw[regId] == "-1")
             continue;
         if (isLoad) {
-            srcReg    [memop].insert(regMapAutoAdd(raw[regId]));
-            //desReg    [memop].insert(regMapAutoAdd(raw[regId]));
-            effSize[memop] = stoi(raw[LS_SIZE]);
+            srcReg [memop].insert(regMapAutoAdd(raw[regId]));
         }
         if (isStore){
-            srcReg    [MAXMEMOP+memop].insert(regMapAutoAdd(raw[regId]));
-            //desReg    [MAXMEMOP+memop].insert(regMapAutoAdd(raw[regId]));
-            effSize[MAXMEMOP+memop] = decStr2int(raw[LS_SIZE]);
+            srcReg [MAXMEMOP+memop].insert(regMapAutoAdd(raw[regId]));
         }
     }
 
@@ -89,7 +96,7 @@ void INSTR_MODEL::handleLSInstr(vector<string>& raw) {
 
 void INSTR_MODEL::handleFInstr(vector<string>& raw) {
     assert(raw[C_CMD_IDX] == "F");
-    instrAddr  = hexStr2uint(raw[F_ADDR]);
+    instrAddr  = hexStr2uint(raw[F_ADDR]); /// this is virtual address
     instrSize  = decStr2int(raw[F_SIZE]);
     instrId    = decStr2uint(raw[F_ID]);
     instr_name = vector<string>(raw.begin() + F_NAME, raw.end());
@@ -117,7 +124,7 @@ vector<string> INSTR_MODEL::getInstrName() const {
 ////////////// instruction model pool
 
 INSTR_MODEL_MANAGER::INSTR_MODEL_MANAGER(const string &instr_model_file)
-: inputFile(new std::fstream(instr_model_file))
+: inputFile(new std::ifstream(instr_model_file))
 {
     assert(inputFile);
     vector<string> rawLines; /// for only a instruction
@@ -133,7 +140,7 @@ INSTR_MODEL_MANAGER::INSTR_MODEL_MANAGER(const string &instr_model_file)
             instr_pool.insert({newInstr->getInstrId(), newInstr});
             rawLines.clear();
             icount++;
-            if (icount % 1000000){
+            if (icount % 1000000 == 0){
                 cout << "[INSTR MODEL] pass initialize " << icount << endl;
             }
         }

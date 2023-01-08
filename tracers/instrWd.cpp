@@ -1,9 +1,9 @@
 //
-
+// Created by tanawin on 7/1/2566.
+//
+/////// header file is in tracer.h
 #include "tracer.h"
 
-//
-// Created by tanawin on 7/1/2566.
 
 void ETRACER::INSTR_WINDOW::addReg(REGNUM regNum, uint64_t seqNum){
     regDep[regNum]++;
@@ -16,7 +16,8 @@ void ETRACER::INSTR_WINDOW::rmReg(REGNUM regNum){
     regDep[regNum]--;
 }
 
-ETRACER::INSTR_WINDOW::INSTR_WINDOW(INSTR_MODEL_MANAGER* _instr_model_mng):
+ETRACER::INSTR_WINDOW::INSTR_WINDOW(INSTR_MODEL_MANAGER* _instr_model_mng, int _windowSize):
+MAX_WINDOWSIZE(_windowSize),
 instrModelMng(_instr_model_mng)
 {}
 
@@ -58,7 +59,7 @@ void ETRACER::INSTR_WINDOW::assignMemDepHelp(unordered_set<uint64_t> &result, AD
              (instrPtr->instr_type == STORE))
         {
             auto memInstrPtr = (MEM_INSTR*) instrPtr;
-
+            /// is overlap address so this is dependency
             if (memInstrPtr->isEffective(effAddr, effSize, isLoad)){
                 result.insert(instrPtr->getSeqNum());
             }

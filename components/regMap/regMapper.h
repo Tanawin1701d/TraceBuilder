@@ -68,7 +68,7 @@ static    map<std::string, REGNUM> regmap = {
             { "ymm30",46}, {"xmm30", 46},
             { "ymm31",47}, {"xmm31", 47},
             { "rflags", 48},
-            {"rip"    , 49}
+            { "rip"   , 49}
     };
 static    int lastRegName = 49;
 

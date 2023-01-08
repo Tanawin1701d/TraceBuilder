@@ -10,11 +10,11 @@
 
 using namespace std;
 
-static void splitNstrip(string raw, vector<string>& result);
-static void strip(string& raw);
+void splitNstrip(string raw, vector<string>& result);
+void strip(string& raw);
 
-static uintptr_t hexStr2uint  (string raw);
-static int       decStr2int   (string raw);
-static uintptr_t decStr2uint  (string raw);
+uintptr_t hexStr2uint  (string raw);
+int       decStr2int   (string raw);
+uintptr_t decStr2uint  (string raw);
 
 #endif //TRACEBUILDER_STRHELP_H

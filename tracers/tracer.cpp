@@ -9,24 +9,25 @@ ETRACER::ETRACER(const string& _traceFileName,
                  const string& _outputFileName_data,
                  const string& _outputFileName_instr,
                  int _windowSize,
-                 INSTR_MODEL_MANAGER* _instr_model_mng
+                 INSTR_MODEL_MANAGER* _instr_model_mng,
+                 MEM_MNG* _memMng
                  ):
-        traceFile(new ifstream(_traceFileName)),
-        outputFile_data(new ofstream(_outputFileName_data)),
+        traceFile       (new ifstream(_traceFileName)),
+        outputFile_data (new ofstream(_outputFileName_data)),
         outputFile_instr(new ofstream(_outputFileName_instr)),
         instrModelMng(_instr_model_mng),
-        windowSize(_windowSize),
+        memMng(_memMng),
         lastSeqN(UINT64_MAX),
         lastFetTick(0),
-        instrWindow(_instr_model_mng),
+        instrWindow(_instr_model_mng, _windowSize),
         newCInstr(nullptr),
         newFtInstr(nullptr)
 {
+    assert(memMng);
     assert(traceFile);
     assert(outputFile_data);
     assert(outputFile_instr);
-    assert(windowSize >= 20);
-    initMemMap();
+    assert(_windowSize >= 20);
     preWrite_data.reserve(MAX_PREW_BUFF+1000);
     preWrite_instr.reserve(MAX_PREW_BUFF+1000);
 
@@ -76,7 +77,7 @@ void ETRACER::step() {
                     /// this means real single instruction is retrieved already
                     /// order of init instruction is restricted due to rob dependency connection
                     uint64_t instrMdId = -1;
-                    initAllPerInstrType(FETCH, fetchLine, instrMdId);
+                    initAllPerInstrType(FETCH, fetchLine, instrMdId); ////// fetch will give me instrMdId
                     assert(instrMdId != -1);
                     initAllPerInstrType(LOAD, loadLines   , instrMdId);
                     initAllPerInstrType(COMP, computeLines, instrMdId);
@@ -89,7 +90,7 @@ void ETRACER::step() {
                     newStInstr.clear();
                     newCInstr = nullptr;
                     newLdInstr.clear();
-                    delete newFtInstr; // fetch
+                    delete newFtInstr; /// fetch will not be clear by instruction window so we need to delete now
                     newFtInstr = nullptr;
                     /// clear string line
                     fetchLine.clear();
@@ -111,15 +112,6 @@ int ETRACER::regMapper(string regName) {
     return regMapAutoAdd(regName);
 }
 
-
-ADDR ETRACER::memMapper(ADDR hostAddr) {
-    return mapMem(hostAddr);
-}
-
-vector<ADAS> ETRACER::memMapAndSplit(ADDR startAddr, int size) {
-    return memMapperAndSplit(startAddr, size);
-}
-
 uint64_t ETRACER::genSeqN() {
     return ++lastSeqN;
 }
@@ -131,39 +123,47 @@ uint64_t ETRACER::genSeqN() {
 //}
 //
 
-void ETRACER::initAllPerInstrType(INSTR_TYPE _instrType, vector<string>& _rawLines,uint64_t& instrMdId){
+void ETRACER::initAllPerInstrType(INSTR_TYPE _instrType, vector<string>& _rawLines,uint64_t& _instrMdId){
     ///////// for fetch instruction instrMdId will be used to answer instruction while other is used to initialize instruction
     if (_instrType == LOAD) {
         for (const auto& line: _rawLines){
-            newLdInstr.push_back(new LOAD_INSTR(this, line, instrMdId));
+            newLdInstr.push_back(new LOAD_INSTR(this, line, _instrMdId));
         }
         getstatPoolCount("count_loadInstr" ) += _rawLines.size();
     }else if (_instrType == STORE){
         for (const auto& line: _rawLines) {
-            newStInstr.push_back(new STORE_INSTR(this, line, instrMdId));
+            newStInstr.push_back(new STORE_INSTR(this, line, _instrMdId));
         }
         getstatPoolCount("count_storeInstr") += _rawLines.size();
     }else if (_instrType == COMP){
-            newCInstr = new COMP_INSTR(this, instrMdId);
+            newCInstr = new COMP_INSTR(this, _instrMdId);
             getstatPoolCount("count_compInstr" ) += 1;
     }else if (_instrType == FETCH){
         assert(!_rawLines.empty());
         newFtInstr = new FETCH_INSTR(this, _rawLines[0]);
-        instrMdId  = newFtInstr->getInstrMdId();
+        _instrMdId  = newFtInstr->getInstrMdId();
     }
 }
 
 void ETRACER::tryPushWindowAll() {
-    for (const auto sldInstr: newLdInstr){
-        instrWindow.tryPushWindow((MEM_INSTR*)sldInstr);
-    }
-    instrWindow.tryPushWindow((COMP_INSTR*)newCInstr);
+    //// we push store first because it will be push to front of queue not at the back.
+    ////  ------------------>>
+    ////  |LOAD|COMP|STORE|
+
     for (const auto sstInstr: newStInstr){
         instrWindow.tryPushWindow((MEM_INSTR*) sstInstr);
+    }
+    instrWindow.tryPushWindow((COMP_INSTR*)newCInstr);
+    for (const auto sldInstr: newLdInstr){
+        instrWindow.tryPushWindow((MEM_INSTR*)sldInstr);
     }
 }
 
 void ETRACER::tryWriteAll() {
+    ////  ------------------>>
+    ////  |LOAD|COMP|STORE|
+
+    ///// for elastic trace
     for (const auto sLdInstr: newLdInstr){
         tryWrite((INSTR*) sLdInstr, outputFile_data, preWrite_data);
     }
@@ -171,7 +171,7 @@ void ETRACER::tryWriteAll() {
     for (const auto sStInstr: newStInstr){
         tryWrite((INSTR*) sStInstr, outputFile_data, preWrite_data);
     }
-
+    ///// for static fetch trace
     tryWrite((INSTR*) newFtInstr, outputFile_instr, preWrite_instr);
 }
 
