@@ -13,8 +13,6 @@ ETRACER::ETRACER(const string& _traceFileName,
                  MEM_MNG* _memMng
                  ):
         traceFile       (new ifstream(_traceFileName)),
-        outputFile_data (new ofstream(_outputFileName_data)),
-        outputFile_instr(new ofstream(_outputFileName_instr)),
         instrModelMng(_instr_model_mng),
         memMng(_memMng),
         lastSeqN(UINT64_MAX),
@@ -23,23 +21,39 @@ ETRACER::ETRACER(const string& _traceFileName,
         newCInstr(nullptr),
         newFtInstr(nullptr)
 {
-    assert(memMng);
-    assert(traceFile);
+#ifndef debug
+    protoFile_data  = new ProtoOutputStream(_outputFileName_data);
+    protoFile_instr = new ProtoOutputStream(_outputFileName_instr);
+#else
     assert(outputFile_data);
     assert(outputFile_instr);
-    assert(_windowSize >= 20);
-    traceFile->rdbuf()->pubsetbuf(preRead_trace, MAX_PRE_RW_BUFF);
+    outputFile_data (new ofstream(_outputFileName_data)),
+    outputFile_instr(new ofstream(_outputFileName_instr)),
     preWrite_data.reserve(MAX_PRE_RW_BUFF + 1000);
     preWrite_instr.reserve(MAX_PRE_RW_BUFF + 1000);
+#endif
+    assert(memMng);
+    assert(traceFile);
+
+    assert(_windowSize >= 20);
+    traceFile->rdbuf()->pubsetbuf(preRead_trace, MAX_PRE_RW_BUFF);
+
 
 }
 
 ETRACER::~ETRACER() {
     traceFile->close();
+
+#ifndef debug
+    delete protoFile_data;
+    delete protoFile_instr;
+#else
     flushWrite(outputFile_data, preWrite_data);
     flushWrite(outputFile_instr, preWrite_instr);
     outputFile_data->close();
     outputFile_instr->close();
+#endif
+
     delete newCInstr;
 
 
