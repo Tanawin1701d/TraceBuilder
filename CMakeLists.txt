@@ -37,6 +37,12 @@ set(CMAKE_CXX_STANDARD 17)
 FIND_PACKAGE( Boost 1.40 COMPONENTS program_options REQUIRED )
 INCLUDE_DIRECTORIES( ${Boost_INCLUDE_DIR} )
 
+# Find the Protocol Buffers library
+find_package(Protobuf REQUIRED)
+
+# Generate C++ code from the .proto file
+protobuf_generate_cpp(PROTO_SRCS PROTO_HDRS my_proto_file.proto)
+
 add_executable(traceBuilder
         main.cpp
         tracers/tracer.cpp
@@ -61,4 +67,4 @@ add_executable(traceBuilder
         ioHelp/protoHelp/protoio.cc
         )
 
-TARGET_LINK_LIBRARIES( traceBuilder LINK_PUBLIC ${Boost_LIBRARIES} )
+TARGET_LINK_LIBRARIES( traceBuilder LINK_PUBLIC protobuf::libprotobuf ${Boost_LIBRARIES} )
