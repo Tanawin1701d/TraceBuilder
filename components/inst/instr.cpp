@@ -24,12 +24,9 @@ INSTR::getInstrMdId() const{
     return instrMdId;
 }
 
-string INSTR::genAscLine() {
-    return "undectectable instruction invokes this class";
-}
+
 
 ////MEM
-
 
 MEM_INSTR::MEM_INSTR(ETRACER *_reader,
                      string rawData,
@@ -78,6 +75,7 @@ MEM_INSTR::isOverLapAddr(ADDR _newAddr, int _newSize) const {
 
 }
 
+
 ////LOAD
 bool
 LOAD_INSTR::isEffective(ADDR _newAddr, int _newSize, int _newIsLoS) {
@@ -94,26 +92,6 @@ LOAD_INSTR::LOAD_INSTR(ETRACER *_reader, string rawData, uint64_t _instrMdId)
 
     instr_type = INSTR_TYPE::LOAD;
 
-}
-
-string LOAD_INSTR::genAscLine() {
-    /////# seq_num,[pc],[weight,]type,[p_addr,size,flags,]comp_delay:[rob_dep]:[reg_dep]
-    string instrstr = to_string(seqNum) + ",0,1,LOAD," +
-                      to_string(phyAddr) + "," + to_string(addrSize) +
-                      ",0,500:";
-
-    for (auto robDepSeqN: robDependency){
-        instrstr += "," + to_string(robDepSeqN);
-    }
-    instrstr+= ":";
-    for (auto regDepSeqN: regDependency){
-        instrstr += "," + to_string(regDepSeqN);
-    }
-
-    getstatPoolCount("count_robDepFromLoadInstr")+=robDependency.size();
-    getstatPoolCount("count_regDepFromLoadInstr")+=regDependency.size();
-
-    return instrstr;
 }
 
 
@@ -137,29 +115,10 @@ MEM_INSTR(_reader,
 
 }
 
-string
-STORE_INSTR::genAscLine() {
-    /////# seq_num,[pc],[weight,]type,[p_addr,size,flags,]comp_delay:[rob_dep]:[reg_dep]
-    string instrstr = to_string(seqNum) + ",0,1,STORE," +
-                      to_string(phyAddr) + "," + to_string(addrSize) +
-                      ",0,500:";
 
-    for (auto robDepSeqN: robDependency){
-        instrstr += "," + to_string(robDepSeqN);
-    }
-    instrstr+= ":";
-    for (auto regDepSeqN: regDependency){
-        instrstr += "," + to_string(regDepSeqN);
-    }
 
-    getstatPoolCount("count_robDepFromStoreInstr")+=robDependency.size();
-    getstatPoolCount("count_regDepFromStoreInstr")+=regDependency.size();
-
-    return instrstr;
-}
 
 ////COMP
-
 
 COMP_INSTR::COMP_INSTR(ETRACER *_reader, uint64_t _instrMdId) :
 INSTR(_reader,
@@ -182,25 +141,7 @@ INSTR(_reader,
     instr_type = INSTR_TYPE::COMP;
 }
 
-string
-COMP_INSTR::genAscLine() {
-    //// output format
-    ///// seq_num,[pc],[weight,]type,[p_addr,size,flags,]comp_delay:[rob_dep]:[reg_dep]
-    string instrstr = to_string(seqNum) + ",0,1,COMP,500:";
 
-    for (auto robDepSeqN: robDependency){
-        instrstr += "," + to_string(robDepSeqN);
-    }
-    instrstr+= ":";
-    for (auto regDepSeqN: regDependency){
-        instrstr += "," + to_string(regDepSeqN);
-    }
-
-    getstatPoolCount("count_robDepFromCompInstr")+=robDependency.size();
-    getstatPoolCount("count_regDepFromCompInstr")+=regDependency.size();
-
-    return instrstr;
-}
 
 /////FETCH
 
@@ -233,6 +174,144 @@ INSTR(_reader, -1, false)
     //// we do not deal with dependency about fetch instruction right now due to read-only manner
 }
 
+
+
+#ifndef debug
+
+void LOAD_INSTR::genProtoMsg(ProtoOutputStream* strm) {
+    ProtoMessage::InstDepRecord dep_pkt;
+    dep_pkt.set_seq_num(seqNum);
+    dep_pkt.set_type(ProtoMessage::InstDepRecord::RecordType::LOAD);
+    dep_pkt.set_pc(0);
+    dep_pkt.set_comp_delay(500);
+    for (auto robDepSeqN: robDependency){
+        dep_pkt.add_rob_dep(robDepSeqN);
+    }
+    for (auto regDepSeqN: regDependency){
+        dep_pkt.add_reg_dep(regDepSeqN);
+    }
+    dep_pkt.set_flags (0);
+    dep_pkt.set_p_addr(phyAddr);
+    dep_pkt.set_size  (virAddr);
+
+    return dep_pkt;
+}
+
+void STORE_INSTR::genProtoMsg(ProtoOutputStream* strm) {
+    ProtoMessage::InstDepRecord dep_pkt;
+    dep_pkt.set_seq_num(seqNum);
+    dep_pkt.set_type(ProtoMessage::InstDepRecord::RecordType::STORE);
+    dep_pkt.set_pc(0);
+    dep_pkt.set_comp_delay(500);
+    for (auto robDepSeqN: robDependency){
+        dep_pkt.add_rob_dep(robDepSeqN);
+    }
+    for (auto regDepSeqN: regDependency){
+        dep_pkt.add_reg_dep(regDepSeqN);
+    }
+    dep_pkt.set_flags (0);
+    dep_pkt.set_p_addr(phyAddr);
+    dep_pkt.set_size  (virAddr);
+    strm->write(dep_pkt);
+    return dep_pkt;
+}
+
+void COMP_INSTR::genProtoMsg(ProtoOutputStream* strm) {
+    ProtoMessage::InstDepRecord dep_pkt;
+    dep_pkt.set_seq_num(seqNum);
+    dep_pkt.set_type(ProtoMessage::InstDepRecord::RecordType::COMP);
+    dep_pkt.set_pc(0);
+    dep_pkt.set_comp_delay(500);
+    for (auto robDepSeqN: robDependency){
+        dep_pkt.add_rob_dep(robDepSeqN);
+    }
+    for (auto regDepSeqN: regDependency){
+        dep_pkt.add_reg_dep(regDepSeqN);
+    }
+    strm->write(dep_pkt);
+    return dep_pkt;
+}
+
+void FETCH_INSTR::genProtoMsg(ProtoOutputStream* strm) {
+    ProtoMessage::Packet inst_fetch_pkt;
+    inst_fetch_pkt.set_tick(executeTick);
+    inst_fetch_pkt.set_cmd(1); /// 1 means read.
+    inst_fetch_pkt.set_pc(0);
+    inst_fetch_pkt.set_flags(0);
+    inst_fetch_pkt.set_addr(addrASizes[0].addr);
+    inst_fetch_pkt.set_size(addrASizes[0].size);
+    strm->write(inst_fetch_pkt);
+    return inst_fetch_pkt;
+}
+
+
+#else
+
+string INSTR::genAscLine() {
+    return "undectectable instruction invokes this class";
+}
+
+string LOAD_INSTR::genAscLine() {
+    /////# seq_num,[pc],[weight,]type,[p_addr,size,flags,]comp_delay:[rob_dep]:[reg_dep]
+    string instrstr = to_string(seqNum) + ",0,1,LOAD," +
+                      to_string(phyAddr) + "," + to_string(addrSize) +
+                      ",0,500:";
+
+    for (auto robDepSeqN: robDependency){
+        instrstr += "," + to_string(robDepSeqN);
+    }
+    instrstr+= ":";
+    for (auto regDepSeqN: regDependency){
+        instrstr += "," + to_string(regDepSeqN);
+    }
+
+    getstatPoolCount("count_robDepFromLoadInstr")+=robDependency.size();
+    getstatPoolCount("count_regDepFromLoadInstr")+=regDependency.size();
+
+    return instrstr;
+}
+
+string
+COMP_INSTR::genAscLine() {
+    //// output format
+    ///// seq_num,[pc],[weight,]type,[p_addr,size,flags,]comp_delay:[rob_dep]:[reg_dep]
+    string instrstr = to_string(seqNum) + ",0,1,COMP,500:";
+
+    for (auto robDepSeqN: robDependency){
+        instrstr += "," + to_string(robDepSeqN);
+    }
+    instrstr+= ":";
+    for (auto regDepSeqN: regDependency){
+        instrstr += "," + to_string(regDepSeqN);
+    }
+
+    getstatPoolCount("count_robDepFromCompInstr")+=robDependency.size();
+    getstatPoolCount("count_regDepFromCompInstr")+=regDependency.size();
+
+    return instrstr;
+}
+
+string
+STORE_INSTR::genAscLine() {
+    /////# seq_num,[pc],[weight,]type,[p_addr,size,flags,]comp_delay:[rob_dep]:[reg_dep]
+    string instrstr = to_string(seqNum) + ",0,1,STORE," +
+                      to_string(phyAddr) + "," + to_string(addrSize) +
+                      ",0,500:";
+
+    for (auto robDepSeqN: robDependency){
+        instrstr += "," + to_string(robDepSeqN);
+    }
+    instrstr+= ":";
+    for (auto regDepSeqN: regDependency){
+        instrstr += "," + to_string(regDepSeqN);
+    }
+
+    getstatPoolCount("count_robDepFromStoreInstr")+=robDependency.size();
+    getstatPoolCount("count_regDepFromStoreInstr")+=regDependency.size();
+
+    return instrstr;
+}
+
 string
 FETCH_INSTR::genAscLine() {
     //cmd,addr, size, tick
@@ -254,3 +333,4 @@ FETCH_INSTR::genAscLine() {
 
     return printStr;
 }
+#endif

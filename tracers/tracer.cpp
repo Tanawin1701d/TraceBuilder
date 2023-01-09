@@ -28,8 +28,9 @@ ETRACER::ETRACER(const string& _traceFileName,
     assert(outputFile_data);
     assert(outputFile_instr);
     assert(_windowSize >= 20);
-    preWrite_data.reserve(MAX_PREW_BUFF+1000);
-    preWrite_instr.reserve(MAX_PREW_BUFF+1000);
+    traceFile->rdbuf()->pubsetbuf(preRead_trace, MAX_PRE_RW_BUFF);
+    preWrite_data.reserve(MAX_PRE_RW_BUFF + 1000);
+    preWrite_instr.reserve(MAX_PRE_RW_BUFF + 1000);
 
 }
 
@@ -71,8 +72,8 @@ void ETRACER::step() {
                 case 'F' : {
                     assert(fetchLine.empty());
                     fetchLine.push_back(line);
-                    if ((icount % 100000000) == 0)
-                        cout << "pass " << icount << endl;
+                    if ((icount % 1000000) == 0)
+                        cout << "pass " << icount << "file retrieved" <<  traceFile->tellg() / 1073741824 << endl;
                     icount++;
                     /// this means real single instruction is retrieved already
                     /// order of init instruction is restricted due to rob dependency connection
@@ -164,27 +165,51 @@ void ETRACER::tryWriteAll() {
     ////  |LOAD|COMP|STORE|
 
     ///// for elastic trace
+#ifndef debug
     for (const auto sLdInstr: newLdInstr){
-        tryWrite((INSTR*) sLdInstr, outputFile_data, preWrite_data);
+        tryWriteProto((INSTR *) sLdInstr, protoFile_data);
     }
-    tryWrite((INSTR*) newCInstr, outputFile_data, preWrite_data);
+    tryWriteProto((INSTR *) newCInstr, protoFile_data);
     for (const auto sStInstr: newStInstr){
-        tryWrite((INSTR*) sStInstr, outputFile_data, preWrite_data);
+        tryWriteProto((INSTR *) sStInstr, protoFile_data);
     }
     ///// for static fetch trace
-    tryWrite((INSTR*) newFtInstr, outputFile_instr, preWrite_instr);
+    tryWriteProto((INSTR *) newFtInstr, protoFile_data);
+#else
+    for (const auto sLdInstr: newLdInstr){
+        tryWriteASCII((INSTR *) sLdInstr, outputFile_data, preWrite_data);
+    }
+    tryWriteASCII((INSTR *) newCInstr, outputFile_data, preWrite_data);
+    for (const auto sStInstr: newStInstr){
+        tryWriteASCII((INSTR *) sStInstr, outputFile_data, preWrite_data);
+    }
+    ///// for static fetch trace
+    tryWriteASCII((INSTR *) newFtInstr, outputFile_instr, preWrite_instr);
+#endif
 }
 
-void ETRACER::tryWrite(INSTR* newOp, ofstream* printFile, string& preWriteStr) const {
+void ETRACER::tryWriteProto(INSTR* newOp, ProtoOutputStream* printFile) {
+    if(!newOp)
+        return;
+
+    newOp->genProtoMsg(printFile);
+
+
+}
+
+
+#ifdef debug
+void ETRACER::tryWriteASCII(INSTR* newOp, ofstream* printFile, string& preWriteStr) const {
     if (newOp) {
         //*printFile << newOp->genAscLine() << endl;
-        if (preWriteStr.size() >= MAX_PREW_BUFF){
+        if (preWriteStr.size() >= MAX_PRE_RW_BUFF){
             flushWrite(printFile, preWriteStr);
         }
         preWriteStr += newOp->genAscLine();
         preWriteStr += '\n';
     }
 }
+
 
 void ETRACER::flushWrite(ofstream* printFile, string& preWriteStr) {
     if (!preWriteStr.empty()){
@@ -193,8 +218,11 @@ void ETRACER::flushWrite(ofstream* printFile, string& preWriteStr) {
     }
 }
 
+#endif
+
 TICK ETRACER::stepInstrExeTick(TICK amount) {
     TICK curTick = lastFetTick;
     lastFetTick += amount;
     return curTick;
 }
+

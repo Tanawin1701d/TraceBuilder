@@ -44,6 +44,8 @@ bool MEM_MNG::isAllocated(ADDR _a_vaddr) {
 void MEM_MNG::allocate(ADDR _a_vaddr) {
     pageMap.insert({_a_vaddr, nextphyStartAddr});
     nextphyStartAddr += pageAlignSize;
+
+    //////// stat collect
     auto& statmemuse = getstatPoolCount("max_memory_used");
     statmemuse = max(nextphyStartAddr, (ADDR)statmemuse);
 }

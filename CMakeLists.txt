@@ -31,6 +31,7 @@
 #TARGET_LINK_LIBRARIES( traceBuilder PRIVATE protobuf::libprotobuf ${Boost_LIBRARIES} )
 
 cmake_minimum_required(VERSION 3.23)
+project(traceBuilder)
 set(CMAKE_CXX_STANDARD 17)
 
 FIND_PACKAGE( Boost 1.40 COMPONENTS program_options REQUIRED )
@@ -55,6 +56,9 @@ add_executable(traceBuilder
         tracers/instrWd.cpp
         components/memMap/MemMng.cpp
         components/memMap/MemMng.h
+        ioHelp/protoHelp/protoio.hh
+        ioHelp/protoHelp/protobuf.cc
+        ioHelp/protoHelp/protoio.cc
         )
 
 TARGET_LINK_LIBRARIES( traceBuilder LINK_PUBLIC ${Boost_LIBRARIES} )

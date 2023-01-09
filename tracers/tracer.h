@@ -19,6 +19,7 @@
 #include "../components/inst/instr.h"
 #include "../components/inst/instr_model.h"
 #include "../components/memMap/MemMng.h"
+#include "../ioHelp/protoHelp/protoio.hh"
 #include "statPool.h"
 using namespace std;
 
@@ -30,13 +31,23 @@ class ETRACER{
     friend class FETCH_INSTR;
     friend class LOAD_INSTR;
     friend class STORE_INSTR;
+
+
+
     //// io file
     ifstream* traceFile;
+#ifndef debug
+    ProtoOutputStream* protoFile_data;
+    ProtoOutputStream* protoFile_instr;
+#else
     ofstream* outputFile_data;
     ofstream* outputFile_instr;
     string preWrite_data;
-    unsigned long MAX_PREW_BUFF = 2000000000;
     string preWrite_instr;
+#endif
+    static const unsigned long MAX_PRE_RW_BUFF = 2000000000;
+    char   preRead_trace[MAX_PRE_RW_BUFF];
+
     /////////INSTR_MODEL
     INSTR_MODEL_MANAGER* instrModelMng;
     /////////MEMORY_MANAGER
@@ -101,11 +112,14 @@ public:
     //// push all new micro instruction to window
     void tryPushWindowAll();
 
-    //// write data
-    void tryWrite(INSTR* newOp, ofstream* printFile,string& preWriteStr) const;
     void tryWriteAll();
+#ifndef debug
+    void tryWriteProto(INSTR* newOp, ProtoOutputStream* printFile);
+#else
+    //// write data
+    void tryWriteASCII(INSTR* newOp, ofstream* printFile, string& preWriteStr) const;
     static void flushWrite(ofstream* printFile, string& preWriteStr);
-
+#endif
     //// for get instr fetch time and step for next instruction
     TICK stepInstrExeTick(TICK amount);
 };

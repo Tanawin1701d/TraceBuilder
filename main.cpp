@@ -13,7 +13,7 @@ int main() {
                           "/media/tanawin/tanawin1701d/Project/sms/pintool/msmsPin/generatedFile/instrBeta.txt",
                           64,
                           &instr_md_mng,
-                          &mem_mng
+                          &mem_mng,
             );
     tracer.step();
     printStat();

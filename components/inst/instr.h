@@ -11,10 +11,13 @@
 #include <deque>
 #include "../../tracers/statPool.h"
 #include<boost/algorithm/string.hpp>
+#include <google/protobuf/message.h>
 #include "../regMap/regMapper.h"
 #include "../memMap/MemMng.h"
 #include "../../ioHelp/strHelp.h"
-
+#include "../../ioHelp/protoHelp/inst_dep_record.pb.h"
+#include "../../ioHelp/protoHelp/inst.pb.h"
+#include "../../ioHelp/protoHelp/protoio.hh"
 
 
 class ETRACER; // pintool reader
@@ -48,7 +51,11 @@ public:
     virtual ~INSTR()= default;
     INSTR_TYPE     instr_type;
     uint64_t getSeqNum() const;
-    virtual string genAscLine() = 0;
+#ifndef debug
+    virtual void genProtoMsg(ProtoOutputStream* strm) = 0;
+#else
+    virtual string genAscLine() ;
+#endif
 };
 
 // we assume that newly instruction coming need only 1 slot in rob
@@ -70,7 +77,7 @@ public:
               bool robModeDepIsLoad,
               uint64_t _instrMdId);
     //robModeDepIsLoad to define that current isntruction is load or store
-    ~MEM_INSTR() override{};
+    virtual ~MEM_INSTR() {};
     bool isOverLapAddr(ADDR _newAddr, int _newSize) const;
     virtual bool isEffective(ADDR _addr, int _size, int _newIsLoS) = 0; // is new incoming is load or store
 };
@@ -79,7 +86,12 @@ class LOAD_INSTR : public MEM_INSTR{
 public:
     bool isEffective(ADDR _newAddr, int _newSize, int _newIsLoS) override;
     LOAD_INSTR(ETRACER* _reader, string rawData, uint64_t _instrMdId);
+
+    #ifndef debug
+    void genProtoMsg(ProtoOutputStream* strm) override;
+    #else
     string genAscLine() override;
+    #endif
 };
 
 class STORE_INSTR : public MEM_INSTR{
@@ -88,7 +100,11 @@ protected:
 public:
     bool isEffective(ADDR _newAddr, int _newSize, int _newIsLoS) override;
     STORE_INSTR(ETRACER* _reader, string rawData, uint64_t _instrMdId);
-    string genAscLine() override;
+    #ifndef debug
+        void genProtoMsg(ProtoOutputStream* strm) override;
+    #else
+        string genAscLine() override;
+    #endif
 
 };
 
@@ -96,7 +112,11 @@ class COMP_INSTR : public INSTR{
 
 public:
     COMP_INSTR(ETRACER* _reader, uint64_t _instrMdId);
-    string genAscLine() override;
+    #ifndef debug
+        void genProtoMsg(ProtoOutputStream* strm) override;
+    #else
+        string genAscLine() override;
+    #endif
 
 
 };
@@ -115,7 +135,11 @@ protected:
 
 public:
     explicit FETCH_INSTR(ETRACER* _reader, const string& _raw);
-    string genAscLine();
+    #ifndef debug
+        void genProtoMsg(ProtoOutputStream* strm) override;
+    #else
+        string genAscLine() override;
+    #endif
 };
 
 #endif //TRACEBUILDER_INSTR_H
