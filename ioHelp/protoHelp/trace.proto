@@ -1,0 +1,17 @@
+syntax = "proto2";
+
+package ProtoMessage;
+
+message traceRecord{
+  enum addrCmd{
+    LOAD = 0;
+    STORE = 1;
+  }
+
+  required uint64 fetnumber = 1;
+  repeated uint64 addr = 2;
+
+}
+
+// use this command to compile
+// protoc -I=. --cpp_out=. ./trace.proto

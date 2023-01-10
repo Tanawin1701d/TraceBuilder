@@ -181,7 +181,7 @@ INSTR(_reader, -1, false)
 void LOAD_INSTR::genProtoMsg(ProtoOutputStream* strm) {
     ProtoMessage::InstDepRecord dep_pkt;
     dep_pkt.set_seq_num(seqNum);
-    dep_pkt.set_type(ProtoMessage::InstDepRecord::RecordType::LOAD);
+    dep_pkt.set_type(ProtoMessage::InstDepRecord::RecordType::InstDepRecord_RecordType_LOAD);
     dep_pkt.set_pc(0);
     dep_pkt.set_comp_delay(500);
     for (auto robDepSeqN: robDependency){
@@ -194,13 +194,15 @@ void LOAD_INSTR::genProtoMsg(ProtoOutputStream* strm) {
     dep_pkt.set_p_addr(phyAddr);
     dep_pkt.set_size  (virAddr);
 
-    return dep_pkt;
+    getstatPoolCount("count_robDepFromLoadInstr")+=robDependency.size();
+    getstatPoolCount("count_regDepFromLoadInstr")+=regDependency.size();
+
 }
 
 void STORE_INSTR::genProtoMsg(ProtoOutputStream* strm) {
     ProtoMessage::InstDepRecord dep_pkt;
     dep_pkt.set_seq_num(seqNum);
-    dep_pkt.set_type(ProtoMessage::InstDepRecord::RecordType::STORE);
+    dep_pkt.set_type(ProtoMessage::InstDepRecord::RecordType::InstDepRecord_RecordType_STORE);
     dep_pkt.set_pc(0);
     dep_pkt.set_comp_delay(500);
     for (auto robDepSeqN: robDependency){
@@ -213,13 +215,15 @@ void STORE_INSTR::genProtoMsg(ProtoOutputStream* strm) {
     dep_pkt.set_p_addr(phyAddr);
     dep_pkt.set_size  (virAddr);
     strm->write(dep_pkt);
-    return dep_pkt;
+
+    getstatPoolCount("count_robDepFromStoreInstr")+=robDependency.size();
+    getstatPoolCount("count_regDepFromStoreInstr")+=regDependency.size();
 }
 
 void COMP_INSTR::genProtoMsg(ProtoOutputStream* strm) {
     ProtoMessage::InstDepRecord dep_pkt;
     dep_pkt.set_seq_num(seqNum);
-    dep_pkt.set_type(ProtoMessage::InstDepRecord::RecordType::COMP);
+    dep_pkt.set_type(ProtoMessage::InstDepRecord_RecordType_COMP);
     dep_pkt.set_pc(0);
     dep_pkt.set_comp_delay(500);
     for (auto robDepSeqN: robDependency){
@@ -229,7 +233,9 @@ void COMP_INSTR::genProtoMsg(ProtoOutputStream* strm) {
         dep_pkt.add_reg_dep(regDepSeqN);
     }
     strm->write(dep_pkt);
-    return dep_pkt;
+
+    getstatPoolCount("count_robDepFromCompInstr")+=robDependency.size();
+    getstatPoolCount("count_regDepFromCompInstr")+=regDependency.size();
 }
 
 void FETCH_INSTR::genProtoMsg(ProtoOutputStream* strm) {
@@ -241,7 +247,8 @@ void FETCH_INSTR::genProtoMsg(ProtoOutputStream* strm) {
     inst_fetch_pkt.set_addr(addrASizes[0].addr);
     inst_fetch_pkt.set_size(addrASizes[0].size);
     strm->write(inst_fetch_pkt);
-    return inst_fetch_pkt;
+    getstatPoolCount("count_fetchInstr")++;
+
 }
 
 

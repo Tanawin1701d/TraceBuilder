@@ -24,6 +24,16 @@ ETRACER::ETRACER(const string& _traceFileName,
 #ifndef debug
     protoFile_data  = new ProtoOutputStream(_outputFileName_data);
     protoFile_instr = new ProtoOutputStream(_outputFileName_instr);
+    ProtoMessage::InstDepRecordHeader data_rec_header;
+
+    ////// data side init
+    data_rec_header.set_obj_id("gem5.5");
+    data_rec_header.set_tick_freq(1000000000);
+    data_rec_header.set_window_size(120); /// for now we use identical to gem5/util
+    protoFile_data->write(data_rec_header);
+    ///////////////////////////////////////////////////////////////////////////////////////
+    ////// instruction side init
+
 #else
     assert(outputFile_data);
     assert(outputFile_instr);
@@ -36,7 +46,7 @@ ETRACER::ETRACER(const string& _traceFileName,
     assert(traceFile);
 
     assert(_windowSize >= 20);
-    traceFile->rdbuf()->pubsetbuf(preRead_trace, MAX_PRE_RW_BUFF);
+    //traceFile->rdbuf()->pubsetbuf(preRead_trace, MAX_PRE_RW_BUFF);
 
 
 }
@@ -45,8 +55,8 @@ ETRACER::~ETRACER() {
     traceFile->close();
 
 #ifndef debug
-    delete protoFile_data;
-    delete protoFile_instr;
+    //delete protoFile_data;
+    //delete protoFile_instr;
 #else
     flushWrite(outputFile_data, preWrite_data);
     flushWrite(outputFile_instr, preWrite_instr);
@@ -130,13 +140,7 @@ int ETRACER::regMapper(string regName) {
 uint64_t ETRACER::genSeqN() {
     return ++lastSeqN;
 }
-//
-//int ETRACER::countNewWindowReqSize() const {
-//    return (int)(newStInstr.size()) +
-//           (int)(newLdInstr.size()) +
-//           (int)(newCInstr != nullptr);
-//}
-//
+
 
 void ETRACER::initAllPerInstrType(INSTR_TYPE _instrType, vector<string>& _rawLines,uint64_t& _instrMdId){
     ///////// for fetch instruction instrMdId will be used to answer instruction while other is used to initialize instruction
@@ -203,7 +207,7 @@ void ETRACER::tryWriteAll() {
 }
 
 void ETRACER::tryWriteProto(INSTR* newOp, ProtoOutputStream* printFile) {
-    if(!newOp)
+    if (!newOp)
         return;
 
     newOp->genProtoMsg(printFile);
@@ -213,26 +217,27 @@ void ETRACER::tryWriteProto(INSTR* newOp, ProtoOutputStream* printFile) {
 
 
 #ifdef debug
-void ETRACER::tryWriteASCII(INSTR* newOp, ofstream* printFile, string& preWriteStr) const {
-    if (newOp) {
-        //*printFile << newOp->genAscLine() << endl;
-        if (preWriteStr.size() >= MAX_PRE_RW_BUFF){
-            flushWrite(printFile, preWriteStr);
+    void ETRACER::tryWriteASCII(INSTR* newOp, ofstream* printFile, string& preWriteStr) const {
+        if (newOp) {
+            //*printFile << newOp->genAscLine() << endl;
+            if (preWriteStr.size() >= MAX_PRE_RW_BUFF){
+                flushWrite(printFile, preWriteStr);
+            }
+            preWriteStr += newOp->genAscLine();
+            preWriteStr += '\n';
         }
-        preWriteStr += newOp->genAscLine();
-        preWriteStr += '\n';
     }
-}
 
 
-void ETRACER::flushWrite(ofstream* printFile, string& preWriteStr) {
-    if (!preWriteStr.empty()){
-        *printFile << preWriteStr;
-        preWriteStr.clear();
+    void ETRACER::flushWrite(ofstream* printFile, string& preWriteStr) {
+        if (!preWriteStr.empty()){
+            *printFile << preWriteStr;
+            preWriteStr.clear();
+        }
     }
-}
 
 #endif
+
 
 TICK ETRACER::stepInstrExeTick(TICK amount) {
     TICK curTick = lastFetTick;

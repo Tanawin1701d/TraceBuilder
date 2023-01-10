@@ -19,7 +19,7 @@
 #include "../components/inst/instr.h"
 #include "../components/inst/instr_model.h"
 #include "../components/memMap/MemMng.h"
-#include "../ioHelp/protoHelp/protoio.hh"
+//#include "../ioHelp/protoHelp/protoio.hh"
 #include "statPool.h"
 using namespace std;
 
@@ -46,7 +46,7 @@ class ETRACER{
     string preWrite_instr;
 #endif
     static const unsigned long MAX_PRE_RW_BUFF = 2000000000;
-    char   preRead_trace[MAX_PRE_RW_BUFF];
+    //char   preRead_trace[MAX_PRE_RW_BUFF];
 
     /////////INSTR_MODEL
     INSTR_MODEL_MANAGER* instrModelMng;

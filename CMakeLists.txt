@@ -34,14 +34,14 @@ cmake_minimum_required(VERSION 3.23)
 project(traceBuilder)
 set(CMAKE_CXX_STANDARD 17)
 
+include(FindProtobuf)
+find_package(Protobuf REQUIRED)
+find_package(Threads REQUIRED)
+
+include_directories(${PROTOBUF_INCLUDE_DIR})
+
 FIND_PACKAGE( Boost 1.40 COMPONENTS program_options REQUIRED )
 INCLUDE_DIRECTORIES( ${Boost_INCLUDE_DIR} )
-
-# Find the Protocol Buffers library
-find_package(Protobuf REQUIRED)
-
-# Generate C++ code from the .proto file
-protobuf_generate_cpp(PROTO_SRCS PROTO_HDRS my_proto_file.proto)
 
 add_executable(traceBuilder
         main.cpp
@@ -65,6 +65,15 @@ add_executable(traceBuilder
         ioHelp/protoHelp/protoio.hh
         ioHelp/protoHelp/protobuf.cc
         ioHelp/protoHelp/protoio.cc
+####### protobuf file
+        ioHelp/protoHelp/inst_dep_record.pb.cc
+        ioHelp/protoHelp/inst_dep_record.pb.h
+
+        ioHelp/protoHelp/packet.pb.cc
+        ioHelp/protoHelp/packet.pb.h
+
         )
 
-TARGET_LINK_LIBRARIES( traceBuilder LINK_PUBLIC protobuf::libprotobuf ${Boost_LIBRARIES} )
+
+
+TARGET_LINK_LIBRARIES( traceBuilder PRIVATE ${Boost_LIBRARIES} Threads::Threads ${PROTOBUF_LIBRARY}  )

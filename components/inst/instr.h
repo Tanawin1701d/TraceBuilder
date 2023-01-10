@@ -17,6 +17,7 @@
 #include "../../ioHelp/strHelp.h"
 #include "../../ioHelp/protoHelp/inst_dep_record.pb.h"
 #include "../../ioHelp/protoHelp/inst.pb.h"
+#include "../../ioHelp/protoHelp/packet.pb.h"
 #include "../../ioHelp/protoHelp/protoio.hh"
 
 
