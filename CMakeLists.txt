@@ -40,8 +40,10 @@ find_package(Threads REQUIRED)
 
 include_directories(${PROTOBUF_INCLUDE_DIR})
 
+message("${Protobuf_LIBRARIES} dssssdddd")
+
 FIND_PACKAGE( Boost 1.40 COMPONENTS program_options REQUIRED )
-INCLUDE_DIRECTORIES( ${Boost_INCLUDE_DIR} )
+INCLUDE_DIRECTORIES( ${Boost_LIBRARIES} )
 
 add_executable(traceBuilder
         main.cpp
