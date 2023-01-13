@@ -11,19 +11,34 @@
 #include <fstream>
 #include <sstream>
 
+//// struct of runtime trace file
+
+//#pragma pack(push, 1)
+struct RT_OBJ{
+    uint64_t loadAddr[3];
+    uint64_t storeAddr[3];
+    uint32_t fetchId;
+    uint8_t  loadMemOpNum[3];
+    uint8_t  storeMemOpNum[3];
+};
+//#pragma pack(pop)
+
+///// these pragma is derived from 
+//https://stackoverflow.com/questions/32109646/how-to-write-a-struct-to-file-in-c-and-read-the-file
+
+const UINT32 maxRtTracing =  400000000; 
+const UINT32 maxMemOpPerLS = 3;
 
 //FILE* trace;
 static std::ofstream* outputFile_instr;
 static std::ofstream* outputFile_trace;
+static std::ofstream* outputFile_traceDb;
 
-static std::string preWrite;
-static std::string preWriteT;
-UINT32 INSTRID = 0;
-
-int pagemapFile;
-
-
-
+static std::string   preWrite;
+static std::string   preWriteRuntimeDebg;
+struct RT_OBJ* preWriteRt; /// 400 M times 52 bytes
+UINT32 preWriteRt_idx = 0;
+UINT32 INSTRID        = 0;
 
 VOID tryFlush(){
     if (preWrite.size() >= 4000000000){
@@ -32,50 +47,75 @@ VOID tryFlush(){
     }
 }
 
-VOID tryFlushT(){
-    if (preWriteT.size() >= 4000000000){
-        *outputFile_trace << preWriteT;
-        preWriteT.clear();
+VOID flushDb(std::string dayta){
+    *outputFile_traceDb << dayta;
+}
+
+
+std::string getDebugOutcome(RT_OBJ example){
+    std::string prePrint;
+    for (int i = 0; i < 3; i++){
+        prePrint  += "L " + std::to_string(example.loadAddr[i])  + "  memop addr "
+                  + std::to_string(example.loadMemOpNum[i]) 
+                  + "\n";
+    }
+    for (int i = 0; i < 3; i++){
+        prePrint  += "S " + std::to_string(example.storeAddr[i]) + " memop addr " 
+                  + std::to_string(example.loadMemOpNum[i])        
+                  + "\n";       
+    }
+    prePrint  += "F " + std::to_string(example.fetchId) + "\n";
+    return prePrint;
+}
+
+VOID flushRuntimeData(){
+    if (preWriteRt_idx){
+        outputFile_trace->write((char*)preWriteRt, sizeof(RT_OBJ)*preWriteRt_idx);
+        ////// this is used for debug
     }
 }
 
 
 
-VOID LD_TRACE(ADDRINT addr, BOOL isLoad, UINT32 memop){
-    preWriteT += isLoad ? "L " : "S ";
-
-    char buffer[32];
-    sprintf(buffer, "%lx", addr);
-    std::string ldAddrHex(buffer);
-
-    preWriteT += "0x";
-    preWriteT += ldAddrHex;
-    preWriteT += " ";
-    preWriteT += std::to_string(memop);
-    preWriteT += "\n";
+VOID L_TRACE(ADDRINT addr, UINT32 lsFieldId, UINT32 memop){
+    preWriteRt[preWriteRt_idx].loadAddr    [lsFieldId] = addr;
+    preWriteRt[preWriteRt_idx].loadMemOpNum[lsFieldId] = (uint8_t)memop;
 }
 
-VOID ButtomEachIntr(
-                char* instr_id
-                ){
+VOID S_TRACE(ADDRINT addr, UINT32 lsFieldId, UINT32 memop){
+    preWriteRt[preWriteRt_idx].storeAddr    [lsFieldId] = addr;     // update address;
+    preWriteRt[preWriteRt_idx].storeMemOpNum[lsFieldId] = (uint8_t)memop; //update memory operand number
+}
 
-    //fprintf(trace, "---------- %s -----\n", str);
-    preWriteT += "F ";
-    preWriteT += instr_id;
-    preWriteT += "\n";
-    tryFlushT();
+// inline void bufferInitialize(UINT32 pwIdx){
+//         preWriteRt[pwIdx].loadIdx    = 0;
+//         preWriteRt[pwIdx].storeIdx   = 0;
+// }
+
+VOID ButtomEachIntr(
+        UINT32 fetchId
+                ){
+    preWriteRt[preWriteRt_idx].fetchId = fetchId;
+    //// we print debug before debug
+    preWriteRuntimeDebg += getDebugOutcome(preWriteRt[preWriteRt_idx]);
+    flushDb(preWriteRuntimeDebg);
+    preWriteRuntimeDebg.clear();
+    ////////////////////////////////
+    preWriteRt_idx++;
+    if ( preWriteRt_idx >= maxRtTracing){
+        flushRuntimeData();
+        //reset index of the buffer
+        preWriteRt_idx = 0;
+    }
+    //bufferInitialize(preWriteRt_idx);
+     /// initilize for next instruction
+    /// this is crucial due to inconsistent state exist
 
 }
 
 // The Instruction function is called for every instruction
 VOID Instruction(INS ins, VOID* v)
 {
-
-    // instruction id 
-    std::string _instrIdRaw = std::to_string(INSTRID);
-    char* instrIdStr = new char[256];
-    std::copy(_instrIdRaw.begin(), _instrIdRaw.end(), instrIdStr);
-    instrIdStr[_instrIdRaw.length()] = '\0';
     
     //instruction
     std::string _instrName   = INS_Disassemble(ins);
@@ -111,6 +151,10 @@ VOID Instruction(INS ins, VOID* v)
 
     ///////////////////////// for load store instruction
     UINT32 memOperands = INS_MemoryOperandCount(ins);
+
+    UINT32 loaded_amt = 0;
+    UINT32 stored_amt = 0;
+
     for (UINT32 memOp = 0; memOp < memOperands; memOp++){
         UINT32 opIdxMtc   = INS_MemoryOperandIndexToOperandIndex(ins, memOp);
         REG    baseReg    = INS_OperandMemoryBaseReg (ins, opIdxMtc);
@@ -134,21 +178,38 @@ VOID Instruction(INS ins, VOID* v)
         preWrite += " ";
         preWrite += std::to_string(memOp);
         preWrite += "\n";
-
-        INS_InsertPredicatedCall(ins, IPOINT_BEFORE, 
-                            (AFUNPTR)LD_TRACE,
+        /// there is memory operand that act like load and store at a time
+        /// so we need to add all to the serializer
+        if (isLoad){
+            assert(loaded_amt < maxMemOpPerLS);
+            INS_InsertPredicatedCall(ins, IPOINT_BEFORE, 
+                            (AFUNPTR)L_TRACE,
                             IARG_MEMORYOP_EA, memOp,
-                            IARG_BOOL, isLoad,
+                            IARG_UINT32, loaded_amt,
                             IARG_UINT32, memOp,
                             IARG_END
                             );
+            loaded_amt++;
+        }
+        if (isStore){
+            assert(stored_amt < maxMemOpPerLS);
+            INS_InsertPredicatedCall(ins, IPOINT_BEFORE, 
+                            (AFUNPTR)S_TRACE,
+                            IARG_MEMORYOP_EA, memOp,
+                            IARG_UINT32, stored_amt,
+                            IARG_UINT32, memOp,
+                            IARG_END
+                            );
+            stored_amt++;
+        }
+        
     }
     
     
     ////////////////////////// for insert predicated of the end of instruction
     INS_InsertPredicatedCall(ins, IPOINT_BEFORE, 
                             (AFUNPTR)ButtomEachIntr,
-                            IARG_PTR, (void*)instrIdStr,
+                            IARG_UINT32, INSTRID,
                             IARG_CALL_ORDER, 
                             CALL_ORDER_LAST,
                             IARG_END
@@ -159,7 +220,7 @@ VOID Instruction(INS ins, VOID* v)
     preWrite += " ";
     preWrite += std::to_string(instrSize);
     preWrite += " ";
-    preWrite += _instrIdRaw;
+    preWrite += std::to_string(INSTRID);
     preWrite += " ";
     preWrite += _instrName;
     preWrite += "\n";
@@ -174,9 +235,8 @@ VOID Fini(INT32 code, VOID* v)
 {
     printf("write remain to disk\n");
     *outputFile_instr << preWrite;
-    *outputFile_trace << preWriteT;
+    flushRuntimeData();
     preWrite.clear();
-    preWriteT.clear();
     outputFile_instr->close();     
     outputFile_trace->close();
 }
@@ -187,19 +247,21 @@ KNOB<std::string> outputinstrFileKnob(KNOB_MODE_WRITEONCE, "pintool",
 KNOB<std::string> outputdataFileKnob(KNOB_MODE_WRITEONCE, "pintool",
     "d", "/tmp/runtimeTrace.txt", "output for runtime tracing");
 
-
+KNOB<std::string> outputdebugtraceKnob(KNOB_MODE_WRITEONCE, "pintool",
+    "db", "/tmp/runtimeTrace.dbg", "output for runtime debugging");
 
 int main(int argc, char* argv[])
 {
     // Initialize the Pin tool
+    //bufferInitialize(0);
     PIN_Init(argc, argv);
-
     //preWrite.reserve(4000001000);
-
-    outputFile_instr = new std::ofstream(outputinstrFileKnob.Value()),
-    outputFile_trace = new std::ofstream(outputdataFileKnob.Value()),
+    // prewrite for run time tracing file
+    preWriteRt         = new RT_OBJ[maxRtTracing];
+    outputFile_instr   = new std::ofstream(outputinstrFileKnob.Value()),
+    outputFile_trace   = new std::ofstream(outputdataFileKnob .Value()),
+    outputFile_traceDb = new std::ofstream(outputdebugtraceKnob.Value());
     preWrite.reserve(2000001000);
-    preWriteT.reserve(4000001000);
 
     // Register the Instruction function to be called for every instruction
     INS_AddInstrumentFunction(Instruction, nullptr);

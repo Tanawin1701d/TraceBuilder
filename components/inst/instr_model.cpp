@@ -4,7 +4,10 @@
 
 #include "instr_model.h"
 
-INSTR_MODEL::INSTR_MODEL(const vector<string> &_raws) {
+INSTR_MODEL::INSTR_MODEL(const vector<string> &_raws):
+amt_loadOpr(0),
+amt_storeOpr(0)
+{
 
     for (auto& e : effSize){ e = 0;} // to be sure
 
@@ -75,9 +78,11 @@ void INSTR_MODEL::handleLSInstr(vector<string>& raw) {
     assert(isLoad || isStore);
     if (isLoad) {
         effSize[memop] = decStr2int(raw[LS_SIZE]);
+        amt_loadOpr++;
     }
     if (isStore) {
         effSize[MAXMEMOP+memop] = decStr2int(raw[LS_SIZE]);
+        amt_storeOpr++;
     }
 
 
@@ -114,6 +119,14 @@ int INSTR_MODEL::getInstrSize() const {
 
 uint64_t INSTR_MODEL::getInstrId() const {
     return instrId;
+}
+
+int INSTR_MODEL::getLoadOpAmt() const{
+    return amt_loadOpr;
+}
+
+int INSTR_MODEL::getStoreOpAmt() const{
+    return amt_storeOpr;
 }
 
 vector<string> INSTR_MODEL::getInstrName() const {

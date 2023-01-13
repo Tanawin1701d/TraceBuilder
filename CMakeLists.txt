@@ -74,7 +74,7 @@ add_executable(traceBuilder
         ioHelp/protoHelp/packet.pb.cc
         ioHelp/protoHelp/packet.pb.h
 
-        )
+        ioHelp/pinIoSh/pinIo.h ioHelp/pinIoSh/pinIo.cpp)
 
 
 

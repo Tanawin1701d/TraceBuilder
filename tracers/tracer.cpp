@@ -12,7 +12,7 @@ ETRACER::ETRACER(const string& _traceFileName,
                  INSTR_MODEL_MANAGER* _instr_model_mng,
                  MEM_MNG* _memMng
                  ):
-        traceFile       (new ifstream(_traceFileName)),
+        traceFile       (new PIN_IO(_traceFileName)),
         instrModelMng(_instr_model_mng),
         memMng(_memMng),
         lastSeqN(UINT64_MAX),
@@ -21,6 +21,8 @@ ETRACER::ETRACER(const string& _traceFileName,
         newCInstr(nullptr),
         newFtInstr(nullptr)
 {
+    assert(traceFile);
+    // traceFile is aleady assert for unable to open file already
 #ifndef debug
     protoFile_data  = new ProtoOutputStream(_outputFileName_data);
     protoFile_instr = new ProtoOutputStream(_outputFileName_instr);
@@ -43,8 +45,6 @@ ETRACER::ETRACER(const string& _traceFileName,
     preWrite_instr.reserve(MAX_PRE_RW_BUFF + 1000);
 #endif
     assert(memMng);
-    assert(traceFile);
-
     assert(_windowSize >= 20);
     //traceFile->rdbuf()->pubsetbuf(preRead_trace, MAX_PRE_RW_BUFF);
 
@@ -52,7 +52,7 @@ ETRACER::ETRACER(const string& _traceFileName,
 }
 
 ETRACER::~ETRACER() {
-    traceFile->close();
+    delete traceFile;
 
 #ifndef debug
     //delete protoFile_data;
@@ -70,64 +70,14 @@ ETRACER::~ETRACER() {
 }
 
 void ETRACER::step() {
-    // for inject for each   line mean raw data that retrive from pintool
-    [[maybe_unused]] vector<string> computeLines; // means multiple line is single instruction
-    vector<string> loadLines;    // multiple load lines is multiple instruction
-    vector<string> storeLines;   // multiple store lines is multiple instruction
-    vector<string> fetchLine;    // single line of fetch per instruction
-
     //////////////////////////////////////////////////////////////////
 
     unsigned long icount = 0;
     string line;
-    while(getline(*traceFile, line) ){
-            /// detect microp in x86 and add to correspond type
-            char instrType = line[0];
-            switch (instrType) {
-
-                case 'L' : {
-                    loadLines.push_back(line);
-                    break;
-                }
-                case 'S' : {
-                    storeLines.push_back(line);
-                    break;
-                }
-                case 'F' : {
-                    assert(fetchLine.empty());
-                    fetchLine.push_back(line);
-                    if ((icount % 1000000) == 0)
-                        cout << "pass " << icount << "file retrieved" <<  traceFile->tellg() / 1073741824 << endl;
-                    icount++;
-                    /// this means real single instruction is retrieved already
-                    /// order of init instruction is restricted due to rob dependency connection
-                    uint64_t instrMdId = -1;
-                    initAllPerInstrType(FETCH, fetchLine, instrMdId); ////// fetch will give me instrMdId
-                    assert(instrMdId != -1);
-                    initAllPerInstrType(LOAD, loadLines   , instrMdId);
-                    initAllPerInstrType(COMP, computeLines, instrMdId);
-                    initAllPerInstrType(STORE,storeLines  , instrMdId);
-                    ///stat
-                    ///////////////// write instruction to file
-                    tryPushWindowAll();
-                    tryWriteAll();
-                    /// clear new Instruction
-                    newStInstr.clear();
-                    newCInstr = nullptr;
-                    newLdInstr.clear();
-                    delete newFtInstr; /// fetch will not be clear by instruction window so we need to delete now
-                    newFtInstr = nullptr;
-                    /// clear string line
-                    fetchLine.clear();
-                    loadLines.clear();
-                    computeLines.clear();
-                    storeLines.clear();
-                    break;
-                }
-                default:
-                    throw invalid_argument("unknown instruction " + line);
-            }
-
+    RT_OBJ singleInstr{};
+    while(traceFile->readInstr(singleInstr) ){
+        /// readInstr will read single instruction from file
+        initInstr(singleInstr);
     }
 }
 
@@ -142,26 +92,33 @@ uint64_t ETRACER::genSeqN() {
 }
 
 
-void ETRACER::initAllPerInstrType(INSTR_TYPE _instrType, vector<string>& _rawLines,uint64_t& _instrMdId){
+void ETRACER::initAllPerInstrType(RT_OBJ& instr_rt){
     ///////// for fetch instruction instrMdId will be used to answer instruction while other is used to initialize instruction
-    if (_instrType == LOAD) {
-        for (const auto& line: _rawLines){
-            newLdInstr.push_back(new LOAD_INSTR(this, line, _instrMdId));
-        }
-        getstatPoolCount("count_loadInstr" ) += _rawLines.size();
-    }else if (_instrType == STORE){
-        for (const auto& line: _rawLines) {
-            newStInstr.push_back(new STORE_INSTR(this, line, _instrMdId));
-        }
-        getstatPoolCount("count_storeInstr") += _rawLines.size();
-    }else if (_instrType == COMP){
-            newCInstr = new COMP_INSTR(this, _instrMdId);
-            getstatPoolCount("count_compInstr" ) += 1;
-    }else if (_instrType == FETCH){
-        assert(!_rawLines.empty());
-        newFtInstr = new FETCH_INSTR(this, _rawLines[0]);
-        _instrMdId  = newFtInstr->getInstrMdId();
+    /// things to make sure
+
+    /////// 1.instruction is add to global class member which will be added to obs window
+    /////// 2.instruction is initiate in order ====> |fetch|load|comp|store|
+    /////// 3. instruction model id is set in fetch instr init
+
+
+    /// init fetch instruction first
+             newFtInstr  = new FETCH_INSTR(this, instr_rt);
+    uint64_t _instrMdId  = newFtInstr->getInstrMdId();
+    /// init load instruction
+    int loadOpAmt = instrModelMng->getInstrModel(_instrMdId)->getLoadOpAmt();
+    for (int loadIdx = 0; loadIdx  < loadOpAmt; loadIdx++){
+        newLdInstr.push_back(new LOAD_INSTR(this, loadIdx, _instrMdId));
     }
+    getstatPoolCount("count_loadInstr" ) += loadOpAmt;
+    /// init comp instruction
+    newCInstr = new COMP_INSTR(this, _instrMdId);
+    getstatPoolCount("count_compInstr" ) += 1;
+    /// init store instruction
+    int storeOpAmt = instrModelMng->getInstrModel(_instrMdId)->getStoreOpAmt();
+    for (int storeIdx = 0; storeIdx  < storeOpAmt; storeIdx++){
+        newStInstr.push_back(new STORE_INSTR(this, storeIdx, _instrMdId));
+    }
+    getstatPoolCount("count_storeInstr") += storeOpAmt;
 }
 
 void ETRACER::tryPushWindowAll() {

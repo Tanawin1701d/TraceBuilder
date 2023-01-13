@@ -19,6 +19,7 @@
 #include "../../ioHelp/protoHelp/inst.pb.h"
 #include "../../ioHelp/protoHelp/packet.pb.h"
 #include "../../ioHelp/protoHelp/protoio.hh"
+#include "../../ioHelp/pinIoSh/pinIo.h"
 
 
 class ETRACER; // pintool reader
@@ -74,7 +75,8 @@ protected:
 
 public:
     MEM_INSTR(ETRACER *_reader,
-              string rawData,
+              const RT_OBJ& tracedData,
+              const int lsIdx, /// index to point to operand in mem instr
               bool robModeDepIsLoad,
               uint64_t _instrMdId);
     //robModeDepIsLoad to define that current isntruction is load or store
@@ -86,7 +88,10 @@ public:
 class LOAD_INSTR : public MEM_INSTR{
 public:
     bool isEffective(ADDR _newAddr, int _newSize, int _newIsLoS) override;
-    LOAD_INSTR(ETRACER* _reader, string rawData, uint64_t _instrMdId);
+    LOAD_INSTR(      ETRACER* _reader,
+               const RT_OBJ&  _tracedData,
+               int      _lsIdx, /// index to point to operand in mem instr
+                     uint64_t _instrMdId);
 
     #ifndef debug
     void genProtoMsg(ProtoOutputStream* strm) override;
@@ -100,7 +105,10 @@ protected:
 
 public:
     bool isEffective(ADDR _newAddr, int _newSize, int _newIsLoS) override;
-    STORE_INSTR(ETRACER* _reader, string rawData, uint64_t _instrMdId);
+    STORE_INSTR(      ETRACER* _reader,
+                      const RT_OBJ&  _tracedData,
+                      int      _lsIdx, /// index to point to operand in mem instr
+                      uint64_t _instrMdId);
     #ifndef debug
         void genProtoMsg(ProtoOutputStream* strm) override;
     #else
@@ -135,7 +143,7 @@ protected:
     TICK        executeTick;
 
 public:
-    explicit FETCH_INSTR(ETRACER* _reader, const string& _raw);
+    explicit FETCH_INSTR(ETRACER* _reader, const RT_OBJ& traced);
     #ifndef debug
         void genProtoMsg(ProtoOutputStream* strm) override;
     #else

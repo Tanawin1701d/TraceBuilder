@@ -58,6 +58,9 @@ private:
   unordered_set<REGNUM> srcReg [amt_operandType];
   unordered_set<REGNUM> desReg [amt_operandType];   // des reg for load and store operand is not used.
   int                   effSize[amt_operandType]{}; // effective memory address size // for comp and fetch is set to 0
+  int                   amt_loadOpr;
+  int                   amt_storeOpr;
+
   void handleComInstr(vector<string>& raw);
   void handleLSInstr (vector<string>& raw);
   void handleFInstr  (vector<string>& raw);
@@ -70,9 +73,11 @@ public:
     pair<unordered_set<REGNUM>, int> getSrcRegLS(bool isLoad, int memop); //return src reg and size of effective address
 
     // instuction get and set
-    ADDR             getInstrAddr() const;
-    int              getInstrSize() const;
-    uint64_t         getInstrId  () const;
+    ADDR             getInstrAddr()  const;
+    int              getInstrSize()  const;
+    uint64_t         getInstrId  ()  const;
+    int              getLoadOpAmt()  const;
+    int              getStoreOpAmt() const;
     [[maybe_unused]] vector<string> getInstrName() const;
 
 

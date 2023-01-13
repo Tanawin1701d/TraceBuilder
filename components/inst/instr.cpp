@@ -29,24 +29,20 @@ INSTR::getInstrMdId() const{
 ////MEM
 
 MEM_INSTR::MEM_INSTR(ETRACER *_reader,
-                     string rawData,
+                     const RT_OBJ& tracedData,
+                     const int lsIdx, /// index to point to operand in mem instr
                      bool robModeDepIsLoad,
                      uint64_t _instrMdId
 ) : INSTR(_reader, _instrMdId) {
     ///////// split raw data to vector
-    vector<string> splitedInstr;
-    splitNstrip(std::move(rawData), splitedInstr);
-    //////// assert check that receive instr is corect
-    assert((  robModeDepIsLoad  && (splitedInstr [LS_Idx] == "L")) ||
-           ((!robModeDepIsLoad) && (splitedInstr [LS_Idx] == "S")) );
-    assert(!splitedInstr[addr_Idx ].empty());
-    assert(!splitedInstr[memop_Idx].empty());
     ///////////////////////////////////////////////////////
     /// initialize variable and get instruction model
-    memop = decStr2int(splitedInstr[memop_Idx]);
+    memop = robModeDepIsLoad ? tracedData.loadMemOpNum [lsIdx]
+                             : tracedData.storeMemOpNum[lsIdx];
     INSTR_MODEL* instrModel = _reader->instrModelMng->getInstrModel(_instrMdId);
     auto srcRegAndEffSize = instrModel->getSrcRegLS(robModeDepIsLoad, memop);
-    virAddr = hexStr2uint(splitedInstr[addr_Idx]);
+    virAddr = robModeDepIsLoad ? tracedData.loadAddr[lsIdx]
+                               : tracedData.storeAddr[lsIdx];
     addrSize = srcRegAndEffSize.second;
     vector<ADAS> tempPhyAddrResults;
     _reader->memMng->v2pConvert(virAddr, addrSize, tempPhyAddrResults);
@@ -55,8 +51,8 @@ MEM_INSTR::MEM_INSTR(ETRACER *_reader,
     phyAddr = tempPhyAddrResults[0].addr;
     /////////////////////////////////////////////////////////
     /// deal with rob dependency
-    _reader->instrWindow.assignMemDepHelp(robDependency, phyAddr, addrSize, false);
-    /// dela with reg dependency
+    _reader->instrWindow.assignMemDepHelp(robDependency, phyAddr, addrSize, false); // for now load after load gem5 trace cpu will deal with it automatically
+    /// deta with reg dependency
     for (auto srcRegNum: srcRegAndEffSize.first)
         _reader->instrWindow.assignRegDepHelp(regDependency, srcRegNum);
     /////////////////////////////////////////////////////////
@@ -84,9 +80,13 @@ LOAD_INSTR::isEffective(ADDR _newAddr, int _newSize, int _newIsLoS) {
 
 }
 
-LOAD_INSTR::LOAD_INSTR(ETRACER *_reader, string rawData, uint64_t _instrMdId)
+LOAD_INSTR::LOAD_INSTR(      ETRACER* _reader,
+                       const RT_OBJ&  _tracedData,
+                             int      _lsIdx, /// index to point to operand in mem instr
+                             uint64_t _instrMdId)
     :MEM_INSTR(_reader,
-               std::move(rawData),
+               _tracedData,
+               _lsIdx,
                true,
                _instrMdId){
 
@@ -101,9 +101,13 @@ STORE_INSTR::isEffective(ADDR _newAddr, int _newSize, int _newIsLoS) {
     return isOverLapAddr(_newAddr, _newSize);
 }
 
-STORE_INSTR::STORE_INSTR(ETRACER *_reader, string rawData, uint64_t _instrMdId):
+STORE_INSTR::STORE_INSTR(      ETRACER* _reader,
+                               const RT_OBJ&  _tracedData,
+                               int      _lsIdx, /// index to point to operand in mem instr
+                               uint64_t _instrMdId):
 MEM_INSTR(_reader,
-          std::move(rawData),
+          _tracedData,
+          _lsIdx,
           false,
           _instrMdId){
     if (_reader->newCInstr) {
@@ -145,18 +149,10 @@ INSTR(_reader,
 
 /////FETCH
 
-FETCH_INSTR::FETCH_INSTR(ETRACER* _reader, const string& _raw):
+FETCH_INSTR::FETCH_INSTR(ETRACER* _reader, const RT_OBJ& traced):
 INSTR(_reader, -1, false)
 {
-    assert(!_raw.empty());
-    vector<string> splitedInstr;
-    splitNstrip(_raw, splitedInstr);
-
-    assert(splitedInstr.size() == 2);
-    assert( splitedInstr [F_Idx  ] == "F" );
-    assert(!splitedInstr [F_MdIdx].empty());
-
-    instrMdId = decStr2uint(splitedInstr[F_MdIdx]);
+    instrMdId = traced.fetchId;
     INSTR_MODEL* instrModel = _reader->instrModelMng->getInstrModel(instrMdId);
 
     virAddr = instrModel->getInstrAddr();

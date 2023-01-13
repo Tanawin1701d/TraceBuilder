@@ -19,6 +19,7 @@
 #include "../components/inst/instr.h"
 #include "../components/inst/instr_model.h"
 #include "../components/memMap/MemMng.h"
+#include "../ioHelp/pinIoSh/pinIo.h"
 //#include "../ioHelp/protoHelp/protoio.hh"
 #include "statPool.h"
 using namespace std;
@@ -35,7 +36,7 @@ class ETRACER{
 
 
     //// io file
-    ifstream* traceFile;
+    PIN_IO* traceFile;
 #ifndef debug
     ProtoOutputStream* protoFile_data;
     ProtoOutputStream* protoFile_instr;
@@ -105,9 +106,7 @@ public:
     /// for each instruction to track themself data
     [[maybe_unused]] static int regMapper(string regName);
     uint64_t genSeqN(); ///gen new sequence number for newly generated instruction
-    void initAllPerInstrType(INSTR_TYPE      _instrType,
-                             vector<string>& _rawLines,
-                             uint64_t&       _instrMdId); //// init instruction from raw string file
+    void initInstr(RT_OBJ& instr_rt); //// init instruction from raw string file
 
     //// push all new micro instruction to window
     void tryPushWindowAll();

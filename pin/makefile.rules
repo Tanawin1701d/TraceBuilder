@@ -83,30 +83,30 @@ SANITY_SUBSET := $(TEST_TOOL_ROOTS) $(TEST_ROOTS)
 # Build the intermediate object file.
 
 
-INCS += -I/usr/local/include/google/protobuf
-LPATHS += -L/usr/local/lib -Wl, -rpath,/usr/local/lib
-LIBS += -lprotobuf -pthread
-TOOL_LPATHS += -L/usr/local/lib -Wl,-rpath,/usr/local/lib
-TOOL_LIBS += -lrt -lprotobuf
+# INCS += -I/usr/local/include/google/protobuf
+# LPATHS += -L/usr/local/lib -Wl, -rpath,/usr/local/lib
+# LIBS += -lprotobuf -pthread
+# TOOL_LPATHS += -L/usr/local/lib -Wl,-rpath,/usr/local/lib
+# TOOL_LIBS += -lrt -lprotobuf
 
 
 
 # TOOL_CXXFLAGS += -DUSING_PIN -I$(HOME)/opt/libtrace/include
 
-$(OBJDIR)Source1$(OBJ_SUFFIX): trace.pb.cc
-	$(CXX) $(TOOL_CXXFLAGS) $(COMP_OBJ)$@ $<
+# $(OBJDIR)Source1$(OBJ_SUFFIX): trace.pb.cc
+# 	$(CXX) $(TOOL_CXXFLAGS) $(COMP_OBJ)$@ $<
 
-$(OBJDIR)Source2$(OBJ_SUFFIX): protoio.cc
-	$(CXX) $(TOOL_CXXFLAGS) $(COMP_OBJ)$@ $<
+# $(OBJDIR)Source2$(OBJ_SUFFIX): protoio.cc
+# 	$(CXX) $(TOOL_CXXFLAGS) $(COMP_OBJ)$@ $<
 
-$(OBJDIR)Source3$(OBJ_SUFFIX): tracerProto.cpp
-	$(CXX) $(TOOL_CXXFLAGS)   $(COMP_OBJ)$@ $<
+# $(OBJDIR)Source3$(OBJ_SUFFIX): tracerProto.cpp
+# 	$(CXX) $(TOOL_CXXFLAGS)   $(COMP_OBJ)$@ $<
 
-# Build the tool as a dll (shared object).
-$(OBJDIR)tracerProto2$(PINTOOL_SUFFIX): $(OBJDIR)Source1$(OBJ_SUFFIX)  $(OBJDIR)Source2$(OBJ_SUFFIX)  $(OBJDIR)Source3$(OBJ_SUFFIX)
-	echo "$(TOOL_LPATHS) ddddddsfdfdfdfdfdfdfdfdfdfdfdfdf"
-	echo $(CXX -v) 
-	$(LINKER) $(TOOL_LDFLAGS)  $(LINK_EXE)$@ $(^:%.h=) $(TOOL_LPATHS) $(TOOL_LIBS)
+# # Build the tool as a dll (shared object).
+# $(OBJDIR)tracerProto2$(PINTOOL_SUFFIX): $(OBJDIR)Source1$(OBJ_SUFFIX)  $(OBJDIR)Source2$(OBJ_SUFFIX)  $(OBJDIR)Source3$(OBJ_SUFFIX)
+# 	echo "$(TOOL_LPATHS) ddddddsfdfdfdfdfdfdfdfdfdfdfdfdf"
+# 	echo $(CXX -v) 
+# 	$(LINKER) $(TOOL_LDFLAGS)  $(LINK_EXE)$@ $(^:%.h=) $(TOOL_LPATHS) $(TOOL_LIBS)
 
 # This section contains the build rules for all binaries that have special build rules.
 # See makefile.default.rules for the default build rules.
