@@ -7,19 +7,23 @@
 
 #include<iostream>
 #include <fstream>
+#include <sstream>
 
 using namespace std;
 
+const uint32_t maxMemOpPerLS = 2;
+
 #pragma pack(push, 1)
 struct RT_OBJ{
-    uint64_t loadAddr[3];
-    uint64_t storeAddr[3];
+    uint64_t loadAddr[maxMemOpPerLS];
+    uint64_t storeAddr[maxMemOpPerLS];
     uint32_t fetchId;
-    uint8_t  loadMemOpNum[3];
-    uint8_t  storeMemOpNum[3];
+    uint8_t  loadMemOpNum[maxMemOpPerLS];
+    uint8_t  storeMemOpNum[maxMemOpPerLS];
 };
 #pragma pack(pop)
 
+std::string to_string(const RT_OBJ& obj);
 
 class PIN_IO{
 

@@ -21,6 +21,12 @@ MAX_WINDOWSIZE(_windowSize),
 instrModelMng(_instr_model_mng)
 {}
 
+ETRACER::INSTR_WINDOW::~INSTR_WINDOW() {
+    for (auto instr_ptr: currentWindow){
+        delete instr_ptr;
+    }
+}
+
 void ETRACER::INSTR_WINDOW::tryPushWindow(COMP_INSTR* newOp) {
     if (!newOp)
         return ;
@@ -74,6 +80,7 @@ void ETRACER::INSTR_WINDOW::tryPopWindow() {
     if (currentWindow.size() == MAX_WINDOWSIZE){
         // pop size is crucial
         auto instrPtr = currentWindow.back();
+        //auto preDel             =
         //////  eject reg dep in case comop operand
         if (instrPtr->instr_type == COMP) {
             INSTR_MODEL* instrModel = instrModelMng->getInstrModel(instrPtr->getInstrMdId());

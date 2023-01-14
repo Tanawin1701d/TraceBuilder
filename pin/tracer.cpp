@@ -11,32 +11,34 @@
 #include <fstream>
 #include <sstream>
 
+
 //// struct of runtime trace file
 
-//#pragma pack(push, 1)
+const UINT32 maxRtTracing =  40000000; 
+const UINT32 maxMemOpPerLS = 2;
+
+#pragma pack(push, 1)
 struct RT_OBJ{
-    uint64_t loadAddr[3];
-    uint64_t storeAddr[3];
+    uint64_t loadAddr     [maxMemOpPerLS];
+    uint64_t storeAddr    [maxMemOpPerLS];
     uint32_t fetchId;
-    uint8_t  loadMemOpNum[3];
-    uint8_t  storeMemOpNum[3];
+    uint8_t  loadMemOpNum [maxMemOpPerLS];
+    uint8_t  storeMemOpNum[maxMemOpPerLS];
 };
-//#pragma pack(pop)
+#pragma pack(pop)
 
 ///// these pragma is derived from 
 //https://stackoverflow.com/questions/32109646/how-to-write-a-struct-to-file-in-c-and-read-the-file
-
-const UINT32 maxRtTracing =  400000000; 
-const UINT32 maxMemOpPerLS = 3;
 
 //FILE* trace;
 static std::ofstream* outputFile_instr;
 static std::ofstream* outputFile_trace;
 static std::ofstream* outputFile_traceDb;
 
+//prewrite for optimize file buffering
 static std::string   preWrite;
 static std::string   preWriteRuntimeDebg;
-struct RT_OBJ* preWriteRt; /// 400 M times 52 bytes
+struct RT_OBJ*       preWriteRt; /// 400 M times 52 bytes
 UINT32 preWriteRt_idx = 0;
 UINT32 INSTRID        = 0;
 
@@ -52,21 +54,32 @@ VOID flushDb(std::string dayta){
 }
 
 
-std::string getDebugOutcome(RT_OBJ example){
-    std::string prePrint;
-    for (int i = 0; i < 3; i++){
-        prePrint  += "L " + std::to_string(example.loadAddr[i])  + "  memop addr "
-                  + std::to_string(example.loadMemOpNum[i]) 
-                  + "\n";
+std::string getDebugOutcome(const RT_OBJ& obj) {
+    std::ostringstream ss;
+    ss << "loadAddr: [";
+    for (int i = 0; i < 2; i++) {
+        ss << "0x" << std::hex << obj.loadAddr[i] << ", ";
     }
-    for (int i = 0; i < 3; i++){
-        prePrint  += "S " + std::to_string(example.storeAddr[i]) + " memop addr " 
-                  + std::to_string(example.loadMemOpNum[i])        
-                  + "\n";       
+    ss.seekp(-2, ss.cur);
+    ss << "], storeAddr: [";
+    for (int i = 0; i < 2; i++) {
+        ss << "0x" << std::hex << obj.storeAddr[i] << ", ";
     }
-    prePrint  += "F " + std::to_string(example.fetchId) + "\n";
-    return prePrint;
+    ss.seekp(-2, ss.cur);
+    ss << "], fetchId: " << std::dec << obj.fetchId << ", loadMemOpNum: [";
+    for (int i = 0; i < 2; i++) {
+        ss << (int)obj.loadMemOpNum[i] << ", ";
+    }
+    ss.seekp(-2, ss.cur);
+    ss << "], storeMemOpNum: [";
+    for (int i = 0; i < 2; i++) {
+        ss << (int)obj.storeMemOpNum[i] << ", ";
+    }
+    ss.seekp(-2, ss.cur);
+    ss << "]";
+    return ss.str();
 }
+
 
 VOID flushRuntimeData(){
     if (preWriteRt_idx){
@@ -87,19 +100,14 @@ VOID S_TRACE(ADDRINT addr, UINT32 lsFieldId, UINT32 memop){
     preWriteRt[preWriteRt_idx].storeMemOpNum[lsFieldId] = (uint8_t)memop; //update memory operand number
 }
 
-// inline void bufferInitialize(UINT32 pwIdx){
-//         preWriteRt[pwIdx].loadIdx    = 0;
-//         preWriteRt[pwIdx].storeIdx   = 0;
-// }
-
 VOID ButtomEachIntr(
         UINT32 fetchId
                 ){
     preWriteRt[preWriteRt_idx].fetchId = fetchId;
     //// we print debug before debug
-    preWriteRuntimeDebg += getDebugOutcome(preWriteRt[preWriteRt_idx]);
-    flushDb(preWriteRuntimeDebg);
-    preWriteRuntimeDebg.clear();
+    //preWriteRuntimeDebg += getDebugOutcome(preWriteRt[preWriteRt_idx]) + '\n';
+    //flushDb(preWriteRuntimeDebg);
+    //preWriteRuntimeDebg.clear();
     ////////////////////////////////
     preWriteRt_idx++;
     if ( preWriteRt_idx >= maxRtTracing){

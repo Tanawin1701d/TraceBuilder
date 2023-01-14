@@ -20,8 +20,10 @@
 #include "../components/inst/instr_model.h"
 #include "../components/memMap/MemMng.h"
 #include "../ioHelp/pinIoSh/pinIo.h"
+#include <google/protobuf/message.h>
 //#include "../ioHelp/protoHelp/protoio.hh"
 #include "statPool.h"
+
 using namespace std;
 
 
@@ -37,17 +39,8 @@ class ETRACER{
 
     //// io file
     PIN_IO* traceFile;
-#ifndef debug
     ProtoOutputStream* protoFile_data;
     ProtoOutputStream* protoFile_instr;
-#else
-    ofstream* outputFile_data;
-    ofstream* outputFile_instr;
-    string preWrite_data;
-    string preWrite_instr;
-#endif
-    static const unsigned long MAX_PRE_RW_BUFF = 2000000000;
-    //char   preRead_trace[MAX_PRE_RW_BUFF];
 
     /////////INSTR_MODEL
     INSTR_MODEL_MANAGER* instrModelMng;
@@ -57,7 +50,7 @@ class ETRACER{
     class INSTR_WINDOW {
     private:
                const int MAX_WINDOWSIZE = 120;
-        static const int MAX_REGNUM = 80;
+        static const int MAX_REGNUM     = 80;
 
         INSTR_MODEL_MANAGER* instrModelMng;
         int      regDep   [MAX_REGNUM] {};
@@ -70,8 +63,9 @@ class ETRACER{
 
     public:
         explicit INSTR_WINDOW(INSTR_MODEL_MANAGER* _instr_model, int _windowSize);
+        ~INSTR_WINDOW();
         void tryPushWindow(COMP_INSTR* newOp);
-        void tryPushWindow(MEM_INSTR* newOp);
+        void tryPushWindow(MEM_INSTR * newOp);
         void tryPopWindow();
         void assignRegDepHelp(unordered_set<uint64_t>& result, REGNUM regNum);
         void assignMemDepHelp(unordered_set<uint64_t>& result,
@@ -86,7 +80,7 @@ class ETRACER{
 
 public:
 
-    //// current instruction in analysis
+    /////////INPROCESSING INSTRUCTION
     vector<LOAD_INSTR*>  newLdInstr;
     COMP_INSTR*          newCInstr;
     vector<STORE_INSTR*> newStInstr;
@@ -104,21 +98,14 @@ public:
     /// for main control instruction
     void step();
     /// for each instruction to track themself data
-    [[maybe_unused]] static int regMapper(string regName);
     uint64_t genSeqN(); ///gen new sequence number for newly generated instruction
     void initInstr(RT_OBJ& instr_rt); //// init instruction from raw string file
-
     //// push all new micro instruction to window
     void tryPushWindowAll();
-
     void tryWriteAll();
-#ifndef debug
+    void clear_inproc_instr();
+
     void tryWriteProto(INSTR* newOp, ProtoOutputStream* printFile);
-#else
-    //// write data
-    void tryWriteASCII(INSTR* newOp, ofstream* printFile, string& preWriteStr) const;
-    static void flushWrite(ofstream* printFile, string& preWriteStr);
-#endif
     //// for get instr fetch time and step for next instruction
     TICK stepInstrExeTick(TICK amount);
 };
