@@ -25,8 +25,19 @@ python3 /media/tanawin/tanawin1701d/Project/sms/gem5/util/encode_packet_trace.py
 
 
 
+sudo pin-3.25-98650-g8f6168173-gcc-linux/pin -t obj-intel64/tracer.so         \
+-i /media/tanawin/tanawin1701d/Project/sms/pintool/msmsPin/rawFile/fluidInstr \
+-d /media/tanawin/tanawin1701d/Project/sms/pintool/msmsPin/rawFile/fluidData  \
+-db /media/tanawin/tanawin1701d/Project/sms/pintool/msmsPin/rawFile/fluidDatadbg \
+-- /media/tanawin/tanawin1701d/Project/sms/compiledEle/meta_workloads/test-progs/memstress/fluidanimateSerial 1 5 /media/tanawin/tanawin1701d/Project/sms/compiledEle/meta_workloads/test-progs/memstress/in_100K.fluid /media/tanawin/tanawin1701d/Project/sms/pintool/msmsPin/rawFile/fluidOut
+
+
+### test 
+
+
 sudo pin-3.25-98650-g8f6168173-gcc-linux/pin -t obj-intel64/tracer.so \
--i /media/tanawin/tanawin1701d/Project/sms/pintool/msmsPin/rawFile/testserst \
--d /media/tanawin/tanawin1701d/Project/sms/pintool/msmsPin/rawFile/testserRT \
+-i /media/tanawin/tanawin1701d/Project/sms/pintool/msmsPin/rawFile/simpleAddInstr \
+-d /media/tanawin/tanawin1701d/Project/sms/pintool/msmsPin/rawFile/simpleAddRT \
 -db /media/tanawin/tanawin1701d/Project/sms/pintool/msmsPin/rawFile/testserdbg \
--- /bin/ls
+-- /media/tanawin/tanawin1701d/Project/sms/pintool/msmsPin/test/simpleAdd
+

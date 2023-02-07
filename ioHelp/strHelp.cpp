@@ -49,3 +49,12 @@ uintptr_t decStr2uint(string raw) {
 
     return cres;
 }
+
+string concatVec ( vector<string>& raws ){
+    string preRet;
+    for (auto& e : raws){
+        preRet += e;
+        preRet += " ";
+    }
+    return preRet;
+}

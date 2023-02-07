@@ -16,7 +16,7 @@
 #include <cassert>
 #include<boost/algorithm/string.hpp>
 #include "../components/regMap/regMapper.h"
-#include "../components/inst/instr.h"
+#include "../components/inst/rtInstr.h"
 #include "../components/inst/instr_model.h"
 #include "../components/memMap/MemMng.h"
 #include "../ioHelp/pinIoSh/pinIo.h"

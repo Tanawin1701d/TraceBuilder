@@ -6,7 +6,7 @@
 #define TRACEBUILDER_INSTR_MODEL_H
 
 #include "../regMap/regMapper.h"
-#include "instr.h"
+#include "rtInstr.h"
 
 
 

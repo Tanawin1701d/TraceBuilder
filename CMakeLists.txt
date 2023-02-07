@@ -19,8 +19,8 @@ add_executable(traceBuilder
         tracers/tracer.h
         components/regMap/regMapper.h
         components/regMap/regMapper.cpp
-        components/inst/instr.cpp
-        components/inst/instr.h
+        components/inst/rtInstr.cpp
+        components/inst/rtInstr.h
         tracers/statPool.h
         tracers/statPool.cpp
         components/inst/instr_model.cpp
@@ -30,17 +30,18 @@ add_executable(traceBuilder
         tracers/instrWd.cpp
         components/memMap/MemMng.cpp
         components/memMap/MemMng.h
+####### protohelp
         ioHelp/protoHelp/protoio.hh
         ioHelp/protoHelp/protobuf.cc
         ioHelp/protoHelp/protoio.cc
-####### protobuf file
-        ioHelp/protoHelp/inst_dep_record.pb.cc
         ioHelp/protoHelp/inst_dep_record.pb.h
-        ioHelp/protoHelp/packet.pb.cc
+        ioHelp/protoHelp/inst_dep_record.pb.cc
         ioHelp/protoHelp/packet.pb.h
+        ioHelp/protoHelp/packet.pb.cc
+####### pin input file
         ioHelp/pinIoSh/pinIo.h
         ioHelp/pinIoSh/pinIo.cpp
-        )
+        components/inst/operand.cpp components/inst/operand.h)
 
 
 

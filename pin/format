@@ -1,0 +1,15 @@
+C SD r1
+C S r2
+C D r9
+L r1 r2 size memop
+S r1 r2 size memop
+LS r1 r2 size memop
+F virtualaddress size id name
+
+
+
+
+$ --pin tracer
+L physicaladdr1 memop
+S physicaladdr1 memop
+F id

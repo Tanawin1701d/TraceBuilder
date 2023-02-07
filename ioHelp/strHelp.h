@@ -17,4 +17,6 @@ uintptr_t hexStr2uint  (string raw);
 int       decStr2int   (string raw);
 uintptr_t decStr2uint  (string raw);
 
+string    concatVec    (vector<string>& raws);
+
 #endif //TRACEBUILDER_STRHELP_H

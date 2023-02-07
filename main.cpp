@@ -4,17 +4,19 @@
 #include "components/inst/instr_model.h"
 int main() {
 
-    auto instr_md_mng = INSTR_MODEL_MANAGER("/media/tanawin/tanawin1701d/Project/sms/pintool/msmsPin/rawFile/FluidIN");
+    auto instr_md_mng = INSTR_MODEL_MANAGER("/media/tanawin/tanawin1701d/Project/sms/pintool/msmsPin/rawFile/fluidInstr");
     ADDR memSize = ((ADDR)1) << (4 + 30); ///// 16 gigabyte
     auto mem_mng      = MEM_MNG(12, 6, memSize, 0);
             ///// 12 bit means 4 kb page size ///// 6 bit mean 64 byte cache line size
-    auto tracer = ETRACER("/media/tanawin/tanawin1701d/Project/sms/pintool/msmsPin/rawFile/fluidRT",
-                          "/media/tanawin/tanawin1701d/Project/sms/pintool/msmsPin/generatedFile/FluidData",
-                          "/media/tanawin/tanawin1701d/Project/sms/pintool/msmsPin/generatedFile/FluidInstr",
-                          120,
+    auto tracer = ETRACER("/media/tanawin/tanawin1701d/Project/sms/pintool/msmsPin/rawFile/fluidData",
+                          "/media/tanawin/tanawin1701d/Project/sms/pintool/msmsPin/generatedFile/FluidDataSerial",
+                          "/media/tanawin/tanawin1701d/Project/sms/pintool/msmsPin/generatedFile/FluidInstrSerial",
+                          60,
                           &instr_md_mng,
                           &mem_mng
             );
+
+
     tracer.step();
 
     printStat();

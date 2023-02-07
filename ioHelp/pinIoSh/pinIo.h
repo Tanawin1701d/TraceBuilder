@@ -8,6 +8,7 @@
 #include<iostream>
 #include <fstream>
 #include <sstream>
+#include <vector>
 
 using namespace std;
 
@@ -23,7 +24,7 @@ struct RT_OBJ{
 };
 #pragma pack(pop)
 
-std::string to_string(const RT_OBJ& obj);
+std::string to_string(const RT_OBJ& obj, vector<string>& fetchStr);
 
 class PIN_IO{
 

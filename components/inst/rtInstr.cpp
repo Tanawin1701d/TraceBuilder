@@ -1,7 +1,7 @@
 //
 // Created by tanawin on 28/12/2565.
 //
-#include "instr.h"
+#include "rtInstr.h"
 
 #include <utility>
 #include"../../tracers/tracer.h"
@@ -190,6 +190,7 @@ void LOAD_INSTR::genProtoMsg(ProtoOutputStream* strm) {
     dep_pkt.set_p_addr(phyAddr);
     dep_pkt.set_size(addrSize);
     dep_pkt.set_v_addr(virAddr);
+    strm->write(dep_pkt);
 
     getstatPoolCount("count_robDepFromLoadInstr")+=robDependency.size();
     getstatPoolCount("count_regDepFromLoadInstr")+=regDependency.size();

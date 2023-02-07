@@ -62,7 +62,9 @@ void ETRACER::step() {
         #ifdef debug
             if (icount < 50) {
                 cout << "-----------" << icount << "------------------" << endl;
-                cout << to_string(singleInstr) << endl;
+                vector<string> instrString = instrModelMng->getInstrModel(singleInstr.fetchId)->getInstrName();
+                cout << to_string(singleInstr, instrString) << endl;
+                cout << "---------------------------------------------" << endl;
             }
         #else
         if ((icount % 10000000) == 0)
