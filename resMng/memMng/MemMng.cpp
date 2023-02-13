@@ -3,16 +3,16 @@
 //
 
 #include "MemMng.h"
-#include "../../tracers/statPool.h"
+#include "../../stat/statPool.h"
 
 
 MEM_MNG::MEM_MNG(ADDR _pageBit,
                  ADDR _alignBit,
                  ADDR _ramSize, /// in byte
                  ADDR _phyStartAddr):
-phyStartAddr(_phyStartAddr),
+phyStartAddr    (_phyStartAddr),
 nextphyStartAddr(_phyStartAddr),
-phySize(_ramSize){
+phySize         (_ramSize){
 
     pageAlignBit  = _pageBit;
     pageAlignSize = ((ADDR)1) << pageAlignBit;
@@ -53,7 +53,6 @@ void MEM_MNG::allocate(ADDR _a_vaddr) {
 ADDR MEM_MNG::pageAlign(ADDR _vaddr) {
     return _vaddr & (~(  (((ADDR) 1) << pageAlignBit) - 1));
 }
-
 
 void MEM_MNG::v2pConvert(ADDR _vaddr, int _size, vector<ADAS>& results) {
 

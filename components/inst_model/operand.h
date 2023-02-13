@@ -33,13 +33,17 @@ private:
     REGNUM indexRegId;
     int    scaleFactor;
     IMM    displacement;
+    int    size;
+    int    memopNum;
     void genEffAddr();
 
 public:
     MEM_OPERAND(REGNUM _baseRegId,
                 REGNUM _indexRegId,
                 int    _scaleFactor,
-                IMM    _displacement);
+                IMM    _displacement,
+                int    _size,
+                int    _memopNum);
 
     REGNUM getBaseRegId() const;
 
@@ -48,6 +52,8 @@ public:
     int getScaleFactor() const;
 
     IMM getDisplacement() const;
+
+    int getSize() const;
 };
 /// load operand
 class LD_OPERAND : public MEM_OPERAND{
@@ -56,7 +62,9 @@ public:
     LD_OPERAND(REGNUM _baseRegId,
                REGNUM _indexRegId,
                int    _scaleFactor,
-               IMM    _displacement);
+               IMM    _displacement,
+               int    _size,
+               int    _memopNum);
 };
 /// store operand
 class ST_OPERAND : public MEM_OPERAND{
@@ -65,7 +73,9 @@ public:
     ST_OPERAND(REGNUM _baseRegId,
                REGNUM _indexRegId,
                int    _scaleFactor,
-               IMM    _displacement);
+               IMM    _displacement,
+               int    _size,
+               int    _memopNum);
 };
 /// immediate operand
 class IMM_OPERAND : public OPERAND{

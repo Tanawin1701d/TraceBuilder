@@ -10,7 +10,7 @@
 #include <vector>
 #include <cassert>
 
-using namespace std;
+
 typedef unsigned long long ADDR;
 
 struct ADAS{
@@ -20,19 +20,23 @@ struct ADAS{
 
 
 ///// TODO make it for multicore mapping
+
+
 class MEM_MNG{
 private:
     ADDR phyStartAddr;
     ADDR nextphyStartAddr;
 
     ADDR phySize;
+    //// memory page alignment
     ADDR pageAlignSize;
     ADDR pageAlignBit; ///// addr & ~(pageBit-1) = start page addr
-
+    //// cache block/line alignment
     ADDR cacheAlignmentSize; ///// in byte
     ADDR cacheAlignBit; ///// addr & ~(alignBit-1) = start address
+    //// map from virtual address to physical address
     std::unordered_map<ADDR, ADDR> pageMap; ///// map start page of virtual address to start page of phy sical
-    ///
+    //// private method
     ADDR v2pConvertSingle(ADDR _vaddr);
     bool isAllocated(ADDR _a_vaddr); /// page align virtual address as a input
     void allocate(ADDR _a_vaddr); ///// -----^
@@ -40,8 +44,6 @@ private:
 public:
     explicit MEM_MNG(ADDR _pageBit, ADDR _alignBit, ADDR _ramSize, ADDR _phyStartAddr);
     void     v2pConvert(ADDR _vaddr, int _size, vector<ADAS>& results);
-
-
 
 };
 

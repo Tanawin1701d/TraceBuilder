@@ -1,8 +1,0 @@
-//
-// Created by tanawin on 7/2/2566.
-//
-
-#ifndef TRACEBUILDER_STATICIDX_H
-#define TRACEBUILDER_STATICIDX_H
-
-#endif //TRACEBUILDER_STATICIDX_H

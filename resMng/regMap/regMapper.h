@@ -9,7 +9,7 @@
 #include <map>
 #include <string>
 #include<boost/algorithm/string.hpp>
-#include"../../tracers/statPool.h"
+#include"../../stat/statPool.h"
 
 using namespace std;
 
@@ -71,6 +71,7 @@ static    map<std::string, REGNUM> regmap = {
             { "rip"   , 49}
     };
 static    int lastRegName = 49;
+static    int unusedReg   = -1;
 
 REGNUM regMapAutoAdd(const string& regName);
 

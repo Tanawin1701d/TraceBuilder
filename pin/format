@@ -5,8 +5,16 @@ L r1 r2 size memop
 S r1 r2 size memop
 LS r1 r2 size memop
 F virtualaddress size id name
+------ old
 
 
+R S regname
+L S baseReg indexReg size memOperandNum
+I S immVal
+R S regname
+S D baseReg indexReg size memOperandNum
+F S id virtualaddress size  name
+------ new
 
 
 $ --pin tracer

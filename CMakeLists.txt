@@ -17,19 +17,19 @@ add_executable(traceBuilder
         main.cpp
         tracers/tracer.cpp
         tracers/tracer.h
-        components/regMap/regMapper.h
-        components/regMap/regMapper.cpp
-        components/inst/rtInstr.cpp
-        components/inst/rtInstr.h
-        tracers/statPool.h
-        tracers/statPool.cpp
-        components/inst/instr_model.cpp
-        components/inst/instr_model.h
+        resMng/regMap/regMapper.h
+        resMng/regMap/regMapper.cpp
+        components/inst_model/rt_instr.cpp
+        components/inst_model/rt_instr.h
+        stat/statPool.h
+        stat/statPool.cpp
+        components/inst_model/instr_model_mng.cpp
+        components/inst_model/instr_model_mng.h
         ioHelp/strHelp.cpp
         ioHelp/strHelp.h
         tracers/instrWd.cpp
-        components/memMap/MemMng.cpp
-        components/memMap/MemMng.h
+        resMng/memMng/MemMng.cpp
+        resMng/memMng/MemMng.h
 ####### protohelp
         ioHelp/protoHelp/protoio.hh
         ioHelp/protoHelp/protobuf.cc
@@ -41,7 +41,7 @@ add_executable(traceBuilder
 ####### pin input file
         ioHelp/pinIoSh/pinIo.h
         ioHelp/pinIoSh/pinIo.cpp
-        components/inst/operand.cpp components/inst/operand.h)
+        components/inst_model/operand.cpp components/inst_model/operand.h components/inst_model/opcode.h tracerFrontEnd/staticTraceVar.h components/uop/uop_base.cpp components/uop/uop_base.h components/uop/dep.cpp components/uop/dep.h components/uop/decoder.cpp components/uop/decoder.h)
 
 
 

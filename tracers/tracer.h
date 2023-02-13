@@ -22,7 +22,7 @@
 #include "../ioHelp/pinIoSh/pinIo.h"
 #include <google/protobuf/message.h>
 //#include "../ioHelp/protoHelp/protoio.hh"
-#include "statPool.h"
+#include "../stat/statPool.h"
 
 using namespace std;
 

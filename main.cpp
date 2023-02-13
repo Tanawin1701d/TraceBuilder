@@ -1,6 +1,6 @@
 #include <iostream>
 #include "tracers/tracer.h"
-#include "tracers/statPool.h"
+#include "stat/statPool.h"
 #include "components/inst/instr_model.h"
 int main() {
 

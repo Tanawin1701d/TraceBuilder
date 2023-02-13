@@ -1,0 +1,50 @@
+what do we want
+
+(opcode  operand1 operand2 operand3 )   ----->    (uop1 uop2 uop3 uop4 + dependency)
+
+
+class UOP_ADD : UOP_BASE{
+private:
+        ////////////////////////////// source
+        ////////// src register
+        REGNUM srcRegister1;
+        REGNUM srcRegister2;
+        .
+        .
+        TREGNUM srcTempReg1;
+        TREGNUM srcTempReg2;
+        .
+        .
+        ADDRAG srcMem1  /// address range
+        .
+        .
+
+        ////////////////////////////// destination
+        ////////// des register
+        REGNUM desRegister1;
+        REGNUM desRegister2;
+        .
+        .
+        TREGNUM desTempReg1;
+        TREGNUM desTempReg2;
+        .
+        .
+        ADDRAG desMem1  /// addresss range
+        ...................... method.........................................................................
+        /////// do dependent check function
+        void doDepenCheck(instruction window);
+        bool isDepenOnReg(...)
+        bool isDepenOnMem(...)
+        bool isDepenOnTem(...)
+}
+
+class MACRO_ADD_I{
+
+private:
+
+public:
+
+    MACRO_ADD_I(REG_OPERAND1, MEM_OPERAND1)
+    vector<UOP_BASE*> generateUop
+
+}
