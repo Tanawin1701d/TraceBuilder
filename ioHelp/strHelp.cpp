@@ -11,7 +11,23 @@ splitNstrip(string raw, vector<string>& result) {
                             boost::token_compress_on);
 
     for (string& preStr: result) {
-        strip(raw);
+        strip(preStr);
+    }
+}
+
+void
+spiltLineFromStrNstrip(const string&   raw,
+                       vector<string>& result
+){
+
+    std::stringstream  ss(raw);
+    string line;
+    while (std::getline(ss, line)){
+        result.push_back(line);
+    }
+    /////// strip
+    for (string& preStr: result) {
+        strip(preStr);
     }
 }
 

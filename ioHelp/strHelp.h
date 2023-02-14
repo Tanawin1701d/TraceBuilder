@@ -6,11 +6,17 @@
 #define TRACEBUILDER_STRHELP_H
 #include<iostream>
 #include<vector>
+#include <sstream>
 #include<boost/algorithm/string.hpp>
 
 using namespace std;
 
 void splitNstrip(string raw, vector<string>& result);
+
+void spiltLineFromStrNstrip(const string&         raw,
+                                  vector<string>& result
+                            );
+
 void strip(string& raw);
 
 uintptr_t hexStr2uint  (string raw);

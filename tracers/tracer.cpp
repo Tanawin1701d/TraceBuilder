@@ -30,8 +30,9 @@ threadModel (_threadModel){
 void TRACER_BASE::onGetDynTraceValue(dynTraceData dyndata) {
 
     //// assign runtime trace value to runtime instruction operand
-    auto rtInstr =
-            threadModel->getRtInstrfromRtTrace(dyndata.rawData);
+    //////////////// analysis runtime information then decode
+    auto rtInstr ;
+
     //// decode current runtime instruction tot microop
     ///////// less vector index means it should execute first(dead lock prevention)
     auto uops = decoder->decode(rtInstr);

@@ -7,7 +7,7 @@
 #include<iostream>
 
 struct dynTraceData{
-    std::string rawData;
+    vector<string> rawData;   //// this is used for each instruction
     ///// others data that we reccord from dynamic pintool will be filled here.
 };
 

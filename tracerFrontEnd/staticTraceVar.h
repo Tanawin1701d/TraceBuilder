@@ -32,6 +32,7 @@ static const int ST_IDX_IMM_IMM       = 2; // static trace index of immediate va
 static const int ST_IDX_IMM_AMT       = 3; // static trace amount of index for immediate operand
 
 //// fetch metadata
+static const int ST_IDXL_FETCH_TYPE   = 0;
 static const int ST_IDX_FETCH_ID      = 2; // instruction io (uniq for each program but may be same in different program)
 static const int ST_IDX_FETCH_VADDR   = 3; // virtual address of the instruction
 static const int ST_IDX_FETCH_SZ      = 4; // instruction size
@@ -54,7 +55,8 @@ static const std::string ST_VAL_LD_UNSED_REG = "UNUSED";
 /////////////////////////////////////////////////////////////////////////////////////
 //// this is used for call static tracer
 struct staticTraceData{
-    std::string rawData;
+    vector<string> rawData;
+    ////// this is used for each instruction
     ///// others data that we reccord from dynamic pintool will be filled here.
 };
 #endif //TRACEBUILDER_STATICTRACEVAR_H

@@ -5,30 +5,55 @@
 #ifndef TRACEBUILDER_TRACETOOLFED_H
 #define TRACEBUILDER_TRACETOOLFED_H
 
-#include "staticTraceVar.h"
-#include "dynTraceVar.h"
-#include "../components/thread_model/thread_model.h"
+//#include "staticTraceVar.h"
+//#include "dynTraceVar.h"
+#include <fstream>
+#include <cassert>
+
 
 class TRACER_BASE;
-class CORE;
-
-typedef void (CORE::*sendStTraceData)         (staticTraceData, THREAD_ID);
-typedef void (TRACER_BASE::*sendDynTraceData) (dynTraceData);
-
+class THREAD_MODEL;
 
 ///// for now we assume that stream front-end and file front end share same input trace function
 class TRACE_TOOL_FRONT_END{
-private:
-TRACER_BASE*     tracer;
-CORE*            core;
-sendStTraceData  staticTraceListener;
-sendDynTraceData dynTraceListener;
+protected:
+    THREAD_MODEL*    tmd; // for static trace to send static instruction to build runtime instruction
+    TRACER_BASE*     tracer; // for runtime trace; the runtime data will be integrate with
+    // runtime instruction to generate precise micro op
+
+
 public:
 
-void setStaticTraceCallBack( sendStTraceData _staticTraceListener,
-                             CORE*           _corelistener);
-void setDynTraceCallBadck  (sendDynTraceData _dynTraceListener,
-                            TRACER_BASE*     _tracer);
+    TRACE_TOOL_FRONT_END();
+
+    void setListenners(THREAD_MODEL* _tmd, TRACER_BASE* _tracer);
+
+    virtual ~TRACE_TOOL_FRONT_END() = 0;
+
+    virtual void start() = 0;
+
+};
+
+class LAGACY_PIN_TRACER : public TRACE_TOOL_FRONT_END{
+
+private:
+    std::string fileName_static; // file name to opend static trace
+    std::string fileName_dyn; // file name to open
+    std::ifstream* staticFile;
+    std::ifstream* dynFile;
+
+    void startStaticTrace();
+    void startDynTrace();
+
+public:
+    LAGACY_PIN_TRACER(
+                      std::string _fileName_static,
+                      std::string _fileName_dyn
+                      );
+
+    ~LAGACY_PIN_TRACER() override;
+
+    void start();
 
 };
 
