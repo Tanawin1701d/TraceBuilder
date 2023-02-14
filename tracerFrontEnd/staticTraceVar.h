@@ -50,4 +50,11 @@ static const std::string ST_VAL_COMPO_IMM   = "I";
 static const std::string ST_VAL_COMPO_FETCH = "F";
 //// markunused for load store operand
 static const std::string ST_VAL_LD_UNSED_REG = "UNUSED";
+
+/////////////////////////////////////////////////////////////////////////////////////
+//// this is used for call static tracer
+struct staticTraceData{
+    std::string rawData;
+    ///// others data that we reccord from dynamic pintool will be filled here.
+};
 #endif //TRACEBUILDER_STATICTRACEVAR_H

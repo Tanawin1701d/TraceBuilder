@@ -2,12 +2,12 @@
 // Created by tanawin on 6/1/2566.
 //
 
-#include "instr_model_mng.h"
+#include "thread_model.h"
 
 ////////////////////////////////////////////////////////////////////////
 ////////////// instruction model pool
 
-INSTR_MODEL_MANAGER::INSTR_MODEL_MANAGER(const string &instr_model_file)
+THREAD_MODEL::THREAD_MODEL(const string &instr_model_file)
 : inputFile(new std::ifstream(instr_model_file))
 {
     assert(inputFile);
@@ -35,7 +35,7 @@ INSTR_MODEL_MANAGER::INSTR_MODEL_MANAGER(const string &instr_model_file)
     cout << "[INSTR MODEL] all instruction is fully initialized\n";
 }
 
-INSTR_MODEL_MANAGER::~INSTR_MODEL_MANAGER() {
+THREAD_MODEL::~THREAD_MODEL() {
     for (auto& e : instr_pool){
         delete e.second;
     }
@@ -44,7 +44,7 @@ INSTR_MODEL_MANAGER::~INSTR_MODEL_MANAGER() {
 }
 
 RT_INSTR
-INSTR_MODEL_MANAGER::getInstrTemplate(uint64_t instr_id) {
+THREAD_MODEL::getInstrTemplate(uint64_t instr_id) {
     auto finder = instr_pool.find(instr_id);
     assert( finder != instr_pool.end() );
     return *(finder->second);

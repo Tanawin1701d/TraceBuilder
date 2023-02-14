@@ -23,11 +23,11 @@ add_executable(traceBuilder
         components/inst_model/rt_instr.h
         stat/statPool.h
         stat/statPool.cpp
-        components/inst_model/instr_model_mng.cpp
-        components/inst_model/instr_model_mng.h
+        components/thread_model/thread_model.cpp
+        components/thread_model/thread_model.h
         ioHelp/strHelp.cpp
         ioHelp/strHelp.h
-        tracers/instrWd.cpp
+        tracers/uop_wd.cpp
         resMng/memMng/MemMng.cpp
         resMng/memMng/MemMng.h
 ####### protohelp
@@ -41,7 +41,20 @@ add_executable(traceBuilder
 ####### pin input file
         ioHelp/pinIoSh/pinIo.h
         ioHelp/pinIoSh/pinIo.cpp
-        components/inst_model/operand.cpp components/inst_model/operand.h components/inst_model/opcode.h tracerFrontEnd/staticTraceVar.h components/uop/uop_base.cpp components/uop/uop_base.h components/uop/dep.cpp components/uop/dep.h components/uop/decoder.cpp components/uop/decoder.h)
+        components/inst_model/operand.cpp
+        components/inst_model/operand.h
+        components/inst_model/opcode.h
+        tracerFrontEnd/staticTraceVar.h
+        components/uop/uop_base.cpp
+        components/uop/uop_base.h
+        components/uop/dep.cpp
+        components/uop/dep.h
+        components/uop/decoder.cpp
+        components/uop/decoder.h
+        tracers/uop_wd.h
+        tracerFrontEnd/dynTraceVar.h
+        core/core.h
+        tracerFrontEnd/traceToolFed.cpp tracerFrontEnd/traceToolFed.h)
 
 
 
