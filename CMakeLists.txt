@@ -54,7 +54,7 @@ add_executable(traceBuilder
         tracers/uop_wd.h
         tracerFrontEnd/dynTraceVar.h
         core/core.h
-        tracerFrontEnd/traceToolFed.cpp tracerFrontEnd/traceToolFed.h)
+        tracerFrontEnd/traceToolFed.cpp tracerFrontEnd/traceToolFed.h tracerFrontEnd/legacyPin/lagacy_pin.cpp tracerFrontEnd/legacyPin/lagacy_pin.h)
 
 
 
