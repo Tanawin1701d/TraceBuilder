@@ -17,7 +17,7 @@ bool DEP_BASE::addDep(UOP_BASE* uop) {
 ////// register dependency
 
 
-bool REG_DEP::isdependOnReg(const REGNUM &sucReg) const{
+bool REG_DEP::isdependOnReg(const REGNUM &sucReg){
     return std::find(desReg.begin(), desReg.end(),sucReg) != desReg.end();
 }
 
@@ -25,13 +25,10 @@ void REG_DEP::doRegDepenCheck(UOP_WINDOW *traceWindow){
     assert(traceWindow != nullptr);
     auto uopWindow_ptr = traceWindow->getUopwindow();
     ////// TODO we might upgrade for clever method to achieve better performance
-    for (auto uopWindow_itr  = uopWindow_ptr->begin();
-              uopWindow_itr != uopWindow_ptr->end();
-              uopWindow_itr++
-    ){
+    for (auto& uopWindow_itr : *uopWindow_ptr){
         for (auto mySrcReg: srcReg){
-            if ((*uopWindow_itr)->isdependOnReg(mySrcReg)){
-                addRegDep(*uopWindow_itr);
+            if (uopWindow_itr->isdependOnReg(mySrcReg)){
+                addRegDep(uopWindow_itr);
             }
         }
     }
@@ -79,17 +76,14 @@ void MEM_DEP::doMemDepenCheck(UOP_WINDOW *traceWindow) {
     assert(traceWindow != nullptr);
     auto uopWindow_ptr = traceWindow->getUopwindow();
     ////// TODO we might upgrade for clever method to achieve better performance
-    for (auto uopWindow_itr  = uopWindow_ptr->begin();
-         uopWindow_itr != uopWindow_ptr->end();
-         uopWindow_itr++
-            ){
+    for (auto & uopWindow_itr : *uopWindow_ptr){
         for (auto& ldAdas : loadAdas){
-            if ((*uopWindow_itr)->isdependOnMem(ldAdas, true))
-                addMemDep(*uopWindow_itr);
+            if (uopWindow_itr->isdependOnMem(ldAdas, true))
+                addMemDep(uopWindow_itr);
         }
         for (auto& stAdas : storeAdas){
-            if ((*uopWindow_itr)->isdependOnMem(stAdas, false))
-                addMemDep(*uopWindow_itr);
+            if (uopWindow_itr->isdependOnMem(stAdas, false))
+                addMemDep(uopWindow_itr);
         }
     }
 }

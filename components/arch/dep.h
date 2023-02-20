@@ -33,7 +33,7 @@ private:
 
 public:
     ///// for successor to ask about dependency
-    virtual bool isdependOnReg(const REGNUM& sucReg) const;
+    virtual bool isdependOnReg(const REGNUM& sucReg);
     ///// for asking procedure to get dep
     virtual void doRegDepenCheck(UOP_WINDOW* traceWindow);
     ///// for adding source/des of the micro-op meta-data
@@ -52,7 +52,7 @@ private:
     vector<ADAS> loadAdas;
     vector<ADAS> storeAdas;
     ///// scan overlaping
-    bool scanOverlap(const ADAS adas, vector<ADAS>& adasVec);
+    static bool scanOverlap(const ADAS adas, vector<ADAS>& adasVec);
 
 public:
     ///// for successor to ask about dependency
@@ -75,7 +75,7 @@ class EXE_DEP: public DEP_BASE{
 
 public:
     ///// for successor to ask about dependency
-    virtual bool isdepenOnEXE(const UOP_BASE* uop) { return false;} const;
+    virtual bool isdepenOnEXE(const UOP_BASE* uop) { return false;} ;
     ///// for get/set dependency
     bool addExeDep(UOP_BASE* uop);
     std::unordered_set<UOP_BASE*>& getExeDep();
@@ -88,9 +88,9 @@ public:
 class TEM_DEP: public DEP_BASE{
 public:
     ///// for successor to ask about dependency
-    virtual bool isdepenOnTEM(const UOP_BASE* uop) { return false;} const;
+    virtual bool isdepenOnTEM(const UOP_BASE* uop) { return false;};
     ///// for asking procedure to get dep
-    virtual void doTEMDepenCheck(UOP_WINDOW* traceWindow){ return;}; //// there is no need to check with
+    virtual void doTEMDepenCheck(UOP_WINDOW* traceWindow){}; //// there is no need to check with
                                                                         ///// instruction window right now
     ///// for get/set dependency
     bool addTemDep(UOP_BASE* uop);
