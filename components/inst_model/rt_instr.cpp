@@ -2,8 +2,6 @@
 // Created by tanawin on 28/12/2565.
 //
 #include "rt_instr.h"
-#include "../../tracerFrontEnd/staticTraceVar.h"
-
 #include <utility>
 
 //////////////// public method
@@ -45,6 +43,36 @@ RT_INSTR::interpretSt(const vector<string>& st_raw) {
         }else{
             throw invalid_argument("there is no operand or any indicator : " + opr_tokens[ST_IDX_COMPO_TYP]);
         }
+    }
+
+}
+
+
+void
+RT_INSTR::fillDynData(convertedDynData& cvtDynData){
+
+    ////////// fill physical address of each load operand
+    for (int ldIdx = 0 ;
+             (ldIdx < maxMemOpPerLS)  &&
+             (cvtDynData.loadMemOpNum[ldIdx] != DUMMY_MEM_OP_NUM);
+             ldIdx++
+        ){
+        assert(cvtDynData.loadMemOpNum[ldIdx] < srcLdOperands.size());
+        ////// for backward compatability
+        /////// we assume that memop may be reordered arbitrary.
+        srcLdOperands[ cvtDynData.loadMemOpNum[ldIdx] ].setPhyAddr(cvtDynData.phyLoadAddr[ldIdx]);
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////// fill physical address of each store operand
+    for (int stIdx = 0 ;
+         (stIdx < maxMemOpPerLS)  &&
+         (cvtDynData.storeMemOpNum[stIdx] != DUMMY_MEM_OP_NUM);
+         stIdx++
+            ){
+        assert(cvtDynData.storeMemOpNum[stIdx] < desStOperands.size());
+        ////// for backward compatability
+        /////// we assume that memop may be reordered arbitrary.
+        desStOperands[ cvtDynData.storeMemOpNum[stIdx]].setPhyAddr(cvtDynData.phyStoreAddr[stIdx]);
     }
 
 }

@@ -3,7 +3,15 @@
 //
 
 #include "MemMng.h"
-#include "../../stat/statPool.h"
+#include "../../../stat/statPool.h"
+
+
+bool isADASoverlap(const ADAS& a,const ADAS& b){
+
+    return ( (a.addr >= b.addr) && (a.addr < (b.addr + b.size)) ) ||
+           ( (b.addr >= a.addr) && (b.addr < (a.addr + a.size)) )
+
+}
 
 
 MEM_MNG::MEM_MNG(ADDR _pageBit,

@@ -7,8 +7,8 @@
 
 ////////// lagacy pin tracer
 
-LAGACY_PIN_TRACER::LAGACY_PIN_TRACER(std::string _fileName_static,
-                                     std::string _fileName_dyn):
+LAGACY_PIN_TRACER::LAGACY_PIN_TRACER(const std::string& _fileName_static,
+                                     const std::string& _fileName_dyn):
         TRACE_TOOL_FRONT_END()
 {
     staticFile = new std::ifstream(_fileName_static);
@@ -49,21 +49,13 @@ LAGACY_PIN_TRACER::startStaticTrace(){
 void
 LAGACY_PIN_TRACER::startDynTrace(){
 
-    dynTraceData presentData;
+    dynTraceData dynData{};
 
-    std::string line;
-
-    while(std::getline(*dynFile, line)){
-
-        if(!line.empty()) {
-            presentData.rawData.push_back(line);
-            if(line.substr(ST_IDXL_FETCH_TYPE,  1) == ST_VAL_COMPO_FETCH)
-            {
-                ///// if we get fetch component type so we should send thread model to decode
-                tracer->onGetDynTraceValue(presentData);
-            }
-        }
+    while (!dynFile->eof()){
+        dynFile->read( (char*) (&dynData.rawData) , sizeof(RT_OBJ));
+        tracer->onGetDynTraceValue(dynData);
     }
+
 }
 
 void

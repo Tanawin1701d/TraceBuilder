@@ -5,6 +5,7 @@
 #ifndef TRACEBUILDER_STATICTRACEVAR_H
 #define TRACEBUILDER_STATICTRACEVAR_H
 #include<iostream>
+#include <vector>
 ///// this is used for define and explain static trace file
 
 /// this file is used track for each line of static trace outcome whatever architecture
@@ -55,7 +56,7 @@ static const std::string ST_VAL_LD_UNSED_REG = "UNUSED";
 /////////////////////////////////////////////////////////////////////////////////////
 //// this is used for call static tracer
 struct staticTraceData{
-    vector<string> rawData;
+    std::vector<std::string> rawData;
     ////// this is used for each instruction
     ///// others data that we reccord from dynamic pintool will be filled here.
 };

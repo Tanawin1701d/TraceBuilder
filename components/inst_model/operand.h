@@ -5,7 +5,8 @@
 #ifndef TRACEBUILDER_OPERAND_H
 #define TRACEBUILDER_OPERAND_H
 
-#include "../regMap/regMapper.h"
+#include "../../core/resMng/regMap/regMapper.h"
+#include "../../core/resMng/memMng/MemMng.h"
 
 typedef  unsigned long long IMM;
 
@@ -35,7 +36,14 @@ private:
     IMM    displacement;
     int    size;
     int    memopNum;
-    void genEffAddr();
+    ADDR   phyAddr;
+public:
+    void setPhyAddr(ADDR phyAddr);
+
+public:
+    int getMemopNum() const;
+
+    ADDR getPhyAddr() const;
 
 public:
     MEM_OPERAND(REGNUM _baseRegId,

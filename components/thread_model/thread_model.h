@@ -7,8 +7,9 @@
 
 #include "../inst_model/rt_instr.h"
 #include <sstream>
-#include "../../resMng/regMap/regMapper.h"
-#include "../../tracerFrontEnd/staticTraceVar.h"
+#include "../../core/resMng/regMap/regMapper.h"
+#include "../../core/tracerFrontEnd/staticTraceVar.h"
+#include "../../core/tracerFrontEnd/dynTraceVar.h"
 
 typedef int THREAD_ID;
 
@@ -23,6 +24,8 @@ public:
     explicit THREAD_MODEL();
     ~THREAD_MODEL();
     RT_INSTR getInstrTemplate(uint64_t instr_id);
+    RT_INSTR getInstrWithDynFill(uint64_t          instr_id,
+                                 convertedDynData& dynData);
     void onGetStTraceValue(staticTraceData stData); // for only per instruction
 
 };

@@ -8,7 +8,7 @@
 #endif //TRACEBUILDER_INSTRWD_H
 
 #include<deque>
-#include "../components/uop/uop_base.h"
+#include "../../components/arch/uop_base.h"
 
 class UOP_WINDOW{
 private:
@@ -21,6 +21,6 @@ public:
     UOP_WINDOW(int _window_size);
     void depAssign(UOP_BASE* newUop);
     void addUop(UOP_BASE* newUop);
-
+    std::deque<UOP_BASE*>* getUopwindow() { return &uop_window;}
 
 };

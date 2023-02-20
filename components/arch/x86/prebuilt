@@ -1,0 +1,30 @@
+//////////// decoder
+
+from <mnemonic> INPUT <O_TYPE1> <O_TYPE1> <O_TYPE1> OUTPUT
+to   <MICROOP_NAME>
+
+
+//////////// MACROOP LANGUAGE
+TYPENAME    OTREG ### temporal register,
+            OREG  ### register operand,
+            OL    ### load operand
+            OS    ### store operand
+
+MACROOP <MACROOP_NAME>
+      INPUT <TYPE_NAME> <VAR_NAME> ..........
+      OUTPUT <TYPE_NAME> <VAR_NAME> ..........
+      MICROOP <MICROOP_NAME> INPUT <VAR_NAME> ... OUTPUT <VAR_NAME> ...
+      MICROOP <MICROOP_NAME> INPUT <VAR_NAME> ... OUTPUT <VAR_NAME> ...
+MACROOP_END
+
+
+
+//////////// MICROOP LANGUAGE
+TYPENAME   TREG ### temporal register,
+            REG ### register,
+            MEM ### memory
+
+MICROOP <MACROOP_NAME>
+    INPUT  <TYPE_NAME> <VAR_NAME> ..........
+    OUTPUT <TYPE_NAME> <VAR_NAME> ..........
+MICROOP_END

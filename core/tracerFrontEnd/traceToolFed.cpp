@@ -4,7 +4,7 @@
 
 #include "traceToolFed.h"
 #include "staticTraceVar.h"
-#include "../components/thread_model/thread_model.h"
+#include "../../components/thread_model/thread_model.h"
 
 TRACE_TOOL_FRONT_END::TRACE_TOOL_FRONT_END(){}
 

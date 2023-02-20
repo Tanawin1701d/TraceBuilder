@@ -11,7 +11,8 @@
 #include "operand.h"
 #include "opcode.h"
 
-#include"../../tracers/tracer.h"
+#include"../../core/tracers/tracer.h"
+#include "../../core/tracerFrontEnd/staticTraceVar.h"
 #include "../../ioHelp/strHelp.h"
 
 class RT_INSTR{
@@ -55,6 +56,7 @@ public:
     RT_INSTR( RT_INSTR& host);
     RT_INSTR(); // static trace raw
     void     interpretSt(const vector<string>& st_raw); // interpret from raw static tracer
+    void     fillDynData(convertedDynData& cvtDynData);
     /// getter
     uint64_t getRtInstrId() const;
     const string &getMnemonic() const;

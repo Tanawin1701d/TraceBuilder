@@ -15,10 +15,10 @@ INCLUDE_DIRECTORIES( ${Boost_LIBRARIES} )
 
 add_executable(traceBuilder
         main.cpp
-        tracers/tracer.cpp
-        tracers/tracer.h
-        resMng/regMap/regMapper.h
-        resMng/regMap/regMapper.cpp
+        core/tracers/tracer.cpp
+        core/tracers/tracer.h
+        core/resMng/regMap/regMapper.h
+        core/resMng/regMap/regMapper.cpp
         components/inst_model/rt_instr.cpp
         components/inst_model/rt_instr.h
         stat/statPool.h
@@ -27,9 +27,9 @@ add_executable(traceBuilder
         components/thread_model/thread_model.h
         ioHelp/strHelp.cpp
         ioHelp/strHelp.h
-        tracers/uop_wd.cpp
-        resMng/memMng/MemMng.cpp
-        resMng/memMng/MemMng.h
+        core/tracers/uop_wd.cpp
+        core/resMng/memMng/MemMng.cpp
+        core/resMng/memMng/MemMng.h
 ####### protohelp
         ioHelp/protoHelp/protoio.hh
         ioHelp/protoHelp/protobuf.cc
@@ -44,17 +44,17 @@ add_executable(traceBuilder
         components/inst_model/operand.cpp
         components/inst_model/operand.h
         components/inst_model/opcode.h
-        tracerFrontEnd/staticTraceVar.h
-        components/uop/uop_base.cpp
-        components/uop/uop_base.h
-        components/uop/dep.cpp
-        components/uop/dep.h
-        components/uop/decoder.cpp
-        components/uop/decoder.h
-        tracers/uop_wd.h
-        tracerFrontEnd/dynTraceVar.h
+        core/tracerFrontEnd/staticTraceVar.h
+        components/arch/uop_base.cpp
+        components/arch/uop_base.h
+        components/arch/dep.cpp
+        components/arch/dep.h
+        components/arch/decoder.cpp
+        components/arch/decoder.h
+        core/tracers/uop_wd.h
+        core/tracerFrontEnd/dynTraceVar.h
         core/core.h
-        tracerFrontEnd/traceToolFed.cpp tracerFrontEnd/traceToolFed.h tracerFrontEnd/legacyPin/lagacy_pin.cpp tracerFrontEnd/legacyPin/lagacy_pin.h)
+        core/tracerFrontEnd/traceToolFed.cpp core/tracerFrontEnd/traceToolFed.h core/tracerFrontEnd/legacyPin/lagacy_pin.cpp core/tracerFrontEnd/legacyPin/lagacy_pin.h core/resultFrontEnd/resultFed.cpp core/resultFrontEnd/resultFed.h)
 
 
 

@@ -18,6 +18,8 @@ struct ADAS{
     ADDR size;
 };
 
+bool isADASoverlap(const ADAS& a,const ADAS& b);
+
 
 ///// TODO make it for multicore mapping
 
@@ -43,7 +45,7 @@ private:
     ADDR pageAlign(ADDR _vaddr); /// align virtual address to fit page
 public:
     explicit MEM_MNG(ADDR _pageBit, ADDR _alignBit, ADDR _ramSize, ADDR _phyStartAddr);
-    void     v2pConvert(ADDR _vaddr, int _size, vector<ADAS>& results);
+    void     v2pConvert(ADDR _vaddr, int _size, std::vector<ADAS>& results);
 
 };
 

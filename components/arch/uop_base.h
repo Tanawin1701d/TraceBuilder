@@ -10,6 +10,7 @@
 #include "../inst_model/operand.h"
 
 class RT_INSTR;
+class UOP_WINDOW;
 
 
 class UOP_BASE: public REG_DEP, public MEM_DEP, public EXE_DEP, public TEM_DEP{
@@ -18,7 +19,7 @@ private:
 public:
     uint64_t getSeqNum() const;
     void setSeqNum(uint64_t _seqNum);
-    virtual void doDepenCheck(/*TODO pass instruction window*/) = 0;
+    virtual void doDepenCheck(UOP_WINDOW* uop_window) = 0;
 
 };
 

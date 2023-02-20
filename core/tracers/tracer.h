@@ -5,11 +5,11 @@
 #ifndef TRACEBUILDER_TRACER_H
 #define TRACEBUILDER_TRACER_H
 
-#include "../components/thread_model/thread_model.h"
+#include "../../components/thread_model/thread_model.h"
 #include "uop_wd.h"
 #include "../resMng/memMng/MemMng.h"
 #include "../tracerFrontEnd/dynTraceVar.h"
-#include "../components/uop/decoder.h"
+#include "../../components/uop/decoder.h"
 
 class TRACE_MANAGER;
 

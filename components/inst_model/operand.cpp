@@ -54,6 +54,21 @@ MEM_OPERAND::getSize() const {
     return size;
 }
 
+int MEM_OPERAND::getMemopNum() const {
+    return memopNum;
+}
+
+ADDR MEM_OPERAND::getPhyAddr() const {
+    return phyAddr;
+}
+
+
+
+/////////////////  set
+
+void MEM_OPERAND::setPhyAddr(ADDR _phyAddr) {
+    MEM_OPERAND::phyAddr = _phyAddr;
+}
 
 /// load operand
 

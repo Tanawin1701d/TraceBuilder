@@ -5,11 +5,17 @@
 #ifndef TRACEBUILDER_LAGACY_PIN_H
 #define TRACEBUILDER_LAGACY_PIN_H
 
+#include<istream>
+#include "../traceToolFed.h"
+#include "../staticTraceVar.h"
+#include "../dynTraceVar.h"
+#include "../../../components/thread_model/thread_model.h"
+
 class LAGACY_PIN_TRACER : public TRACE_TOOL_FRONT_END{
 
 private:
-    std::string fileName_static; // file name to opend static trace
-    std::string fileName_dyn; // file name to open
+    std::string    fileName_static; // file name to opend static trace
+    std::string    fileName_dyn; // file name to open
     std::ifstream* staticFile;
     std::ifstream* dynFile;
 
@@ -18,8 +24,8 @@ private:
 
 public:
     LAGACY_PIN_TRACER(
-            std::string _fileName_static,
-            std::string _fileName_dyn
+            const std::string& _fileName_static,
+            const std::string& _fileName_dyn
     );
 
     ~LAGACY_PIN_TRACER() override;
