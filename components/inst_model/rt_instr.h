@@ -66,13 +66,13 @@ public:
     ADDR getAddr() const;
     int getSize() const;
     ////// get method
-    const vector<REG_OPERAND>& getSrcRegOperands() const    { return srcRegOperands;};
-    const vector<LD_OPERAND>& getSrcLdOperands() const      { return srcLdOperands ;};
-    const vector<IMM_OPERAND>& getSrcImmOperands() const    { return srcImmOperands;};
-          vector<OPERAND*>& getSrcPoolOperands()            { return srcPoolOperands;};
-    const vector<REG_OPERAND>& getDesRegOperands() const    { return desRegOperands;};
-    const vector<ST_OPERAND>& getDesStOperands() const      { return desStOperands ;};
-          vector<OPERAND*>& getDesPoolOperands()            { return desPoolOperands;};
+    vector<REG_OPERAND>& getSrcRegOperands()    { return srcRegOperands;};
+    vector<LD_OPERAND>& getSrcLdOperands()      { return srcLdOperands ;};
+    vector<IMM_OPERAND>& getSrcImmOperands()    { return srcImmOperands;};
+    vector<OPERAND*>& getSrcPoolOperands()      { return srcPoolOperands;};
+    vector<REG_OPERAND>& getDesRegOperands()    { return desRegOperands;};
+    vector<ST_OPERAND>& getDesStOperands()      { return desStOperands ;};
+    vector<OPERAND*>& getDesPoolOperands()      { return desPoolOperands;};
     ////// count method
     int countSrcRegOperands() const { return srcRegOperands.size();};
     int countSrcLdOpeands() const   { return srcLdOperands .size();};
