@@ -12,8 +12,21 @@ typedef  unsigned long long IMM;
 
 
 /// architecture instruction's operand
-class OPERAND{
 
+enum OPR_TYPE {
+    T_REG,
+    T_MEM_LD,
+    T_MEM_ST,
+    T_IMM,
+    T_DUMMY
+};
+
+class OPERAND{
+private:
+    OPR_TYPE OT;
+public:
+    OPERAND(OPR_TYPE _OT);
+    OPR_TYPE getOPTYPE() {return OT;};
 };
 
 
@@ -24,6 +37,7 @@ private:
 public:
     REG_OPERAND(REGNUM _regId);
     REGNUM getRegId() const;
+    REGNUM getValue();
 };
 
 
@@ -34,24 +48,18 @@ private:
     REGNUM indexRegId;
     int    scaleFactor;
     IMM    displacement;
-    int    size;
+    ADDR    size;
     int    memopNum;
     ADDR   phyAddr;
-public:
-    void setPhyAddr(ADDR phyAddr);
-
-public:
-    int getMemopNum() const;
-
-    ADDR getPhyAddr() const;
 
 public:
     MEM_OPERAND(REGNUM _baseRegId,
                 REGNUM _indexRegId,
                 int    _scaleFactor,
                 IMM    _displacement,
-                int    _size,
-                int    _memopNum);
+                ADDR    _size,
+                int    _memopNum,
+                OPR_TYPE _setOpr);
 
     REGNUM getBaseRegId() const;
 
@@ -61,7 +69,16 @@ public:
 
     IMM getDisplacement() const;
 
-    int getSize() const;
+    ADDR getSize() const;
+
+    void setPhyAddr(ADDR phyAddr);
+
+    int getMemopNum() const;
+
+    ADDR getPhyAddr() const;
+
+    ADAS getValue();
+
 };
 /// load operand
 class LD_OPERAND : public MEM_OPERAND{
@@ -71,7 +88,7 @@ public:
                REGNUM _indexRegId,
                int    _scaleFactor,
                IMM    _displacement,
-               int    _size,
+               ADDR    _size,
                int    _memopNum);
 };
 /// store operand
@@ -82,7 +99,7 @@ public:
                REGNUM _indexRegId,
                int    _scaleFactor,
                IMM    _displacement,
-               int    _size,
+               ADDR    _size,
                int    _memopNum);
 };
 /// immediate operand
@@ -94,6 +111,8 @@ public:
     IMM_OPERAND(IMM _imm);
 
     IMM getImm() const;
+
+    IMM getValue();
 };
 
 

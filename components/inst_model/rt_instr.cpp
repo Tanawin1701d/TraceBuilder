@@ -89,8 +89,10 @@ RT_INSTR::interpretRegOperand(vector<string> &tokens) {
 
     if (isSrc){
         srcRegOperands.emplace_back(newRegName);
+        srcPoolOperands.push_back(&(*srcRegOperands.rbegin()));
     }else if ( isDes ){
         desRegOperands.emplace_back(newRegName);
+        desPoolOperands.push_back(&(*desRegOperands.rbegin()));
     }else{
         throw std::invalid_argument(
                 "invalid static trace for reg operand " + tokens[ST_IDX_DIRO]
@@ -117,10 +119,14 @@ RT_INSTR::interpretLSOperand(vector<string> &tokens, bool isLoad) {
     int size  = stoi(tokens[ST_IDX_LOAD_SZ]);
     int memopNum = stoi(tokens[ST_IDX_LOAD_MON]);
     ///build operand
-    if (isLoad)
+    if (isLoad) {
         srcLdOperands.emplace_back(baseReg, indexReg, scale, displacement, size, memopNum);
-    else // store
+        srcPoolOperands.push_back(&(*srcLdOperands.rbegin()));
+    }
+    else { // store
         desStOperands.emplace_back(baseReg, indexReg, scale, displacement, size, memopNum);
+        desPoolOperands.push_back(&(*desStOperands.rbegin()));
+    }
 }
 
 void
@@ -149,6 +155,7 @@ RT_INSTR::interpretImmOperand(vector<string>& tokens) {
     IMM imm = stoull(tokens[ST_IDX_IMM_IMM]);
 
     srcImmOperands.emplace_back(imm);
+    srcPoolOperands.push_back(&(*srcImmOperands.rbegin()));
 
 }
 
