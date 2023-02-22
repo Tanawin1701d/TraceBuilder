@@ -7,7 +7,7 @@
 /// reg operand
 REG_OPERAND::REG_OPERAND(REGNUM _regId):
 regId(_regId),
-OPERAND(T_REG)
+OPERAND(O_REG)
 {}
 
 REGNUM REG_OPERAND::getRegId() const {
@@ -94,7 +94,7 @@ int    _memopNum
                 _displacement,
                 _size,
                 _memopNum,
-                T_MEM_LD){}
+                O_MEM_LD){}
 
 /// store operand
 
@@ -110,13 +110,13 @@ ST_OPERAND::ST_OPERAND(REGNUM _baseRegId,
                     _displacement,
                     _size,
                     _memopNum,
-                    T_MEM_ST){}
+                    O_MEM_ST){}
 
 /// imm operand
 
 IMM_OPERAND::IMM_OPERAND(IMM _imm):
 imm(_imm),
-OPERAND(T_IMM)
+OPERAND(O_IMM)
 {}
 
 IMM

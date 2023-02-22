@@ -5,18 +5,21 @@ to   <MICROOP_NAME>
 
 
 //////////// MACROOP LANGUAGE
-TYPENAME    OTREG ### temporal register,
-            OREG  ### register operand,
-            OL    ### load operand
-            OS    ### store operand
+TYPENAME    T_TEMP   ### temporal register,
+            T_REG    ### register operand,
+            T_MEM_LD ### load operand
+            T_MEM_ST ### store operand
+            T_IMM    ### imm operand
+
 
 MACROOP <MACROOP_NAME>
       INPUT <TYPE_NAME> <VAR_NAME> ..........
       OUTPUT <TYPE_NAME> <VAR_NAME> ..........
+      TEMP   <VAR_NAME> ...............   # in temp case type is not required due to reg operand
       MICROOP <MICROOP_NAME> INPUT <VAR_NAME> ... OUTPUT <VAR_NAME> ...
       MICROOP <MICROOP_NAME> INPUT <VAR_NAME> ... OUTPUT <VAR_NAME> ...
 MACROOP_END
-
+//////////////////// eventhough you do not need input/output in microop you must specify INPUT/OUTPUT keyword
 
 
 //////////// MICROOP LANGUAGE

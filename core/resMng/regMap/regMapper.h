@@ -13,8 +13,8 @@
 
 using namespace std;
 
-
-typedef  int REGNUM;
+typedef  int TREGNUM; ///// temporal reg number
+typedef  int REGNUM;  ///// reg number
 
 static    map<std::string, REGNUM> regmap = {
 

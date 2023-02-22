@@ -117,8 +117,34 @@ EXE_DEP::getExeDep() {
 
 ////// temporary register dependency
 
+
 bool TEM_DEP::addTemDep(UOP_BASE *uop) {
     return addDep(uop);
+}
+
+
+
+bool
+TEM_DEP::isdepenOnTEM(const TREGNUM sucTreg) {
+    return std::find(desTRegs.begin(), desTRegs.end(), sucTreg)
+            != desTRegs.end();
+}
+
+void
+TEM_DEP::doTEMDepenCheck(vector<UOP_BASE *>& predecessor) {
+    for (auto uop_ptr: predecessor){
+        for (auto src_treg: srcTRegs) {
+            if (uop_ptr->isdepenOnTEM(src_treg)){
+                addTemDep(uop_ptr);
+            }
+        }
+    }
+}
+
+void
+TEM_DEP::addTRegMeta(const TREGNUM tregnum, bool isSrc){
+   auto& pushVec = isSrc ? srcTRegs : desTRegs;
+   pushVec.push_back(tregnum);
 }
 
 std::unordered_set<UOP_BASE*>&

@@ -7,12 +7,14 @@ void UOP_ADD::doDepenCheck(UOP_WINDOW* uop_window) {
 
 }
 
-void UOP_ADD::addMeta(REGNUM A, ADAS B, REGNUM C){
+void UOP_ADD::addMeta(REGNUM A, ADAS B, TREGNUM C, REGNUM D, TREGNUM E){
 ///////// input
    addRegMeta(A, true);
    addMemMeta(B, true);
+   addTRegMeta(C, true);
 ///////// output
-   addRegMeta(C, false);
+   addRegMeta(D, false);
+   addTRegMeta(E, false);
 }
 
 void UOP_ADD2::doDepenCheck(UOP_WINDOW* uop_window) {

@@ -14,11 +14,11 @@ typedef  unsigned long long IMM;
 /// architecture instruction's operand
 
 enum OPR_TYPE {
-    T_REG,
-    T_MEM_LD,
-    T_MEM_ST,
-    T_IMM,
-    T_DUMMY
+    O_REG,
+    O_MEM_LD,
+    O_MEM_ST,
+    O_IMM,
+    O_DUMMY
 };
 
 class OPERAND{

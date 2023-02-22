@@ -86,12 +86,17 @@ public:
 
 ////// temporary register  order dependency some physical register
 class TEM_DEP: public DEP_BASE{
+    vector<TREGNUM> srcTRegs;
+    vector<TREGNUM> desTRegs;
+    /////////TODO we might use bit assign role to enhance the performance
 public:
     ///// for successor to ask about dependency
-    virtual bool isdepenOnTEM(const UOP_BASE* uop) { return false;};
+    virtual bool isdepenOnTEM(const TREGNUM sucTreg);
     ///// for asking procedure to get dep
-    virtual void doTEMDepenCheck(UOP_WINDOW* traceWindow){}; //// there is no need to check with
+    virtual void doTEMDepenCheck(vector<UOP_BASE*>& predecessor); //// there is no need to check with
                                                                         ///// instruction window right now
+    ///// for adding source/des of the micro-op meta-data
+    virtual void addTRegMeta(const TREGNUM tregnum, bool isSrc); //// if false it is des
     ///// for get/set dependency
     bool addTemDep(UOP_BASE* uop);
     std::unordered_set<UOP_BASE*>& getTemDep();
