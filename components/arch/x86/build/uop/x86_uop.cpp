@@ -1,23 +1,21 @@
 #include"x86_uop.h"
 void UOP_ADD::doDepenCheck(UOP_WINDOW* uop_window) {
     doRegDepenCheck(uop_window);
-    doMemDepenCheck(uop_window);
+    
     ///// for future use
     /////   doExeDepenCheck(uop_window)
 
 }
 
-void UOP_ADD::addMeta(REGNUM A, ADAS B, TREGNUM C, REGNUM D, TREGNUM E){
+void UOP_ADD::addMeta(REGNUM A, TREGNUM B, REGNUM C){
 ///////// input
    addRegMeta(A, true);
-   addMemMeta(B, true);
-   addTRegMeta(C, true);
+   addTRegMeta(B, true);
 ///////// output
-   addRegMeta(D, false);
-   addTRegMeta(E, false);
+   addRegMeta(C, false);
 }
 
-void UOP_ADD2::doDepenCheck(UOP_WINDOW* uop_window) {
+void UOP_LD::doDepenCheck(UOP_WINDOW* uop_window) {
     
     doMemDepenCheck(uop_window);
     ///// for future use
@@ -25,10 +23,9 @@ void UOP_ADD2::doDepenCheck(UOP_WINDOW* uop_window) {
 
 }
 
-void UOP_ADD2::addMeta(ADAS A, ADAS B, ADAS C){
+void UOP_LD::addMeta(ADAS A, TREGNUM C){
 ///////// input
    addMemMeta(A, true);
-   addMemMeta(B, true);
 ///////// output
-   addMemMeta(C, false);
+   addTRegMeta(C, false);
 }

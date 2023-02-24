@@ -37,7 +37,7 @@ private:
 public:
     REG_OPERAND(REGNUM _regId);
     REGNUM getRegId() const;
-    REGNUM getValue();
+    REGNUM getMeta();
 };
 
 
@@ -77,7 +77,7 @@ public:
 
     ADDR getPhyAddr() const;
 
-    ADAS getValue();
+    ADAS getMeta();
 
 };
 /// load operand

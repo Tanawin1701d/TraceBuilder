@@ -15,7 +15,7 @@ REGNUM REG_OPERAND::getRegId() const {
 }
 
 REGNUM
-REG_OPERAND::getValue(){ return regId;}
+REG_OPERAND::getMeta(){ return regId;}
 
 /// memory operand
 MEM_OPERAND::MEM_OPERAND(
@@ -70,7 +70,7 @@ ADDR MEM_OPERAND::getPhyAddr() const {
 }
 
 ADAS
-MEM_OPERAND::getValue(){return {phyAddr, size};}
+MEM_OPERAND::getMeta(){return {phyAddr, size};}
 
 /////////////////  set
 

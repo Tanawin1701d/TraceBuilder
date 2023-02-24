@@ -31,12 +31,12 @@ private:
     vector<REG_OPERAND> srcRegOperands;
     vector<LD_OPERAND>  srcLdOperands;
     vector<IMM_OPERAND> srcImmOperands;
-    vector<OPERAND*>    srcPoolOperands; /// pool the  src operand for macroop will get it and fill into micro-op
+    vector<OPERAND*>    srcMacroPoolOperands; /// pool the  src operand for macroop will get it and fill into micro-op
     /////// des operand data and metadata
         /// for now we assume that order is matter to classify instruction and micro-op
     vector<REG_OPERAND> desRegOperands;
     vector<ST_OPERAND>  desStOperands;
-    vector<OPERAND*>    desPoolOperands;/// pool the  des operand for macroop will get it and fill into micro-op
+    vector<OPERAND*>    desMacroPoolOperands;/// pool the  des operand for macroop will get it and fill into micro-op
     /////// micro op
     //TODO store for micro-op
 
@@ -69,10 +69,10 @@ public:
     vector<REG_OPERAND>& getSrcRegOperands()    { return srcRegOperands;};
     vector<LD_OPERAND>& getSrcLdOperands()      { return srcLdOperands ;};
     vector<IMM_OPERAND>& getSrcImmOperands()    { return srcImmOperands;};
-    vector<OPERAND*>& getSrcPoolOperands()      { return srcPoolOperands;};
+    vector<OPERAND*>& getSrcMacroPoolOperands()      { return srcMacroPoolOperands;};
     vector<REG_OPERAND>& getDesRegOperands()    { return desRegOperands;};
     vector<ST_OPERAND>& getDesStOperands()      { return desStOperands ;};
-    vector<OPERAND*>& getDesPoolOperands()      { return desPoolOperands;};
+    vector<OPERAND*>& getDesMacroPoolOperands()      { return desMacroPoolOperands;};
     ////// count method
     int countSrcRegOperands() const { return srcRegOperands.size();};
     int countSrcLdOpeands() const   { return srcLdOperands .size();};

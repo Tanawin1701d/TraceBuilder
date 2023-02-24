@@ -11,15 +11,15 @@ class UOP_ADD : public UOP_BASE{
 public:
   UOP_ADD() = default;
   void doDepenCheck(UOP_WINDOW* uop_window) override;
-  void addMeta( REGNUM A, ADAS B, TREGNUM C, REGNUM D, TREGNUM E );
+  void addMeta( REGNUM A, TREGNUM B, REGNUM C );
 };
 
  
-class UOP_ADD2 : public UOP_BASE{
+class UOP_LD : public UOP_BASE{
 public:
-  UOP_ADD2() = default;
+  UOP_LD() = default;
   void doDepenCheck(UOP_WINDOW* uop_window) override;
-  void addMeta( ADAS A, ADAS B, ADAS C );
+  void addMeta( ADAS A, TREGNUM C );
 };
 
 #endif

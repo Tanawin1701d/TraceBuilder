@@ -12,6 +12,7 @@ void MOP_BASE::set_rt_instr(RT_INSTR* _rt_instr) {
 }
 
 vector<UOP_BASE*> MOP_SIMPLE::genUop(){
+    rt_instr->getDesPoolOperands();
     assert(rt_instr != nullptr);
     vector<UOP_BASE*> retUOP;
     /////////// give one micro-op for one imm operand
@@ -25,24 +26,24 @@ vector<UOP_BASE*> MOP_SIMPLE::genUop(){
     vector<UOP_BASE*> ldUops;
     for (auto& ldOpr: rt_instr->getSrcLdOperands()){
         auto ldUop = new UOP_SIMPLE();
-        ldUop->addMemMeta(ldOpr.getValue(), true);
+        ldUop->addMemMeta(ldOpr.getMeta(), true);
         ldUops.push_back(ldUop);
         retUOP.push_back(ldUop);
     }
     //////////// give only one uop for all reg compute node
     auto compUop = new UOP_SIMPLE();
     for (auto srcRegOpr: rt_instr->getSrcRegOperands()){
-        compUop->addRegMeta(srcRegOpr.getValue(), true);
+        compUop->addRegMeta(srcRegOpr.getMeta(), true);
     }
     for (auto desRegOpr: rt_instr->getDesRegOperands()){
-        compUop->addRegMeta(desRegOpr.getValue(), false);
+        compUop->addRegMeta(desRegOpr.getMeta(), false);
     }
     retUOP.push_back(compUop);
     /////////// give one micro-op for one store operand
     vector<UOP_BASE*> stUops;
     for (auto& stOpr: rt_instr->getDesStOperands()){
         auto stUop = new UOP_SIMPLE();
-        stUop->addMemMeta(stOpr.getValue(), false);
+        stUop->addMemMeta(stOpr.getMeta(), false);
         stUops.push_back(stUop);
         retUOP.push_back(stUop);
     }

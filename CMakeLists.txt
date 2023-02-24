@@ -60,7 +60,7 @@ add_executable(traceBuilder
         core/tracerFrontEnd/legacyPin/lagacy_pin.h
         core/resultFrontEnd/resultFed.cpp
         core/resultFrontEnd/resultFed.h
-        components/arch/x86/build/uop/x86_uop.h components/arch/x86/build/uop/x86_uop.cpp components/arch/mop_base.cpp components/arch/mop_base.h)
+        components/arch/x86/build/uop/x86_uop.h components/arch/x86/build/uop/x86_uop.cpp components/arch/mop_base.cpp components/arch/mop_base.h components/arch/x86/build/mop/x86_mop.h components/arch/x86/build/mop/x86_mop.cpp)
 
 
 

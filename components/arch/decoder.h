@@ -5,8 +5,7 @@
 #ifndef TRACEBUILDER_DECODER_H
 #define TRACEBUILDER_DECODER_H
 
-#include "../inst_model/rt_instr.h"
-#include "uop_base.h"
+#include "mop_base.h"
 
 
 
@@ -14,9 +13,16 @@
 //// output is uop base class
 
 //// if it is x86 decoder we will use another file.
+
+class RT_INSTR;
 class DECODER{
+protected:
+    MOP_SIMPLE* simpleMop;
+
 public:
-    vector<UOP_BASE*> decode(RT_INSTR& rt_instr);
+    DECODER();
+    virtual MOP_BASE* decodeMOP(RT_INSTR& rt_instr);
+
 };
 
 #endif //TRACEBUILDER_DECODER_H
