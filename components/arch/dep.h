@@ -18,6 +18,8 @@ protected:
     ///// current dependency of this microop
     std::unordered_set<UOP_BASE*> predecessors;
 public:
+    virtual ~DEP_BASE() = default;
+    //////// other derive dependency do not need the virtual deconstructor because base class have been implemented already.
     bool addDep(UOP_BASE* uop);
 };
 ///////////////////////////////////////////////////////////////////////

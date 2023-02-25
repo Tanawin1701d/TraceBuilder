@@ -26,6 +26,7 @@ private:
     OPR_TYPE OT;
 public:
     OPERAND(OPR_TYPE _OT);
+    virtual ~OPERAND() = default;
     OPR_TYPE getOPTYPE() {return OT;};
 };
 

@@ -11,16 +11,15 @@ void MOP_BASE::set_rt_instr(RT_INSTR* _rt_instr) {
     rt_instr = _rt_instr;
 }
 
-vector<UOP_BASE*> MOP_SIMPLE::genUop(){
-    rt_instr->getDesPoolOperands();
+void
+MOP_SIMPLE::genUop(vector<UOP_BASE*>& results){
     assert(rt_instr != nullptr);
-    vector<UOP_BASE*> retUOP;
     /////////// give one micro-op for one imm operand
     vector<UOP_BASE*> immUops;
     for (auto& immOpr: rt_instr->getSrcImmOperands()){
             auto immUop = new UOP_SIMPLE();
             immUops.push_back(immUop);
-            retUOP.push_back(immUop);
+            results.push_back(immUop);
     }
     /////////// give one micro-op for one imm operand
     vector<UOP_BASE*> ldUops;
@@ -28,7 +27,7 @@ vector<UOP_BASE*> MOP_SIMPLE::genUop(){
         auto ldUop = new UOP_SIMPLE();
         ldUop->addMemMeta(ldOpr.getMeta(), true);
         ldUops.push_back(ldUop);
-        retUOP.push_back(ldUop);
+        results.push_back(ldUop);
     }
     //////////// give only one uop for all reg compute node
     auto compUop = new UOP_SIMPLE();
@@ -38,14 +37,14 @@ vector<UOP_BASE*> MOP_SIMPLE::genUop(){
     for (auto desRegOpr: rt_instr->getDesRegOperands()){
         compUop->addRegMeta(desRegOpr.getMeta(), false);
     }
-    retUOP.push_back(compUop);
+    results.push_back(compUop);
     /////////// give one micro-op for one store operand
     vector<UOP_BASE*> stUops;
     for (auto& stOpr: rt_instr->getDesStOperands()){
         auto stUop = new UOP_SIMPLE();
         stUop->addMemMeta(stOpr.getMeta(), false);
         stUops.push_back(stUop);
-        retUOP.push_back(stUop);
+        results.push_back(stUop);
     }
 
     /////////// dependency connection
@@ -61,5 +60,4 @@ vector<UOP_BASE*> MOP_SIMPLE::genUop(){
         stUop->addMemDep(compUop);
     }
     /////////////return the pooled uop
-    return retUOP;
 }

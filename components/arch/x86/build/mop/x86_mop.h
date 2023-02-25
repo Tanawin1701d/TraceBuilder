@@ -10,6 +10,6 @@
 class MOP_ADD_R_M : MOP_BASE{
 public:
 
-   vector<UOP_BASE*> genUop() override;
+   void genUop(vector<UOP_BASE*>& results) override;
 };
 #endif

@@ -13,15 +13,16 @@ class MOP_BASE{
 protected:
     RT_INSTR* rt_instr{};
 public:
+    virtual ~MOP_BASE() = default;
     void set_rt_instr(RT_INSTR* _rt_instr);
-    virtual vector<UOP_BASE*> genUop() = 0;
+    virtual  void genUop(vector<UOP_BASE*>& results) = 0;
 
 };
 
 class MOP_SIMPLE :public MOP_BASE{
 
 public:
-    vector<UOP_BASE*> genUop() override;
+    void  genUop(vector<UOP_BASE*>& results) override;
 };
 
 #endif //TRACEBUILDER_MOP_BASE_H

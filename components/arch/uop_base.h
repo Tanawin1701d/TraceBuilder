@@ -16,6 +16,7 @@ class UOP_BASE: public REG_DEP, public MEM_DEP, public EXE_DEP, public TEM_DEP{
 private:
     uint64_t seqNum;// sequence number of uop in each thread
 public:
+    virtual ~UOP_BASE() = default;
     uint64_t getSeqNum() const;
     void setSeqNum(uint64_t _seqNum);
 

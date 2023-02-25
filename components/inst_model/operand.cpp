@@ -4,6 +4,8 @@
 
 #include "operand.h"
 
+OPERAND::OPERAND(OPR_TYPE _OT): OT(_OT) {}
+
 /// reg operand
 REG_OPERAND::REG_OPERAND(REGNUM _regId):
 regId(_regId),

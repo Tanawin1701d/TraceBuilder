@@ -9,14 +9,19 @@
 RT_INSTR::RT_INSTR(RT_INSTR& host) :
     rt_instr_id(host.rt_instr_id),
     mnemonic(host.mnemonic),
+    srcDecodeKey(host.srcDecodeKey),
+    desDecodeKey(host.desDecodeKey),
     opc(host.opc),
     addr(host.addr),
     size(host.size),
     srcRegOperands(host.srcRegOperands),
     srcLdOperands(host.srcLdOperands),
     srcImmOperands(host.srcImmOperands),
+    srcMacroPoolOperands(host.srcMacroPoolOperands),
     desRegOperands(host.desRegOperands),
-    desStOperands(host.desStOperands)
+    desStOperands(host.desStOperands),
+    desMacroPoolOperands(host.desMacroPoolOperands),
+    macroop(host.macroop)
 {}
 
 RT_INSTR::RT_INSTR() {
@@ -76,6 +81,13 @@ RT_INSTR::fillDynData(convertedDynData& cvtDynData){
     }
 
 }
+
+void
+RT_INSTR::genUOPS(vector<UOP_BASE *>& results) {
+    assert(macroop != nullptr);
+    macroop->set_rt_instr(this);
+    macroop->genUop(results);
+}
 //////////////// internal method
 void
 RT_INSTR::interpretRegOperand(vector<string> &tokens) {
@@ -90,9 +102,11 @@ RT_INSTR::interpretRegOperand(vector<string> &tokens) {
     if (isSrc){
         srcRegOperands.emplace_back(newRegName);
         srcMacroPoolOperands.push_back(&(*srcRegOperands.rbegin()));
+        srcDecodeKey = srcDecodeKey + DEC_REG_OPR;
     }else if ( isDes ){
         desRegOperands.emplace_back(newRegName);
         desMacroPoolOperands.push_back(&(*desRegOperands.rbegin()));
+        desDecodeKey = desDecodeKey + DEC_REG_OPR;
     }else{
         throw std::invalid_argument(
                 "invalid static trace for reg operand " + tokens[ST_IDX_DIRO]
@@ -122,10 +136,12 @@ RT_INSTR::interpretLSOperand(vector<string> &tokens, bool isLoad) {
     if (isLoad) {
         srcLdOperands.emplace_back(baseReg, indexReg, scale, displacement, size, memopNum);
         srcMacroPoolOperands.push_back(&(*srcLdOperands.rbegin()));
+        srcDecodeKey = srcDecodeKey + DEC_LD_OPR;
     }
     else { // store
         desStOperands.emplace_back(baseReg, indexReg, scale, displacement, size, memopNum);
         desMacroPoolOperands.push_back(&(*desStOperands.rbegin()));
+        desDecodeKey = desDecodeKey + DEC_ST_OPR;
     }
 }
 
@@ -155,6 +171,7 @@ RT_INSTR::interpretImmOperand(vector<string>& tokens) {
     IMM imm = stoull(tokens[ST_IDX_IMM_IMM]);
 
     srcImmOperands.emplace_back(imm);
+    srcDecodeKey = srcDecodeKey + DEC_IMM_OPR;
     //// we do not push to MacroPooloperand due to current version regardless about imm
 }
 
@@ -171,7 +188,6 @@ RT_INSTR::interpretFetch(vector<string> &tokens) {
 }
 
 ///// getter
-
 
 uint64_t RT_INSTR::getRtInstrId() const {
     return rt_instr_id;
@@ -191,4 +207,10 @@ ADDR RT_INSTR::getAddr() const {
 
 int RT_INSTR::getSize() const {
     return size;
+}
+
+string RT_INSTR::getDecodeKey(){
+    return mnemonic     + DEC_DILEM  +
+           srcDecodeKey + DEC_DILEM  +
+           desDecodeKey;
 }

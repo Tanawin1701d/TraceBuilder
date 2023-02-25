@@ -15,12 +15,13 @@
 //// if it is x86 decoder we will use another file.
 
 class RT_INSTR;
-class DECODER{
+class DECODER_BASE{
 protected:
     MOP_SIMPLE* simpleMop;
 
 public:
-    DECODER();
+    DECODER_BASE();
+    virtual ~DECODER_BASE() = default; //// prevent memory leak
     virtual MOP_BASE* decodeMOP(RT_INSTR& rt_instr);
 
 };

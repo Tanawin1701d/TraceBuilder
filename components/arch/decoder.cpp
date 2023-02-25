@@ -5,11 +5,11 @@
 #include "decoder.h"
 
 MOP_BASE*
-DECODER::decodeMOP(RT_INSTR &rt_instr) {
+DECODER_BASE::decodeMOP(RT_INSTR &rt_instr) {
 
     assert(simpleMop != nullptr);
     return simpleMop;
 }
 
-DECODER::DECODER():
+DECODER_BASE::DECODER_BASE():
 simpleMop(new MOP_SIMPLE()){}
