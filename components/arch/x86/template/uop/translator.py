@@ -1,5 +1,6 @@
 import os
-
+from colorama import init
+from termcolor import colored
 # UOPSTORAGE { name: "add", input: [REG, TREG, MEM],
 #                           inputName: [jennis, mewnich, orn],
 #                           output: [REG, TREG, MEM],
@@ -30,6 +31,7 @@ ioTypeMap = {UOP_IO_TYPE_REG: "REGNUM", UOP_IO_TYPE_MEM: "ADAS", UOP_IO_TYPE_TRE
 START_PARAMETER = 'a'
 
 ##### for cxx writing
+SCRIPT_DIR_PATH=os.path.dirname(os.path.realpath(__file__))
 DES_PREFIX = "../../build/uop"
 INC_DEP = "../../../dep.h"
 INC_UOP = "../../../uop_base.h"
@@ -53,8 +55,8 @@ def uop_CXX_write(cxx_eles):
     headerWritePath = os.path.join(DES_PREFIX, HEAD_FILE_NAME)
     cxxWritePath = os.path.join(DES_PREFIX, CXX_FILE_NAME)
 
-    headerFile = open(headerWritePath, "w")
-    cxxWriteFile = open(cxxWritePath, "w")
+    headerFile = open(os.path.join(SCRIPT_DIR_PATH, headerWritePath), "w")
+    cxxWriteFile = open(os.path.join(SCRIPT_DIR_PATH,cxxWritePath), "w")
 
     headerFile.write(headerStr)
     cxxWriteFile.write(cxxStr)
@@ -155,7 +157,6 @@ def uop_interpret(lines_token):
 
         if REP == REF_VAL_UOP_START:
             uopResult.update({"name": linetok[1]})
-            print("detect uop",uopResult)
         elif (REP == REF_VAL_INPUT) or (REP == REF_VAL_OUTPUT):
             varSide = REP.lower()  # convert to input or output
             varSideName = varSide + "Name"
@@ -164,11 +165,11 @@ def uop_interpret(lines_token):
             if len(linetok) >= 3:
                 for vt, vm in zip(linetok[1::2], linetok[2::2]):
                     if vt not in UOP_IO_TYPES:
-                        raise ValueError("there is no this type of microop")
+                        raise ValueError(f"there is no this type of microop {linetok}")
                     uopResult[varSide].append(vt)
                     uopResult[varSideName].append(vm)
         elif REP == REF_VAL_UOP_END:
-            #print(uopResult)
+            print(colored(f"[UOP GEN]interpret UOP: {uopResult[UOP_MT_NAME]} successfully", "blue"))
             yield uopResult
             uopResult.clear()
         else:
@@ -190,7 +191,7 @@ def find_mach_files(dir_path):
 ##sequence generator in current folder that script is belonged to.
 ##return list of token lists from readFile()
 def readFiles():
-    targetFilePaths = find_mach_files(".")
+    targetFilePaths = find_mach_files(SCRIPT_DIR_PATH)
     for targetFilePath in targetFilePaths:
         yield readFile(targetFilePath)
 
@@ -199,7 +200,7 @@ def readFiles():
 # return list of token list
 def readFile(srcFilePath):
     result = []
-    print("[uop generator] start reading file {}".format(srcFilePath))
+    print(colored(f"[UOP GEN] start reading file: {srcFilePath}", "cyan"))
     with open(srcFilePath, "r") as srcFile:
         lines = srcFile.readlines()
         for line in lines:
@@ -210,13 +211,18 @@ def readFile(srcFilePath):
 
 
 def start():
+    init()
+    print(colored("[DEC GEN]===================== start micro operation generator =====================", "magenta"))
+    interpreted_uopPool = []
+    cxx_headandcpp_list = []
     for tokenLists in readFiles():
         # it is list of  token list per line in each file.
         # [ #line1#["INPUT", REG, REG, MEM], #line2#["OUTPUT", REG, REG, MEM]]
-        cxx_headandcpp_list = []
-        for interpreted_uop in uop_interpret(tokenLists):
+        for interpreted_uop in uop_interpret(tokenLists): #### tokenList of each file
+            #single micro-op
+            interpreted_uopPool.append(interpreted_uop.copy())
             cxx_method_str = uop_genCXX(interpreted_uop)
             cxx_headandcpp_list.append(cxx_method_str)
-        uop_CXX_write(cxx_headandcpp_list)
 
-start()
+    uop_CXX_write(cxx_headandcpp_list)
+    return interpreted_uopPool

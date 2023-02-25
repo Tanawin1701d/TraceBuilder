@@ -1,4 +1,6 @@
 import os
+from colorama import init
+from termcolor import colored
 
 # MOPSTORAGE= { mnemonic: "add",
 #               inputType: "RLI"   <varTypeAKA> <varTypeAKA2>
@@ -26,6 +28,7 @@ DEC_META_MACROOP        = "macroop"
 
 
 ##### for cxx writing
+SCRIPT_DIR_PATH=os.path.dirname(os.path.realpath(__file__))
 DES_PREFIX     = "../../build/decoder"
 INC_MOP        = "../../../mop_base.h"
 INC_MOP_X86    = "../mop/x86_mop.h"
@@ -36,12 +39,12 @@ CXX_FILE_NAME = "x86_dec.cpp"
 MACH_FILE_TYPE = ".mach"
 # write to file
 def dec_writeCXX_file(cxx_eles):
-    headerStr = "#ifdef X86_DEC_H\n" \
-             "#define X86_DEC_H\n" \
-             f"#include\"{INC_MOP_X86}\"" \
-             f"#include\"{INC_MOP}\"" \
-             f"#include\"{INC_DEC_BASE}\""\
-             "\n\n\n\n\n\n\n"
+    headerStr = "#ifndef X86_DEC_H\n" \
+                "#define X86_DEC_H\n" \
+                f"#include\"{INC_MOP_X86}\"\n" \
+                f"#include\"{INC_MOP}\"\n" \
+                f"#include\"{INC_DEC_BASE}\"\n"\
+                "\n\n\n\n\n\n\n"
 
     headerStr = headerStr + cxx_eles[0] + "\n"
 
@@ -54,8 +57,8 @@ def dec_writeCXX_file(cxx_eles):
     headerWritePath = os.path.join(DES_PREFIX, HEAD_FILE_NAME)
     cxxWritePath = os.path.join(DES_PREFIX, CXX_FILE_NAME)
 
-    headerFile   = open(headerWritePath, "w")
-    cxxWriteFile = open(cxxWritePath, "w")
+    headerFile   = open(os.path.join(SCRIPT_DIR_PATH,headerWritePath), "w")
+    cxxWriteFile = open(os.path.join(SCRIPT_DIR_PATH,cxxWritePath), "w")
 
     headerFile.write(headerStr)
     cxxWriteFile.write(cxxStr)
@@ -67,10 +70,10 @@ def dec_writeCXX_file(cxx_eles):
 # gen constructor and method
 def dec_genCPP_constructorMethod(interpreted_decList):
 
-    cppStr = "DECODER_X86::DECODER_X86(){\n"
+    cppStr = "DECODER_X86::DECODER_X86(): DECODER_BASE(){\n"
 
     for interpreted_map in interpreted_decList:
-        cppStr = cppStr + "     decodeStorage.insert(\"{RTKEY}\", new MOP_{MOPNAME}());\n"\
+        cppStr = cppStr + "     decodeStorage.insert({{\"{RTKEY}\", (MOP_BASE*)(new MOP_{MOPNAME}())}});\n"\
                             .format(RTKEY = "$".join([interpreted_map[DEC_META_NAME],
                                                       interpreted_map[DEC_META_INPUT],
                                                       interpreted_map[DEC_META_OUTPUT]])   ,
@@ -85,25 +88,26 @@ def dec_genCPP_decodeMopMethod(interpreted_decList):
     cppStr = "MOP_BASE*\n" \
              "DECODER_X86::decodeMOP(RT_INSTR& rt_instr) {\n" \
              "" \
-             "auto finder = decodeStorage.find(rt_instr.getDecodeKey())" \
-             "return finder == decodeStorage.end() ? simpleMop: finder->second();" \
-             "" \
+             "auto finder = decodeStorage.find(rt_instr.getDecodeKey());\n" \
+             "return ( finder == decodeStorage.end() ) ? simpleMop: finder->second();\n" \
+             "\n" \
              "}"
     return cppStr
 
 # mop gen cxx method for each file
 def dec_genCXX_methods(interpreted_decList):
-    headerStr = "class DECODER_X86{\n" \
+    headerStr = "class DECODER_X86 : DECODER_BASE{\n" \
                 "private:\n" \
                 "       unordered_map<std::string, MOP_BASE*> decodeStorage;\n" \
                 "public:\n" \
-                "                 DOCODER_X86();\n" \
+                "                 DECODER_X86();\n" \
                 "       MOP_BASE* decodeMOP(RT_INSTR& rt_instr) override;\n" \
                 "};\n"
 
     cppStr    = dec_genCPP_constructorMethod(interpreted_decList) + "\n\n\n\n\n\n"\
                 + dec_genCPP_decodeMopMethod  (interpreted_decList)
 
+    return headerStr, cppStr
 
 # interpret microop
 def interpret_decoder(linesToken):
@@ -116,6 +120,7 @@ def interpret_decoder(linesToken):
         retDec.update({DEC_META_INPUT   :  singleLineToken[4]})
         retDec.update({DEC_META_OUTPUT  :  singleLineToken[6]})
         retDec.update({DEC_META_MACROOP :  singleLineToken[8]})
+        print(colored(f"[DEC GEN] interpret DEC: {retDec[DEC_META_NAME]}", "blue"))
         yield retDec
 
 # Recursive function to find all .mach files
@@ -132,7 +137,7 @@ def find_mach_files(dir_path):
 ##sequence generator in current folder that script is belonged to.
 ##return list of token lists from readFile()
 def readFiles():
-    targetFilePaths = find_mach_files(".")
+    targetFilePaths = find_mach_files(SCRIPT_DIR_PATH)
     for targetFilePath in targetFilePaths:
         yield readFile(targetFilePath)
 
@@ -141,7 +146,7 @@ def readFiles():
 # return list of token list
 def readFile(srcFilePath):
     result = []
-    print("[dec generator] start reading file {}".format(srcFilePath))
+    print(colored(f"[DEC GEN] start reading file {srcFilePath}", "cyan"))
     with open(srcFilePath, "r") as srcFile:
         lines = srcFile.readlines()
         for line in lines:
@@ -149,3 +154,17 @@ def readFile(srcFilePath):
             if (len(splitedToken) > 0) and (splitedToken[0] in REF_VALS):
                 result.append(splitedToken)
     return result
+
+
+def start():
+    init()
+    print(colored("[DEC GEN]===================== start decoder generator =====================", "magenta"))
+    tokenListsPool = []
+    for singleFileTokenList in readFiles():
+        tokenListsPool = tokenListsPool + singleFileTokenList
+
+    interpretedDecPool = interpret_decoder(tokenListsPool)
+
+    headerStr, cppStr =  dec_genCXX_methods(interpretedDecPool)
+    dec_writeCXX_file((headerStr, cppStr))
+    return interpretedDecPool

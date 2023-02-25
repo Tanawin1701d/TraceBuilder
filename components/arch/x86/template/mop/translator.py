@@ -1,5 +1,6 @@
 import os
-
+from colorama import init
+from termcolor import colored
 # MOPSTORAGE= { name: "add",
 #
 #               input: { varName: (T_MEM_LD, id)}
@@ -56,6 +57,7 @@ MOP_META_MICROOP_DEP    = "dep"
 
 
 ##### for cxx writing
+SCRIPT_DIR_PATH=os.path.dirname(os.path.realpath(__file__))
 DES_PREFIX = "../../build/mop"
 INC_DEP = "../../../dep.h"
 INC_UOP = "../../../uop_base.h"
@@ -85,8 +87,8 @@ def mop_writeCXX_methods(cxx_eles): #tuple (cpp, header)
     headerWritePath = os.path.join(DES_PREFIX, HEAD_FILE_NAME)
     cxxWritePath = os.path.join(DES_PREFIX, CXX_FILE_NAME)
 
-    headerFile   = open(headerWritePath, "w")
-    cxxWriteFile = open(cxxWritePath, "w")
+    headerFile   = open(os.path.join(SCRIPT_DIR_PATH,headerWritePath), "w")
+    cxxWriteFile = open(os.path.join(SCRIPT_DIR_PATH,cxxWritePath), "w")
 
     headerFile.write(headerStr)
     cxxWriteFile.write(cxxStr)
@@ -122,10 +124,8 @@ def uop_genParam_addMeta(interpret_mop, uopMeta):
 def mop_genCXX_method_genUop(interpret_mop):
     retStr = str()
 
-    retStr = "vector<UOP_BASE*> MOP_{MOPNAME}::genUop(){{\n".format(MOPNAME = interpret_mop[MOP_META_NAME])
+    retStr = "void MOP_{MOPNAME}::genUop(vector<UOP_BASE*>& results){{\n".format(MOPNAME = interpret_mop[MOP_META_NAME])
 
-    #### init vector
-    retStr = retStr + "     vector<UOP_BASE*> retUops;\n"
     #### get pool
     retStr = retStr + "     auto srcPool = rt_instr->getSrcMacroPoolOperands();\n" ## type vector<OPERAND*>
     retStr = retStr + "     auto desPool = rt_instr->getDesMacroPoolOperands();\n" ## type vector<OPERAND*>
@@ -140,7 +140,7 @@ def mop_genCXX_method_genUop(interpret_mop):
                                                                             )
 
         #### push back to pool
-        retStr = retStr + "     retUops.push_back(var_{UOPTYPE});\n".format(UOPTYPE = "UOP_"+uopName)
+        retStr = retStr + "     results.push_back(var_{UOPTYPE});\n".format(UOPTYPE = "UOP_"+uopName)
 
     retStr = retStr + "\n\n\n     ///------------------------connect uop temp variable dep \n"
 
@@ -151,10 +151,6 @@ def mop_genCXX_method_genUop(interpret_mop):
                 .format(UOPTYPE = "UOP_"+uopName,
                         DEPUOP  = "UOP_" + depType)
 
-    #### return vector
-    retStr = retStr + "return retUops;\n"
-
-
     retStr = retStr + "}"
     return retStr
 
@@ -162,7 +158,7 @@ def mop_genCXX_methods(interpret_mop):
     headerStr = "class MOP_{MOPNAME} : MOP_BASE{{\n" \
                 "public:\n" \
                 "\n" \
-                "   vector<UOP_BASE*> genUop() override;\n" \
+                "   void genUop(vector<UOP_BASE*>& results) override;\n" \
                 "}};"\
         .format(MOPNAME = interpret_mop[MOP_META_NAME])
 
@@ -196,6 +192,7 @@ def interpretMacroop(linesToken):
             definedVar.clear()
             varTempDep.clear()
         elif tokKey == REF_VAL_MACRO_END:
+            print(colored(f"[MOP GEN] interpret MOP: {mopMeta[MOP_META_NAME]} successfully", "blue"))
             yield mopMeta
         elif tokKey == REF_VAL_MACRO_INPUT:
             if len(singleLineTok) >= 3:
@@ -212,7 +209,6 @@ def interpretMacroop(linesToken):
         elif tokKey == REF_VAL_MACRO_OUPUT:
             if len(singleLineTok) >= 3:
                 for id, (vt, vn) in enumerate(zip(singleLineTok[1::2], singleLineTok[2::2])):
-                    print (vt, "    ", vn)
                     if vt not in  [MOP_IO_TYPE_ST_MEM, MOP_IO_TYPE_REG]:
                         raise KeyError(f"there is no type {vt}")
                     if vn in definedVar:
@@ -273,14 +269,14 @@ def find_mach_files(dir_path):
 ##sequence generator in current folder that script is belonged to.
 ##return list of token lists from readFile()
 def readFiles():
-    targetFilePaths = find_mach_files(".")
+    targetFilePaths = find_mach_files(SCRIPT_DIR_PATH)
     for targetFilePath in targetFilePaths:
         yield readFile(targetFilePath)
 ##read specific file and do tokenize string
 # return list of token list
 def readFile(srcFilePath):
     result = []
-    print("[mop generator] start reading file {}".format(srcFilePath))
+    print(colored(f"[MOP GEN] start reading file: {srcFilePath}", "cyan"))
     with open(srcFilePath, "r") as srcFile:
         lines = srcFile.readlines()
         for line in lines:
@@ -291,10 +287,13 @@ def readFile(srcFilePath):
 
 
 def start():
+    init()
+    print(colored("[DEC GEN]===================== start macro operation generator =====================", "magenta"))
+    cxxSrcs = []
+    mopMetaPool = []
     for tokensList in readFiles():
-        cxxSrcs = []
         for mopMeta in interpretMacroop(tokensList):
+            mopMetaPool.append(mopMeta.copy())
             cxxSrcs.append(mop_genCXX_methods(mopMeta))
-        mop_writeCXX_methods(cxxSrcs)
-
-start()
+    mop_writeCXX_methods(cxxSrcs)
+    return mopMetaPool
