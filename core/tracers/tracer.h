@@ -37,7 +37,7 @@ public:
                 DECODER *decoder,
                 THREAD_MODEL *threadModel);
 
-    void onGetDynTraceValue(dynTraceData dyndata);
+    void onGetDynTraceValue(dynTraceData dyndata) ;
 
 };
 
