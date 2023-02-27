@@ -14,15 +14,38 @@ RT_INSTR::RT_INSTR(RT_INSTR& host) :
     opc(host.opc),
     addr(host.addr),
     size(host.size),
+    //// src operand
     srcRegOperands(host.srcRegOperands),
     srcLdOperands(host.srcLdOperands),
     srcImmOperands(host.srcImmOperands),
-    srcMacroPoolOperands(host.srcMacroPoolOperands),
+
+    //// des operand
     desRegOperands(host.desRegOperands),
     desStOperands(host.desStOperands),
-    desMacroPoolOperands(host.desMacroPoolOperands),
+
     macroop(host.macroop)
-{}
+{
+
+    //////// macro pool operand need index from self operand class
+    /// build src macroPool Operands
+    srcMacroPoolOperands.reserve(host.srcMacroPoolOperands.size());
+    for (auto& oprPtr: srcRegOperands){
+        srcMacroPoolOperands[oprPtr.getMcSideIdx()] = &oprPtr;
+    }
+    for (auto& oprPtr: srcLdOperands){
+        srcMacroPoolOperands[oprPtr.getMcSideIdx()] = &oprPtr;
+    }
+    /// build des macrPool operand
+    desMacroPoolOperands.reserve(host.desMacroPoolOperands.size());
+    for (auto& oprPtr: desRegOperands){
+        desMacroPoolOperands[oprPtr.getMcSideIdx()] = &oprPtr;
+    }
+    for (auto& oprPtr: desStOperands){
+        desMacroPoolOperands[oprPtr.getMcSideIdx()] = &oprPtr;
+    }
+    ///////////////////////////////////////////////////////////////////////
+
+}
 
 RT_INSTR::RT_INSTR() {
     //// we might use dummy opcode
@@ -30,17 +53,19 @@ RT_INSTR::RT_INSTR() {
 
 void
 RT_INSTR::interpretSt(const vector<string>& st_raw) {
+    size_t lstSrcMacroIdx = 0;
+    size_t lstDesMacroIdx = 0;
     for (auto& opr_raw: st_raw){
         vector<string> opr_tokens;
         splitNstrip(opr_raw, opr_tokens);
         assert(opr_tokens.size() > 2);
         ///// check operand type and interpret them
         if (opr_tokens[ST_IDX_COMPO_TYP] == ST_VAL_COMPO_REG){
-            interpretRegOperand(opr_tokens);
+            interpretRegOperand(opr_tokens, lstSrcMacroIdx, lstDesMacroIdx);
         }else if (opr_tokens[ST_IDX_COMPO_TYP] == ST_VAL_COMPO_LD){
-            interpretLOperand(opr_tokens);
+            interpretLOperand(opr_tokens, lstSrcMacroIdx, lstDesMacroIdx);
         }else if (opr_tokens[ST_IDX_COMPO_TYP] == ST_VAL_COMPO_ST){
-            interpretSOperand(opr_tokens);
+            interpretSOperand(opr_tokens, lstSrcMacroIdx, lstDesMacroIdx);
         }else if (opr_tokens[ST_IDX_COMPO_TYP] == ST_VAL_COMPO_IMM){
             interpretImmOperand(opr_tokens);
         }else if (opr_tokens[ST_IDX_COMPO_TYP] == ST_VAL_COMPO_FETCH){
@@ -90,7 +115,7 @@ RT_INSTR::genUOPS(vector<UOP_BASE *>& results) {
 }
 //////////////// internal method
 void
-RT_INSTR::interpretRegOperand(vector<string> &tokens) {
+RT_INSTR::interpretRegOperand(vector<string> &tokens, size_t& lstSrcMacroIdx, size_t& lstDesMacroIdx) {
     assert(tokens[ST_IDX_COMPO_TYP] == ST_VAL_COMPO_REG);
     assert(tokens.size() == ST_IDX_REG_AMT);
 
@@ -100,11 +125,11 @@ RT_INSTR::interpretRegOperand(vector<string> &tokens) {
     REGNUM newRegName = regMapAutoAdd(tokens[ST_IDX_REG_R]);
 
     if (isSrc){
-        srcRegOperands.emplace_back(newRegName);
+        srcRegOperands.emplace_back(newRegName, lstSrcMacroIdx++);
         srcMacroPoolOperands.push_back(&(*srcRegOperands.rbegin()));
         srcDecodeKey = srcDecodeKey + DEC_REG_OPR;
     }else if ( isDes ){
-        desRegOperands.emplace_back(newRegName);
+        desRegOperands.emplace_back(newRegName, lstDesMacroIdx++);
         desMacroPoolOperands.push_back(&(*desRegOperands.rbegin()));
         desDecodeKey = desDecodeKey + DEC_REG_OPR;
     }else{
@@ -116,7 +141,7 @@ RT_INSTR::interpretRegOperand(vector<string> &tokens) {
 
 /// TODO for now load and store operand share same raw format so we will use pool function instead
 void
-RT_INSTR::interpretLSOperand(vector<string> &tokens, bool isLoad) {
+RT_INSTR::interpretLSOperand(vector<string> &tokens, bool isLoad, size_t& lstSrcMacroIdx, size_t& lstDesMacroIdx) {
     //// check direction of the operand whether it is store or
     bool isSrc = tokens[ST_IDX_DIRO] == ST_VAL_DIRO_SRC;
     bool isDes = tokens[ST_IDX_DIRO] == ST_VAL_DIRO_DES;
@@ -134,32 +159,34 @@ RT_INSTR::interpretLSOperand(vector<string> &tokens, bool isLoad) {
     int memopNum = stoi(tokens[ST_IDX_LOAD_MON]);
     ///build operand
     if (isLoad) {
-        srcLdOperands.emplace_back(baseReg, indexReg, scale, displacement, size, memopNum);
+        srcLdOperands.emplace_back(baseReg, indexReg,scale,
+                                   displacement, size, memopNum,lstSrcMacroIdx++);
         srcMacroPoolOperands.push_back(&(*srcLdOperands.rbegin()));
         srcDecodeKey = srcDecodeKey + DEC_LD_OPR;
     }
     else { // store
-        desStOperands.emplace_back(baseReg, indexReg, scale, displacement, size, memopNum);
+        desStOperands.emplace_back(baseReg, indexReg, scale,
+                                   displacement, size, memopNum, lstDesMacroIdx++);
         desMacroPoolOperands.push_back(&(*desStOperands.rbegin()));
         desDecodeKey = desDecodeKey + DEC_ST_OPR;
     }
 }
 
 void
-RT_INSTR::interpretLOperand(vector<string> &tokens) {
+RT_INSTR::interpretLOperand(vector<string> &tokens, size_t& lstSrcMacroIdx, size_t& lstDesMacroIdx) {
     assert(tokens[ST_IDX_COMPO_TYP] == ST_VAL_COMPO_LD);
     assert(tokens.size() == ST_IDX_LOAD_AMT);
     assert(tokens[ST_IDX_DIRO] == ST_VAL_DIRO_SRC);
-    interpretLSOperand(tokens, true);
+    interpretLSOperand(tokens, true, lstSrcMacroIdx, lstDesMacroIdx);
 
 }
 
 void
-RT_INSTR::interpretSOperand(vector<string> &tokens) {
+RT_INSTR::interpretSOperand(vector<string> &tokens, size_t& lstSrcMacroIdx, size_t& lstDesMacroIdx) {
     assert(tokens[ST_IDX_COMPO_TYP] == ST_VAL_COMPO_ST);
     assert(tokens.size() == ST_IDX_STORE_AMT);
     assert(tokens[ST_IDX_DIRO] == ST_VAL_DIRO_DES);
-    interpretLSOperand(tokens, false);
+    interpretLSOperand(tokens, false, lstSrcMacroIdx, lstDesMacroIdx);
 
 }
 

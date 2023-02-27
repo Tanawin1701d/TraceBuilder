@@ -4,12 +4,14 @@
 
 #include "operand.h"
 
-OPERAND::OPERAND(OPR_TYPE _OT): OT(_OT) {}
+OPERAND::OPERAND(OPR_TYPE _OT, size_t _mcArgSIdx):
+OT(_OT),
+mcArgSIdx(_mcArgSIdx){}
 
 /// reg operand
-REG_OPERAND::REG_OPERAND(REGNUM _regId):
+REG_OPERAND::REG_OPERAND(REGNUM _regId, size_t _mcArgSIdx):
 regId(_regId),
-OPERAND(O_REG)
+OPERAND(O_REG, _mcArgSIdx)
 {}
 
 REGNUM REG_OPERAND::getRegId() const {
@@ -27,7 +29,8 @@ MEM_OPERAND::MEM_OPERAND(
                             IMM    _displacement,
                             ADDR    _size,
                             int    _memopNum,
-                            OPR_TYPE _setOpr
+                            OPR_TYPE _setOpr,
+                            size_t _mcArgSIdx
                         ) :
 baseRegId   (_baseRegId),
 indexRegId  (_indexRegId),
@@ -35,7 +38,7 @@ scaleFactor (_scaleFactor),
 displacement(_displacement),
 size(_size),
 memopNum(_memopNum),
-OPERAND(_setOpr)
+OPERAND(_setOpr, _mcArgSIdx)
 {}
 
 REGNUM
@@ -88,7 +91,8 @@ REGNUM _indexRegId,
 int    _scaleFactor,
 IMM    _displacement,
 ADDR    _size,
-int    _memopNum
+int    _memopNum,
+size_t _mcArgSIdx
 ):
     MEM_OPERAND(_baseRegId,
                 _indexRegId,
@@ -96,7 +100,8 @@ int    _memopNum
                 _displacement,
                 _size,
                 _memopNum,
-                O_MEM_LD){}
+                O_MEM_LD,
+                _mcArgSIdx){}
 
 /// store operand
 
@@ -105,20 +110,23 @@ ST_OPERAND::ST_OPERAND(REGNUM _baseRegId,
                        int    _scaleFactor,
                        IMM    _displacement,
                        ADDR   _size,
-                       int    _memopNum):
+                       int    _memopNum,
+                       size_t _mcArgSIdx
+                       ):
         MEM_OPERAND(_baseRegId,
                     _indexRegId,
                     _scaleFactor,
                     _displacement,
                     _size,
                     _memopNum,
-                    O_MEM_ST){}
+                    O_MEM_ST,
+                    _mcArgSIdx){}
 
 /// imm operand
 
 IMM_OPERAND::IMM_OPERAND(IMM _imm):
 imm(_imm),
-OPERAND(O_IMM)
+OPERAND(O_IMM,-1)
 {}
 
 IMM

@@ -37,30 +37,30 @@ private:
     ADDR                addr{};
     int                 size{};
     /////// src operand data and metadata
-        /// for now we assume that order is matter to unify instruction
     vector<REG_OPERAND> srcRegOperands;
     vector<LD_OPERAND>  srcLdOperands;
     vector<IMM_OPERAND> srcImmOperands;
+    /////// pool operand to allow macro-op access in correct order
     vector<OPERAND*>    srcMacroPoolOperands; /// pool the  src operand for macroop will get it and fill into micro-op
+
+
     /////// des operand data and metadata
-        /// for now we assume that order is matter to classify instruction and micro-op
+    /// for now we assume that order is matter to classify instruction and micro-op
     vector<REG_OPERAND> desRegOperands;
     vector<ST_OPERAND>  desStOperands;
+    /////// pool operand to allow macro-op access in correct order
     vector<OPERAND*>    desMacroPoolOperands;/// pool the  des operand for macroop will get it and fill into micro-op
     /////// macro-op
     MOP_BASE*           macroop{};
-    //TODO store for micro-op
-
-    /// index interpreter for raw file
 
 
 protected:
 
     /// interpret operand for each type from raw data that recieve from pintool
-    virtual void interpretRegOperand(vector<string>& tokens);
-    virtual void interpretLOperand (vector<string>& tokens);
-    virtual void interpretSOperand (vector<string>& tokens);
-    virtual void interpretLSOperand (vector<string>& tokens, bool isLoad);
+    virtual void interpretRegOperand(vector<string>& tokens, size_t& lstSrcMacroIdx, size_t& lstDesMacroIdx);
+    virtual void interpretLOperand (vector<string>& tokens, size_t& lstSrcMacroIdx, size_t& lstDesMacroIdx);
+    virtual void interpretSOperand (vector<string>& tokens, size_t& lstSrcMacroIdx, size_t& lstDesMacroIdx);
+    virtual void interpretLSOperand (vector<string>& tokens, bool isLoad, size_t& lstSrcMacroIdx, size_t& lstDesMacroIdx);
     virtual void interpretImmOperand(vector<string>& tokens);
     virtual void interpretFetch  (vector<string>& tokens);
 

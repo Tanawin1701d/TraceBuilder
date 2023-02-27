@@ -24,10 +24,12 @@ enum OPR_TYPE {
 class OPERAND{
 private:
     OPR_TYPE OT;
+    size_t   mcArgSIdx; //// microop operand idx for each side (src or side)
 public:
-    OPERAND(OPR_TYPE _OT);
+    OPERAND(OPR_TYPE _OT, size_t _mcArgSIdx);
     virtual ~OPERAND() = default;
     OPR_TYPE getOPTYPE() {return OT;};
+    size_t   getMcSideIdx() {return mcArgSIdx;}
 };
 
 
@@ -36,7 +38,7 @@ class REG_OPERAND : public OPERAND{
 private:
     REGNUM regId;
 public:
-    REG_OPERAND(REGNUM _regId);
+    REG_OPERAND(REGNUM _regId, size_t _mcArgSIdx);
     REGNUM getRegId() const;
     REGNUM getMeta();
 };
@@ -60,7 +62,8 @@ public:
                 IMM    _displacement,
                 ADDR    _size,
                 int    _memopNum,
-                OPR_TYPE _setOpr);
+                OPR_TYPE _setOpr,
+                size_t _mcArgSIdx);
 
     REGNUM getBaseRegId() const;
 
@@ -90,7 +93,8 @@ public:
                int    _scaleFactor,
                IMM    _displacement,
                ADDR    _size,
-               int    _memopNum);
+               int    _memopNum,
+               size_t _mcArgSIdx);
 };
 /// store operand
 class ST_OPERAND : public MEM_OPERAND{
@@ -101,7 +105,8 @@ public:
                int    _scaleFactor,
                IMM    _displacement,
                ADDR    _size,
-               int    _memopNum);
+               int    _memopNum,
+               size_t _mcArgSIdx);
 };
 /// immediate operand
 class IMM_OPERAND : public OPERAND{
