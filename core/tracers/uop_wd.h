@@ -8,14 +8,14 @@
 #endif //TRACEBUILDER_INSTRWD_H
 
 #include<deque>
-#include "../../components/arch/uop_base.h"
+#include "../../models/arch/uop_base.h"
 
 class UOP_WINDOW{
 private:
     std::deque<UOP_BASE*> uop_window;
     int window_size;
     bool isFull();
-    void popFromQ();
+    void tryPopFromQ();
 
 public:
     UOP_WINDOW(int _window_size);

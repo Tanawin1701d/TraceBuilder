@@ -6,14 +6,14 @@
 #define TRACEBUILDER_RESULTFED_H
 
 #include <vector>
-#include "../../components/uop/uop_base.h"
+#include "../../models/arch/uop_base.h"
 
 class RESULT_FRONT_END{
-
+friend class TRACER_BASE;
 protected:
     ////////// please remind that this UOP_BASE pointer will be deleted later
     ///////////////// (when uop window discard it, uop will be deleted)
-    virtual void onGetResult(std::vector<UOP_BASE*>& results) = 0;
+    virtual void onGetUopsResult(std::vector<UOP_BASE*>& results) = 0;
 
 };
 

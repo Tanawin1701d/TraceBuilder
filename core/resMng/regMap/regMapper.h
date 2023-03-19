@@ -9,7 +9,7 @@
 #include <map>
 #include <string>
 #include<boost/algorithm/string.hpp>
-#include"../../../stat/statPool.h"
+#include"stat/statPool.h"
 
 using namespace std;
 

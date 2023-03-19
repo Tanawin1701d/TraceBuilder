@@ -5,11 +5,11 @@
 #ifndef TRACEBUILDER_LAGACY_PIN_H
 #define TRACEBUILDER_LAGACY_PIN_H
 
-#include<istream>
+#include <istream>
 #include "../traceToolFed.h"
 #include "../staticTraceVar.h"
 #include "../dynTraceVar.h"
-#include "../../../components/thread_model/thread_model.h"
+#include "models/thread_model/thread_model.h"
 
 class LAGACY_PIN_TRACER : public TRACE_TOOL_FRONT_END{
 

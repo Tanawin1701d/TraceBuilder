@@ -2,19 +2,23 @@
 // Created by tanawin on 7/1/2566.
 //
 /////// header file is in tracer.h
-#include "tracer.h"
 #include "uop_wd.h"
 
+
+///// constructor
 UOP_WINDOW::UOP_WINDOW(int _window_size){
     ///// minimum uop window is 10
     assert(_window_size >= 10);
+    window_size = _window_size;
 }
 
 void
-UOP_WINDOW::popFromQ(){
-    UOP_BASE* preDelete = uop_window.back();
-    delete preDelete;
-    uop_window.pop_back();
+UOP_WINDOW::tryPopFromQ(){
+    if ( !uop_window.empty() ) {
+        UOP_BASE *preDelete = uop_window.back();
+        delete preDelete;
+        uop_window.pop_back();
+    }
 }
 
 //// check is full?

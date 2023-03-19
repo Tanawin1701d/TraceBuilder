@@ -9,7 +9,7 @@
 bool isADASoverlap(const ADAS& a,const ADAS& b){
 
     return ( (a.addr >= b.addr) && (a.addr < (b.addr + b.size)) ) ||
-           ( (b.addr >= a.addr) && (b.addr < (a.addr + a.size)) )
+           ( (b.addr >= a.addr) && (b.addr < (a.addr + a.size)) );
 
 }
 
