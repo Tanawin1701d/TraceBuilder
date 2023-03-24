@@ -28,13 +28,6 @@ UOP_WINDOW::isFull() {
 }
 
 void
-UOP_WINDOW::depAssign(UOP_BASE* newUop) {
-
-    assert(newUop != nullptr);
-    newUop->doDepenCheck(this);
-}
-
-void
 UOP_WINDOW::addUop(UOP_BASE* newUop){
     assert(newUop != nullptr);
     if (isFull())

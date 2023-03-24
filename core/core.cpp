@@ -5,27 +5,43 @@
 #include "core.h"
 
 
-CORE::CORE(MEM_MNG* _memMng):
+CORE::CORE(MEM_MNG* _memMng, DECODER_BASE* _decBase):
+amountThread(0),
 memMng(_memMng),
-last_tid(0)
+decoder(_decBase)
 {
-    assert(_memMng != nullptr);
+    assert(_memMng  != nullptr);
+    assert(_decBase != nullptr);
 }
 
 
 void
-CORE::addTraceWorker(TRACE_TOOL_FRONT_END* _trace_tool,
-                     RESULT_FRONT_END*     _result_frontEnd,
-                     int                   _obsSize
+CORE::addWorker(TRACE_TOOL_FRONT_END* _trace_tool,
+                RESULT_FRONT_END*     _result_frontEnd,
+                int                   _obsSize
                      ){
 
-    traceWorkers.emplace_back(
-            last_tid++,
-            _trace_tool,
-            _result_frontEnd,
-            memMng,
-            _obsSize
-            );
+    /////// for now we assume that each trace worker have their own thread model
+    //////////// In future, we might support shared thread model to optimize the performance
+
+    ////////// build uop window and thread model for tracer and traceTool
+    UOP_WINDOW*   uopWindow = new UOP_WINDOW(_obsSize);
+    THREAD_MODEL* tmd       = new THREAD_MODEL();
+
+    ///////// tracer
+    TRACER_BASE* tracer = new TRACER_BASE(amountThread,
+                                          _result_frontEnd,
+                                          uopWindow,
+                                          decoder,
+                                          memMng,
+                                          tmd
+                                          );
+    ///////// traceTool
+    _trace_tool->setListenners(tmd, tracer);
+
+    ///////// add Tracer
+    traceWorkers.insert({amountThread, tracer});
+    traceTools.insert({amountThread, _trace_tool});
 }
 
 
@@ -33,11 +49,12 @@ void
 CORE::start(bool parallel){
 
     if (parallel) {
-        //////TODO make it run
+        //////TODO make it run in parallel
         assert(false);
     }else{
-        for (auto& worker: traceWorkers){
-            worker.start();
+        for (auto& traceTool: traceTools){
+            assert(traceTool.second != nullptr);
+            traceTool.second->start();
         }
     }
 }

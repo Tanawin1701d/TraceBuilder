@@ -68,7 +68,7 @@ public:
     virtual ~RT_INSTR() = default;
     RT_INSTR(); // static trace raw
     void     interpretSt(const vector<string>& st_raw); // interpret from raw static tracer
-    void     fillDynData(convertedDynData& cvtDynData);
+    void     fillDynData(CVT_RT_OBJ& cvtDynData);
     void     genUOPS(vector<UOP_BASE*>& results);
 
     uint64_t      getRtInstrId() const {return rt_instr_id;};

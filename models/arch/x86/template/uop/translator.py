@@ -4,15 +4,18 @@ from termcolor import colored
 # UOPSTORAGE { name: "add", input: [REG, TREG, MEM],
 #                           inputName: [jennis, mewnich, orn],
 #                           output: [REG, TREG, MEM],
-#                           outputName: [jennis, mewnich, orn] }
+#                           outputName: [jennis, mewnich, orn]
+#                           uopType: "UOP_COMP"}
 
-REF_VALS          = {"MICROOP", "INPUT", "OUTPUT", "MICROOP_END"}
+REF_VALS          = {"MICROOP", "INPUT", "OUTPUT", "TYPE", "MICROOP_END"}
 REF_VAL_UOP_START = "MICROOP"
 REF_VAL_INPUT     = "INPUT"
 REF_VAL_OUTPUT    = "OUTPUT"
+REF_VAL_TYPE      = "TYPE"
 REF_VAL_UOP_END   = "MICROOP_END"
 
 UOP_IO_TYPES = ["TREG", "REG", "MEM"]
+UOP_CLUSTER_TYPES = ["UOP_COMP","UOP_LOAD","UOP_STORE", "UOP_IMM","UOP_DUMMY"]
 ##ioTYPE
 UOP_IO_TYPE_TREG = "TREG"
 UOP_IO_TYPE_REG  = "REG"
@@ -23,6 +26,7 @@ UOP_MT_INPUT_VT    = "input"
 UOP_MT_INPUT_VN = "inputName"
 UOP_MT_OUTPUT_VT = "output"
 UOP_MT_OUTPUT_VN = "outputName"
+UOP_MT_TYPE      = "uopType"
 
 UOP_STORAGE = dict()
 
@@ -119,13 +123,17 @@ def uop_genCXX(interpreted_uop):
     headerFile = " \n" \
                  "class UOP_{VAR_NAME} : public UOP_BASE{{\n" \
                  "public:\n" \
-                 "  UOP_{VAR_NAME}() = default;\n" \
+                 "  UOP_{VAR_NAME}();\n" \
                  "  void doDepenCheck(UOP_WINDOW* uop_window) override;\n" \
                  "  {FUNC_INIT}\n" \
                  "}};\n".format(VAR_NAME=interpreted_uop[UOP_MT_NAME],
                                FUNC_INIT=uop_genCXX_func_init_head(interpreted_uop))
 
-    cxxFile = "void UOP_{VAR_NAME}::doDepenCheck(UOP_WINDOW* uop_window) {{\n" \
+    cxxFile = "" \
+              "UOP_{VAR_NAME}::UOP_{VAR_NAME}() : UOP_BASE({UOP_TYPE}){{}}" \
+              "\n" \
+              "\n" \
+              "void UOP_{VAR_NAME}::doDepenCheck(UOP_WINDOW* uop_window) {{\n" \
               "    {REG_CHECK}\n" \
               "    {MEM_CHECK}\n" \
               "    ///// for future use\n" \
@@ -139,6 +147,7 @@ def uop_genCXX(interpreted_uop):
                         MEM_CHECK="doMemDepenCheck(uop_window);" if (("MEM" in interpreted_uop[UOP_MT_INPUT_VT]) or
                                                                      ("MEM" in interpreted_uop[UOP_MT_OUTPUT_VT]))
                         else "",
+                        UOP_TYPE = interpreted_uop[UOP_MT_TYPE],
                         FUNC_INIT=uop_genCXX_func_init_file(interpreted_uop)
                         )
 
@@ -154,7 +163,6 @@ def uop_interpret(lines_token):
         # assume that we have at least one token for each line
         #print(linetok)
         REP = linetok[0]
-
         if REP == REF_VAL_UOP_START:
             uopResult.update({"name": linetok[1]})
         elif (REP == REF_VAL_INPUT) or (REP == REF_VAL_OUTPUT):
@@ -165,9 +173,13 @@ def uop_interpret(lines_token):
             if len(linetok) >= 3:
                 for vt, vm in zip(linetok[1::2], linetok[2::2]):
                     if vt not in UOP_IO_TYPES:
-                        raise ValueError(f"there is no this type of microop {linetok}")
+                        raise ValueError(f"there is no this io type of microop {linetok}")
                     uopResult[varSide].append(vt)
                     uopResult[varSideName].append(vm)
+        elif REP == REF_VAL_TYPE:
+            if linetok[1] not in UOP_CLUSTER_TYPES:
+                raise ValueError(f"there is no this microopo type of microoop ")
+            uopResult.update({UOP_MT_TYPE: linetok[1]})
         elif REP == REF_VAL_UOP_END:
             print(colored(f"[UOP GEN]interpret UOP: {uopResult[UOP_MT_NAME]} successfully", "blue"))
             yield uopResult

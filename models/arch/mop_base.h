@@ -9,12 +9,22 @@
 
 class RT_INSTR;
 
+typedef uint64_t MOP_ID;
+
 class MOP_BASE{
 
 public:
+    MOP_ID getMopId() const;
+
+    void setMopId(MOP_ID mopId);
+
+public:
     virtual ~MOP_BASE() = default;
+    //// results is used to return to micro-op to trace rt_instr
     virtual  void genUop(vector<UOP_BASE*>& results,
                          RT_INSTR* _rt_instr) = 0;
+
+
 
 };
 

@@ -19,7 +19,6 @@ protected:
     TRACER_BASE*     tracer; // for runtime trace; the runtime data will be integrate with
     // runtime instruction to generate precise micro op
 
-
 public:
 
     TRACE_TOOL_FRONT_END();

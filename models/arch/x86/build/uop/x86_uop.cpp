@@ -1,4 +1,6 @@
 #include"x86_uop.h"
+UOP_ADD::UOP_ADD() : UOP_BASE(UOP_COMP){}
+
 void UOP_ADD::doDepenCheck(UOP_WINDOW* uop_window) {
     doRegDepenCheck(uop_window);
     
@@ -14,6 +16,8 @@ void UOP_ADD::addMeta(REGNUM A, TREGNUM B, REGNUM C){
 ///////// output
    addRegMeta(C, false);
 }
+
+UOP_LD::UOP_LD() : UOP_BASE(UOP_LOAD){}
 
 void UOP_LD::doDepenCheck(UOP_WINDOW* uop_window) {
     

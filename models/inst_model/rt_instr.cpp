@@ -76,7 +76,7 @@ RT_INSTR::interpretSt(const vector<string>& st_raw) {
 
 
 void
-RT_INSTR::fillDynData(convertedDynData& cvtDynData){
+RT_INSTR::fillDynData(CVT_RT_OBJ& cvtDynData){
 
     ////////// fill physical address of each load operand
     for (int ldIdx = 0 ;

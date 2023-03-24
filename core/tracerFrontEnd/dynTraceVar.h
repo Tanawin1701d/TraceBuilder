@@ -24,7 +24,7 @@ struct RT_OBJ{
 /////// this struct is used for store the converted
 /////// data that received from trace front end like
 /////// (memory mapping, runtime interupt bra bra bra ..)
-struct convertedDynData{
+struct CVT_RT_OBJ{
     ///// assume that the address array is in memop order
     uint64_t phyLoadAddr[maxMemOpPerLS];
     uint64_t phyStoreAddr[maxMemOpPerLS];

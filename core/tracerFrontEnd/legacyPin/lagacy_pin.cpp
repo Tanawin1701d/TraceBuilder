@@ -34,13 +34,16 @@ LAGACY_PIN_TRACER::startStaticTrace(){
     std::string line;
 
     while(std::getline(*staticFile, line)){
-
         if(!line.empty()) {
             presentData.rawData.push_back(line);
-            if(line.substr(ST_IDXL_FETCH_TYPE,  1) == ST_VAL_COMPO_FETCH)
+            if(
+                    !line.empty() &&
+                    line.substr(ST_IDXL_FETCH_TYPE,  1) == ST_VAL_COMPO_FETCH
+            )
             {
                 ///// if we get fetch component type so we should send thread model to decode
                 tmd->onGetStTraceValue(presentData);
+                maxInstrNumber++;
             }
         }
     }
@@ -51,6 +54,9 @@ LAGACY_PIN_TRACER::startDynTrace(){
 
     dynTraceData dynData{};
 
+    //// ask tracer to initialize their runtime instruction
+    tracer->onInitialize(maxInstrNumber);
+    //// ask tracer to trace each runtime instruction
     while (!dynFile->eof()){
         dynFile->read( (char*) (&dynData.rawData) , sizeof(RT_OBJ));
         tracer->onGetDynTraceValue(dynData);

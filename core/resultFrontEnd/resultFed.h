@@ -6,7 +6,8 @@
 #define TRACEBUILDER_RESULTFED_H
 
 #include <vector>
-#include "../../models/arch/uop_base.h"
+#include "models/inst_model/rt_instr.h"
+#include "models/arch/uop_base.h"
 
 class RESULT_FRONT_END{
 friend class TRACER_BASE;

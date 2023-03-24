@@ -35,7 +35,7 @@ private:
 
 public:
     ///// for successor to ask about dependency
-    virtual bool isdependOnReg(const REGNUM& sucReg);
+    virtual bool isdependOnReg(const REGNUM& sucReg); /// sucReg is success reg
     ///// for asking procedure to get dep
     virtual void doRegDepenCheck(UOP_WINDOW* traceWindow);
     ///// for adding source/des of the micro-op meta-data
@@ -65,7 +65,12 @@ public:
     virtual void addMemMeta(ADAS adas, bool isLoad);
     ///// for get/set dependency
     bool addMemDep(UOP_BASE* uop);
-    std::unordered_set<UOP_BASE*>& getMemDep();
+
+    unordered_set<UOP_BASE*>& getMemDep();
+
+    vector<ADAS>& getAll_LD_ADAS() {return loadAdas;}
+    vector<ADAS>& getAll_ST_ADAS() {return storeAdas;}
+
 };
 ///////////////////////////////////////////////////////////////////////
 

@@ -9,7 +9,7 @@
  
 class UOP_ADD : public UOP_BASE{
 public:
-  UOP_ADD() = default;
+  UOP_ADD();
   void doDepenCheck(UOP_WINDOW* uop_window) override;
   void addMeta( REGNUM A, TREGNUM B, REGNUM C );
 };
@@ -17,7 +17,7 @@ public:
  
 class UOP_LD : public UOP_BASE{
 public:
-  UOP_LD() = default;
+  UOP_LD();
   void doDepenCheck(UOP_WINDOW* uop_window) override;
   void addMeta( ADAS A, TREGNUM C );
 };

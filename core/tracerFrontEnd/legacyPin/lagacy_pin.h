@@ -19,6 +19,8 @@ private:
     std::ifstream* staticFile;
     std::ifstream* dynFile;
 
+    uint64_t maxInstrNumber = 0;
+
     void startStaticTrace();
     void startDynTrace();
 
