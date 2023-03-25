@@ -3,7 +3,6 @@
 //
 
 #include "resultFed_gemLagacy.h"
-#include "models/arch/uop_base.h"
 
 
 RESULT_FRONT_END_GEM_LAGACY::

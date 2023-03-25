@@ -8,6 +8,8 @@
 
 TRACE_TOOL_FRONT_END::TRACE_TOOL_FRONT_END(){}
 
+TRACE_TOOL_FRONT_END::~TRACE_TOOL_FRONT_END(){}
+
 void
 TRACE_TOOL_FRONT_END::setListenners(THREAD_MODEL* _tmd,
                                     TRACER_BASE* _tracer){

@@ -10,8 +10,8 @@
 
 #include "operand.h"
 
-#include "core/tracers/tracer.h"
 #include "core/tracerFrontEnd/staticTraceVar.h"
+#include "core/tracerFrontEnd/dynTraceVar.h"
 #include "ioHelp/strHelp.h"
 #include "models/arch/mop_base.h"
 

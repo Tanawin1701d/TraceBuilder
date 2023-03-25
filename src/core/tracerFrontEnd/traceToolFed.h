@@ -7,9 +7,8 @@
 
 #include <fstream>
 #include <cassert>
+#include "core/tracers/tracer.h"
 
-
-class TRACER_BASE;
 class THREAD_MODEL;
 
 ///// for now we assume that stream front-end and file front end share same input trace function
@@ -25,7 +24,7 @@ public:
 
     void setListenners(THREAD_MODEL* _tmd, TRACER_BASE* _tracer);
 
-    virtual ~TRACE_TOOL_FRONT_END() = 0;
+    virtual ~TRACE_TOOL_FRONT_END();
 
     virtual void start() = 0;
 

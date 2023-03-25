@@ -17,7 +17,7 @@ INCLUDE_DIRECTORIES( ./src )
 
 add_custom_target(
         x86sim ALL
-        COMMAND python3 ${CMAKE_SOURCE_DIR}/models/x86/template/gen.py
+        COMMAND python3 ${CMAKE_SOURCE_DIR}/src/models/arch/x86/template/gen.py
         COMMENT "generating the x86 model"
 )
 
@@ -27,6 +27,7 @@ FILE(GLOB_RECURSE SRC_CORE     RELATIVE ${CMAKE_SOURCE_DIR} "src/core/*.cpp")
 FILE(GLOB_RECURSE SRC_MODEL    RELATIVE ${CMAKE_SOURCE_DIR} "src/models/*.cpp" EXCLUDE "src/models/arch/x86/*") # it may be changed due to architecture specification
 FILE(GLOB_RECURSE SRC_STAT     RELATIVE ${CMAKE_SOURCE_DIR} "src/stat/*.cpp")
 FILE(GLOB_RECURSE SRC_IOH      RELATIVE ${CMAKE_SOURCE_DIR} "src/ioHelp/*.cpp")  # stand for io helper
+FILE(GLOB_RECURSE SRC_IOHCC    RELATIVE ${CMAKE_SOURCE_DIR} "src/ioHelp/*.cc")
 FILE(GLOB_RECURSE SRC_ARCH_X86 RELATIVE ${CMAKE_SOURCE_DIR} "src/models/arch/x86/*.cpp")
 FILE(GLOB_RECURSE SRC_EXAMPLE  RELATIVE ${CMAKE_SOURCE_DIR} "src/example/*.cpp")
 
@@ -37,6 +38,7 @@ add_executable(
         ${SRC_MODEL}
         ${SRC_STAT}
         ${SRC_IOH}
+        ${SRC_IOHCC}
         ${SRC_ARCH_X86}
         ${SRC_EXAMPLE}
 
