@@ -13,8 +13,7 @@ FIND_PACKAGE( Boost 1.40 COMPONENTS program_options REQUIRED )
 
 INCLUDE_DIRECTORIES(${PROTOBUF_INCLUDE_DIR})
 INCLUDE_DIRECTORIES( ${Boost_LIBRARIES} )
-INCLUDE_DIRECTORIES( . )
-
+INCLUDE_DIRECTORIES( ./src )
 
 add_custom_target(
         x86sim ALL
@@ -24,21 +23,24 @@ add_custom_target(
 
 
 
-FILE(GLOB_RECURSE SRC_CORE     RELATIVE ${CMAKE_SOURCE_DIR} "core/*.cpp")
-FILE(GLOB_RECURSE SRC_MODEL    RELATIVE ${CMAKE_SOURCE_DIR} "models/*.cpp" EXCLUDE "models/arch/x86/*") # it may be changed due to architecture specification
-FILE(GLOB_RECURSE SRC_STAT     RELATIVE ${CMAKE_SOURCE_DIR} "stat/*.cpp")
-FILE(GLOB_RECURSE SRC_IOH      RELATIVE ${CMAKE_SOURCE_DIR} "ioHelp/*.cpp")  # stand for io helper
-FILE(GLOB_RECURSE SRC_ARCH_X86 RELATIVE ${CMAKE_SOURCE_DIR} "models/arch/x86/*.cpp")
+FILE(GLOB_RECURSE SRC_CORE     RELATIVE ${CMAKE_SOURCE_DIR} "src/core/*.cpp")
+FILE(GLOB_RECURSE SRC_MODEL    RELATIVE ${CMAKE_SOURCE_DIR} "src/models/*.cpp" EXCLUDE "src/models/arch/x86/*") # it may be changed due to architecture specification
+FILE(GLOB_RECURSE SRC_STAT     RELATIVE ${CMAKE_SOURCE_DIR} "src/stat/*.cpp")
+FILE(GLOB_RECURSE SRC_IOH      RELATIVE ${CMAKE_SOURCE_DIR} "src/ioHelp/*.cpp")  # stand for io helper
+FILE(GLOB_RECURSE SRC_ARCH_X86 RELATIVE ${CMAKE_SOURCE_DIR} "src/models/arch/x86/*.cpp")
+FILE(GLOB_RECURSE SRC_EXAMPLE  RELATIVE ${CMAKE_SOURCE_DIR} "src/example/*.cpp")
 
 add_executable(
         traceBuilder
-        main.cpp
+        src/main.cpp
         ${SRC_CORE}
         ${SRC_MODEL}
         ${SRC_STAT}
         ${SRC_IOH}
         ${SRC_ARCH_X86}
-        example/simplePinGem.cpp example/simplePinGem.h)
+        ${SRC_EXAMPLE}
+
+)
 
 TARGET_LINK_LIBRARIES( traceBuilder PRIVATE ${Boost_LIBRARIES} Threads::Threads ${PROTOBUF_LIBRARY} )
 
