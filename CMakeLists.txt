@@ -38,7 +38,7 @@ add_executable(
         ${SRC_STAT}
         ${SRC_IOH}
         ${SRC_ARCH_X86}
-)
+        example/simplePinGem.cpp example/simplePinGem.h)
 
 TARGET_LINK_LIBRARIES( traceBuilder PRIVATE ${Boost_LIBRARIES} Threads::Threads ${PROTOBUF_LIBRARY} )
 

@@ -10,7 +10,7 @@
 
 
 
-class DECODER_X86 : DECODER_BASE{
+class DECODER_X86 : public DECODER_BASE{
 private:
        unordered_map<std::string, MOP_BASE*> decodeStorage;
 public:

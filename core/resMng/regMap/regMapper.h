@@ -11,7 +11,6 @@
 #include<boost/algorithm/string.hpp>
 #include"stat/statPool.h"
 
-using namespace std;
 
 typedef  int TREGNUM; ///// temporal reg number
 typedef  int REGNUM;  ///// reg number

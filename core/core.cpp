@@ -42,6 +42,7 @@ CORE::addWorker(TRACE_TOOL_FRONT_END* _trace_tool,
     ///////// add Tracer
     traceWorkers.insert({amountThread, tracer});
     traceTools.insert({amountThread, _trace_tool});
+    amountThread++;
 }
 
 

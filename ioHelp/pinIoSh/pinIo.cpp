@@ -4,9 +4,9 @@
 #include "pinIo.h"
 #include "../strHelp.h"
 
-PIN_IO::PIN_IO(const string& _fileName):
+PIN_IO::PIN_IO(const std::string& _fileName):
 fileName(_fileName),
-inputFile(new ifstream(_fileName))
+inputFile(new std::ifstream(_fileName))
 {
     assert(inputFile);
 
@@ -24,7 +24,7 @@ bool PIN_IO::readInstr(RT_OBJ& result) {
     return true;
 }
 
-std::string to_string(const RT_OBJ& obj, vector<string>& fetchStr) {
+std::string to_string(const RT_OBJ& obj, std::vector<std::string>& fetchStr) {
     std::ostringstream ss;
     ss << "loadAddr: [";
     for (int i = 0; i < 2; i++) {

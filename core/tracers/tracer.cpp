@@ -92,7 +92,7 @@ void
 TRACER_BASE::onGetDynTraceValue(dynTraceData dyndata) {
 
     /////// convert virtual memory address to simulated address
-    auto& rt_instr = rt_instrs[dyndata.rawData.fetchId];
+    auto* rt_instr = rt_instrs[dyndata.rawData.fetchId];
     CVT_RT_OBJ cvt_trace_data{};
     cvt_rtobj_tracable(dyndata.rawData, *rt_instr, cvt_trace_data);
     ////// fill data to rt_instr
@@ -107,7 +107,7 @@ TRACER_BASE::onGetDynTraceValue(dynTraceData dyndata) {
         uop->doDepenCheck(uopWindow);
     }
     /////// send to result front-end
-    resFed->onGetUopsResult(inflight_uops);
+    resFed->onGetUopsResult(inflight_uops, rt_instr);
     /////// push data to uop window
     for (auto* uop : inflight_uops){
         uopWindow->addUop(uop);

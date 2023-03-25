@@ -7,16 +7,20 @@
 
 
 RESULT_FRONT_END_GEM_LAGACY::
-RESULT_FRONT_END_GEM_LAGACY(const string& filePath){
-    protoStream = new ProtoOutputStream(filePath);
+RESULT_FRONT_END_GEM_LAGACY(const std::string& filePath_data, const std::string& filePath_instr)
+: lastTick(0){
+    dataProtoStream  = new ProtoOutputStream(filePath_data) ;
+    instrProtoStream = new ProtoOutputStream(filePath_instr);
 }
 
 void
 RESULT_FRONT_END_GEM_LAGACY::onGetUopsResult(
-        vector<UOP_BASE*> &uops,
+        std::vector<UOP_BASE*> &uops,
         RT_INSTR* rt_instr
         ) {
-    //////// generate dynamic data record and put to gem5
+    ////////////////////////////////////////////////////////
+    //////// generate dynamic data record FOR gem5
+    ////////////////////////////////////////////////////////
     for (auto* uop: uops){
         assert(uop != nullptr);
         ///////////////////////////////// build protobuffer
@@ -26,7 +30,9 @@ RESULT_FRONT_END_GEM_LAGACY::onGetUopsResult(
         dep_pkt.set_comp_delay(500);
         dep_pkt.set_weight(1);
         dep_pkt.set_pc(0);
-
+        ///////////////////////////////////////////////////////
+        ////////// add dependency for each uop instruction type
+        ///////////////////////////////////////////////////////
         ///// you can trust that the uops dependency which get from ONGETUOPSRESULTS is not deleted
         //////// by uop window but it maybe deleted after finish this function.
         for (auto* regDepUop: uop->getRegDep()){
@@ -38,6 +44,10 @@ RESULT_FRONT_END_GEM_LAGACY::onGetUopsResult(
         for (auto* memDepUop: uop->getMemDep()){
             dep_pkt.add_rob_dep(memDepUop->getSeqNum());
         }
+
+        /////////////////////////////////////////////////////
+        ////////// add explicit for each uop instruction type
+        /////////////////////////////////////////////////////
         ///////////// for compute instruction
         if (uop->getUopType() == UOP_COMP || uop->getUopType() == UOP_IMM){
             dep_pkt.set_type(ProtoMessage::InstDepRecord_RecordType_COMP);
@@ -64,6 +74,19 @@ RESULT_FRONT_END_GEM_LAGACY::onGetUopsResult(
             throw invalid_argument(errorCode.c_str());
         }
 
+        dataProtoStream->write(dep_pkt);
     }
+
+    ////////////////////////////////////////////////////////
+    //////// generate dynamic static record FOR gem5
+    ////////////////////////////////////////////////////////
+
+    ProtoMessage::Packet instr_pkt;
+    lastTick += 500;
+    instr_pkt.set_tick(lastTick);
+    instr_pkt.set_cmd(0);
+    instr_pkt.set_addr(lastTick % 1000000);
+    instr_pkt.set_size(4);
+    instrProtoStream->write(instr_pkt);
 
 }

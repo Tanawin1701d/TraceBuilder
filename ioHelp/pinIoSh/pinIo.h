@@ -10,8 +10,6 @@
 #include <sstream>
 #include <vector>
 
-using namespace std;
-
 const uint32_t maxMemOpPerLS = 2;
 
 #pragma pack(push, 1)
@@ -24,16 +22,16 @@ struct RT_OBJ{
 };
 #pragma pack(pop)
 
-std::string to_string(const RT_OBJ& obj, vector<string>& fetchStr);
+std::string to_string(const RT_OBJ& obj, std::vector<std::string>& fetchStr);
 
 class PIN_IO{
 
 private:
-    string fileName;
+    std::string fileName;
 
-    ifstream* inputFile;
+    std::ifstream* inputFile;
 public:
-    explicit PIN_IO(const string& _fileName);
+    explicit PIN_IO(const std::string& _fileName);
     ~ PIN_IO();
     /// return true is it can get the new instruction
     /// false if it is end of file

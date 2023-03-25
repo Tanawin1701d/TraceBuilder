@@ -8,17 +8,22 @@
 #include "../resultFed.h"
 #include "ioHelp/protoHelp/protoio.hh"
 #include "ioHelp/protoHelp/inst_dep_record.pb.h"
+#include "ioHelp/protoHelp/packet.pb.h"
 
 class RESULT_FRONT_END_GEM_LAGACY : public RESULT_FRONT_END{
 
 private:
-    ProtoOutputStream* protoStream;
+    ProtoOutputStream* dataProtoStream;
+    ProtoOutputStream* instrProtoStream;
+    uint64_t           lastTick;
+
 
 public:
 
-    RESULT_FRONT_END_GEM_LAGACY(const string& filePath);
+    RESULT_FRONT_END_GEM_LAGACY(const std::string& filePath_data,
+                                const std::string& filePath_instr);
 
-    void onGetUopsResult(vector<UOP_BASE*>& uops,
+    void onGetUopsResult(std::vector<UOP_BASE*>& uops,
                          RT_INSTR*          rt_instr
     );
 

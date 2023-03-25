@@ -3,8 +3,6 @@
 //
 #include "statPool.h"
 
-using namespace std;
-
 void printStat(){
     int keyMax = 0;
     for (auto& pa: statPoolCount){

@@ -61,7 +61,7 @@ SCRIPT_DIR_PATH=os.path.dirname(os.path.realpath(__file__))
 DES_PREFIX = "../../build/mop"
 INC_DEP = "../../../dep.h"
 INC_UOP = "../../../uop_base.h"
-INC_UOP = "../../../mop_base.h"
+INC_MOP = "../../../mop_base.h"
 INC_UOP_X86 = "../uop/x86_uop.h"
 INC_RT_INSTR= "../../../../inst_model/rt_instr.h"
 HEAD_FILE_NAME = "x86_mop.h"
@@ -75,6 +75,7 @@ def mop_writeCXX_methods(cxx_eles): #tuple (cpp, header)
                 f"#include\"{INC_DEP}\"\n" \
                 f"#include\"{INC_UOP}\"\n" \
                 f"#include\"{INC_UOP_X86}\"\n" \
+                f"#include\"{INC_MOP}\"\n"\
                 "\n\n\n\n"
     headerStr = headerStr + "\n".join([x[0] for x in cxx_eles] ) + "\n"
     headerStr = headerStr + "#endif\n"
@@ -159,7 +160,7 @@ def mop_genCXX_method_genUop(interpret_mop):
     return retStr
 
 def mop_genCXX_methods(interpret_mop):
-    headerStr = "class MOP_{MOPNAME} : MOP_BASE{{\n" \
+    headerStr = "class MOP_{MOPNAME} : public MOP_BASE{{\n" \
                 "public:\n" \
                 "\n" \
                 "   void genUop(vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;\n" \

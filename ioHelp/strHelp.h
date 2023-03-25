@@ -9,20 +9,19 @@
 #include <sstream>
 #include<boost/algorithm/string.hpp>
 
-using namespace std;
 
-void splitNstrip(string raw, vector<string>& result);
+void splitNstrip(std::string raw, std::vector<std::string>& result);
 
-void spiltLineFromStrNstrip(const string&         raw,
-                                  vector<string>& result
+void spiltLineFromStrNstrip(const std::string&         raw,
+                                  std::vector<std::string>& result
                             );
 
-void strip(string& raw);
+void strip(std::string& raw);
 
-uintptr_t hexStr2uint  (string raw);
-int       decStr2int   (string raw);
-uintptr_t decStr2uint  (string raw);
+uintptr_t hexStr2uint  (std::string raw);
+int       decStr2int   (std::string raw);
+uintptr_t decStr2uint  (std::string raw);
 
-string    concatVec    (vector<string>& raws);
+std::string    concatVec    (std::vector<std::string>& raws);
 
 #endif //TRACEBUILDER_STRHELP_H

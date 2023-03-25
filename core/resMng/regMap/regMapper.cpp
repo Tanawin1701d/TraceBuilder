@@ -4,7 +4,7 @@
 #include "regMapper.h"
 
 REGNUM
-regMapAutoAdd(const string& regName){
+regMapAutoAdd(const std::string& regName){
     assert(!regName.empty());
     auto finder = regmap.find(regName);
     if ( finder != regmap.end()){
