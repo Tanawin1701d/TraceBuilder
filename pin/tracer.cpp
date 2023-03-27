@@ -42,8 +42,8 @@ struct RT_OBJ*       preWriteRt; /// 400 M times 52 bytes
 UINT32 preWriteRt_idx = 0;
 UINT32 INSTRID        = 0;
 
-VOID tryFlush(){
-    if (preWrite.size() >= 4000000000){
+VOID tryFlush(bool forceFlush = false){
+    if (preWrite.size() >= 4000000000 || forceFlush){
         *outputFile_instr << preWrite;
         preWrite.clear();
     }
@@ -134,85 +134,123 @@ VOID Instruction(INS ins, VOID* v)
     sprintf(buffer, "%lx", instrAddr);
     std::string instrAddrHex(buffer);
 
+    //mem_id counter
+    UINT32 memOp = 0;
+    UINT32 loaded_amt = 0;
+    UINT32 stored_amt = 0;
 
+    //decode string varible
+    std::string srcKey;
+    std::string desKey;
+    std::string resKey;
+
+    // rflags register
+    std::string rflagsStr = "rflags";
 
     ///////////////////////// for compute instruction
     UINT32 numOperands = INS_OperandCount(ins);
+
     for (UINT32 opIdx = 0; opIdx < numOperands; opIdx++){
         if (INS_OperandIsReg(ins, opIdx)){
                 bool isSrc = INS_OperandRead(ins, opIdx);
                 bool isDes = INS_OperandWritten(ins, opIdx);
-                REG reg = INS_OperandReg(ins, opIdx);
+                REG  reg   = INS_OperandReg(ins, opIdx);
                 //if (reg != REG_RFLAGS)
                 assert(!INS_OperandIsMemory(ins, opIdx));
                 assert(isSrc || isDes);
-                preWrite += "C ";
-                if (isSrc)
-                    preWrite += "S"; // source register
-                if (isDes)
-                    preWrite += "D"; // des register
-                preWrite += " ";
-                preWrite += reg ? REG_StringShort(static_cast<REG>(reg)) : "-1";
-                preWrite += "\n";
-        }
-    }
+                
+                std::string preRegStr;
 
-    ///////////////////////// for load store instruction
-    UINT32 memOperands = INS_MemoryOperandCount(ins);
 
-    UINT32 loaded_amt = 0;
-    UINT32 stored_amt = 0;
+                preRegStr += "R "; // source register
+                preRegStr += "X "; // source register
+                preRegStr += reg ? REG_StringShort(static_cast<REG>(reg)) : "-1";
+                preRegStr += "\n";
 
-    for (UINT32 memOp = 0; memOp < memOperands; memOp++){
-        UINT32 opIdxMtc   = INS_MemoryOperandIndexToOperandIndex(ins, memOp);
-        REG    baseReg    = INS_OperandMemoryBaseReg (ins, opIdxMtc);
-        REG    indexReg   = INS_OperandMemoryIndexReg(ins, opIdxMtc);
-        bool   isLoad     = INS_MemoryOperandIsRead (ins, memOp);
-        bool   isStore    = INS_MemoryOperandIsWritten(ins, memOp);
-        UINT32 memRefSize = INS_MemoryOperandSize(ins, memOp);
+                std::string regStr = REG_StringShort(static_cast<REG>(reg));
 
-        ////// for instruction template
-        if (isLoad)
-            preWrite += "L";
-        if (isStore)
-            preWrite += "S";
-        assert(isLoad || isStore);
-        preWrite += " ";
-        preWrite += baseReg  ? REG_StringShort(static_cast<REG>(baseReg)) : "-1";
-        preWrite += " ";
-        preWrite += indexReg ? REG_StringShort(static_cast<REG>(indexReg)) : "-1";
-        preWrite += " ";
-        preWrite += std::to_string(memRefSize);
-        preWrite += " ";
-        preWrite += std::to_string(memOp);
-        preWrite += "\n";
-        /// there is memory operand that act like load and store at a time
-        /// so we need to add all to the serializer
-        if (isLoad){
-            assert(loaded_amt < maxMemOpPerLS);
-            INS_InsertPredicatedCall(ins, IPOINT_BEFORE, 
-                            (AFUNPTR)L_TRACE,
-                            IARG_MEMORYOP_EA, memOp,
-                            IARG_UINT32, loaded_amt,
-                            IARG_UINT32, memOp,
-                            IARG_END
-                            );
+                if (isSrc && regStr != rflagsStr){
+                    preRegStr[2]  = 'S';
+                    preWrite     += preRegStr;
+                    srcKey       += 'R';
+                }
+       
+                if (isDes && regStr != rflagsStr){
+                    preRegStr[2]  = 'D';
+                    preWrite     += preRegStr;
+                    desKey       += 'R';
+                }
+                
+        }else if (INS_OperandIsMemory(ins, opIdx)){
+
+            ///////// for memory operand
+
+            REG    baseReg    = INS_OperandMemoryBaseReg  (ins, opIdx);
+            REG    indexReg   = INS_OperandMemoryIndexReg (ins, opIdx);
+            bool   isLoad     = INS_MemoryOperandIsRead   (ins, memOp);
+            bool   isStore    = INS_MemoryOperandIsWritten(ins, memOp);
+            UINT32 memRefSize = INS_MemoryOperandSize(ins, memOp);
+
+
+            std::string preMemStr;
+            
+            assert(isLoad || isStore);
+            preMemStr += "X ";
+            preMemStr += "Y ";
+            preMemStr += baseReg  ? REG_StringShort(static_cast<REG>(baseReg)) : "-1";
+            preMemStr += " ";
+            preMemStr += indexReg ? REG_StringShort(static_cast<REG>(indexReg)) : "-1";
+            preMemStr += " ";
+            preMemStr += std::to_string(memRefSize);
+            preMemStr += " ";
+            preMemStr += std::to_string(memOp);
+            preMemStr += "\n";
+
+            if (isLoad){
+                preMemStr[0] =  'L';
+                preMemStr[2] =  'S';
+                preWrite += preMemStr;
+                srcKey   += 'L';
+                assert(loaded_amt < maxMemOpPerLS);
+                INS_InsertPredicatedCall(ins, IPOINT_BEFORE, 
+                                (AFUNPTR)L_TRACE,
+                                IARG_MEMORYOP_EA, memOp,
+                                IARG_UINT32, loaded_amt,
+                                IARG_UINT32, memOp,
+                                IARG_END
+                                );
             loaded_amt++;
-        }
-        if (isStore){
-            assert(stored_amt < maxMemOpPerLS);
-            INS_InsertPredicatedCall(ins, IPOINT_BEFORE, 
-                            (AFUNPTR)S_TRACE,
-                            IARG_MEMORYOP_EA, memOp,
-                            IARG_UINT32, stored_amt,
-                            IARG_UINT32, memOp,
-                            IARG_END
-                            );
+            }
+            if (isStore){
+                preMemStr[0] = 'S';
+                preMemStr[2] = 'D';
+                preWrite += preMemStr;
+                desKey   += 'S';
+                assert(stored_amt < maxMemOpPerLS);
+                INS_InsertPredicatedCall(ins, IPOINT_BEFORE, 
+                                (AFUNPTR)S_TRACE,
+                                IARG_MEMORYOP_EA, memOp,
+                                IARG_UINT32, stored_amt,
+                                IARG_UINT32, memOp,
+                                IARG_END
+                                );
             stored_amt++;
+            }
+            memOp++;
+        }else if (INS_OperandIsImmediate(ins, opIdx)){
+            std::string preImmStr;
+            preImmStr += "I S ";
+            preImmStr += std::to_string(INS_OperandImmediate(ins, opIdx));
+            preImmStr += '\n';
+            preWrite  += preImmStr;
+            srcKey    += 'I';
         }
-        
     }
     
+    //////// handle decode key
+    resKey = "N " + INS_Mnemonic(ins) + "$" + srcKey + "$" + desKey;
+    preWrite += resKey + "\n";
+
     
     ////////////////////////// for insert predicated of the end of instruction
     INS_InsertPredicatedCall(ins, IPOINT_BEFORE, 
@@ -223,15 +261,17 @@ VOID Instruction(INS ins, VOID* v)
                             IARG_END
                             );
 
-    preWrite += "F ";
+    preWrite += "F S";
+    preWrite += " ";
+    preWrite += std::to_string(INSTRID);
+    preWrite += " ";
     preWrite += "0x" + instrAddrHex;
     preWrite += " ";
     preWrite += std::to_string(instrSize);
     preWrite += " ";
-    preWrite += std::to_string(INSTRID);
-    preWrite += " ";
     preWrite += _instrName;
     preWrite += "\n";
+    preWrite += "---------------------------------\n";
 
     INSTRID++;
     tryFlush();
@@ -248,6 +288,9 @@ VOID Fini(INT32 code, VOID* v)
     outputFile_instr->close();     
     outputFile_trace->close();
 }
+
+
+
 
 KNOB<std::string> outputinstrFileKnob(KNOB_MODE_WRITEONCE, "pintool",
     "i", "/tmp/instr.txt", "output for instruction model");
@@ -273,6 +316,9 @@ int main(int argc, char* argv[])
 
     // Register the Instruction function to be called for every instruction
     INS_AddInstrumentFunction(Instruction, nullptr);
+    tryFlush(true);
+
+
     PIN_AddFiniFunction(Fini, 0);
     // Start the program and never return
     PIN_StartProgram();

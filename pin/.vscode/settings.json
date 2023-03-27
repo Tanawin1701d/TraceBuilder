@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "*.isa": "python",
+        "*.ph": "cpp"
+    }
+}

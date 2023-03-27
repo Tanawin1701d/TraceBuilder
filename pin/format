@@ -13,6 +13,8 @@ L S baseReg indexReg size memOperandNum
 I S immVal
 R S regname
 S D baseReg indexReg size memOperandNum
+N mnemonic$RLIR$S
+
 F S id virtualaddress size  name
 ------ new
 
