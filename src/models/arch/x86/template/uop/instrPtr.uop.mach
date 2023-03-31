@@ -1,0 +1,30 @@
+MICROOP LD_RIP
+    TYPE UOP_COMP
+    INPUT REG RIP
+    OUTPUT TREG T1
+MICROOP_END
+
+
+/// there is one temp register source
+
+MICROOP ST_RIP_1T
+    TYPE UOP_COMP
+    INPUT TREG T1
+    OUTPUT REG RIP
+MICROOP_END
+
+/// there is one register source 
+
+MICROOP ST_RIP_1R
+    TYPE UOP_COMP
+    INPUT  REG R1
+    OUTPUT REG RIP
+MICROOP_END
+
+/// there is two register source 
+
+MICROOP ST_RIP_2T
+    TYPE UOP_COMP
+    INPUT TREG T1 TREG T2
+    OUTPUT REG RIP
+MICROOP_END

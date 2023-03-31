@@ -9,92 +9,88 @@ import mop.translator as mop
 import decoder.translator as dec
 
 decOPR_to_mopOPR = {
-                      "R"     : "O_REG",
-                      "L"     : "O_MEM_LD",
-                      "S"     : "O_MEM_ST",
+                      "R"     : "REG",
+                      "L"     : "MEM",
+                      "S"     : "MEM",
                       "I"     : "DUMMY"
 }
 
-mopOPR_to_uopOPR = {  "TEMP"   : "TREG",
-                      "O_REG"    : "REG",
-                      "O_MEM_LD" : "MEM",
-                      "O_MEM_ST" : "MEM"
-                    }
 
 def satisfyDecWithMop( singleDec, MOP_DICT ):
-    print(singleDec)
+    #print(singleDec)
     if singleDec[dec.DEC_META_NAME] not in MOP_DICT:
         raise ValueError(f"there is no MACROOP to map from {singleDec}")
+    macroopName = singleDec[dec.DEC_META_NAME]
 
-    micoopName = singleDec[dec.DEC_META_NAME]
-
-    ##### check input
-    input_operandOrder = 0
-    for inptType in singleDec[dec.DEC_META_INPUT]: # iterate every input of decoder
-        findAns = False
-        if inptType != "I":
-            ### exhaustsive search with input at associate mop, so we have to search the identical input operand order
-            for typeTuple in MOP_DICT[micoopName][mop.MOP_META_INPUT].values():
-                if (typeTuple[1] == input_operandOrder)  and (typeTuple[0] == mopOPR_to_uopOPR[inptType]):
-                    input_operandOrder = input_operandOrder + 1
-                    findAns = True
-                    break
-            if not findAns :
-                raise ValueError(f"decode operand and macroop operand mismatch dec: {singleDec} with mop: {MOP_DICT[micoopName]}")
-    ## it count operand order tempvariable is exclude
-    if input_operandOrder != len(MOP_DICT[micoopName][mop.MOP_META_INPUT]):
-        raise (AttributeError(f"not suffice amount of parameter in {singleDec} to mop {MOP_DICT[micoopName]}"))
+    #### check input side
+    decInputTypes = [decOPR_to_mopOPR[decType]
+                     for decType in singleDec[dec.DEC_META_INPUT]
+                     if  decType != dec.DEC_IO_TYPE_IMM
+                    ]
+    mopInputTypes = [(vt, vid) for vt, vid in MOP_DICT[macroopName][mop.MOP_META_INPUT].values()]  # name : (vt, vid)
+    mopInputTypes = sorted(mopInputTypes, key= lambda x: x[1])  ## sort by input macroop order
+    mopInputTypes = [vt for vt, vid in mopInputTypes]
+    if mopInputTypes != decInputTypes:
+        raise AttributeError(f"decoder input {singleDec} \n\n\n      MISMATCH with \n\n\n\n    {MOP_DICT[macroopName]}     !")
 
 
-    ##### check output
-    output_operandOrder = 0
-    for outputType in singleDec[dec.DEC_META_OUTPUT]:
-        findAns = False
-        if outputType != "I":
-            ### exhaustsive search with output at associate mop, so we have to search the identical input operand order
-            for typeTuple in MOP_DICT[micoopName][mop.MOP_META_OUTPUT].values():
-                if (typeTuple[1] == output_operandOrder)  and (typeTuple[0] == mopOPR_to_uopOPR[outputType]):
-                    output_operandOrder = output_operandOrder + 1
-                    findAns = True
-                    break
-            if not findAns :
-                raise ValueError(f"decode operand and macroop operand mismatch dec: {singleDec} with mop: {MOP_DICT[micoopName]}")
-    ## it count operand order tempvariable is exclude
-    if output_operandOrder != len(MOP_DICT[micoopName][mop.MOP_META_OUTPUT]):
-        raise (AttributeError(f"not suffice amount of parameter in {singleDec} to mop {MOP_DICT[micoopName]}"))
-
-
-
+    #### check output side
+    decOutputType = [decOPR_to_mopOPR[decType]
+                    for decType in singleDec[dec.DEC_META_OUTPUT]
+                    if  decType != dec.DEC_IO_TYPE_IMM
+                    ]
+    mopOutputTypes = [(vt, vid) for vt, vid in MOP_DICT[macroopName][mop.MOP_META_OUTPUT].values()]
+    mopOutputTypes = sorted(mopOutputTypes, key= lambda x: x[1])
+    mopOutputTypes = [vt for vt, vid in mopOutputTypes]
+    if mopOutputTypes != decOutputType:
+        raise AttributeError(f"decoder output {singleDec} \n\n\n      MISMATCH with \n\n\n\n    {MOP_DICT[macroopName]}     !")
+    #######################
 def satisfyMopWithUop(singleMop, UOP_DICT):
     # mopdict is name -> mopmeta data
-    for uopName, uopMeta in singleMop[mop.MOP_META_MICROOP].items():
+    for uopRelName, uopMeta in singleMop[mop.MOP_META_MICROOP].items():  # uop relative name in mop view
         if not (uopMeta[mop.MOP_META_MICROOP_TYPE] in UOP_DICT):
-            raise (ValueError(f"there is no microop type for name {uopName} "
+            raise (ValueError(f"there is no microop type for name {uopRelName} "
                               f"in uop dictionary from mop {singleMop[mop.MOP_META_NAME]}"))
+
+        uopType = uopMeta[mop.MOP_META_MICROOP_TYPE]
         ##### check input
-        inputInUopManner = [] # the input type that uop accept ex. T_MEM_LD -> MEM(ADAS)
-        for varname in uopMeta[mop.MOP_META_MICROOP_INPUT]:
-            if varname in singleMop[mop.MOP_META_INPUT]:
-                mopOrType = singleMop[mop.MOP_META_INPUT][varname][0] # 0 mean get type of mop operand name
-                uopOrType = mopOPR_to_uopOPR[mopOrType]
-                inputInUopManner.append(uopOrType)
+        inputInMacroView = []
+        inputInuopView   = UOP_DICT[uopType][uop.UOP_MT_INPUT_VT]
+
+        for varName in uopMeta[mop.MOP_META_MICROOP_INPUT]:
+            #### get type from macro op
+            if varName in singleMop[mop.MOP_META_VARTEMP]:
+                inputInMacroView.append(mop.MOP_IO_TYPE_TEMP)
+            elif varName in singleMop[mop.MOP_META_INPUT]:
+                ##### case
+                inputInMacroView.append(singleMop[mop.MOP_META_INPUT][varName][0])
             else:
-                inputInUopManner.append(mopOPR_to_uopOPR["TEMP"])
-        if inputInUopManner != UOP_DICT[uopMeta[mop.MOP_META_MICROOP_TYPE]][uop.UOP_MT_INPUT_VT]:
-            raise(ValueError(f"[MACROOP] input error! mop: {singleMop} but uop{UOP_DICT[uopName]}"))
+                raise ( AttributeError(f"check uop input from mop faile due to missing "
+                                       f"vartype for {varName} in {singleMop}") )
+
+        if inputInMacroView != inputInuopView:
+            raise ( AttributeError(f"uop input argument from macrooop{inputInMacroView} for {singleMop} is mismatch from uop argument {inputInuopView}") )
 
 
         ##### check output
-        outputInUopManner = []
-        for varname in uopMeta[mop.MOP_META_MICROOP_OUTPUT]:
-            if varname in singleMop[mop.MOP_META_OUTPUT]:
-                mopOrType = singleMop[mop.MOP_META_OUTPUT][varname][0] # 0 mean get type of mop operand name
-                uopOrType = mopOPR_to_uopOPR[mopOrType]
-                outputInUopManner.append(uopOrType)
+        outputInMacroView = []
+        outputInuopView   = UOP_DICT[uopType][uop.UOP_MT_OUTPUT_VT]
+
+        for varName in uopMeta[mop.MOP_META_MICROOP_OUTPUT]:
+            #### get type from macro op
+            if varName in singleMop[mop.MOP_META_VARTEMP]:
+                outputInMacroView.append(mop.MOP_IO_TYPE_TEMP)
+            elif varName in singleMop[mop.MOP_META_OUTPUT]:
+                ##### case
+                outputInMacroView.append(singleMop[mop.MOP_META_OUTPUT][varName][0])   ## ... [varName] will get (TYPE, id) so, we should [0] to get type
             else:
-                outputInUopManner.append(mopOPR_to_uopOPR["TEMP"])
-        if outputInUopManner != UOP_DICT[uopMeta[mop.MOP_META_MICROOP_TYPE]][uop.UOP_MT_OUTPUT_VT]:
-            raise(ValueError(f"[MACROOP] output error! mop: {singleMop} but uop{UOP_DICT[uopName]}"))
+                raise ( AttributeError(f"check uop output from mop fail due to missing "
+                                       f"vartype for {varName} in {singleMop}") )
+
+
+        if outputInMacroView != outputInuopView:
+            raise ( AttributeError(f"uop output argument from macrooop{outputInMacroView} is mismatch from uop argument {outputInuopView}") )
+
 
 def convertUopListToUopDict(uopList):
     ret = dict()

@@ -17,7 +17,7 @@ REF_VAL_DECODE_TO     = "TO"
 
 DEC_IO_INPUT_TYPES = ["R", "I", "L"]
 DEC_IO_OUTPUT_TYPE = ["R", "S"]
-
+DEC_IO_TYPE_IMM    = "I"
 
 ##### for meta data
 DEC_META_NAME           = "mnemonic"

@@ -1,0 +1,48 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "MACH",
+	"patterns": [
+		{
+			"include": "#keywords"
+		},
+		{
+			"include": "#strings"
+		},
+		{
+			"name": "keyword.uop",
+			"match": "\\b(MICROOP|INPUT|OUTPUT|TYPE|MICROOP_END)\\b"
+		},
+		{
+			"name": "keyword.mop",
+			"match": "\\b(MACROOP_END|INPUT|OUTPUT|TEMP|MICROOP|MACROOP)\\b"
+		},
+		{
+			"name": "keyword.dec",
+			"match": "\\b(DECODER|FROM|INPUT|OUTPUT|TO)\\b"
+		},
+		{
+			"name": "variable.parameter",
+			"match": "\\b(MEM|REG|TREG)\\b"
+		}
+	],
+	"repository": {
+		"keywords": {
+			"patterns": [{
+				"name": "keyword.control.mach",
+				"match": "\\b(if|while|for|return)\\b"
+			}]
+		},
+		"strings": {
+			"name": "string.quoted.double.mach",
+			"begin": "\"",
+			"end": "\"",
+			"patterns": [
+				{
+					"name": "constant.character.escape.mach",
+					"match": "\\\\."
+				}
+			]
+		}
+	},
+	"scopeName": "source.mach"
+}

@@ -20,6 +20,13 @@ UOP_CLUSTER_TYPES = ["UOP_COMP","UOP_LOAD","UOP_STORE", "UOP_IMM","UOP_DUMMY"]
 UOP_IO_TYPE_TREG = "TREG"
 UOP_IO_TYPE_REG  = "REG"
 UOP_IO_TYPE_MEM  = "MEM"
+
+ioTypeMap = {
+    "TREG" : "TREGNUM",
+    "REG"  : "REG_OPERAND",
+    "MEM"  : "MEM_OPERAND"
+}
+
 ##uopMeta
 UOP_MT_NAME  = "name"
 UOP_MT_INPUT_VT    = "input"
@@ -29,10 +36,6 @@ UOP_MT_OUTPUT_VN = "outputName"
 UOP_MT_TYPE      = "uopType"
 
 UOP_STORAGE = dict()
-
-##### for cxx generating
-ioTypeMap = {UOP_IO_TYPE_REG: "REGNUM", UOP_IO_TYPE_MEM: "ADAS", UOP_IO_TYPE_TREG: "TREGNUM"}
-START_PARAMETER = 'a'
 
 ##### for cxx writing
 SCRIPT_DIR_PATH=os.path.dirname(os.path.realpath(__file__))
@@ -72,6 +75,7 @@ def uop_CXX_write(cxx_eles):
 def uop_genCXX_init_param(interpreted_uop):
     first = True
     ret = str()
+    ### VarType VarName
     for vt, vn in zip(interpreted_uop[UOP_MT_INPUT_VT] + interpreted_uop[UOP_MT_OUTPUT_VT],
                       interpreted_uop[UOP_MT_INPUT_VN] + interpreted_uop[UOP_MT_OUTPUT_VN]
                       ):
@@ -79,7 +83,7 @@ def uop_genCXX_init_param(interpreted_uop):
             first = False
         else:
             ret += ", "
-        ret = ret + ioTypeMap[vt] + " " + vn
+        ret = ret + ioTypeMap[vt] + "* " + vn
     return ret
 
 
@@ -96,22 +100,28 @@ def uop_genCXX_func_init_file(interpreted_uop):
                                                           )
     ret = ret + "///////// input\n"
     for vt, vn in zip(interpreted_uop[UOP_MT_INPUT_VT], interpreted_uop[UOP_MT_INPUT_VN]):
-        if vt == "REG":
-            ret = ret + "   addRegMeta({REGNUM}, {BOOL_IS_SRC});\n".format(REGNUM=vn, BOOL_IS_SRC="true")
-        if vt == "MEM":
-            ret = ret + "   addMemMeta({ADAS}, {BOOL_IS_SRC});\n".format(ADAS=vn, BOOL_IS_SRC="true")
-        if vt == "TREG":
-            ret = ret + "   addTRegMeta({REGNUM}, {BOOL_IS_SRC});\n".format(REGNUM=vn, BOOL_IS_SRC="true")
+        ret  = ret + f"///{vt} with name {vn}\n"
+        if vt == UOP_IO_TYPE_REG:
+            ret  = ret + "addRegMeta({REGNUM}, true);\n".format(REGNUM = vn + "->getMeta()")
+        if vt == UOP_IO_TYPE_MEM:
+            ret  = ret + "addMemMeta({ADAS}  , true);\n".format(ADAS   = vn + "->getMeta()"      )
+            ret  = ret + "addRegMeta({REGNUM}, true);\n".format(REGNUM = vn + "->getBaseRegId()" )
+            ret  = ret + "addRegMeta({REGNUM}, true);\n".format(REGNUM = vn + "->getIndexRegId()")
+        if vt == UOP_IO_TYPE_TREG:
+            ret  = ret + "addTRegMeta({TREGNUM}, true);\n".format(TREGNUM = "*"+vn)
 
     ret = ret + "///////// output\n"
 
     for vt, vn in zip(interpreted_uop[UOP_MT_OUTPUT_VT], interpreted_uop[UOP_MT_OUTPUT_VN]):
-        if vt == "REG":
-            ret = ret + "   addRegMeta({REGNUM}, {BOOL_IS_SRC});\n".format(REGNUM=vn, BOOL_IS_SRC="false")
-        if vt == "MEM":
-            ret = ret + "   addMemMeta({ADAS}, {BOOL_IS_SRC});\n".format(ADAS=vn, BOOL_IS_SRC="false")
-        if vt == "TREG":
-            ret = ret + "   addTRegMeta({REGNUM}, {BOOL_IS_SRC});\n".format(REGNUM=vn, BOOL_IS_SRC="false")
+        ret  = ret + f"///{vt} with name {vn}\n"
+        if vt == UOP_IO_TYPE_REG:
+            ret  = ret + "addRegMeta({REGNUM}, false);\n".format(REGNUM = vn + "->getMeta()")
+        if vt == UOP_IO_TYPE_MEM:
+            ret  = ret + "addMemMeta({ADAS}, false);\n" .format(ADAS   = vn + "->getMeta()"      )
+            ret  = ret + "addRegMeta({REGNUM}, true);\n".format(REGNUM = vn + "->getBaseRegId()" )
+            ret  = ret + "addRegMeta({REGNUM}, true);\n".format(REGNUM = vn + "->getIndexRegId()")
+        if vt == UOP_IO_TYPE_TREG:
+            ret  = ret + "addTRegMeta({TREGNUM}, false);\n".format(TREGNUM = "*"+vn)
 
     ret += "}"
     return ret
@@ -129,7 +139,12 @@ def uop_genCXX(interpreted_uop):
                  "}};\n".format(VAR_NAME=interpreted_uop[UOP_MT_NAME],
                                FUNC_INIT=uop_genCXX_func_init_head(interpreted_uop))
 
+    isAnyMemOpr = (UOP_IO_TYPE_MEM in interpreted_uop[UOP_MT_INPUT_VT]) or (UOP_IO_TYPE_MEM in interpreted_uop[UOP_MT_OUTPUT_VT])
+    isAnyRegOpr = UOP_IO_TYPE_REG   in interpreted_uop[UOP_MT_INPUT_VT]
+
     cxxFile = "" \
+              "/////////////// UOP_{VAR_NAME}\n" \
+              "\n" \
               "UOP_{VAR_NAME}::UOP_{VAR_NAME}() : UOP_BASE({UOP_TYPE}){{}}" \
               "\n" \
               "\n" \
@@ -142,11 +157,12 @@ def uop_genCXX(interpreted_uop):
               "}}\n" \
               "\n" \
               "{FUNC_INIT}\n" \
-              "".format(VAR_NAME=interpreted_uop[UOP_MT_NAME],
-                        REG_CHECK="doRegDepenCheck(uop_window);" if "REG" in interpreted_uop[UOP_MT_INPUT_VT] else "",
-                        MEM_CHECK="doMemDepenCheck(uop_window);" if (("MEM" in interpreted_uop[UOP_MT_INPUT_VT]) or
-                                                                     ("MEM" in interpreted_uop[UOP_MT_OUTPUT_VT]))
-                        else "",
+              "\n" \
+              "//////////////////////////////////////\n" \
+              "\n" \
+              "\n".format(VAR_NAME=interpreted_uop[UOP_MT_NAME],
+                        REG_CHECK="doRegDepenCheck(uop_window);" if isAnyMemOpr or isAnyRegOpr else "",
+                        MEM_CHECK="doMemDepenCheck(uop_window);" if isAnyMemOpr                else "",
                         UOP_TYPE = interpreted_uop[UOP_MT_TYPE],
                         FUNC_INIT=uop_genCXX_func_init_file(interpreted_uop)
                         )

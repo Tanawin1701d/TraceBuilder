@@ -8,7 +8,102 @@
 
 
 
-class MOP_ADD_R_M : public MOP_BASE{
+class MOP_MOV_M_R : public MOP_BASE{
+public:
+
+   void genUop(vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};
+class MOP_MOV_I_R : public MOP_BASE{
+public:
+
+   void genUop(vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};
+class MOP_MOV_R_R : public MOP_BASE{
+public:
+
+   void genUop(vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};
+class MOP_MOV_I_M : public MOP_BASE{
+public:
+
+   void genUop(vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};
+class MOP_MOV_R_M : public MOP_BASE{
+public:
+
+   void genUop(vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};
+class MOP_JMP_REG : public MOP_BASE{
+public:
+
+   void genUop(vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};
+class MOP_JMP_IMM : public MOP_BASE{
+public:
+
+   void genUop(vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};
+class MOP_JMP_MEM : public MOP_BASE{
+public:
+
+   void genUop(vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};
+class MOP_COMP_R_I_R : public MOP_BASE{
+public:
+
+   void genUop(vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};
+class MOP_COMP_R_R_R : public MOP_BASE{
+public:
+
+   void genUop(vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};
+class MOP_COMP_R_M_R : public MOP_BASE{
+public:
+
+   void genUop(vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};
+class MOP_COMP_M_R_R : public MOP_BASE{
+public:
+
+   void genUop(vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};
+class MOP_COMP_M_M_R : public MOP_BASE{
+public:
+
+   void genUop(vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};
+class MOP_COMP_M_I_R : public MOP_BASE{
+public:
+
+   void genUop(vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};
+class MOP_COMP_R_I_M : public MOP_BASE{
+public:
+
+   void genUop(vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};
+class MOP_COMP_R_R_M : public MOP_BASE{
+public:
+
+   void genUop(vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};
+class MOP_COMP_R_M_M : public MOP_BASE{
+public:
+
+   void genUop(vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};
+class MOP_COMP_M_R_M : public MOP_BASE{
+public:
+
+   void genUop(vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};
+class MOP_COMP_M_M_M : public MOP_BASE{
+public:
+
+   void genUop(vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};
+class MOP_COMP_M_I_M : public MOP_BASE{
 public:
 
    void genUop(vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;

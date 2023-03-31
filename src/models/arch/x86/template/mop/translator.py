@@ -3,12 +3,12 @@ from colorama import init
 from termcolor import colored
 # MOPSTORAGE= {
 #                   name: "add",
-#                   input: { varName: (T_MEM_LD, id)}
-#                   output: {varName: (T_MEM_ST, id)}
+#                   input: { varName: (REG, id)}
+#                   output: {varName: (MEM, id)}
 #                   varTemp {varName }
 #                   microops:
 #                         <microop Name>:
-#                               type   : "type"
+#                               type   : "microop_type"
 #                               input  : [varName, varName, varNameTemp, varNameTemp2]
 #                               output : [varName, varName, varNameTemp]
 #                               dep    : {<microop Name1>,<microop Name2>, ...}
@@ -26,21 +26,21 @@ REF_VAL_MACRO_UOP_OUTPUT = "OUTPUT"
 
 
 
-MOP_IO_TYPES = ["O_REG", "O_MEM_LD", "O_MEM_ST", "O_IMM"]  ## we will drop imm out
+MOP_IO_TYPE_TEMP   = "TREG"
+MOP_IO_TYPE_REG    = "REG"
+MOP_IO_TYPE_MEM    = "MEM"
+
+MOP_IO_TYPES = [MOP_IO_TYPE_TEMP, MOP_IO_TYPE_REG, MOP_IO_TYPE_MEM]  ## we will drop imm out
 
 MOP_STORAGE = dict()
 
 ##### for cxx generating
-ioTypeMap = {"TEMP"   : "REGNUM",
-             "O_REG"    : "REG_OPERAND",
-             "O_MEM_LD" : "LD_OPERAND",
-             "O_MEM_ST" : "ST_OPERAND"
-             }
+ioTypeMap = {
+    MOP_IO_TYPE_TEMP : "TREGNUM",
+    MOP_IO_TYPE_REG  : "REG_OPERAND",
+    MOP_IO_TYPE_MEM  : "MEM_OPERAND"
+}
 
-MOP_IO_TYPE_TEMP   = "TEMP"
-MOP_IO_TYPE_REG    = "O_REG"
-MOP_IO_TYPE_LD_MEM = "O_MEM_LD"
-MOP_IO_TYPE_ST_MEM = "O_MEM_ST"
 
 
 
@@ -101,12 +101,12 @@ def mop_writeCXX_methods(cxx_eles): #tuple (cpp, header)
 def uop_genParam_addMeta(interpret_mop, uopMeta):
     retList = []
     for varName in uopMeta[MOP_META_MICROOP_INPUT]:
-        if varName in interpret_mop[MOP_META_INPUT]:
+        if varName in interpret_mop[MOP_META_INPUT]: ## in case operand variable
             vt, id    = interpret_mop[MOP_META_INPUT][varName]
             vtCxx = ioTypeMap[vt]
-            retList.append(f"(({vtCxx}*)(srcPool[{id}]))->getMeta()")
-        elif varName in interpret_mop[MOP_META_VARTEMP]:
-            retList.append(varName)
+            retList.append(f"({vtCxx}*)(srcPool[{id}])")
+        elif varName in interpret_mop[MOP_META_VARTEMP]: ## in case temp variable
+            retList.append(f"&{varName}")
         else:
             raise (AttributeError(f"error can interpret like this {varName}  {str(uopMeta)}"))
 
@@ -114,9 +114,9 @@ def uop_genParam_addMeta(interpret_mop, uopMeta):
         if varName in interpret_mop[MOP_META_OUTPUT]:
             vt, id = interpret_mop[MOP_META_OUTPUT][varName]
             vtCxx = ioTypeMap[vt]
-            retList.append(f"(({vtCxx}*)(desPool[{id}]))->getMeta()")
+            retList.append(f"({vtCxx}*)(desPool[{id}])")
         elif varName in interpret_mop[MOP_META_VARTEMP]:
-            retList.append(varName)
+            retList.append(f"&{varName}")
         else:
             print(interpret_mop[MOP_META_OUTPUT])
             raise (AttributeError(f"error can interpret like this {varName}  {str(uopMeta)}"))
@@ -131,21 +131,23 @@ def mop_genCXX_method_genUop(interpret_mop):
     #### get pool
     retStr = retStr + "     auto srcPool = rt_instr->getSrcMacroPoolOperands();\n" ## type vector<OPERAND*>
     retStr = retStr + "     auto desPool = rt_instr->getDesMacroPoolOperands();\n" ## type vector<OPERAND*>
-    retStr = retStr + "     TREGNUM " + ",".join(list(interpret_mop[MOP_META_VARTEMP])) + ";\n"
+    #### there are cases that don't have TREGNUM
+    if (len(interpret_mop[MOP_META_VARTEMP]) > 0):
+        retStr = retStr + "     TREGNUM " + ",".join(list(interpret_mop[MOP_META_VARTEMP])) + ";\n"
     #########################################
     ####  create uop pointer
     retStr = retStr + "\n\n\n     ///------------------------create uop \n"
     for uopName, uopMeta in interpret_mop[MOP_META_MICROOP].items():
         #### init uop and add meta data
         retStr = retStr + "     auto var_{UOPNAME} = new {UOPTYPE}();\n"\
-                          "     var_{UOPNAME}->addMeta({PARAM});\n".format(
+                          "          var_{UOPNAME}->addMeta({PARAM});\n".format(
                                                                             UOPNAME = uopName,
                                                                             UOPTYPE = "UOP_"+uopMeta[MOP_META_MICROOP_TYPE],
                                                                             PARAM   = uop_genParam_addMeta(interpret_mop, uopMeta)
                                                                             )
 
         #### push back to pool
-        retStr = retStr + "     results.push_back(var_{UOPNAME});\n".format(UOPNAME = uopName)
+        retStr = retStr + "          results.push_back(var_{UOPNAME});\n".format(UOPNAME = uopName)
 
     retStr = retStr + "\n\n\n     ///------------------------connect uop temp variable dep \n"
     ###################################
@@ -153,7 +155,7 @@ def mop_genCXX_method_genUop(interpret_mop):
     for uopName, uopMeta in interpret_mop[MOP_META_MICROOP].items():
         for depName in uopMeta[MOP_META_MICROOP_DEP]:
             retStr = retStr + "     var_{UOPNAME}->addTemDep(var_{DEPUOPNAME});\n"\
-                .format(UOPNAME = uopName,
+                .format(UOPNAME     = uopName,
                         DEPUOPNAME  = depName)
 
     retStr = retStr + "}"
@@ -167,7 +169,8 @@ def mop_genCXX_methods(interpret_mop):
                 "}};"\
         .format(MOPNAME = interpret_mop[MOP_META_NAME])
 
-    cppStr    = mop_genCXX_method_genUop(interpret_mop)
+    cppStr    = str()
+    cppStr    = cppStr +  mop_genCXX_method_genUop(interpret_mop)
 
     return headerStr, cppStr
 
@@ -206,7 +209,7 @@ def interpretMacroop(linesToken):
             ## case receive INPUT macroop
             if len(singleLineTok) >= 3:
                 for id, (vt, vn) in enumerate(zip(singleLineTok[1::2], singleLineTok[2::2])):
-                    if vt not in [MOP_IO_TYPE_REG, MOP_IO_TYPE_LD_MEM]:
+                    if vt not in [MOP_IO_TYPE_REG, MOP_IO_TYPE_MEM]:
                         raise KeyError(f"there is no type {vt}")
                     if vn in definedVar:
                         raise ValueError(f"there is variable {vn} already")
@@ -219,7 +222,7 @@ def interpretMacroop(linesToken):
             ## case receive OUTPUT macroop
             if len(singleLineTok) >= 3:
                 for id, (vt, vn) in enumerate(zip(singleLineTok[1::2], singleLineTok[2::2])):
-                    if vt not in  [MOP_IO_TYPE_ST_MEM, MOP_IO_TYPE_REG]:
+                    if vt not in  [MOP_IO_TYPE_MEM, MOP_IO_TYPE_REG]:
                         raise KeyError(f"there is no type {vt}")
                     if vn in definedVar:
                         raise ValueError(f"there is variable {vn} already")
@@ -263,8 +266,9 @@ def interpretMicroop(mopMeta, definedVar, singleLineTok, varTempDep):
 
         #### case input of micro-op is temp-variable we should assign dependency
         if token in mopMeta[MOP_META_VARTEMP]: ## for now token is temp variable name
-            mopMeta[MOP_META_MICROOP][microopName][MOP_META_MICROOP_DEP]\
-                .add(varTempDep[token])
+            ## some vartemp may be unused due to dummy declaration
+            if token in varTempDep:
+                mopMeta[MOP_META_MICROOP][microopName][MOP_META_MICROOP_DEP].add(varTempDep[token])
                  ### if there are any errors the vartempDep will raise itself
         ### input variable name to each micro-op
         mopMeta[MOP_META_MICROOP][microopName][MOP_META_MICROOP_INPUT].append(token)
