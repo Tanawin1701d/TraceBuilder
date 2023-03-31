@@ -27,8 +27,8 @@
 - syntax
   -  ```  
         MACROOP <NAME>
-              INPUT [<INPUT_OPERAND_TYPE> <INPUT_OPERAND_NAME>]
-              OUTPUT [<OUT_OPERAND_TYPE> <OUTPUT_OPERAND_NAME>]
+              INPUT [<INPUT_TYPE> <INPUT_NAME>]
+              OUTPUT [<OUTPUT_TYPE> <OUTPUT_NAME>]
               TEMP  [TEMPVAR_NAME]
               MICROOP <MICROOP_NAME> <relativeName1> INPUT [<VARNAME>] OUTPUT [<VARNAME>]
               MICROOP <MICROOP_NAME> <relativeName2> INPUT [<VARNAME>] OUTPUT [<VARNAME>]
@@ -38,24 +38,23 @@
         MACROOP_END
      ```
       - ```NAME``` name of macroop
-      - ```INPUT_OPERAND_TYPE``` input operand type it can be ```O_REG``` register operand ```O_MEM_LD``` load memory operand
-      - ```INPUT_OPERAND_NAME``` name for each operand 
+      - ```INPUT_TYPE``` input operand type it can be ```REG``` register operand ```MEM``` load memory operand
+      - ```INPUT_NAME``` name for each operand 
       - ```TEMP``` temporal register variable name
       - ```MICROOP_NAME``` type of microop that macroop need to generate
       - ```relativeName*``` name of microop that associate with microop type
       - ```VARNAME```   varname that input/output for each microop need
 - cpp input/output operand association
-  - ```O_REG``` is stand for  ```REG_OPERAND``` in c++ operand
-  - ```O_MEM_LD``` is stand for ```LD_OPERAND``` in c++ operand
-  - ```O_MEM_ST``` is stand for ```ST_OPERAND``` in c++ operand
-  - ```TEMP``` is stand for ```REGNUM```
-  - in detail, you can read at ```models/inst_model/operand.h``` for ```O_REG,O_MEM_LD,O_MEM_ST```
+  - ```REG``` is stand for ```REG_OPERAND``` in c++ operand
+  - ```MEM``` is stand for ```LD_OPERAND``` in c++ operand(for variable that declared in INPUT SECTION)
+  - ```MEM``` is stand for ```ST_OPERAND``` in c++ operand(for variable that declared in OUTPUT SECTION)
+  - in detail, you can read at ```models/inst_model/operand.h``` for ```REG_OPERAND,LD_OPERAND,ST_OPERAND```
 - generating structure
   - ```
          MOPSTORAGE= {
                    name: "add",
-                   input: { varName: (T_MEM_LD, id)} # id is order number associated with RT_instruction pool
-                   output: {varName: (T_MEM_ST, id)}
+                   input: { varName: ("MEM", id_int)} # id is order number associated with RT_instruction pool
+                   output: {varName: ("REG", id_int)}
                    varTemp {varName}
                    microops:
                          <microop Name>:
@@ -82,17 +81,10 @@
     - ```IN_NAME/OUT_NAME``` is input and out name for each operand
 
 - cpp input/output operand association
-    - ```REG``` is stand for  ```REGNUM``` in c++ operand
-    - ```TREG``` is stand for ```REGNUM``` in c++ operand
-    - ```MEM``` is stand for ```ADAS``` in c++ operand
+    - ```REG``` is stand for  ```REG_OPERAND``` in c++ operand
+    - ```TREG``` is stand for ```TREGNUM``` in c++ operand
+    - ```MEM``` is stand for ```LD_OPERAND/ST_OPERAND``` in c++ operand
     - In detail,  you can read at ```core/resMng``` directory
-
-- MACRO-OP <---> MICRO-OP operand association
-    - when you declare micro-op in macro-op, you might wonder how operand associate
-    - ```O_REG``` will be converted to ```REG``` or (```REG_OPERAND``` -> ```REGNUM```) in c++ (see operand getValue method)
-    - ```TEMP``` will be converted to ```TREG``` or (```REGNUM``` -> ```REGNUM```) in c++
-    - ```O_MEM_LD``` will be converted to ```MEM``` or (```LD_OPERAND``` -> ```ADAS```) in c++ (see operand getValue method)
-    - ```O_MEM_ST``` will be converted to ```MEM``` or (```ST_OPERAND``` -> ```ADAS```) in c++ (see operand getValue method)
 
 - generating structure
   - ```
