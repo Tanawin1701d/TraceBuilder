@@ -52,17 +52,13 @@ bool MEM_MNG::isAllocated(ADDR _a_vaddr) {
 void MEM_MNG::allocate(ADDR _a_vaddr) {
     pageMap.insert({_a_vaddr, nextphyStartAddr});
     nextphyStartAddr += pageAlignSize;
-
-    //////// stat collect
-    auto& statmemuse = getstatPoolCount("max_memory_used");
-    statmemuse = max(nextphyStartAddr, (ADDR)statmemuse);
 }
 
 ADDR MEM_MNG::pageAlign(ADDR _vaddr) {
     return _vaddr & (~(  (((ADDR) 1) << pageAlignBit) - 1));
 }
 
-void MEM_MNG::v2pConvert(ADDR _vaddr, int _size, vector<ADAS>& results) {
+void MEM_MNG::v2pConvert(ADDR _vaddr, int _size, std::vector<ADAS>& results) {
 
     assert(_size > 0);
     ADDR cur_vir_addr  = _vaddr;
@@ -70,7 +66,7 @@ void MEM_MNG::v2pConvert(ADDR _vaddr, int _size, vector<ADAS>& results) {
 
     do {
         ADDR next_vir_block_addr = (cur_vir_addr + cacheAlignmentSize) & (~(  (((ADDR) 1) << cacheAlignBit) - 1));
-        ADDR size_for_in_sec      = min(last_vir_addr, next_vir_block_addr) - cur_vir_addr;
+        ADDR size_for_in_sec      = std::min(last_vir_addr, next_vir_block_addr) - cur_vir_addr;
         ///// we assume that cache block line is aligned with page size
         results.push_back({v2pConvertSingle(cur_vir_addr), size_for_in_sec});
         cur_vir_addr += size_for_in_sec;

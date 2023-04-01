@@ -6,6 +6,7 @@
 #define TRACEBUILDER_DECODER_H
 
 #include "mop_base.h"
+#include "stat/statPool.h"
 
 
 

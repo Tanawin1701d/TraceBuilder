@@ -1,12 +1,49 @@
-MACROOP JMP_REG
+//// reg
+
+
+MACROOP JMP__R_R
     INPUT  REG R1
     OUTPUT REG RIP_OUT
     TEMP 
     MICROOP ST_RIP_1R ldAndSetRip INPUT R1  OUTPUT RIP_OUT
 MACROOP_END
 
+MACROOP JMP__I_R
+    INPUT
+    OUTPUT REG RIP_OUT
+    TEMP   T1
+    MICROOP GEN_LD_IMM ldImm       INPUT     OUTPUT T1
+    MICROOP ST_RIP_1T  writeRip    INPUT T1  OUTPUT RIP_OUT
+MACROOP_END
 
-MACROOP JMP_IMM
+MACROOP JMP__M_R
+    INPUT  MEM M1
+    OUTPUT REG RIP_OUT
+    TEMP   T1
+    MICROOP GEN_MEM_LD_T ldMem       INPUT M1  OUTPUT T1
+    MICROOP ST_RIP_1T    writeRip    INPUT T1  OUTPUT RIP_OUT
+MACROOP_END
+
+/////////////////////////////////////////////////////////////////
+////
+//// --------- two source operand
+////
+/////////////////////////////////////////////////////////////////
+
+
+
+//// rip + reg
+
+MACROOP JMP_R_R_R
+    INPUT  REG RIP REG R1
+    OUTPUT REG RIP_OUT
+    TEMP 
+    MICROOP ST_RIP_2R ldAndSetRip INPUT RIP R1  OUTPUT RIP_OUT
+MACROOP_END
+
+//// rip + imm
+
+MACROOP JMP_R_I_R
     INPUT  REG RIP_IN
     OUTPUT REG RIP_OUT
     TEMP   T1 T2
@@ -16,8 +53,9 @@ MACROOP JMP_IMM
 MACROOP_END
 
 
+//// rip + mem 
 
-MACROOP JMP_MEM
+MACROOP JMP_R_M_R
     INPUT  REG RIP_IN  MEM M1
     OUTPUT REG RIP_OUT
     TEMP   T1 T2

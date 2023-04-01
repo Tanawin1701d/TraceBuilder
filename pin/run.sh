@@ -26,10 +26,10 @@ python3 /media/tanawin/tanawin1701d/Project/sms/gem5/util/encode_packet_trace.py
 
 
 sudo pin-3.25-98650-g8f6168173-gcc-linux/pin -t obj-intel64/tracer.so         \
--i /media/tanawin/tanawin1701d/Project/sms/pintool/msmsPin/rawFile/fluidInstr \
--d /media/tanawin/tanawin1701d/Project/sms/pintool/msmsPin/rawFile/fluidData  \
--db /media/tanawin/tanawin1701d/Project/sms/pintool/msmsPin/rawFile/fluidDatadbg \
--- /media/tanawin/tanawin1701d/Project/sms/compiledEle/meta_workloads/test-progs/memstress/fluidanimateSerial 1 5 /media/tanawin/tanawin1701d/Project/sms/compiledEle/meta_workloads/test-progs/memstress/in_100K.fluid /media/tanawin/tanawin1701d/Project/sms/pintool/msmsPin/rawFile/fluidOut
+-i /media/tanawin/tanawin1701e/Project/sms/pintool/msmsPin/traceBuilder/pin/testStaticOutput/fluidInstr \
+-d /media/tanawin/tanawin1701e/Project/sms/pintool/msmsPin/traceBuilder/pin/testDynOutput/fluidData  \
+-db /media/tanawin/tanawin1701e/Project/sms/pintool/msmsPin/traceBuilder/pin/testDynOutput/fluidDatadbg \
+-- /media/tanawin/tanawin1701e/Project/sms/compiledEle/meta_workloads/test-progs/memstress/fluidanimateSerial 1 5 /media/tanawin/tanawin1701e/Project/sms/compiledEle/meta_workloads/test-progs/memstress/in_100K.fluid /media/tanawin/tanawin1701e/Project/sms/pintool/msmsPin/rawFile/fluidOut
 
 
 ### test 
@@ -48,3 +48,19 @@ sudo pin-3.25-98650-g8f6168173-gcc-linux/pin -t obj-intel64/tracer.so \
 -d /media/tanawin/tanawin1701e/Project/sms/pintool/msmsPin/traceBuilder/pin/testDynOutput/test1 \
 -db /media/tanawin/tanawin1701e/Project/sms/pintool/msmsPin/traceBuilder/pin/testDynOutput/test1dbg \
 -- /media/tanawin/tanawin1701e/Project/sms/pintool/msmsPin/traceBuilder/pin/testProgram/teste
+
+######## test jump
+sudo pin-3.25-98650-g8f6168173-gcc-linux/pin -t obj-intel64/tracer.so \
+-i /media/tanawin/tanawin1701e/Project/sms/pintool/msmsPin/traceBuilder/pin/testStaticOutput/testJump \
+-d /media/tanawin/tanawin1701e/Project/sms/pintool/msmsPin/traceBuilder/pin/testDynOutput/testJump \
+-db /media/tanawin/tanawin1701e/Project/sms/pintool/msmsPin/traceBuilder/pin/testDynOutput/testJumpdbg \
+-- /media/tanawin/tanawin1701e/Project/sms/pintool/msmsPin/traceBuilder/pin/testProgram/jumper
+
+
+######## test jump
+
+sudo pin-3.25-98650-g8f6168173-gcc-linux/pin -t obj-intel64/tracer.so         \
+-i /media/tanawin/tanawin1701e/Project/sms/pintool/msmsPin/traceBuilder/pin/testStaticOutput/fluidInstr \
+-d /media/tanawin/tanawin1701e/Project/sms/pintool/msmsPin/traceBuilder/pin/testDynOutput/fluidData  \
+-db /media/tanawin/tanawin1701e/Project/sms/pintool/msmsPin/traceBuilder/pin/testDynOutput/fluidDatadbg \
+-- /media/tanawin/tanawin1701e/Project/sms/compiledEle/meta_workloads/test-progs/memstress/fluidanimateSerial 1 5 /media/tanawin/tanawin1701e/Project/sms/compiledEle/meta_workloads/test-progs/memstress/in_100K.fluid /media/tanawin/tanawin1701e/Project/sms/pintool/msmsPin/rawFile/fluidOut

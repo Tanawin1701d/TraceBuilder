@@ -15,7 +15,7 @@
 typedef  int TREGNUM; ///// temporal reg number
 typedef  int REGNUM;  ///// reg number
 
-static    map<std::string, REGNUM> regmap = {
+static    std::map<std::string, REGNUM> regmap = {
 
             { "rax", 0 }, {"eax" , 0 },{"ax",   0 },{"al"  , 0 },{"ah"  , 0 },
             { "rcx", 1 }, {"ecx" , 1 },{"cx",   1 },{"cl"  , 1 },{"ch"  , 1 },
@@ -72,6 +72,6 @@ static    map<std::string, REGNUM> regmap = {
 static    int lastRegName = 49;
 static    int unusedReg   = -1;
 
-REGNUM regMapAutoAdd(const string& regName);
+REGNUM regMapAutoAdd(const std::string& regName);
 
 #endif //TRACEBUILDER_REGMAPPER_H

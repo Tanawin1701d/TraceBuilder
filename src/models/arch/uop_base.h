@@ -8,6 +8,7 @@
 
 #include "dep.h"
 #include "models/inst_model/operand.h"
+#include "stat/statPool.h"
 
 class RT_INSTR;
 class UOP_WINDOW;

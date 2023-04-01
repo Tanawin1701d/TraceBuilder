@@ -442,6 +442,33 @@ addRegMeta(RIP->getMeta(), false);
 
 
 
+/////////////// UOP_ST_RIP_2R
+
+UOP_ST_RIP_2R::UOP_ST_RIP_2R() : UOP_BASE(UOP_COMP){}
+
+void UOP_ST_RIP_2R::doDepenCheck(UOP_WINDOW* uop_window) {
+    doRegDepenCheck(uop_window);
+    
+    ///// for future use
+    /////   doExeDepenCheck(uop_window)
+
+}
+
+void UOP_ST_RIP_2R::addMeta(REG_OPERAND* R1, REG_OPERAND* R2, REG_OPERAND* RIP){
+///////// input
+///REG with name R1
+addRegMeta(R1->getMeta(), true);
+///REG with name R2
+addRegMeta(R2->getMeta(), true);
+///////// output
+///REG with name RIP
+addRegMeta(RIP->getMeta(), false);
+}
+
+//////////////////////////////////////
+
+
+
 /////////////// UOP_ST_RIP_2T
 
 UOP_ST_RIP_2T::UOP_ST_RIP_2T() : UOP_BASE(UOP_COMP){}

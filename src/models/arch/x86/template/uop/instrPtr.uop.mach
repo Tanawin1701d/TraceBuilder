@@ -13,7 +13,7 @@ MICROOP ST_RIP_1T
     OUTPUT REG RIP
 MICROOP_END
 
-/// there is one register source 
+/// there is one register des
 
 MICROOP ST_RIP_1R
     TYPE UOP_COMP
@@ -21,7 +21,15 @@ MICROOP ST_RIP_1R
     OUTPUT REG RIP
 MICROOP_END
 
-/// there is two register source 
+/// there is two register des
+
+MICROOP ST_RIP_2R
+    TYPE UOP_COMP
+    INPUT  REG R1 REG R2
+    OUTPUT REG RIP
+MICROOP_END
+
+/// there is two register des
 
 MICROOP ST_RIP_2T
     TYPE UOP_COMP

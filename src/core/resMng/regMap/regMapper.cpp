@@ -14,9 +14,9 @@ regMapAutoAdd(const std::string& regName){
     lastRegName++;
 
     regmap.insert(make_pair(regName, lastRegName));
-    cout << "[warning] detect new register : " << regName << " assign to " << lastRegName << endl;
+    std::cout << "[warning] detect new register : " << regName << " assign to " << lastRegName << std::endl;
 
-    getstatPoolCount("count_regMapNewCreate")++;
+    MAIN_STAT["count_regMapNewCreate"]++;
 
     return lastRegName;
 }

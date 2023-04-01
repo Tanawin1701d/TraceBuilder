@@ -12,7 +12,7 @@
 
 class DECODER_X86 : public DECODER_BASE{
 private:
-       unordered_map<std::string, MOP_BASE*> decodeStorage;
+       std::unordered_map<std::string, MOP_BASE*> decodeStorage;
 public:
                  DECODER_X86();
        MOP_BASE* decodeMOP(RT_INSTR& rt_instr) override;

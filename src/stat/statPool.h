@@ -7,36 +7,61 @@
 #include<iostream>
 #include<string>
 #include<unordered_map>
-using namespace std;
+#include<vector>
+#include <cassert>
+#include "ioHelp/strHelp.h"
 
-static std::unordered_map<string, uint64_t> statPoolCount = {
-        {"count_robDepFromLoadInstr",  0},
-        {"count_robDepFromCompInstr",  0},
-        {"count_robDepFromStoreInstr", 0},
 
-        {"count_regDepFromLoadInstr",  0},
-        {"count_regDepFromCompInstr",  0},
-        {"count_regDepFromStoreInstr", 0},
 
-        {"count_loadInstr" , 0},
-        {"count_compInstr" , 0},
-        {"count_storeInstr", 0},
-        {"count_fetchInstr", 0},
-        {"count_fetchSplit", 0},
-        {"max_fetchSplit", 0},
+class  STAT{
+private:
+    /// for now we support only uint64 stat for convinient use
+    bool    valueIsUsed;
+    int64_t value;
+    std::unordered_map<std::string, STAT*> chainStat;
 
-        {"count_regMapNewCreate", 0},
+public:
+    explicit STAT();
+    int64_t  operator+  (int64_t rhs) { setValued();                    return value + rhs; };
+    int64_t  operator-  (int64_t rhs) { setValued();                    return value - rhs; };
+    int64_t& operator=  (int64_t rhs) { setValued(); value  = rhs;      return value;       };
+    int64_t& operator+= (int64_t rhs) { setValued(); value += rhs;      return value;       };
+    int64_t& operator-= (int64_t rhs) { setValued(); value -= rhs;      return value;       };
+    int64_t& operator++ (int)         { setValued(); operator+=(1); return value;       };
+    int64_t& operator-- (int)         { setValued(); operator-=(1); return value;       };
+    STAT&    operator[] (std::string key);
 
-        {"max_memory_used", 0},
+    int64_t getVal()   const {return value;      };
+    bool    isValued() const {return valueIsUsed;};
+    void    setValued() {valueIsUsed = true;}
+    std::unordered_map<std::string, STAT*>& getChainStat(){return chainStat;};
+
 
 };
 
-static uint64_t dummyStatCount = 0;
+///////////////////////////////////////
+///////////////////////////////////////
+static STAT     MAIN_STAT;
+///////////////////////////////////////
+///////////////////////////////////////
 
+class STAT_MNG{
+    size_t maxLength = 0;
+    std::vector<std::string> keys;
+    std::vector<int64_t>     values;
+public:
+    void preparePrint(std::vector<std::string>& prefixs,
+               STAT* stat = &MAIN_STAT
+               );
 
-void printStat();
+    void print();
+};
 
-uint64_t& getstatPoolCount(string name);
+///////////////////////////////////////
+///////////////////////////////////////
+static STAT_MNG MAIN_STAT_MNG;
+///////////////////////////////////////
+///////////////////////////////////////
 
 
 #endif //TRACEBUILDER_STATPOOL_H

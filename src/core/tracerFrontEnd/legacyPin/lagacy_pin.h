@@ -18,7 +18,8 @@ private:
     std::string    fileName_dyn; // file name to open
     std::ifstream* staticFile;
     std::ifstream* dynFile;
-
+    uint64_t MAX_RT_BUFFER = ((uint64_t)1) << 24;
+    RT_OBJ*  bufferRtObj;
     uint64_t maxInstrNumber = 0;
 
     void startStaticTrace();

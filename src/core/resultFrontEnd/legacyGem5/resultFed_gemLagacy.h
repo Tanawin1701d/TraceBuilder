@@ -23,6 +23,8 @@ public:
     RESULT_FRONT_END_GEM_LAGACY(const std::string& filePath_data,
                                 const std::string& filePath_instr);
 
+    ~RESULT_FRONT_END_GEM_LAGACY();
+
     void onGetUopsResult(std::vector<UOP_BASE*>& uops,
                          RT_INSTR*          rt_instr
     );

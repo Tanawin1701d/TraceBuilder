@@ -6,6 +6,7 @@
 #define TRACEBUILDER_MOP_BASE_H
 
 #include "uop_base.h"
+#include "stat/statPool.h"
 
 class RT_INSTR;
 
@@ -21,7 +22,7 @@ public:
 public:
     virtual ~MOP_BASE() = default;
     //// results is used to return to micro-op to trace rt_instr
-    virtual  void genUop(vector<UOP_BASE*>& results,
+    virtual  void genUop(std::vector<UOP_BASE*>& results,
                          RT_INSTR* _rt_instr) = 0;
 
 
@@ -31,7 +32,7 @@ public:
 class MOP_SIMPLE :public MOP_BASE{
 
 public:
-    void  genUop(vector<UOP_BASE*>& results,
+    void  genUop(std::vector<UOP_BASE*>& results,
                  RT_INSTR*          rt_instr) override;
 };
 

@@ -50,6 +50,7 @@ static const std::string ST_VAL_COMPO_LD    = "L";
 static const std::string ST_VAL_COMPO_ST    = "S";
 static const std::string ST_VAL_COMPO_IMM   = "I";
 static const std::string ST_VAL_COMPO_FETCH = "F";
+static const std::string ST_VAL_COMPO_DEC   = "N"; ///pintool also generates decoder key but we do not use it
 //// markunused for load store operand
 static const std::string ST_VAL_LD_UNSED_REG = "UNUSED";
 

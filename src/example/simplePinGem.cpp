@@ -41,4 +41,9 @@ SIMPLE_PIN_GEM::start(){
 
     traceCore->start(false);
 
+    //// stat trace
+    MAIN_STAT_MNG.preparePrint({});
+    MAIN_STAT_MNG.print();
+    /////////////////////////////////////
+
 }

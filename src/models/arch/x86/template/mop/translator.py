@@ -126,8 +126,10 @@ def uop_genParam_addMeta(interpret_mop, uopMeta):
 def mop_genCXX_method_genUop(interpret_mop):
     retStr = str()
 
-    retStr = "void MOP_{MOPNAME}::genUop(vector<UOP_BASE*>& results, RT_INSTR* rt_instr){{\n".format(MOPNAME = interpret_mop[MOP_META_NAME])
+    retStr = "void MOP_{MOPNAME}::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* rt_instr){{\n".format(MOPNAME = interpret_mop[MOP_META_NAME])
 
+    #### stat recorder
+    retStr = retStr + "     MAIN_STAT[\"mopGen\"][\"MOP_{MOPNAME}\"]++;\n".format(MOPNAME = interpret_mop[MOP_META_NAME])
     #### get pool
     retStr = retStr + "     auto srcPool = rt_instr->getSrcMacroPoolOperands();\n" ## type vector<OPERAND*>
     retStr = retStr + "     auto desPool = rt_instr->getDesMacroPoolOperands();\n" ## type vector<OPERAND*>
@@ -165,7 +167,7 @@ def mop_genCXX_methods(interpret_mop):
     headerStr = "class MOP_{MOPNAME} : public MOP_BASE{{\n" \
                 "public:\n" \
                 "\n" \
-                "   void genUop(vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;\n" \
+                "   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;\n" \
                 "}};"\
         .format(MOPNAME = interpret_mop[MOP_META_NAME])
 

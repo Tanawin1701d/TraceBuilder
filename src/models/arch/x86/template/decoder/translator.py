@@ -98,7 +98,7 @@ def dec_genCPP_decodeMopMethod(interpreted_decList):
 def dec_genCXX_methods(interpreted_decList):
     headerStr = "class DECODER_X86 : public DECODER_BASE{\n" \
                 "private:\n" \
-                "       unordered_map<std::string, MOP_BASE*> decodeStorage;\n" \
+                "       std::unordered_map<std::string, MOP_BASE*> decodeStorage;\n" \
                 "public:\n" \
                 "                 DECODER_X86();\n" \
                 "       MOP_BASE* decodeMOP(RT_INSTR& rt_instr) override;\n" \

@@ -12,6 +12,11 @@ RESULT_FRONT_END_GEM_LAGACY(const std::string& filePath_data, const std::string&
     instrProtoStream = new ProtoOutputStream(filePath_instr);
 }
 
+RESULT_FRONT_END_GEM_LAGACY::~RESULT_FRONT_END_GEM_LAGACY() {
+    delete dataProtoStream;
+    delete instrProtoStream;
+}
+
 void
 RESULT_FRONT_END_GEM_LAGACY::onGetUopsResult(
         std::vector<UOP_BASE*> &uops,
@@ -68,9 +73,9 @@ RESULT_FRONT_END_GEM_LAGACY::onGetUopsResult(
                 dep_pkt.set_size(allStAdas[0].size);
             }
         }else{
-            string errorCode = "can't convert to google protobuffer uopType: "
-                               + to_string(uop->getUopType());
-            throw invalid_argument(errorCode.c_str());
+            std::string errorCode = "can't convert to google protobuffer uopType: "
+                               + std::to_string(uop->getUopType());
+            throw std::invalid_argument(errorCode.c_str());
         }
 
         dataProtoStream->write(dep_pkt);

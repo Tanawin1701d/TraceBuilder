@@ -8,7 +8,7 @@
 ////////////////////////////////////////////////////////////////////
 
 void
-MOP_SIMPLE::genUop(vector<UOP_BASE*>& results,
+MOP_SIMPLE::genUop(std::vector<UOP_BASE*>& results,
                    RT_INSTR*          rt_instr){
     assert(rt_instr != nullptr);
     ////////////////////////////////////////////////////////////////
@@ -17,14 +17,14 @@ MOP_SIMPLE::genUop(vector<UOP_BASE*>& results,
     ///
     ////////////////////////////////////////////////////////////////
     /////////// give one micro-op for one imm operand
-    vector<UOP_BASE*> immUops;
+    std::vector<UOP_BASE*> immUops;
     for (auto& immOpr: rt_instr->getSrcImmOperands()){
             auto immUop = new UOP_SIMPLE(UOP_IMM);
             immUops.push_back(immUop);
             results.push_back(immUop);
     }
     /////////// give one micro-op for one load operand
-    vector<UOP_BASE*> ldUops;
+    std::vector<UOP_BASE*> ldUops;
     for (auto& ldOpr: rt_instr->getSrcLdOperands()){
         auto ldUop = new UOP_SIMPLE(UOP_LOAD);
         ldUop->addMemMeta(ldOpr.getMeta(), true);
@@ -41,7 +41,7 @@ MOP_SIMPLE::genUop(vector<UOP_BASE*>& results,
     }
     results.push_back(compUop);
     /////////// give one micro-op for one store operand
-    vector<UOP_BASE*> stUops;
+    std::vector<UOP_BASE*> stUops;
     for (auto& stOpr: rt_instr->getDesStOperands()){
         auto stUop = new UOP_SIMPLE(UOP_STORE);
         stUop->addMemMeta(stOpr.getMeta(), false);

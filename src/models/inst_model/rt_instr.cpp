@@ -49,11 +49,11 @@ RT_INSTR::RT_INSTR() {
 }
 
 void
-RT_INSTR::interpretSt(const vector<string>& st_raw) {
+RT_INSTR::interpretSt(const std::vector<std::string>& st_raw) {
     size_t lstSrcMacroIdx = 0;
     size_t lstDesMacroIdx = 0;
     for (auto& opr_raw: st_raw){
-        vector<string> opr_tokens;
+        std::vector<std::string> opr_tokens;
         splitNstrip(opr_raw, opr_tokens);
         assert(opr_tokens.size() > 2);
         ///// check operand type and interpret them
@@ -67,8 +67,10 @@ RT_INSTR::interpretSt(const vector<string>& st_raw) {
             interpretImmOperand(opr_tokens);
         }else if (opr_tokens[ST_IDX_COMPO_TYP] == ST_VAL_COMPO_FETCH){
             interpretFetch(opr_tokens);
+        }else if (opr_tokens[ST_IDX_COMPO_TYP] == ST_VAL_COMPO_DEC) {
+            /// pass
         }else{
-            throw invalid_argument("there is no operand or any indicator : " + opr_tokens[ST_IDX_COMPO_TYP]);
+            throw std::invalid_argument("there is no operand or any indicator : " + opr_tokens[ST_IDX_COMPO_TYP]);
         }
     }
 
@@ -105,13 +107,13 @@ RT_INSTR::fillDynData(CVT_RT_OBJ& cvtDynData){
 }
 
 void
-RT_INSTR::genUOPS(vector<UOP_BASE *>& results) {
+RT_INSTR::genUOPS(std::vector<UOP_BASE *>& results) {
     assert(macroop != nullptr);
     macroop->genUop(results, this);
 }
 //////////////// internal method
 void
-RT_INSTR::interpretRegOperand(vector<string> &tokens, size_t& lstSrcMacroIdx, size_t& lstDesMacroIdx) {
+RT_INSTR::interpretRegOperand(std::vector<std::string> &tokens, size_t& lstSrcMacroIdx, size_t& lstDesMacroIdx) {
     assert(tokens[ST_IDX_COMPO_TYP] == ST_VAL_COMPO_REG);
     assert(tokens.size() == ST_IDX_REG_AMT);
 
@@ -137,7 +139,7 @@ RT_INSTR::interpretRegOperand(vector<string> &tokens, size_t& lstSrcMacroIdx, si
 
 /// TODO for now load and store operand share same raw format so we will use pool function instead
 void
-RT_INSTR::interpretLSOperand(vector<string> &tokens, bool isLoad, size_t& lstSrcMacroIdx, size_t& lstDesMacroIdx) {
+RT_INSTR::interpretLSOperand(std::vector<std::string> &tokens, bool isLoad, size_t& lstSrcMacroIdx, size_t& lstDesMacroIdx) {
     //// check direction of the operand whether it is store or
     bool isSrc = tokens[ST_IDX_DIRO] == ST_VAL_DIRO_SRC;
     bool isDes = tokens[ST_IDX_DIRO] == ST_VAL_DIRO_DES;
@@ -170,7 +172,7 @@ RT_INSTR::interpretLSOperand(vector<string> &tokens, bool isLoad, size_t& lstSrc
 
 ///// intepret load operand
 void
-RT_INSTR::interpretLOperand(vector<string> &tokens, size_t& lstSrcMacroIdx, size_t& lstDesMacroIdx) {
+RT_INSTR::interpretLOperand(std::vector<std::string> &tokens, size_t& lstSrcMacroIdx, size_t& lstDesMacroIdx) {
     assert(tokens[ST_IDX_COMPO_TYP] == ST_VAL_COMPO_LD);
     assert(tokens.size() == ST_IDX_LOAD_AMT);
     assert(tokens[ST_IDX_DIRO] == ST_VAL_DIRO_SRC);
@@ -180,7 +182,7 @@ RT_INSTR::interpretLOperand(vector<string> &tokens, size_t& lstSrcMacroIdx, size
 
 ///// intepret store operand
 void
-RT_INSTR::interpretSOperand(vector<string> &tokens, size_t& lstSrcMacroIdx, size_t& lstDesMacroIdx) {
+RT_INSTR::interpretSOperand(std::vector<std::string> &tokens, size_t& lstSrcMacroIdx, size_t& lstDesMacroIdx) {
     assert(tokens[ST_IDX_COMPO_TYP] == ST_VAL_COMPO_ST);
     assert(tokens.size() == ST_IDX_STORE_AMT);
     assert(tokens[ST_IDX_DIRO] == ST_VAL_DIRO_DES);
@@ -189,7 +191,7 @@ RT_INSTR::interpretSOperand(vector<string> &tokens, size_t& lstSrcMacroIdx, size
 }
 
 void
-RT_INSTR::interpretImmOperand(vector<string>& tokens) {
+RT_INSTR::interpretImmOperand(std::vector<std::string>& tokens) {
     assert(tokens[ST_IDX_COMPO_TYP] == ST_VAL_COMPO_IMM);
     assert(tokens.size() == ST_IDX_IMM_AMT);
     assert(tokens[ST_IDX_DIRO] == ST_VAL_DIRO_SRC);
@@ -201,7 +203,7 @@ RT_INSTR::interpretImmOperand(vector<string>& tokens) {
 }
 
 void
-RT_INSTR::interpretFetch(vector<string> &tokens) {
+RT_INSTR::interpretFetch(std::vector<std::string> &tokens) {
     assert(tokens[ST_IDX_COMPO_TYP] == ST_VAL_COMPO_IMM);
     assert(tokens.size() == ST_IDX_FETCH_AMT);
     assert(tokens[ST_IDX_DIRO] == ST_VAL_DIRO_SRC);
@@ -210,9 +212,13 @@ RT_INSTR::interpretFetch(vector<string> &tokens) {
     addr        = stoull(tokens[ST_IDX_FETCH_VADDR]);
     size        = stoi(tokens[ST_IDX_FETCH_SZ]);
     mnemonic    = tokens[ST_IDX_FETCH_MNEUMIC];
+
+    /////////////////////////////////////////
+    MAIN_STAT["staticTrace"][mnemonic]+= 1;
+    /////////////////////////////////////////
 }
 
-string RT_INSTR::getDecodeKey(){
+std::string RT_INSTR::getDecodeKey(){
     return mnemonic     + DEC_DILEM  +
            srcDecodeKey + DEC_DILEM  +
            desDecodeKey;

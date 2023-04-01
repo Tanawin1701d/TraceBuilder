@@ -12,8 +12,8 @@
 
 class CORE{
 private:
-    unordered_map<THREAD_ID, TRACER_BASE*>          traceWorkers;
-    unordered_map<THREAD_ID, TRACE_TOOL_FRONT_END*> traceTools;
+    std::unordered_map<THREAD_ID, TRACER_BASE*>          traceWorkers;
+    std::unordered_map<THREAD_ID, TRACE_TOOL_FRONT_END*> traceTools;
     THREAD_ID amountThread;
 
     MEM_MNG*      memMng;

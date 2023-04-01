@@ -37,7 +37,7 @@ void REG_DEP::doRegDepenCheck(UOP_WINDOW *traceWindow){
 }
 
 void REG_DEP::addRegMeta(const REGNUM regnum, bool isSrc) {
-    vector<REGNUM>* targetVec = isSrc ? &srcReg : &desReg;
+    std::vector<REGNUM>* targetVec = isSrc ? &srcReg : &desReg;
     targetVec->push_back(regnum);
 }
 
@@ -54,7 +54,7 @@ REG_DEP::getRegDep() {
 
 ////// memory addresss dependency
 
-bool MEM_DEP::scanOverlap(const ADAS adas, vector<ADAS>& adasVec){
+bool MEM_DEP::scanOverlap(const ADAS adas, std::vector<ADAS>& adasVec){
     for(auto& loadCheck: adasVec){
         if (isADASoverlap(loadCheck, adas)){
             return true;
@@ -90,7 +90,7 @@ void MEM_DEP::doMemDepenCheck(UOP_WINDOW *traceWindow) {
 }
 
 void MEM_DEP::addMemMeta(ADAS adas, bool isLoad) {
-    vector<ADAS>* targetVec = isLoad ? &loadAdas : &storeAdas;
+    std::vector<ADAS>* targetVec = isLoad ? &loadAdas : &storeAdas;
     targetVec->push_back(adas);
 }
 
@@ -132,7 +132,7 @@ TEM_DEP::isdepenOnTEM(const TREGNUM sucTreg) {
 }
 
 void
-TEM_DEP::doTEMDepenCheck(vector<UOP_BASE *>& predecessor) {
+TEM_DEP::doTEMDepenCheck(std::vector<UOP_BASE *>& predecessor) {
     for (auto uop_ptr: predecessor){
         for (auto src_treg: srcTRegs) {
             if (uop_ptr->isdepenOnTEM(src_treg)){

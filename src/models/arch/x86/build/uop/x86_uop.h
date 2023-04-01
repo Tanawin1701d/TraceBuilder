@@ -143,6 +143,14 @@ public:
 };
 
  
+class UOP_ST_RIP_2R : public UOP_BASE{
+public:
+  UOP_ST_RIP_2R();
+  void doDepenCheck(UOP_WINDOW* uop_window) override;
+  void addMeta( REG_OPERAND* R1, REG_OPERAND* R2, REG_OPERAND* RIP );
+};
+
+ 
 class UOP_ST_RIP_2T : public UOP_BASE{
 public:
   UOP_ST_RIP_2T();

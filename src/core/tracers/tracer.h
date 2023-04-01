@@ -20,6 +20,8 @@
 #include "models/arch/mop_base.h"
 #include "models/arch/uop_base.h"
 
+#include "stat/statPool.h"
+
 
 class TRACE_MANAGER;
 
@@ -39,9 +41,9 @@ private:
     ////////// thread model
     THREAD_MODEL* threadModel;
     ///////// run time instruction cache map
-    vector<RT_INSTR*> rt_instrs; //// idex is rt_id
+    std::vector<RT_INSTR*> rt_instrs; //// idex is rt_id
     ///////// current uop that being generated from uops
-    vector<UOP_BASE*> inflight_uops;
+    std::vector<UOP_BASE*> inflight_uops;
     ///////// nextUopId
     uint64_t nextMopId;
 public:

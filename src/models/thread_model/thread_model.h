@@ -18,7 +18,7 @@ class THREAD_MODEL{
 
 private:
 
-    unordered_map<uint64_t, RT_INSTR*> instr_pool; /// map runtime instruction id to runtime instruction
+    std::unordered_map<uint64_t, RT_INSTR*> instr_pool; /// map runtime instruction id to runtime instruction
 
 
 public:

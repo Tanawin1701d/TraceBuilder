@@ -124,11 +124,15 @@ VOID ButtomEachIntr(
 // The Instruction function is called for every instruction
 VOID Instruction(INS ins, VOID* v)
 {
+
+    if ( INS_IsNop(ins) ){
+        return;
+    }
     
     //instruction
     std::string _instrName   = INS_Disassemble(ins);
-    ADDRINT instrAddr = INS_Address(ins);
-    UINT32  instrSize = INS_Size(ins);
+    ADDRINT instrAddr        = INS_Address(ins);
+    UINT32  instrSize        = INS_Size(ins);
 
     char buffer[32];
     sprintf(buffer, "%lx", instrAddr);
@@ -149,6 +153,8 @@ VOID Instruction(INS ins, VOID* v)
 
     ///////////////////////// for compute instruction
     UINT32 numOperands = INS_OperandCount(ins);
+
+
 
     for (UINT32 opIdx = 0; opIdx < numOperands; opIdx++){
         if (INS_OperandIsReg(ins, opIdx)){

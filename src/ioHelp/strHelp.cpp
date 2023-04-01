@@ -66,11 +66,20 @@ uintptr_t decStr2uint(std::string raw) {
     return cres;
 }
 
-std::string concatVec ( std::vector<std::string>& raws ){
+std::string concatVec ( std::vector<std::string>& raws, std::string catTok){
     std::string preRet;
     for (auto& e : raws){
         preRet += e;
-        preRet += " ";
+        preRet += catTok;
+    }
+    return preRet;
+}
+
+
+std::string genRepeatStr (size_t n, std::string str){
+    std::string preRet;
+    for (int i = 0; i < n; i++){
+        preRet += str;
     }
     return preRet;
 }

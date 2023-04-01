@@ -14,7 +14,7 @@ friend class TRACER_BASE;
 protected:
     ////////// please remind that this UOP_BASE pointer will be deleted later
     ///////////////// (when uop window discard it, uop will be deleted)
-    virtual void onGetUopsResult(vector<UOP_BASE*>& results,
+    virtual void onGetUopsResult(std::vector<UOP_BASE*>& results,
                                  RT_INSTR*          rt_instr
     ) = 0;
 
