@@ -40,12 +40,15 @@ RESULT_FRONT_END_GEM_LAGACY::onGetUopsResult(
         ///// you can trust that the uops dependency which get from ONGETUOPSRESULTS is not deleted
         //////// by uop window but it maybe deleted after finish this function.
         for (auto* regDepUop: uop->getRegDep()){
+            MAIN_STAT["DepGem5"]["reg"]++;
             dep_pkt.add_reg_dep(regDepUop->getSeqNum());
         }
         for (auto* tempRegDepUop: uop->getTemDep()){
+            MAIN_STAT["DepGem5"]["reg"]++;
             dep_pkt.add_reg_dep(tempRegDepUop->getSeqNum());
         }
         for (auto* memDepUop: uop->getMemDep()){
+            MAIN_STAT["DepGem5"]["mem"]++;
             dep_pkt.add_rob_dep(memDepUop->getSeqNum());
         }
 

@@ -96,6 +96,7 @@ TRACER_BASE::onGetDynTraceValue(dynTraceData dyndata) {
     auto* rt_instr = rt_instrs[dyndata.rawData.fetchId];
     /////////////////////////////////////////////////////////// stat
     MAIN_STAT["dynTrace"]["MNEMONIC"][rt_instr->getMnemonic()]++;
+    MAIN_STAT["dynTrace"]["MOP_COUNT"]++;
     ///////////////////////////////////////////////////////////
     CVT_RT_OBJ cvt_trace_data{};
     cvt_rtobj_tracable(dyndata.rawData, *rt_instr, cvt_trace_data);
@@ -107,6 +108,7 @@ TRACER_BASE::onGetDynTraceValue(dynTraceData dyndata) {
     /////// interact with uop windows BUT DO NOT PUSH TO UOP WINDOW
             ////// we must notify result front-end first
     for (auto* uop: inflight_uops){
+        MAIN_STAT["dynTrace"]["UOP_COUNT"]++;
         uop->setSeqNum(nextMopId++);
         uop->doDepenCheck(uopWindow);
     }
