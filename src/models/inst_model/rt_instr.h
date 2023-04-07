@@ -49,7 +49,7 @@ private:
     /////// pool operand to allow macro-op access in correct order
     std::vector<OPERAND*>    desMacroPoolOperands;/// pool the  des operand for macroop will get it and fill into micro-op
     /////// macro-op
-    MOP_BASE*           macroop{};
+    MOP_BASE*                macroop{};
 
 
 protected:
@@ -64,9 +64,9 @@ protected:
 
 public:
     /// interpret instruction
-    RT_INSTR( RT_INSTR& host);
+    RT_INSTR ( RT_INSTR& host); ///copy constructor
+    RT_INSTR (); /// vanila constructor
     virtual ~RT_INSTR() = default;
-    RT_INSTR(); // static trace raw
     void     interpretSt(const std::vector<std::string>& st_raw); // interpret from raw static tracer
     void     fillDynData(CVT_RT_OBJ& cvtDynData);
     void     genUOPS(std::vector<UOP_BASE*>& results);
@@ -84,7 +84,7 @@ public:
     std::vector<REG_OPERAND>& getDesRegOperands()       { return desRegOperands;};
     std::vector<ST_OPERAND>&  getDesStOperands()        { return desStOperands ;};
     std::vector<OPERAND*>&    getDesMacroPoolOperands() { return desMacroPoolOperands;};
-    MOP_BASE*            getMacroop()              { return macroop;};
+    MOP_BASE*                 getMacroop()              { return macroop;};
 
 
 

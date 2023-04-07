@@ -25,12 +25,12 @@ SIMPLE_PIN_GEM::start(){
 
     ///////// front end from pintool and gem5
 
-    LAGACY_PIN_TRACER* pinTracer = new LAGACY_PIN_TRACER(inputPinFile_instr, inputPinFile_data);
+    LAGACY_PIN_TRACER*           pinTracer   = new LAGACY_PIN_TRACER(inputPinFile_instr, inputPinFile_data);
     RESULT_FRONT_END_GEM_LAGACY* gemFrontend = new RESULT_FRONT_END_GEM_LAGACY (outProtoFile_data, outProtoFile_instr);
 
     //////// mem manager && decoder
-    ADDR memSize = ((ADDR)1) << (4 + 30);
-    MEM_MNG* memMng = new MEM_MNG(12, 6, memSize, 0);
+    ADDR memSize        = ((ADDR)1) << (4 + 30);
+    MEM_MNG* memMng     = new MEM_MNG(12, 6, memSize, 0);
     DECODER_X86* x86Dec = new DECODER_X86();
 
     //////// core start
@@ -41,9 +41,9 @@ SIMPLE_PIN_GEM::start(){
 
     traceCore->start(false);
 
-    //// stat trace
-    MAIN_STAT_MNG.preparePrint({});
-    MAIN_STAT_MNG.print();
-    /////////////////////////////////////
+    delete pinTracer;
+    delete gemFrontend;
+    delete memMng;
+    delete x86Dec;
 
 }

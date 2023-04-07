@@ -24,7 +24,7 @@ enum OPR_TYPE {
 class OPERAND{
 private:
     OPR_TYPE OT;
-    size_t   mcArgSIdx; //// microop operand idx for each side (src or des side)
+    size_t   mcArgSIdx; //// macroop operand idx for each side (src or des side)
 public:
     OPERAND(OPR_TYPE _OT, size_t _mcArgSIdx);
     virtual ~OPERAND() = default;

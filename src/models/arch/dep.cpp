@@ -24,7 +24,7 @@ bool REG_DEP::isdependOnReg(const REGNUM &sucReg){
 void REG_DEP::doRegDepenCheck(UOP_WINDOW *traceWindow){
     assert(traceWindow != nullptr);
     auto uopWindow_ptr = traceWindow->getUopwindow();
-    ////// TODO we might upgrade for clever method to achieve better performance
+    ////// TODO we might upgrade to clever method to achieve better performance
     for (auto& uopWindow_itr : *uopWindow_ptr){
         for (auto mySrcReg: srcReg){
             if (uopWindow_itr->isdependOnReg(mySrcReg)){
@@ -32,11 +32,10 @@ void REG_DEP::doRegDepenCheck(UOP_WINDOW *traceWindow){
             }
         }
     }
-
-
 }
 
 void REG_DEP::addRegMeta(const REGNUM regnum, bool isSrc) {
+    if (regnum == unusedReg){return;}
     std::vector<REGNUM>* targetVec = isSrc ? &srcReg : &desReg;
     targetVec->push_back(regnum);
 }
@@ -77,6 +76,7 @@ void MEM_DEP::doMemDepenCheck(UOP_WINDOW *traceWindow) {
     assert(traceWindow != nullptr);
     auto uopWindow_ptr = traceWindow->getUopwindow();
     ////// TODO we might upgrade for clever method to achieve better performance
+    /////////// like line sweep algorithm
     for (auto & uopWindow_itr : *uopWindow_ptr){
         for (auto& ldAdas : loadAdas){
             if (uopWindow_itr->isdependOnMem(ldAdas, true))

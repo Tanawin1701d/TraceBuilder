@@ -25,7 +25,8 @@ RT_INSTR::RT_INSTR(RT_INSTR& host) :
 
     //////// macro pool operand need index from self operand class
     /// build src macroPool Operands
-    srcMacroPoolOperands.reserve(host.srcMacroPoolOperands.size());
+        //// IMM operand is ignored due to it is not necessary
+    srcMacroPoolOperands.resize(host.srcMacroPoolOperands.size());
     for (auto& oprPtr: srcRegOperands){
         srcMacroPoolOperands[oprPtr.getMcSideIdx()] = &oprPtr;
     }
@@ -33,7 +34,7 @@ RT_INSTR::RT_INSTR(RT_INSTR& host) :
         srcMacroPoolOperands[oprPtr.getMcSideIdx()] = &oprPtr;
     }
     /// build des macrPool operand
-    desMacroPoolOperands.reserve(host.desMacroPoolOperands.size());
+    desMacroPoolOperands.resize(host.desMacroPoolOperands.size());
     for (auto& oprPtr: desRegOperands){
         desMacroPoolOperands[oprPtr.getMcSideIdx()] = &oprPtr;
     }
@@ -55,7 +56,6 @@ RT_INSTR::interpretSt(const std::vector<std::string>& st_raw) {
     for (auto& opr_raw: st_raw){
         std::vector<std::string> opr_tokens;
         splitNstrip(opr_raw, opr_tokens);
-        assert(opr_tokens.size() > 2);
         ///// check operand type and interpret them
         if (opr_tokens[ST_IDX_COMPO_TYP] == ST_VAL_COMPO_REG){
             interpretRegOperand(opr_tokens, lstSrcMacroIdx, lstDesMacroIdx);
@@ -67,7 +67,7 @@ RT_INSTR::interpretSt(const std::vector<std::string>& st_raw) {
             interpretImmOperand(opr_tokens);
         }else if (opr_tokens[ST_IDX_COMPO_TYP] == ST_VAL_COMPO_FETCH){
             interpretFetch(opr_tokens);
-        }else if (opr_tokens[ST_IDX_COMPO_TYP] == ST_VAL_COMPO_DEC) {
+        }else if (opr_tokens[ST_IDX_COMPO_TYP] == ST_VAL_COMPO_DEC || opr_tokens[ST_IDX_COMPO_TYP] == ST_VAL_COMPO_SPT) {
             /// pass
         }else{
             throw std::invalid_argument("there is no operand or any indicator : " + opr_tokens[ST_IDX_COMPO_TYP]);
@@ -86,10 +86,9 @@ RT_INSTR::fillDynData(CVT_RT_OBJ& cvtDynData){
              (cvtDynData.loadMemOpNum[ldIdx] != DUMMY_MEM_OP_NUM);
              ldIdx++
         ){
-        assert(cvtDynData.loadMemOpNum[ldIdx] < srcLdOperands.size());
         ////// for backward compatability
         /////// we assume that memop may be reordered arbitrary.
-        srcLdOperands[ cvtDynData.loadMemOpNum[ldIdx] ].setPhyAddr(cvtDynData.phyLoadAddr[ldIdx]);
+        srcLdOperands[ldIdx].setPhyAddr(cvtDynData.phyLoadAddr[ldIdx]);
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////
     ////////// fill physical address of each store operand
@@ -98,16 +97,15 @@ RT_INSTR::fillDynData(CVT_RT_OBJ& cvtDynData){
          (cvtDynData.storeMemOpNum[stIdx] != DUMMY_MEM_OP_NUM);
          stIdx++
             ){
-        assert(cvtDynData.storeMemOpNum[stIdx] < desStOperands.size());
         ////// for backward compatability
         /////// we assume that memop may be reordered arbitrary.
-        desStOperands[ cvtDynData.storeMemOpNum[stIdx]].setPhyAddr(cvtDynData.phyStoreAddr[stIdx]);
+        desStOperands[stIdx].setPhyAddr(cvtDynData.phyStoreAddr[stIdx]);
     }
 
 }
 
 void
-RT_INSTR::genUOPS(std::vector<UOP_BASE *>& results) {
+RT_INSTR::genUOPS(std::vector<UOP_BASE*>& results) {
     assert(macroop != nullptr);
     macroop->genUop(results, this);
 }
@@ -125,11 +123,11 @@ RT_INSTR::interpretRegOperand(std::vector<std::string> &tokens, size_t& lstSrcMa
     if (isSrc){
         srcRegOperands.emplace_back(newRegName, lstSrcMacroIdx++);
         srcMacroPoolOperands.push_back(&(*srcRegOperands.rbegin()));
-        srcDecodeKey = srcDecodeKey + DEC_REG_OPR;
+        srcDecodeKey += DEC_REG_OPR;
     }else if ( isDes ){
         desRegOperands.emplace_back(newRegName, lstDesMacroIdx++);
         desMacroPoolOperands.push_back(&(*desRegOperands.rbegin()));
-        desDecodeKey = desDecodeKey + DEC_REG_OPR;
+        desDecodeKey += DEC_REG_OPR;
     }else{
         throw std::invalid_argument(
                 "invalid static trace for reg operand " + tokens[ST_IDX_DIRO]
@@ -143,6 +141,7 @@ RT_INSTR::interpretLSOperand(std::vector<std::string> &tokens, bool isLoad, size
     //// check direction of the operand whether it is store or
     bool isSrc = tokens[ST_IDX_DIRO] == ST_VAL_DIRO_SRC;
     bool isDes = tokens[ST_IDX_DIRO] == ST_VAL_DIRO_DES;
+    /// for now load store indexing use the same id
     ///please reminde that register for load and store instruction may be unused which mean it will return as -1
     //// index base register
     REGNUM baseReg  = (tokens[ST_IDX_LOAD_RB] != ST_VAL_LD_UNSED_REG) ? regMapAutoAdd(tokens[ST_IDX_LOAD_RB])
@@ -153,20 +152,20 @@ RT_INSTR::interpretLSOperand(std::vector<std::string> &tokens, bool isLoad, size
     int scale = 4;
     /// TODO displacement is hard wired to 0
     int displacement = 0;
-    int size  = stoi(tokens[ST_IDX_LOAD_SZ]);
-    int memopNum = stoi(tokens[ST_IDX_LOAD_MON]);
+    int size         = stoi(tokens[ST_IDX_LOAD_SZ] );
+    int memopNum     = stoi(tokens[ST_IDX_LOAD_MON]);
     ///build operand
     if (isLoad) {
         srcLdOperands.emplace_back(baseReg, indexReg,scale,
                                    displacement, size, memopNum,lstSrcMacroIdx++);
         srcMacroPoolOperands.push_back(&(*srcLdOperands.rbegin()));
-        srcDecodeKey = srcDecodeKey + DEC_LD_OPR;
+        srcDecodeKey += DEC_LD_OPR;
     }
     else { // store
         desStOperands.emplace_back(baseReg, indexReg, scale,
                                    displacement, size, memopNum, lstDesMacroIdx++);
         desMacroPoolOperands.push_back(&(*desStOperands.rbegin()));
-        desDecodeKey = desDecodeKey + DEC_ST_OPR;
+        desDecodeKey +=  DEC_ST_OPR;
     }
 }
 
@@ -198,14 +197,14 @@ RT_INSTR::interpretImmOperand(std::vector<std::string>& tokens) {
     IMM imm = stoull(tokens[ST_IDX_IMM_IMM]);
 
     srcImmOperands.emplace_back(imm);
-    srcDecodeKey = srcDecodeKey + DEC_IMM_OPR;
+    srcDecodeKey += DEC_IMM_OPR;
     //// we do not push to MacroPooloperand due to current version regardless about imm
 }
 
 void
 RT_INSTR::interpretFetch(std::vector<std::string> &tokens) {
-    assert(tokens[ST_IDX_COMPO_TYP] == ST_VAL_COMPO_IMM);
-    assert(tokens.size() == ST_IDX_FETCH_AMT);
+    assert(tokens[ST_IDX_COMPO_TYP] == ST_VAL_COMPO_FETCH);
+    assert(tokens.size() >= ST_IDX_FETCH_AMT);
     assert(tokens[ST_IDX_DIRO] == ST_VAL_DIRO_SRC);
 
     rt_instr_id = stoull(tokens[ST_IDX_FETCH_ID]);

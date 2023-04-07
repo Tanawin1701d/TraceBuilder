@@ -71,6 +71,7 @@ static    std::map<std::string, REGNUM> regmap = {
     };
 static    int lastRegName = 49;
 static    int unusedReg   = -1;
+static    std::string unusedRegStr = "-1";
 
 REGNUM regMapAutoAdd(const std::string& regName);
 

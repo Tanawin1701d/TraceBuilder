@@ -24,9 +24,12 @@ private:
 public:
     explicit THREAD_MODEL();
     ~THREAD_MODEL();
+
+    /////// get runtime instruction that not decoded to generate micro-op or added with
+    ////////////// runtime data
     RT_INSTR* getInstrTemplate(uint64_t instr_id);
-//    RT_INSTR getInstrWithDynFill(uint64_t          instr_id,
-//                                 convertedDynData& dynData);
+
+    //////// when tracer collect raw static instruction token which we will decoded it
     void onGetStTraceValue(staticTraceData stData); // for only per instruction
 
 };

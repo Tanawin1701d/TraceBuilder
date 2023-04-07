@@ -44,10 +44,12 @@ LAGACY_PIN_TRACER::startStaticTrace(){
             {
                 ///// if we get fetch component type so we should send thread model to decode
                 tmd->onGetStTraceValue(presentData);
+                presentData.rawData.clear();
                 maxInstrNumber++;
             }
         }
     }
+    std::cout << "[TBD@legacyPin:52] staticIntepret pass!" << std::endl;
 }
 
 void

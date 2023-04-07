@@ -57,7 +57,7 @@ TRACER_BASE::cvtLoadOrStoreToPhyAddr(RT_OBJ&           rt_obj,
 
         //// get data from rt_obj and rt_instr
         uint64_t addr = dynVirAddr[idx];
-        uint64_t size = isLoad ? ldOprs[opNum].getSize() : stOprs[opNum].getSize();
+        uint64_t size = isLoad ? ldOprs[idx].getSize() : stOprs[idx].getSize();
 
         //// convert virtual address to physical address
         std::vector<ADAS> addrCvtResults; /// TODO fornow wew assume 1 operand per 1 ADAS
@@ -97,6 +97,9 @@ TRACER_BASE::onGetDynTraceValue(dynTraceData dyndata) {
     /////////////////////////////////////////////////////////// stat
     MAIN_STAT["dynTrace"]["MNEMONIC"][rt_instr->getMnemonic()]++;
     MAIN_STAT["dynTrace"]["MOP_COUNT"]++;
+    if ( (MAIN_STAT["dynTrace"]["MOP_COUNT"].getVal() % 10000000) == 0 ){
+        std::cout << "[TBD@tracer:101] pass : " <<   MAIN_STAT["dynTrace"]["MOP_COUNT"].getVal() << " instructions" << std::endl;
+    }
     ///////////////////////////////////////////////////////////
     CVT_RT_OBJ cvt_trace_data{};
     cvt_rtobj_tracable(dyndata.rawData, *rt_instr, cvt_trace_data);

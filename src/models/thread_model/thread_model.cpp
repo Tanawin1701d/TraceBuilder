@@ -25,15 +25,6 @@ THREAD_MODEL::getInstrTemplate(uint64_t instr_id) {
 
 }
 
-//RT_INSTR
-//THREAD_MODEL::getInstrWithDynFill(uint64_t instr_id,
-//                                  convertedDynData& cvtData){
-//    auto finder = instr_pool.find(instr_id);
-//    assert(finder != instr_pool.end());
-//
-//    finder->second->fillDynData(cvtData);
-//    return *(finder->second);
-//}
 
 void
 THREAD_MODEL::onGetStTraceValue(staticTraceData stData) {

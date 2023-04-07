@@ -183,7 +183,7 @@ void MOP_MOV_M_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* rt_instr){
      MAIN_STAT["mopGen"]["MOP_JMP_R_I_R"]++;
      auto srcPool = rt_instr->getSrcMacroPoolOperands();
      auto desPool = rt_instr->getDesMacroPoolOperands();
-     TREGNUM T1,T2;
+     TREGNUM T2,T1;
 
 
 
@@ -201,14 +201,14 @@ void MOP_MOV_M_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* rt_instr){
 
 
      ///------------------------connect uop temp variable dep 
-     var_writeRip->addTemDep(var_loader);
      var_writeRip->addTemDep(var_ldRip);
+     var_writeRip->addTemDep(var_loader);
 }
  void MOP_JMP_R_M_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* rt_instr){
      MAIN_STAT["mopGen"]["MOP_JMP_R_M_R"]++;
      auto srcPool = rt_instr->getSrcMacroPoolOperands();
      auto desPool = rt_instr->getDesMacroPoolOperands();
-     TREGNUM T1,T2;
+     TREGNUM T2,T1;
 
 
 
@@ -226,8 +226,8 @@ void MOP_MOV_M_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* rt_instr){
 
 
      ///------------------------connect uop temp variable dep 
-     var_writeRip->addTemDep(var_loader);
      var_writeRip->addTemDep(var_ldRip);
+     var_writeRip->addTemDep(var_loader);
 }
  void MOP_COMP_R_I_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* rt_instr){
      MAIN_STAT["mopGen"]["MOP_COMP_R_I_R"]++;
@@ -312,7 +312,7 @@ void MOP_MOV_M_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* rt_instr){
      MAIN_STAT["mopGen"]["MOP_COMP_M_M_R"]++;
      auto srcPool = rt_instr->getSrcMacroPoolOperands();
      auto desPool = rt_instr->getDesMacroPoolOperands();
-     TREGNUM T1,T2;
+     TREGNUM T2,T1;
 
 
 
@@ -330,14 +330,14 @@ void MOP_MOV_M_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* rt_instr){
 
 
      ///------------------------connect uop temp variable dep 
-     var_alu->addTemDep(var_loader2);
      var_alu->addTemDep(var_loader1);
+     var_alu->addTemDep(var_loader2);
 }
  void MOP_COMP_M_I_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* rt_instr){
      MAIN_STAT["mopGen"]["MOP_COMP_M_I_R"]++;
      auto srcPool = rt_instr->getSrcMacroPoolOperands();
      auto desPool = rt_instr->getDesMacroPoolOperands();
-     TREGNUM T1,T2;
+     TREGNUM T2,T1;
 
 
 
@@ -355,8 +355,8 @@ void MOP_MOV_M_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* rt_instr){
 
 
      ///------------------------connect uop temp variable dep 
-     var_alu->addTemDep(var_loader2);
      var_alu->addTemDep(var_loaderi);
+     var_alu->addTemDep(var_loader2);
 }
  void MOP_COMP_R_I_M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* rt_instr){
      MAIN_STAT["mopGen"]["MOP_COMP_R_I_M"]++;
@@ -458,7 +458,7 @@ void MOP_MOV_M_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* rt_instr){
      MAIN_STAT["mopGen"]["MOP_COMP_M_M_M"]++;
      auto srcPool = rt_instr->getSrcMacroPoolOperands();
      auto desPool = rt_instr->getDesMacroPoolOperands();
-     TREGNUM TX,T1,T2;
+     TREGNUM T2,TX,T1;
 
 
 
@@ -479,15 +479,15 @@ void MOP_MOV_M_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* rt_instr){
 
 
      ///------------------------connect uop temp variable dep 
-     var_alu->addTemDep(var_loader2);
      var_alu->addTemDep(var_loader1);
+     var_alu->addTemDep(var_loader2);
      var_store->addTemDep(var_alu);
 }
  void MOP_COMP_M_I_M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* rt_instr){
      MAIN_STAT["mopGen"]["MOP_COMP_M_I_M"]++;
      auto srcPool = rt_instr->getSrcMacroPoolOperands();
      auto desPool = rt_instr->getDesMacroPoolOperands();
-     TREGNUM TX,T1,T2;
+     TREGNUM T2,TX,T1;
 
 
 
@@ -508,7 +508,7 @@ void MOP_MOV_M_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* rt_instr){
 
 
      ///------------------------connect uop temp variable dep 
-     var_alu->addTemDep(var_loader2);
      var_alu->addTemDep(var_loaderi);
+     var_alu->addTemDep(var_loader2);
      var_store->addTemDep(var_alu);
 }
