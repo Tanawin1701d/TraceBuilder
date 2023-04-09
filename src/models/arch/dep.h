@@ -40,8 +40,11 @@ public:
     virtual void doRegDepenCheck(UOP_WINDOW* traceWindow);
     ///// for adding source/des of the micro-op meta-data
     virtual void addRegMeta(const REGNUM regnum, bool isSrc); //// if false it is des
+    ///// for get des register
+    virtual std::vector<REGNUM>& getdesReg();
     ///// for get/set dependency
     bool addRegDep(UOP_BASE* uop);
+    ///// get reg dep
     std::unordered_set<UOP_BASE*>& getRegDep();
 };
 ///////////////////////////////////////////////////////////////////////

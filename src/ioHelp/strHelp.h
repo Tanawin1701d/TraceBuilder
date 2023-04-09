@@ -16,7 +16,11 @@ void spiltLineFromStrNstrip(const std::string&         raw,
                                   std::vector<std::string>& result
                             );
 
+std::string getProgPf(std::string file, int lineNumber);
+
 void strip(std::string& raw);
+
+void convertToUpperStr(std::string& str);
 
 uintptr_t hexStr2uint  (std::string raw);
 int       decStr2int   (std::string raw);

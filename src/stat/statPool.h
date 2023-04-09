@@ -9,6 +9,8 @@
 #include<unordered_map>
 #include<vector>
 #include <cassert>
+#include <fstream>
+
 #include "ioHelp/strHelp.h"
 
 
@@ -41,7 +43,7 @@ public:
 
 ///////////////////////////////////////
 ///////////////////////////////////////
-static STAT     MAIN_STAT;
+extern  STAT     MAIN_STAT;
 ///////////////////////////////////////
 ///////////////////////////////////////
 
@@ -55,11 +57,13 @@ public:
                );
 
     void print();
+    void saveToFile(const std::string filePath);
+    void clearStat();
 };
 
 ///////////////////////////////////////
 ///////////////////////////////////////
-static STAT_MNG MAIN_STAT_MNG;
+extern STAT_MNG MAIN_STAT_MNG;
 ///////////////////////////////////////
 ///////////////////////////////////////
 

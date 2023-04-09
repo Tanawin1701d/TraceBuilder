@@ -210,8 +210,9 @@ RT_INSTR::interpretFetch(std::vector<std::string> &tokens) {
     rt_instr_id = stoull(tokens[ST_IDX_FETCH_ID]);
     addr        = stoull(tokens[ST_IDX_FETCH_VADDR]);
     size        = stoi(tokens[ST_IDX_FETCH_SZ]);
+    /// please remind that we must use upper case for mnemonic
+    convertToUpperStr(tokens[ST_IDX_FETCH_MNEUMIC]);
     mnemonic    = tokens[ST_IDX_FETCH_MNEUMIC];
-
     /////////////////////////////////////////
     MAIN_STAT["staticTrace"][mnemonic]+= 1;
     /////////////////////////////////////////

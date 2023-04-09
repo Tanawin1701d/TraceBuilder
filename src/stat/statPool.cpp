@@ -3,6 +3,15 @@
 //
 #include "statPool.h"
 
+
+////// defined extern variable
+STAT MAIN_STAT;
+STAT_MNG MAIN_STAT_MNG;
+/////////////////////////////
+
+
+///////// stat worker
+
 STAT::STAT(): valueIsUsed(false), value(0)
 {}
 
@@ -17,6 +26,8 @@ STAT& STAT::operator[](std::string key) {
     return * finder->second;
 }
 
+
+///////// stat manager
 
 void STAT_MNG::preparePrint( std::vector<std::string>& prefixs,
                       STAT *stat) {
@@ -44,8 +55,27 @@ void STAT_MNG::print(){
                   << std::to_string(values[idx])
                   << "\n";
     }
+
+}
+
+void STAT_MNG::saveToFile(const std::string filePath) {
+    std::cout << getProgPf(__FILE__, __LINE__) << " writing stat data" << std::endl;
+    std::ofstream outFile(filePath);
+
+    if (!outFile){
+        std::cout << "error to open stat file. skipping ..." << std::endl;
+        return;
+    }
+
+    for (size_t idx = 0; idx < keys.size(); idx++){
+        outFile << keys[idx] << genRepeatStr(maxLength - keys[idx].size(), " ") << std::to_string(values[idx]) << '\n';
+    }
+    outFile.close();
+
+}
+
+void STAT_MNG::clearStat() {
     keys.clear();
     values.clear();
     maxLength = 0;
-
 }

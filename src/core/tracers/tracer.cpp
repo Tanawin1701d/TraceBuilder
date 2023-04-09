@@ -10,13 +10,13 @@ TRACER_BASE::TRACER_BASE(THREAD_ID          _tid,
                          DECODER_BASE*      _decoder,
                          MEM_MNG*           _memMng,
                          THREAD_MODEL*      _threadModel) :
-tid         (_tid),
-resFed      (_resFed),
-uopWindow   (_uopWindow),
-decoder     (_decoder),
-memMng      (_memMng),
-threadModel (_threadModel),
-nextMopId   (0)
+        tid         (_tid),
+        resFed      (_resFed),
+        uopWindow   (_uopWindow),
+        decoder     (_decoder),
+        memMng      (_memMng),
+        threadModel (_threadModel),
+        nextUopId   (1)
 {
 
     assert( _decoder     != nullptr);
@@ -49,6 +49,13 @@ TRACER_BASE::cvtLoadOrStoreToPhyAddr(RT_OBJ&           rt_obj,
     uint64_t* resPhyAddrs   = isLoad ? results.phyLoadAddr : results.phyStoreAddr;
     uint8_t*  resopNums     = isLoad ? results.loadMemOpNum: results.storeMemOpNum;
 
+    //// initialize op number
+    for (uint32_t idx = 0; idx < maxMemOpPerLS; idx++){
+        resopNums[idx] = dynOpNums[idx];
+    }
+
+    //// iterate to check whether are there address use
+
     while(idx < maxMemOpPerLS){
         opNum = dynOpNums[idx];
         if (opNum == DUMMY_MEM_OP_NUM){
@@ -65,8 +72,6 @@ TRACER_BASE::cvtLoadOrStoreToPhyAddr(RT_OBJ&           rt_obj,
         assert(!addrCvtResults.empty());
         //// fill the converted result
         resPhyAddrs[idx]  = addrCvtResults[0].addr;
-        resopNums  [idx]  = opNum;
-
         //// iterate to next
         idx++;
     }
@@ -97,8 +102,8 @@ TRACER_BASE::onGetDynTraceValue(dynTraceData dyndata) {
     /////////////////////////////////////////////////////////// stat
     MAIN_STAT["dynTrace"]["MNEMONIC"][rt_instr->getMnemonic()]++;
     MAIN_STAT["dynTrace"]["MOP_COUNT"]++;
-    if ( (MAIN_STAT["dynTrace"]["MOP_COUNT"].getVal() % 10000000) == 0 ){
-        std::cout << "[TBD@tracer:101] pass : " <<   MAIN_STAT["dynTrace"]["MOP_COUNT"].getVal() << " instructions" << std::endl;
+    if ( (MAIN_STAT["dynTrace"]["MOP_COUNT"].getVal() % 1000000) == 0 ){
+        std::cout << getProgPf(__FILE__, __LINE__) <<" pass : " <<   MAIN_STAT["dynTrace"]["MOP_COUNT"].getVal() << " instructions" << std::endl;
     }
     ///////////////////////////////////////////////////////////
     CVT_RT_OBJ cvt_trace_data{};
@@ -112,7 +117,7 @@ TRACER_BASE::onGetDynTraceValue(dynTraceData dyndata) {
             ////// we must notify result front-end first
     for (auto* uop: inflight_uops){
         MAIN_STAT["dynTrace"]["UOP_COUNT"]++;
-        uop->setSeqNum(nextMopId++);
+        uop->setSeqNum(nextUopId++);
         uop->doDepenCheck(uopWindow);
     }
     /////// send to result front-end

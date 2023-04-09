@@ -9,10 +9,12 @@
 
 #include<deque>
 #include "../../models/arch/uop_base.h"
+#include "core/resMng/regMap/regMapper.h"
 
 class UOP_WINDOW{
 private:
     std::deque<UOP_BASE*> uop_window;
+    UOP_BASE* lastOwnerReg[MAXREG_AMT];
     int window_size;
     bool isFull();
     void tryPopFromQ();
@@ -21,5 +23,6 @@ public:
     UOP_WINDOW(int _window_size);
     void addUop(UOP_BASE* newUop);
     std::deque<UOP_BASE*>* getUopwindow() { return &uop_window;}
+    UOP_BASE* regDependHelp(REGNUM regNum);
 
 };

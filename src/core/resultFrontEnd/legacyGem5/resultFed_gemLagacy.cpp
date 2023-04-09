@@ -15,6 +15,7 @@ RESULT_FRONT_END_GEM_LAGACY(const std::string& filePath_data, const std::string&
 RESULT_FRONT_END_GEM_LAGACY::~RESULT_FRONT_END_GEM_LAGACY() {
     delete dataProtoStream;
     delete instrProtoStream;
+    std::cout << getProgPf(__FILE__, __LINE__) << " flushed protoStream" << std::endl;
 }
 
 void

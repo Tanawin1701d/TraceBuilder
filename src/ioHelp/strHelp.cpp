@@ -31,10 +31,20 @@ spiltLineFromStrNstrip(const std::string&   raw,
     }
 }
 
+std::string
+getProgPf(std::string file, int lineNumber){
+    return "[" + file + ":" + std::to_string(lineNumber) + "] ";
+}
+
 void
 strip(std::string& raw) {
     boost::algorithm::trim_right(raw);
     boost::algorithm::trim_left (raw);
+}
+
+void
+convertToUpperStr(std::string& str){
+    std::transform(str.begin(),str.end(), str.begin(), ::toupper);
 }
 
 uintptr_t hexStr2uint(std::string raw) {

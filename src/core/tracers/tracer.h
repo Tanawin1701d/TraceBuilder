@@ -45,7 +45,7 @@ private:
     ///////// current uop that being generated from uops
     std::vector<UOP_BASE*> inflight_uops;
     ///////// nextUopId
-    uint64_t nextMopId;
+    uint64_t nextUopId;
 public:
     TRACER_BASE(THREAD_ID          _tid,
                 RESULT_FRONT_END*  _resFed,

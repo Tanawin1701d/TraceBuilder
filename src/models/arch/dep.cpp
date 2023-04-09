@@ -6,9 +6,8 @@
 #include "core/tracers/uop_wd.h"
 
 bool DEP_BASE::addDep(UOP_BASE* uop) {
-
     auto find_iterator = predecessors.find(uop);
-    bool isNew = find_iterator != predecessors.end();
+    bool isNew = find_iterator == predecessors.end();
     if(isNew)
         predecessors.insert(uop);
     return isNew;
@@ -23,15 +22,17 @@ bool REG_DEP::isdependOnReg(const REGNUM &sucReg){
 
 void REG_DEP::doRegDepenCheck(UOP_WINDOW *traceWindow){
     assert(traceWindow != nullptr);
-    auto uopWindow_ptr = traceWindow->getUopwindow();
-    ////// TODO we might upgrade to clever method to achieve better performance
-    for (auto& uopWindow_itr : *uopWindow_ptr){
-        for (auto mySrcReg: srcReg){
-            if (uopWindow_itr->isdependOnReg(mySrcReg)){
-                addRegDep(uopWindow_itr);
-            }
+
+    for (auto mySrcReg: srcReg){
+        auto dependUop = traceWindow->regDependHelp(mySrcReg);
+        if (dependUop != nullptr) {
+            addRegDep(dependUop);
         }
     }
+}
+
+std::vector<REGNUM> &REG_DEP::getdesReg() {
+    return desReg;
 }
 
 void REG_DEP::addRegMeta(const REGNUM regnum, bool isSrc) {
@@ -39,6 +40,8 @@ void REG_DEP::addRegMeta(const REGNUM regnum, bool isSrc) {
     std::vector<REGNUM>* targetVec = isSrc ? &srcReg : &desReg;
     targetVec->push_back(regnum);
 }
+
+
 
 
 bool REG_DEP::addRegDep(UOP_BASE *uop) {

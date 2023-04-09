@@ -13,7 +13,7 @@ LAGACY_PIN_TRACER::LAGACY_PIN_TRACER(const std::string& _fileName_static,
 {
     staticFile  = new std::ifstream(_fileName_static);
     dynFile     = new std::ifstream(_fileName_dyn);
-    bufferRtObj = new RT_OBJ[MAX_RT_BUFFER];
+    bufferRtObj = new RT_OBJ[MAX_RT_BUFFER_OBJ];
 
     assert(staticFile != nullptr);
     assert(dynFile    != nullptr);
@@ -25,6 +25,7 @@ LAGACY_PIN_TRACER::~LAGACY_PIN_TRACER() noexcept {
     dynFile->close();
     delete staticFile;
     delete dynFile;
+    std::cout << getProgPf(__FILE__, __LINE__) << "closed static and dyn input file" << std::endl;
 }
 
 void
@@ -60,20 +61,41 @@ LAGACY_PIN_TRACER::startDynTrace(){
     //// ask tracer to initialize their runtime instruction
     tracer->onInitialize(maxInstrNumber);
     //// ask tracer to trace each runtime instruction
-    uint64_t readedObj_count = 0;
-    while (dynFile->read( (char*) (bufferRtObj) , (long)(MAX_RT_BUFFER * sizeof(RT_OBJ)))){
+    dynFile->seekg(0,std::ios_base::end);
+    uint64_t fileSize  = dynFile->tellg();
+    uint64_t readedObj = 0;
+    uint64_t neededObj = fileSize / sizeof(RT_OBJ);
+    dynFile->seekg(0, std::ios_base::beg);
 
-        uint64_t newreaded_count = dynFile->gcount() / (sizeof (RT_OBJ));
-        uint64_t cur_batch_count = newreaded_count - readedObj_count;
-        readedObj_count          = newreaded_count;
+    //////////////////////// print progress
+    std::cout << getProgPf(__FILE__, __LINE__) <<"] dynamic tracing got file size " <<dynFile->tellg() << std::endl;
+    std::cout << getProgPf(__FILE__, __LINE__) <<"] dynamic file tracing got " << neededObj << "object" << std::endl;
+    if ((fileSize % sizeof(RT_OBJ)) != 0){
+        std::cout << "[legacyPin:73] error alignment is not match" << std::endl;
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////////
+    while (true){
 
-        for (int rtObjIdx = 0; rtObjIdx < cur_batch_count; rtObjIdx++ ){
+        uint64_t  remainObj        = neededObj - readedObj;
+        uint64_t  currentBatchObj  = std::min(remainObj, MAX_RT_BUFFER_OBJ);
+        uint64_t  currentBatchByte = currentBatchObj * sizeof(RT_OBJ);
+
+        if (!remainObj){
+            std::cout << "finish dynamic tracing" << std::endl;
+            break;
+        }
+
+        //////// read file from disk
+        assert(((long)currentBatchByte) > 0 );
+        dynFile->read( (char*)bufferRtObj, (long)currentBatchByte);
+        //////// extract readFile and send to tracer
+        for (int rtObjIdx = 0; rtObjIdx < currentBatchObj; rtObjIdx++ ){
             dynData.rawData = *(bufferRtObj + rtObjIdx);
             tracer->onGetDynTraceValue(dynData);
         }
-
+        /////// update current state
+        readedObj += currentBatchObj;
     }
-
 }
 
 void

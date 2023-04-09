@@ -11,6 +11,9 @@ void
 MOP_SIMPLE::genUop(std::vector<UOP_BASE*>& results,
                    RT_INSTR*          rt_instr){
     assert(rt_instr != nullptr);
+    ///////// stat
+    MAIN_STAT["mopGen"]["MOP_SIMPLE"]++;
+    ///////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////
     ///
     /// generate simple micro-op

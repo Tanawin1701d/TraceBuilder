@@ -5,10 +5,11 @@ pin/pin-3.25-98650-g8f6168173-gcc-linux
 pin/pin-3.25-98650-g8f6168173-gcc-linux.tar.gz
 pin/pin.log
 
-pin/testDynOutput
-pin/testProgram
-pin/testStaticOutput
-pin/testProtoOuput
+pin/testDynOutput/*
+pin/testProgram/*
+pin/testStaticOutput/*
+pin/testProtoOuput/*
+pin/testProtoStat/*
 
 # User-specific stuff
 .idea/**/workspace.xml
