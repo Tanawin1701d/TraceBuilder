@@ -23,6 +23,29 @@ RESULT_FRONT_END_GEM_LAGACY::onGetUopsResult(
         std::vector<UOP_BASE*> &uops,
         RT_INSTR* rt_instr
         ) {
+    #ifdef debug
+        std::cout << "current instruction is " << rt_instr->getDebugName() << std::endl;
+        for (auto uop: uops){
+            std::cout << "uop sn " << uop->getSeqNum() << " register dep ";
+            for (auto regdepUop: uop->getRegDep()){
+                std::cout << regdepUop->getSeqNum() << " ";
+            }
+            std::cout << "memory dep ";
+            for (auto memDepUop : uop->getMemDep()){
+                std::cout << memDepUop->getSeqNum() << " ";
+            }
+            std::cout << "temp Register Dep ";
+            for (auto tempDepUop : uop->getTemDep()){
+                std::cout << tempDepUop->getSeqNum();
+            }
+            std::cout << "\n";
+
+        }
+    std::cout << "--------------------------------\n";
+    #endif
+
+
+
     ////////////////////////////////////////////////////////
     //////// generate dynamic data record FOR gem5
     ////////////////////////////////////////////////////////

@@ -193,7 +193,7 @@ def initUopMeta(uopMeta):
 def interpretMacroop(linesToken):
     mopMeta = None
     definedVar = set()
-    varTempDep = dict()  ##### map vartempName to microop name for track temp variable dep tracking
+    varTempDep = dict()    ##### map vartempName to  set of (microop name) for track temp variable dep tracking
 
     for singleLineTok in  linesToken:
         tokKey = singleLineTok[0]
@@ -234,16 +234,17 @@ def interpretMacroop(linesToken):
                     definedVar.add(vn)
         elif tokKey == REF_VAL_MACRO_TEMP:
             ## case receive TEMP macroop
-            if len(singleLineTok) >= 2:
+            if len(singleLineTok) >= 2: ### check there are temp variable
                 for vn in singleLineTok[1::]:
                     if vn in definedVar:
                         raise ValueError(f"there is variable {vn} already")
                     if vn in MOP_IO_TYPES:
                         raise ValueError(f"can not use varName as the same as MOP_IO_TYPE")
                     mopMeta[MOP_META_VARTEMP].add(vn)
+                    varTempDep.update({vn : set()})
                     definedVar.add(vn)
         elif tokKey == REF_VAL_MACRO_UOP:
-            ## case receive MACROOP DEFINITION
+            ## case receive MACROOP DEFINITION   # in this case we ensure that varTempDep has contained full of tempvariable name
             interpretMicroop(mopMeta, definedVar, singleLineTok, varTempDep)
         else:
             ## case there is error
@@ -270,7 +271,9 @@ def interpretMicroop(mopMeta, definedVar, singleLineTok, varTempDep):
         if token in mopMeta[MOP_META_VARTEMP]: ## for now token is temp variable name
             ## some vartemp may be unused due to dummy declaration
             if token in varTempDep:
-                mopMeta[MOP_META_MICROOP][microopName][MOP_META_MICROOP_DEP].add(varTempDep[token])
+                ### dep of vartemp may have more than one microop we must for loop in them
+                for suc_microop_name in varTempDep[token]:
+                    mopMeta[MOP_META_MICROOP][microopName][MOP_META_MICROOP_DEP].add(suc_microop_name)
                  ### if there are any errors the vartempDep will raise itself
         ### input variable name to each micro-op
         mopMeta[MOP_META_MICROOP][microopName][MOP_META_MICROOP_INPUT].append(token)
@@ -282,7 +285,7 @@ def interpretMicroop(mopMeta, definedVar, singleLineTok, varTempDep):
             raise ValueError(f"argument to microop is not readable {token}  @  {str(singleLineTok)} from {definedVar}")
         #### incase it is temp variable we should notify varTempDep that that last source that write to temp variable is what microop-name
         if token in mopMeta[MOP_META_VARTEMP]:
-            varTempDep.update({token: microopName})
+            varTempDep[token].add(microopName)
         ### output variable name to each micro-op
         mopMeta[MOP_META_MICROOP][microopName][MOP_META_MICROOP_OUTPUT].append(token)
 

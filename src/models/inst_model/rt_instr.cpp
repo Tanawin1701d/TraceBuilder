@@ -9,6 +9,7 @@ RT_INSTR::RT_INSTR(RT_INSTR& host) :
     mnemonic(host.mnemonic),
     srcDecodeKey(host.srcDecodeKey),
     desDecodeKey(host.desDecodeKey),
+    debugName(host.debugName),
     addr(host.addr),
     size(host.size),
     //// src operand
@@ -107,6 +108,15 @@ RT_INSTR::fillDynData(CVT_RT_OBJ& cvtDynData){
 void
 RT_INSTR::genUOPS(std::vector<UOP_BASE*>& results) {
     assert(macroop != nullptr);
+
+    ////// one micro-op may share the same operand due to huge load or store
+    //////////in each uop generating, we must reset the shared tracker
+    for (auto& ldOpr: srcLdOperands){
+        ldOpr.resetSharedOperandTracker();
+    }
+    for (auto& stOpr: desStOperands){
+        stOpr.resetSharedOperandTracker();
+    }
     macroop->genUop(results, this);
 }
 //////////////// internal method
@@ -213,6 +223,8 @@ RT_INSTR::interpretFetch(std::vector<std::string> &tokens) {
     /// please remind that we must use upper case for mnemonic
     convertToUpperStr(tokens[ST_IDX_FETCH_MNEUMIC]);
     mnemonic    = tokens[ST_IDX_FETCH_MNEUMIC];
+    auto preGenDbStr = std::vector(tokens.begin() + ST_IDX_FETCH_MNEUMIC, tokens.end());
+    debugName   = concatVec(preGenDbStr, " ");
     /////////////////////////////////////////
     MAIN_STAT["staticTrace"][mnemonic]+= 1;
     /////////////////////////////////////////

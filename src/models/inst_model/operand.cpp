@@ -38,8 +38,14 @@ scaleFactor (_scaleFactor),
 displacement(_displacement),
 size(_size),
 memopNum(_memopNum),
+current_ruop_count(0),
 OPERAND(_setOpr, _mcArgSIdx)
-{}
+{
+    assert(MAX_BYTE_PER_MICROOP > 0);
+    ///// caculate expect uop that should handle this instr
+    expect_ruop_count = (int)((_size + MAX_BYTE_PER_MICROOP - 1) /  MAX_BYTE_PER_MICROOP);
+
+}
 
 REGNUM
 MEM_OPERAND::getBaseRegId() const {
@@ -66,6 +72,11 @@ MEM_OPERAND::getSize() const {
     return size;
 }
 
+void MEM_OPERAND::setPhyAddr(ADDR _phyAddr) {
+    MEM_OPERAND::phyAddr = _phyAddr;
+    MEM_OPERAND::nextPhyAddr = _phyAddr;
+}
+
 int MEM_OPERAND::getMemopNum() const {
     return memopNum;
 }
@@ -75,13 +86,22 @@ ADDR MEM_OPERAND::getPhyAddr() const {
 }
 
 ADAS
-MEM_OPERAND::getMeta(){return {phyAddr, size};}
-
-/////////////////  set
-
-void MEM_OPERAND::setPhyAddr(ADDR _phyAddr) {
-    MEM_OPERAND::phyAddr = _phyAddr;
+MEM_OPERAND::getMeta(){
+    if (nextPhyAddr >= (phyAddr + size)){
+        return {0, MAX_BYTE_PER_MICROOP};
+    }
+    ADDR nextSize = std::min((ADDR)MAX_BYTE_PER_MICROOP, (phyAddr + size) - nextPhyAddr);
+    ADAS preRet = {nextPhyAddr, nextSize};
+    nextPhyAddr += nextSize;
+    return preRet;
 }
+
+void
+MEM_OPERAND::resetSharedOperandTracker(){
+    current_ruop_count = 0;
+    nextPhyAddr        = phyAddr;
+}
+
 ///////////////////////////////////////////////////////////
 /// load operand
 

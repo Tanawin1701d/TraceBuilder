@@ -11,26 +11,18 @@ int main() {
     auto startTime = high_resolution_clock::now();
 
     auto test = SIMPLE_PIN_GEM(
-                "/media/tanawin/tanawin1701e/Project/sms/pintool/msmsPin/traceBuilder/pin/testStaticOutput/fluidInstr",
-                "/media/tanawin/tanawin1701e/Project/sms/pintool/msmsPin/traceBuilder/pin/testDynOutput/fluidData",
-                "/media/tanawin/tanawin1701e/Project/sms/pintool/msmsPin/traceBuilder/pin/testProtoOuput/fluid/instr",
-                "/media/tanawin/tanawin1701e/Project/sms/pintool/msmsPin/traceBuilder/pin/testProtoOuput/fluid/data"
+                "/media/tanawin/tanawin1701e/Project/sms/pintool/msmsPin/traceBuilder/pin/PinOutput/fluidanimate/static",
+                "/media/tanawin/tanawin1701e/Project/sms/pintool/msmsPin/traceBuilder/pin/PinOutput/fluidanimate/dynamic",
+                "/media/tanawin/tanawin1701e/Project/sms/pintool/msmsPin/traceBuilder/pin/TbOutput/fluidanimate/instr",
+                "/media/tanawin/tanawin1701e/Project/sms/pintool/msmsPin/traceBuilder/pin/TbOutput/fluidanimate/data"
             );
 
     test.start();
 
-
-
-//    MAIN_STAT["test"  ]["dgdfdf"] = 0;
-//    MAIN_STAT["ffdfdf"]["dgdfdf"]["dfdfdffd"]++;
-//    Test tt;
-//    tt.dosomthing();
-
-
     std::vector<std::string> statHelper;
     MAIN_STAT_MNG.preparePrint(statHelper);
     MAIN_STAT_MNG.print();
-    MAIN_STAT_MNG.saveToFile("/media/tanawin/tanawin1701e/Project/sms/pintool/msmsPin/traceBuilder/pin/testProtoStat/fluid.stat");
+    MAIN_STAT_MNG.saveToFile("/media/tanawin/tanawin1701e/Project/sms/pintool/msmsPin/traceBuilder/pin/TbOutput/fluidanimate/stat");
     MAIN_STAT_MNG.clearStat();
 
     ///////// duration count

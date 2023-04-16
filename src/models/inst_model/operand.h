@@ -40,6 +40,7 @@ private:
 public:
     REG_OPERAND(REGNUM _regId, size_t _mcArgSIdx);
     REGNUM getRegId() const;
+    /////// get meta data of the operand that is fundamental of uop
     REGNUM getMeta();
 };
 
@@ -47,6 +48,7 @@ public:
 /// memory operand
 class MEM_OPERAND : public OPERAND{
 private:
+    const uint8_t MAX_BYTE_PER_MICROOP = 8;
     REGNUM baseRegId;
     REGNUM indexRegId;
     int    scaleFactor;
@@ -54,7 +56,12 @@ private:
     ADDR    size;
     int    memopNum;
     ADDR   phyAddr;
-
+    ////// for some memory operand expect to divided into multiple uop (multiple meta data)
+    ///////// so now we call it as "SHARED OPERAND TRACKING"
+    int    expect_ruop_count; //// expect related micro-op count
+    int    current_ruop_count; //// current expect related used count
+    ADDR   nextPhyAddr; ///// next physical addr for microop and size
+    ///////////////////////////////////////////////////////////////////
 public:
     MEM_OPERAND(REGNUM _baseRegId,
                 REGNUM _indexRegId,
@@ -80,8 +87,10 @@ public:
     int getMemopNum() const;
 
     ADDR getPhyAddr() const;
-
+    /////// get meta data of the operand that is fundamental of uop
     ADAS getMeta();
+
+    void resetSharedOperandTracker();
 
 };
 /// load operand

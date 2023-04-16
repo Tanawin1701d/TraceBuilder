@@ -1,0 +1,60 @@
+g++ 
+    -Wall 
+    -Werror 
+    -Wno-unknown-pragmas 
+    -DPIN_CRT=1 
+    -fno-stack-protector 
+    -fno-exceptions 
+    -funwind-tables 
+    -fasynchronous-unwind-tables 
+    -fno-rtti 
+    -DTARGET_IA32E 
+    -DHOST_IA32E 
+    -fPIC 
+    -DTARGET_LINUX 
+    -fabi-version=2 
+    -faligned-new  
+    -I/media/tanawin/tanawin1701e/Project/sms/pintool/msmsPin/traceBuilder/pin/pin-3.25-98650-g8f6168173-gcc-linux/source/include/pin 
+    -I/media/tanawin/tanawin1701e/Project/sms/pintool/msmsPin/traceBuilder/pin/pin-3.25-98650-g8f6168173-gcc-linux/source/include/pin/gen 
+    -isystem /media/tanawin/tanawin1701e/Project/sms/pintool/msmsPin/traceBuilder/pin/pin-3.25-98650-g8f6168173-gcc-linux/extras/cxx/include 
+    -isystem /media/tanawin/tanawin1701e/Project/sms/pintool/msmsPin/traceBuilder/pin/pin-3.25-98650-g8f6168173-gcc-linux/extras/crt/include 
+    -isystem /media/tanawin/tanawin1701e/Project/sms/pintool/msmsPin/traceBuilder/pin/pin-3.25-98650-g8f6168173-gcc-linux/extras/crt/include/arch-x86_64 
+    -isystem /media/tanawin/tanawin1701e/Project/sms/pintool/msmsPin/traceBuilder/pin/pin-3.25-98650-g8f6168173-gcc-linux/extras/crt/include/kernel/uapi 
+    -isystem /media/tanawin/tanawin1701e/Project/sms/pintool/msmsPin/traceBuilder/pin/pin-3.25-98650-g8f6168173-gcc-linux/extras/crt/include/kernel/uapi/asm-x86 
+    -I/media/tanawin/tanawin1701e/Project/sms/pintool/msmsPin/traceBuilder/pin/pin-3.25-98650-g8f6168173-gcc-linux/extras/components/include 
+    -I/media/tanawin/tanawin1701e/Project/sms/pintool/msmsPin/traceBuilder/pin/pin-3.25-98650-g8f6168173-gcc-linux/extras/xed-intel64/include/xed 
+    -I/media/tanawin/tanawin1701e/Project/sms/pintool/msmsPin/traceBuilder/pin/pin-3.25-98650-g8f6168173-gcc-linux/source/tools/Utils 
+    -I/media/tanawin/tanawin1701e/Project/sms/pintool/msmsPin/traceBuilder/pin/pin-3.25-98650-g8f6168173-gcc-linux/source/tools/InstLib 
+    -O3 
+    -fomit-frame-pointer 
+    -fno-strict-aliasing  
+    -Wno-dangling-pointer  
+    -c 
+    -o 
+    obj-intel64/tracer.o 
+    tracer.cpp
+
+g++ 
+    -shared 
+    -Wl,
+    --hash-style=sysv 
+    /media/tanawin/tanawin1701e/Project/sms/pintool/msmsPin/traceBuilder/pin/pin-3.25-98650-g8f6168173-gcc-linux/intel64/runtime/pincrt/crtbeginS.o 
+    -Wl,-Bsymbolic 
+    -Wl,
+    --version-script=/media/tanawin/tanawin1701e/Project/sms/pintool/msmsPin/traceBuilder/pin/pin-3.25-98650-g8f6168173-gcc-linux/source/include/pin/pintool.ver 
+    -fabi-version=2   
+     -o obj-intel64/tracer.so obj-intel64/tracer.o  
+     -L/media/tanawin/tanawin1701e/Project/sms/pintool/msmsPin/traceBuilder/pin/pin-3.25-98650-g8f6168173-gcc-linux/intel64/runtime/pincrt 
+     -L/media/tanawin/tanawin1701e/Project/sms/pintool/msmsPin/traceBuilder/pin/pin-3.25-98650-g8f6168173-gcc-linux/intel64/lib 
+     -L/media/tanawin/tanawin1701e/Project/sms/pintool/msmsPin/traceBuilder/pin/pin-3.25-98650-g8f6168173-gcc-linux/intel64/lib-ext 
+     -L/media/tanawin/tanawin1701e/Project/sms/pintool/msmsPin/traceBuilder/pin/pin-3.25-98650-g8f6168173-gcc-linux/extras/xed-intel64/lib 
+     -lpin 
+     -lxed /media/tanawin/tanawin1701e/Project/sms/pintool/msmsPin/traceBuilder/pin/pin-3.25-98650-g8f6168173-gcc-linux/intel64/runtime/pincrt/crtendS.o 
+     -lpindwarf  
+     -ldl-dynamic 
+     -nostdlib 
+     -lc++ 
+     -lc++abi 
+     -lm-dynamic 
+     -lc-dynamic 
+     -lunwind-dynamic

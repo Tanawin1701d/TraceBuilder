@@ -23,27 +23,107 @@ public:
 };
 
  
-class UOP_GEN_MOV_R_R : public UOP_BASE{
+class UOP_GEN_LD_IMM : public UOP_BASE{
 public:
-  UOP_GEN_MOV_R_R();
+  UOP_GEN_LD_IMM();
+  void doDepenCheck(UOP_WINDOW* uop_window) override;
+  void addMeta( TREGNUM* T1 );
+};
+
+ 
+class UOP_VEC_MOV_R_R : public UOP_BASE{
+public:
+  UOP_VEC_MOV_R_R();
   void doDepenCheck(UOP_WINDOW* uop_window) override;
   void addMeta( REG_OPERAND* A, REG_OPERAND* B );
 };
 
  
-class UOP_GEN_MOV_R_T : public UOP_BASE{
+class UOP_VEC_MOV_R_T : public UOP_BASE{
 public:
-  UOP_GEN_MOV_R_T();
+  UOP_VEC_MOV_R_T();
   void doDepenCheck(UOP_WINDOW* uop_window) override;
   void addMeta( REG_OPERAND* A, TREGNUM* B );
 };
 
  
-class UOP_GEN_MOV_T_R : public UOP_BASE{
+class UOP_VEC_MOV_T_R : public UOP_BASE{
 public:
-  UOP_GEN_MOV_T_R();
+  UOP_VEC_MOV_T_R();
   void doDepenCheck(UOP_WINDOW* uop_window) override;
   void addMeta( TREGNUM* A, REG_OPERAND* B );
+};
+
+ 
+class UOP_VEC_COMP_R_R_R : public UOP_BASE{
+public:
+  UOP_VEC_COMP_R_R_R();
+  void doDepenCheck(UOP_WINDOW* uop_window) override;
+  void addMeta( REG_OPERAND* A, REG_OPERAND* B, REG_OPERAND* C );
+};
+
+ 
+class UOP_VEC_COMP_R_T_R : public UOP_BASE{
+public:
+  UOP_VEC_COMP_R_T_R();
+  void doDepenCheck(UOP_WINDOW* uop_window) override;
+  void addMeta( REG_OPERAND* A, TREGNUM* B, REG_OPERAND* C );
+};
+
+ 
+class UOP_VEC_COMP_T_R_R : public UOP_BASE{
+public:
+  UOP_VEC_COMP_T_R_R();
+  void doDepenCheck(UOP_WINDOW* uop_window) override;
+  void addMeta( TREGNUM* A, REG_OPERAND* B, REG_OPERAND* C );
+};
+
+ 
+class UOP_VEC_COMP_T_T_R : public UOP_BASE{
+public:
+  UOP_VEC_COMP_T_T_R();
+  void doDepenCheck(UOP_WINDOW* uop_window) override;
+  void addMeta( TREGNUM* A, TREGNUM* B, REG_OPERAND* C );
+};
+
+ 
+class UOP_VEC_COMP_R_R_T : public UOP_BASE{
+public:
+  UOP_VEC_COMP_R_R_T();
+  void doDepenCheck(UOP_WINDOW* uop_window) override;
+  void addMeta( REG_OPERAND* A, REG_OPERAND* B, TREGNUM* C );
+};
+
+ 
+class UOP_VEC_COMP_R_T_T : public UOP_BASE{
+public:
+  UOP_VEC_COMP_R_T_T();
+  void doDepenCheck(UOP_WINDOW* uop_window) override;
+  void addMeta( REG_OPERAND* A, TREGNUM* B, TREGNUM* C );
+};
+
+ 
+class UOP_VEC_COMP_T_R_T : public UOP_BASE{
+public:
+  UOP_VEC_COMP_T_R_T();
+  void doDepenCheck(UOP_WINDOW* uop_window) override;
+  void addMeta( TREGNUM* A, REG_OPERAND* B, TREGNUM* C );
+};
+
+ 
+class UOP_VEC_COMP_T_T_T : public UOP_BASE{
+public:
+  UOP_VEC_COMP_T_T_T();
+  void doDepenCheck(UOP_WINDOW* uop_window) override;
+  void addMeta( TREGNUM* A, TREGNUM* B, TREGNUM* C );
+};
+
+ 
+class UOP_VEC_LD_IMM : public UOP_BASE{
+public:
+  UOP_VEC_LD_IMM();
+  void doDepenCheck(UOP_WINDOW* uop_window) override;
+  void addMeta( TREGNUM* T1 );
 };
 
  
@@ -111,11 +191,27 @@ public:
 };
 
  
-class UOP_GEN_LD_IMM : public UOP_BASE{
+class UOP_GEN_MOV_R_R : public UOP_BASE{
 public:
-  UOP_GEN_LD_IMM();
+  UOP_GEN_MOV_R_R();
   void doDepenCheck(UOP_WINDOW* uop_window) override;
-  void addMeta( TREGNUM* T1 );
+  void addMeta( REG_OPERAND* A, REG_OPERAND* B );
+};
+
+ 
+class UOP_GEN_MOV_R_T : public UOP_BASE{
+public:
+  UOP_GEN_MOV_R_T();
+  void doDepenCheck(UOP_WINDOW* uop_window) override;
+  void addMeta( REG_OPERAND* A, TREGNUM* B );
+};
+
+ 
+class UOP_GEN_MOV_T_R : public UOP_BASE{
+public:
+  UOP_GEN_MOV_T_R();
+  void doDepenCheck(UOP_WINDOW* uop_window) override;
+  void addMeta( TREGNUM* A, REG_OPERAND* B );
 };
 
  
@@ -156,6 +252,22 @@ public:
   UOP_ST_RIP_2T();
   void doDepenCheck(UOP_WINDOW* uop_window) override;
   void addMeta( TREGNUM* T1, TREGNUM* T2, REG_OPERAND* RIP );
+};
+
+ 
+class UOP_VEC_MEM_LD_T : public UOP_BASE{
+public:
+  UOP_VEC_MEM_LD_T();
+  void doDepenCheck(UOP_WINDOW* uop_window) override;
+  void addMeta( MEM_OPERAND* A, TREGNUM* B );
+};
+
+ 
+class UOP_VEC_MEM_ST_T : public UOP_BASE{
+public:
+  UOP_VEC_MEM_ST_T();
+  void doDepenCheck(UOP_WINDOW* uop_window) override;
+  void addMeta( TREGNUM* A, MEM_OPERAND* B );
 };
 
 #endif

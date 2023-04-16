@@ -32,6 +32,7 @@ private:
     std::string              mnemonic;
     std::string              srcDecodeKey;
     std::string              desDecodeKey;
+    std::string              debugName; //// the instruction that obtain from raw data
     /////// instruction metadata
     //[[maybe_unused]]
     ADDR                addr{};
@@ -73,6 +74,7 @@ public:
 
     uint64_t           getRtInstrId() const {return rt_instr_id;};
     const std::string& getMnemonic()  const {return mnemonic;};
+    const std::string  getDebugName() const {return debugName;};
     ADDR               getAddr()      const {return addr;};
     int                getSize()      const {return size;};
     std::string        getDecodeKey();

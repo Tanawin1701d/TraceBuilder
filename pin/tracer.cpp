@@ -18,6 +18,12 @@ const UINT32 maxRtTracing =  40000000;
 const UINT32 maxMemOpPerLS = 2;
 const uint8_t UNUSED_MEMOP = -1;
 
+const std::string REG64_PREFIX  = "mm";
+const std::string REG128_PREFIX = "xmm";
+const std::string REG256_PREFIX = "ymm";
+const size_t      REG64_PREFIX_SIZE      = 2;
+const size_t      REG128_256_PREFIX_SIZE = 3;
+
 #pragma pack(push, 1)
 struct RT_OBJ{
     uint64_t loadAddr     [maxMemOpPerLS];
@@ -44,7 +50,8 @@ UINT32 preWriteRt_idx = 0;
 UINT32 INSTRID        = 0;
 
 VOID tryFlush(bool forceFlush = false){
-    if (preWrite.size() >= 4000000000 || forceFlush){
+    if ((preWrite.size() >= 4000000000) || forceFlush){
+        //std::cout << "flushing static trace" << std::endl;
         *outputFile_instr << preWrite;
         preWrite.clear();
     }
@@ -152,10 +159,16 @@ VOID Instruction(INS ins, VOID* v)
     UINT32 loaded_amt = 0;
     UINT32 stored_amt = 0;
 
+    //instruction mode
+    BOOL isVec_64  = false; ////// dtect avx and sse instruction
+    BOOL isVec_128 = false; 
+    BOOL isVec_256 = false;
+
     //decode string varible
     std::string srcKey;
     std::string desKey;
     std::string resKey;
+    UINT32      opr_count = 0;
 
     // rflags register
     std::string rflagsStr = "rflags";
@@ -163,107 +176,168 @@ VOID Instruction(INS ins, VOID* v)
     ///////////////////////// for compute instruction
     UINT32 numOperands = INS_OperandCount(ins);
 
-
-
-    for (UINT32 opIdx = 0; opIdx < numOperands; opIdx++){
-        if (INS_OperandIsReg(ins, opIdx)){
-                bool isSrc = INS_OperandRead   (ins, opIdx);
-                bool isDes = INS_OperandWritten(ins, opIdx);
-                REG  reg   = INS_OperandReg    (ins, opIdx);
-                //if (reg != REG_RFLAGS)
-                assert(!INS_OperandIsMemory(ins, opIdx));
-                assert(isSrc || isDes);
-                
-                std::string preRegStr;
-
-
-                preRegStr += "R "; // source register
-                preRegStr += "X "; // source register
-                preRegStr += reg ? REG_StringShort(static_cast<REG>(reg)) : "-1";
-                preRegStr += "\n";
-
-                std::string regStr = REG_StringShort(static_cast<REG>(reg));
-
-                if (isSrc && regStr != rflagsStr){
-                    preRegStr[2]  = 'S';
-                    preWrite     += preRegStr;
-                    srcKey       += 'R';
-                }
-       
-                if (isDes && regStr != rflagsStr){
-                    preRegStr[2]  = 'D';
-                    preWrite     += preRegStr;
-                    desKey       += 'R';
-                }
-                
-        }else if (INS_OperandIsMemory(ins, opIdx)){
-
-            ///////// for memory operand
-
-            REG    baseReg    = INS_OperandMemoryBaseReg  (ins, opIdx);
-            REG    indexReg   = INS_OperandMemoryIndexReg (ins, opIdx);
-            bool   isLoad     = INS_MemoryOperandIsRead   (ins, memOp);
-            bool   isStore    = INS_MemoryOperandIsWritten(ins, memOp);
-            UINT32 memRefSize = INS_MemoryOperandSize     (ins, memOp);
-
-
-            std::string preMemStr;
-            
-            assert(isLoad || isStore);
-            preMemStr += "X ";
-            preMemStr += "Y ";
-            preMemStr += baseReg  ? REG_StringShort(static_cast<REG>(baseReg)) : "-1";
-            preMemStr += " ";
-            preMemStr += indexReg ? REG_StringShort(static_cast<REG>(indexReg)) : "-1";
-            preMemStr += " ";
-            preMemStr += std::to_string(memRefSize);
-            preMemStr += " ";
-            preMemStr += std::to_string(memOp);
-            preMemStr += "\n";
-
-            if (isLoad){
-                preMemStr[0] =  'L';
-                preMemStr[2] =  'S';
-                preWrite += preMemStr;
-                srcKey   += 'L';
-                assert(loaded_amt < maxMemOpPerLS);
-                INS_InsertPredicatedCall(ins, IPOINT_BEFORE, 
-                                (AFUNPTR)L_TRACE,
-                                IARG_MEMORYOP_EA, memOp,
-                                IARG_UINT32, loaded_amt,
-                                IARG_UINT32, memOp,
-                                IARG_END
-                                );
-            loaded_amt++;
-            }
-            if (isStore){
-                preMemStr[0] = 'S';
-                preMemStr[2] = 'D';
-                preWrite += preMemStr;
-                desKey   += 'S';
-                assert(stored_amt < maxMemOpPerLS);
-                INS_InsertPredicatedCall(ins, IPOINT_BEFORE, 
-                                (AFUNPTR)S_TRACE,
-                                IARG_MEMORYOP_EA, memOp,
-                                IARG_UINT32, stored_amt,
-                                IARG_UINT32, memOp,
-                                IARG_END
-                                );
-            stored_amt++;
-            }
-            memOp++;
-        }else if (INS_OperandIsImmediate(ins, opIdx)){
-            std::string preImmStr;
-            preImmStr += "I S ";
-            preImmStr += std::to_string(INS_OperandImmediate(ins, opIdx));
-            preImmStr += '\n';
-            preWrite  += preImmStr;
-            srcKey    += 'I';
+    if (INS_IsLea(ins)){
+        //////// this is conrner case that pintool not verbose anything about source of effective address
+        std::string preRegStr;
+        ////////////////
+        ///////////    memory location = baseReg + (IndexReg * scale) + displacement
+        //////// WRITE DES OPERAND
+        REG desReg = INS_OperandReg(ins, 0);
+        preRegStr += "R "; // source register
+        preRegStr += "D "; // source register
+        preRegStr += REG_StringShort(static_cast<REG>(desReg));
+        preRegStr += "\n";
+        desKey += "R";
+        opr_count += 1;
+        //////// WRITE BASE OPERAND
+        REG srcReg1 = INS_OperandMemoryBaseReg(ins, 1);
+        if (srcReg1 != REG_INVALID()){
+            preRegStr += "R "; // source register
+            preRegStr += "S "; // source register
+            preRegStr += REG_StringShort(static_cast<REG>(srcReg1));
+            preRegStr += "\n";
+            srcKey += "R";
+            opr_count += 1;
         }
+        //////// WRITE Index OPERAND
+        REG srcReg2 = INS_OperandMemoryIndexReg(ins, 1);
+        if (srcReg2 != REG_INVALID()){
+            preRegStr += "R "; // source register
+            preRegStr += "S "; // source register
+            preRegStr += REG_StringShort(static_cast<REG>(srcReg2));
+            preRegStr += "\n";
+            srcKey += "R";
+            opr_count += 1;
+        }
+        preWrite += preRegStr;
+    }else{
+
+        for (UINT32 opIdx = 0; opIdx < numOperands; opIdx++){
+            ////// register operand
+            if (INS_OperandIsReg(ins, opIdx)){
+                    bool isSrc = INS_OperandRead   (ins, opIdx);
+                    bool isDes = INS_OperandWritten(ins, opIdx);
+                    REG  reg   = INS_OperandReg    (ins, opIdx);
+                    //if (reg != REG_RFLAGS)
+                    assert(!INS_OperandIsMemory(ins, opIdx));
+                    assert(isSrc || isDes);
+
+                    std::string preRegStr;
+
+                    //////// WRITE REG OPERAND
+                    preRegStr += "R "; // source register
+                    preRegStr += "X "; // source register
+                    preRegStr += reg ? REG_StringShort(static_cast<REG>(reg)) : "-1";
+                    preRegStr += "\n";
+
+                    std::string regStr = REG_StringShort(static_cast<REG>(reg));
+
+                    /////// check is it is vector extension operand
+                    if (regStr.size() > REG64_PREFIX_SIZE){
+                            ////// check mm
+                            if(regStr.substr(0, REG64_PREFIX_SIZE) == REG64_PREFIX){
+                                isVec_64 = true;
+                            }
+
+                    }
+                    if (regStr.size() > REG128_256_PREFIX_SIZE){
+                            ////// check xmm ymm
+                            if(regStr.substr(0, REG128_256_PREFIX_SIZE) == REG128_PREFIX){
+                                isVec_128 = true;
+                            }else if (regStr.substr(0, REG128_256_PREFIX_SIZE) == REG256_PREFIX){
+                                isVec_256 = true;
+                            }
+                    }
+
+                    /////// flag register is ignore
+                    if (isSrc && regStr != rflagsStr){
+                        preRegStr[2]  = 'S';
+                        preWrite     += preRegStr;
+                        srcKey       += 'R';
+                        opr_count++; //// this is used to help predict operand type x86
+                    }
+                    /////// flag register is ignore
+                    if (isDes && regStr != rflagsStr){
+                        preRegStr[2]  = 'D';
+                        preWrite     += preRegStr;
+                        desKey       += 'R';
+                        opr_count++; //// this is used to help predict operand type x86
+                    }
+                ////////////////////////////////////////////////////////
+                
+            }else if (INS_OperandIsMemory(ins, opIdx)){
+
+                ///////// for memory operand
+
+                REG    baseReg    = INS_OperandMemoryBaseReg  (ins, opIdx);
+                REG    indexReg   = INS_OperandMemoryIndexReg (ins, opIdx);
+                bool   isLoad     = INS_MemoryOperandIsRead   (ins, memOp);
+                bool   isStore    = INS_MemoryOperandIsWritten(ins, memOp);
+                UINT32 memRefSize = INS_MemoryOperandSize     (ins, memOp);
+
+
+                std::string preMemStr;
+                //////// WRITE LOAD STORE
+                assert(isLoad || isStore);
+                preMemStr += "X ";
+                preMemStr += "Y ";
+                preMemStr += baseReg  ? REG_StringShort(static_cast<REG>(baseReg)) : "-1";
+                preMemStr += " ";
+                preMemStr += indexReg ? REG_StringShort(static_cast<REG>(indexReg)) : "-1";
+                preMemStr += " ";
+                preMemStr += std::to_string(memRefSize);
+                preMemStr += " ";
+                preMemStr += std::to_string(memOp);
+                preMemStr += "\n";
+
+                if (isLoad){
+                    preMemStr[0] =  'L';
+                    preMemStr[2] =  'S';
+                    preWrite += preMemStr;
+                    srcKey   += 'L';
+                    assert(loaded_amt < maxMemOpPerLS);
+                    INS_InsertPredicatedCall(ins, IPOINT_BEFORE, 
+                                    (AFUNPTR)L_TRACE,
+                                    IARG_MEMORYOP_EA, memOp,
+                                    IARG_UINT32, loaded_amt,
+                                    IARG_UINT32, memOp,
+                                    IARG_END
+                                    );
+                    loaded_amt++;
+                }
+                if (isStore){
+                    preMemStr[0] = 'S';
+                    preMemStr[2] = 'D';
+                    preWrite += preMemStr;
+                    desKey   += 'S';
+                    assert(stored_amt < maxMemOpPerLS);
+                    INS_InsertPredicatedCall(ins, IPOINT_BEFORE, 
+                                    (AFUNPTR)S_TRACE,
+                                    IARG_MEMORYOP_EA, memOp,
+                                    IARG_UINT32, stored_amt,
+                                    IARG_UINT32, memOp,
+                                    IARG_END
+                                    );
+                    stored_amt++;
+                }
+                memOp++;
+                opr_count++; //// this is used to help predict operand type x86
+                ////////////////////////////////////////////////////////
+             }else if (INS_OperandIsImmediate(ins, opIdx)){
+                 /////////////////// immediate operand
+                 std::string preImmStr;
+                 preImmStr += "I S ";
+                 preImmStr += std::to_string(INS_OperandImmediate(ins, opIdx));
+                 preImmStr += '\n';
+                 preWrite  += preImmStr;
+                 srcKey    += 'I';
+                 opr_count++;
+             }
     }
     
-    //////// handle decode key
-    resKey = "N " + INS_Mnemonic(ins) + "$" + srcKey + "$" + desKey;
+    }
+    //////// WRITE decode key and debug string
+    resKey = "N " + INS_Mnemonic(ins) + "$" + srcKey + "$" + desKey + "  " + _instrName;
     preWrite += resKey + "\n";
 
     
@@ -276,6 +350,7 @@ VOID Instruction(INS ins, VOID* v)
                             IARG_END
                             );
 
+    //////// WRITE FETCH INSTRUCTION
     preWrite += "F S";
     preWrite += " ";
     preWrite += std::to_string(INSTRID);
@@ -284,12 +359,33 @@ VOID Instruction(INS ins, VOID* v)
     preWrite += " ";
     preWrite += std::to_string(instrSize);
     preWrite += " ";
-    preWrite += _instrName;
+
+    ////// for vector instruction we will add prefix before use
+    bool isVec = isVec_256 || isVec_128 || isVec_64;
+    if (isVec){
+        ///////// add prefix for each size
+        if (isVec_256){
+            preWrite += "V256_";
+        }else if (isVec_128){
+            preWrite += "V128_";
+        }else if (isVec_64){
+            preWrite += "V64_";
+        }
+        ///////// add pseudo suffix operand size
+        if (opr_count == 2){
+            preWrite += "PSEUDO_MOV";
+        }else{
+            preWrite += "PSEUDO_COMP";
+        }
+    }else{
+        preWrite += INS_Mnemonic(ins);
+    }
+
     preWrite += "\n";
     preWrite += "---------------------------------\n";
 
     INSTRID++;
-    tryFlush();
+    tryFlush(true);
 
     
 }
@@ -338,7 +434,8 @@ int main(int argc, char* argv[])
     // Register the Instruction function to be called for every instruction
     INS_AddInstrumentFunction(Instruction, nullptr);
     //// flush static trace
-    tryFlush(true);
+    //tryFlush(true);
+    //outputFile_instr->close();
 
     PIN_AddFiniFunction(Fini, 0);
     // Start the program and never return
