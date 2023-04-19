@@ -17,6 +17,10 @@
 
 typedef uint64_t RT_INSTR_ID;
 
+///////////////// !=====IMPORTANT=====!
+////////////////////// every class member must be
+////////////////////// referred in copy constructor to prevent data missing
+
 class RT_INSTR{
 private:
     const std::string DEC_REG_OPR = "R";
@@ -32,6 +36,7 @@ private:
     std::string              mnemonic;
     std::string              srcDecodeKey;
     std::string              desDecodeKey;
+    std::string              debugDecodeKey;
     std::string              debugName; //// the instruction that obtain from raw data
     /////// instruction metadata
     //[[maybe_unused]]
@@ -62,21 +67,25 @@ protected:
     virtual void interpretLSOperand (std::vector<std::string>& tokens, bool isLoad, size_t& lstSrcMacroIdx, size_t& lstDesMacroIdx);
     virtual void interpretImmOperand(std::vector<std::string>& tokens);
     virtual void interpretFetch     (std::vector<std::string>& tokens);
+    virtual void interpretDebugStr  (std::vector<std::string>& tokens);
 
 public:
-    /// interpret instruction
     RT_INSTR ( RT_INSTR& host); ///copy constructor
     RT_INSTR (); /// vanila constructor
     virtual ~RT_INSTR() = default;
-    void     interpretSt(const std::vector<std::string>& st_raw); // interpret from raw static tracer
+    ///////// entry point to interpret single instruction
+    void     interpretStaticTracedData(const std::vector<std::string>& st_raw); // interpret from raw static tracer
+    ///////// fill dynamic data tracing
     void     fillDynData(CVT_RT_OBJ& cvtDynData);
+    ///////// generate uop    /////// HOTSPOT
     void     genUOPS(std::vector<UOP_BASE*>& results);
 
-    uint64_t           getRtInstrId() const {return rt_instr_id;};
-    const std::string& getMnemonic()  const {return mnemonic;};
-    const std::string  getDebugName() const {return debugName;};
-    ADDR               getAddr()      const {return addr;};
-    int                getSize()      const {return size;};
+    uint64_t           getRtInstrId()      const {return rt_instr_id;};
+    const std::string& getMnemonic()       const {return mnemonic;};
+    const std::string  getDebugDecodeKey() const {return debugDecodeKey;};
+    const std::string  getDebugName()      const {return debugName;};
+    ADDR               getAddr()           const {return addr;};
+    int                getSize()           const {return size;};
     std::string        getDecodeKey();
     ////// get method
     std::vector<REG_OPERAND>& getSrcRegOperands()       { return srcRegOperands;};

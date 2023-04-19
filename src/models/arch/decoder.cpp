@@ -12,4 +12,6 @@ DECODER_BASE::decodeMOP(RT_INSTR &rt_instr) {
 }
 
 DECODER_BASE::DECODER_BASE():
-simpleMop(new MOP_SIMPLE()){}
+simpleMop(new MOP_SIMPLE()){
+    simpleMop->setIsAutoGen();
+}

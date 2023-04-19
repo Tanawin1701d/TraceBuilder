@@ -45,7 +45,7 @@ add_executable(
         ${SRC_IOHCC}
         ${SRC_ARCH_X86}
         ${SRC_EXAMPLE}
-)
+        src/stat/statRecType.cpp src/stat/statRecType.h)
 
 TARGET_LINK_LIBRARIES( traceBuilder PRIVATE ${Boost_LIBRARIES} Threads::Threads ${PROTOBUF_LIBRARY} )
 

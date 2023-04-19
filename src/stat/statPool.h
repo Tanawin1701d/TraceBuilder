@@ -12,32 +12,24 @@
 #include <fstream>
 
 #include "ioHelp/strHelp.h"
-
+#include "statRecType.h"
 
 
 class  STAT{
 private:
-    /// for now we support only uint64 stat for convinient use
-    bool    valueIsUsed;
-    int64_t value;
+    /// for now we support only uint64 stat for convenient use
     std::unordered_map<std::string, STAT*> chainStat;
+    STAT_REC_TYPE* recordedValue;
+    STAT_TYPE      recordedType;
 
 public:
     explicit STAT();
-    int64_t  operator+  (int64_t rhs) { setValued();                    return value + rhs; };
-    int64_t  operator-  (int64_t rhs) { setValued();                    return value - rhs; };
-    int64_t& operator=  (int64_t rhs) { setValued(); value  = rhs;      return value;       };
-    int64_t& operator+= (int64_t rhs) { setValued(); value += rhs;      return value;       };
-    int64_t& operator-= (int64_t rhs) { setValued(); value -= rhs;      return value;       };
-    int64_t& operator++ (int)         { setValued(); operator+=(1); return value;       };
-    int64_t& operator-- (int)         { setValued(); operator-=(1); return value;       };
     STAT&    operator[] (std::string key);
-
-    int64_t getVal()   const {return value;      };
-    bool    isValued() const {return valueIsUsed;};
-    void    setValued() {valueIsUsed = true;}
+    bool         isValueEmpty();
+    std::string  getReport(); /////// please not that this function is assume that there are value @recorder
+    int64_t&     asUINT();
+    std::string& asSTR();
     std::unordered_map<std::string, STAT*>& getChainStat(){return chainStat;};
-
 
 };
 
@@ -50,7 +42,7 @@ extern  STAT     MAIN_STAT;
 class STAT_MNG{
     size_t maxLength = 0;
     std::vector<std::string> keys;
-    std::vector<int64_t>     values;
+    std::vector<std::string> values;
 public:
     void preparePrint(std::vector<std::string>& prefixs,
                STAT* stat = &MAIN_STAT

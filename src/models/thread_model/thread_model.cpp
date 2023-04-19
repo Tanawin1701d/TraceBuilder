@@ -31,7 +31,7 @@ THREAD_MODEL::onGetStTraceValue(staticTraceData stData) {
 
     auto* newInstr = new RT_INSTR();
     /// interpret instruction
-    newInstr->interpretSt(stData.rawData);
+    newInstr->interpretStaticTracedData(stData.rawData);
     /// insert new instruction to instruction pool
     instr_pool.insert({newInstr->getRtInstrId(), newInstr});
     ////////////////////////////////////////////////////////

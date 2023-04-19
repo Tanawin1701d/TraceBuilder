@@ -100,10 +100,16 @@ TRACER_BASE::onGetDynTraceValue(dynTraceData dyndata) {
     assert(dyndata.rawData.fetchId < rt_instrs.size());
     auto* rt_instr = rt_instrs[dyndata.rawData.fetchId];
     /////////////////////////////////////////////////////////// stat
-    MAIN_STAT["dynTrace"]["MNEMONIC"][rt_instr->getMnemonic()]++;
-    MAIN_STAT["dynTrace"]["MOP_COUNT"]++;
-    if ( (MAIN_STAT["dynTrace"]["MOP_COUNT"].getVal() % 1000000) == 0 ){
-        std::cout << getProgPf(__FILE__, __LINE__) <<" pass : " <<   MAIN_STAT["dynTrace"]["MOP_COUNT"].getVal() << " instructions" << std::endl;
+    MAIN_STAT["dynTrace"]["MNEMONIC"][rt_instr->getMnemonic()].asUINT()++;
+    MAIN_STAT["dynTrace"]["MNEMONIC"][rt_instr->getMnemonic()][rt_instr->getMacroop()->getIsAutoGen() ? "miss" : "hit"].asUINT()++;
+    MAIN_STAT["dynTrace"]["MOP_COUNT"].asUINT()++;
+
+    if (rt_instr->getMacroop()->getIsAutoGen()) {
+        MAIN_STAT["dynTrace"]["needUpgrade"][rt_instr->getDebugDecodeKey() + "----" +rt_instr->getDebugName()].asUINT()++;
+    }
+
+    if ( (MAIN_STAT["dynTrace"]["MOP_COUNT"].asUINT() % 1000000) == 0 ){
+        std::cout << getProgPf(__FILE__, __LINE__) <<" pass : " <<   MAIN_STAT["dynTrace"]["MOP_COUNT"].asUINT() << " instructions" << std::endl;
     }
     ///////////////////////////////////////////////////////////
     CVT_RT_OBJ cvt_trace_data{};
@@ -116,7 +122,7 @@ TRACER_BASE::onGetDynTraceValue(dynTraceData dyndata) {
     /////// interact with uop windows BUT DO NOT PUSH TO UOP WINDOW
             ////// we must notify result front-end first
     for (auto* uop: inflight_uops){
-        MAIN_STAT["dynTrace"]["UOP_COUNT"]++;
+        MAIN_STAT["dynTrace"]["UOP_COUNT"].asUINT()++;
         uop->setSeqNum(nextUopId++);
         uop->doDepenCheck(uopWindow);
     }

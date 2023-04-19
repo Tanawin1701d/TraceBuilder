@@ -13,13 +13,17 @@ class RT_INSTR;
 
 class MOP_BASE{
 
+private:
+    bool isAutoGen = false;
+
 public:
     virtual ~MOP_BASE() = default;
     //// results is used to return to micro-op to trace rt_instr
     virtual  void genUop(std::vector<UOP_BASE*>& results,
                          RT_INSTR* _rt_instr) = 0;
 
-
+    bool getIsAutoGen(){return isAutoGen;}
+    void setIsAutoGen(){isAutoGen = true;}
 
 };
 

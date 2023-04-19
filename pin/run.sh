@@ -75,4 +75,4 @@ sudo pin-3.25-98650-g8f6168173-gcc-linux/pin -t obj-intel64/tracer.so         \
 -- /media/tanawin/tanawin1701e/Project/sms/pintool/msmsPin/traceBuilder/pin/testProgram/test2
 
 
-parsecmgmt -a pin -p bodytrack  -c gcc-serial -i simmedium
+parsecmgmt -a pin -p fluidanimate  -c gcc-serial -i simmedium

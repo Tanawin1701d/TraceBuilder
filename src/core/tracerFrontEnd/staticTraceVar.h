@@ -39,6 +39,12 @@ static const int ST_IDX_FETCH_VADDR   = 3; // virtual address of the instruction
 static const int ST_IDX_FETCH_SZ      = 4; // instruction size
 static const int ST_IDX_FETCH_MNEUMIC = 5; // mnuemic id
 static const int ST_IDX_FETCH_AMT     = 6; // static trace amount of token for interpret fetch operand
+
+//// debug metadata
+static const int ST_IDX_DEBUG_DECKEY  = 1; // decode key to match with decoder
+static const int ST_IDX_DEBUG_INSTR   = 2; // index that pintool actually recorded
+static const int ST_IDX_DEBUG_AMT     = 3; // minimum amount of token in debug line string
+
 /////////////////////////////////////////////////////////////////////////////////////
 /// this section is used to identify the each tokens
 //// direction

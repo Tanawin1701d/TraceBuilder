@@ -12,8 +12,47 @@ STAT_MNG MAIN_STAT_MNG;
 
 ///////// stat worker
 
-STAT::STAT(): valueIsUsed(false), value(0)
+STAT::STAT():
+recordedValue(nullptr),
+recordedType(STAT_T_EMPTY)
 {}
+
+
+bool
+STAT::isValueEmpty(){
+    return recordedType == STAT_T_EMPTY;
+}
+
+std::string
+STAT::getReport() {
+    assert(recordedValue != nullptr);
+    return recordedValue->printReport();
+}
+
+
+int64_t&
+STAT::asUINT(){
+    assert(recordedType == STAT_T_UINT64 || recordedType == STAT_T_EMPTY);
+    if (isValueEmpty()){
+        ///// create state recorder and change tracking state
+        recordedValue = new STAT_REC_TYPE_UINT();
+        recordedType  = STAT_T_UINT64;
+    }
+    return ((STAT_REC_TYPE_UINT*)recordedValue)->getRef();
+}
+
+std::string&
+STAT::asSTR() {
+    assert(recordedType == STAT_T_STR || recordedType == STAT_T_EMPTY);
+    if (isValueEmpty()){
+        ///// create state recorder and change tracking state
+        recordedValue = new STAT_REC_TYPE_STR();
+        recordedType  = STAT_T_STR;
+    }
+    return ((STAT_REC_TYPE_STR*)recordedValue)->getRef();
+
+}
+
 
 
 STAT& STAT::operator[](std::string key) {
@@ -34,10 +73,10 @@ void STAT_MNG::preparePrint( std::vector<std::string>& prefixs,
 
     assert(stat != nullptr);
 
-    if (stat->isValued()) {
+    if (!stat->isValueEmpty()) {
         std::string myKey = concatVec(prefixs, "::");
         keys.push_back(myKey);
-        values.push_back(stat->getVal());
+        values.push_back(stat->getReport());
         maxLength = std::max(maxLength, myKey.size());
     }
     for (auto ele: stat->getChainStat()){
@@ -52,7 +91,7 @@ void STAT_MNG::print(){
     for (size_t idx = 0; idx < keys.size(); idx++){
         std::cout << keys[idx]
                   << genRepeatStr(maxLength - keys[idx].size(), " ")
-                  << std::to_string(values[idx])
+                  << values[idx]
                   << "\n";
     }
 
@@ -68,7 +107,7 @@ void STAT_MNG::saveToFile(const std::string filePath) {
     }
 
     for (size_t idx = 0; idx < keys.size(); idx++){
-        outFile << keys[idx] << genRepeatStr(maxLength - keys[idx].size(), " ") << std::to_string(values[idx]) << '\n';
+        outFile << keys[idx] << genRepeatStr(maxLength - keys[idx].size(), " ") << values[idx] << '\n';
     }
     outFile.close();
 

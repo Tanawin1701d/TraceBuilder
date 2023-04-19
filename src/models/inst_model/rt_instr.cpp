@@ -9,6 +9,7 @@ RT_INSTR::RT_INSTR(RT_INSTR& host) :
     mnemonic(host.mnemonic),
     srcDecodeKey(host.srcDecodeKey),
     desDecodeKey(host.desDecodeKey),
+    debugDecodeKey(host.debugDecodeKey),
     debugName(host.debugName),
     addr(host.addr),
     size(host.size),
@@ -51,7 +52,7 @@ RT_INSTR::RT_INSTR() {
 }
 
 void
-RT_INSTR::interpretSt(const std::vector<std::string>& st_raw) {
+RT_INSTR::interpretStaticTracedData(const std::vector<std::string>& st_raw) {
     size_t lstSrcMacroIdx = 0;
     size_t lstDesMacroIdx = 0;
     for (auto& opr_raw: st_raw){
@@ -68,7 +69,9 @@ RT_INSTR::interpretSt(const std::vector<std::string>& st_raw) {
             interpretImmOperand(opr_tokens);
         }else if (opr_tokens[ST_IDX_COMPO_TYP] == ST_VAL_COMPO_FETCH){
             interpretFetch(opr_tokens);
-        }else if (opr_tokens[ST_IDX_COMPO_TYP] == ST_VAL_COMPO_DEC || opr_tokens[ST_IDX_COMPO_TYP] == ST_VAL_COMPO_SPT) {
+        }else if (opr_tokens[ST_IDX_COMPO_TYP] == ST_VAL_COMPO_DEC){
+            interpretDebugStr(opr_tokens);
+        }else if (opr_tokens[ST_IDX_COMPO_TYP] == ST_VAL_COMPO_SPT) {
             /// pass
         }else{
             throw std::invalid_argument("there is no operand or any indicator : " + opr_tokens[ST_IDX_COMPO_TYP]);
@@ -223,11 +226,20 @@ RT_INSTR::interpretFetch(std::vector<std::string> &tokens) {
     /// please remind that we must use upper case for mnemonic
     convertToUpperStr(tokens[ST_IDX_FETCH_MNEUMIC]);
     mnemonic    = tokens[ST_IDX_FETCH_MNEUMIC];
-    auto preGenDbStr = std::vector(tokens.begin() + ST_IDX_FETCH_MNEUMIC, tokens.end());
-    debugName   = concatVec(preGenDbStr, " ");
     /////////////////////////////////////////
-    MAIN_STAT["staticTrace"][mnemonic]+= 1;
+    MAIN_STAT["staticTrace"][mnemonic].asUINT()++;
     /////////////////////////////////////////
+}
+
+void
+RT_INSTR::interpretDebugStr(std::vector<std::string> &tokens) {
+    assert(tokens[ST_IDX_COMPO_TYP] == ST_VAL_COMPO_DEC);
+    assert(tokens.size() >= ST_IDX_DEBUG_AMT);
+    auto preConcatDebugName =
+            std::vector<std::string>(tokens.begin() + ST_IDX_DEBUG_INSTR,
+                                     tokens.end());
+    debugDecodeKey = tokens[ST_IDX_DEBUG_DECKEY];
+    debugName = concatVec(preConcatDebugName, " ");
 }
 
 std::string RT_INSTR::getDecodeKey(){
