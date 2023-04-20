@@ -255,6 +255,38 @@ public:
 };
 
  
+class UOP_GEN_CMP_RR : public UOP_BASE{
+public:
+  UOP_GEN_CMP_RR();
+  void doDepenCheck(UOP_WINDOW* uop_window) override;
+  void addMeta( REG_OPERAND* A, REG_OPERAND* B );
+};
+
+ 
+class UOP_GEN_CMP_RI : public UOP_BASE{
+public:
+  UOP_GEN_CMP_RI();
+  void doDepenCheck(UOP_WINDOW* uop_window) override;
+  void addMeta( REG_OPERAND* A, TREGNUM* B );
+};
+
+ 
+class UOP_GEN_CMP_RM : public UOP_BASE{
+public:
+  UOP_GEN_CMP_RM();
+  void doDepenCheck(UOP_WINDOW* uop_window) override;
+  void addMeta( REG_OPERAND* A, TREGNUM* B );
+};
+
+ 
+class UOP_GEN_CMP_MI : public UOP_BASE{
+public:
+  UOP_GEN_CMP_MI();
+  void doDepenCheck(UOP_WINDOW* uop_window) override;
+  void addMeta( TREGNUM* A, TREGNUM* B );
+};
+
+ 
 class UOP_VEC_MEM_LD_T : public UOP_BASE{
 public:
   UOP_VEC_MEM_LD_T();

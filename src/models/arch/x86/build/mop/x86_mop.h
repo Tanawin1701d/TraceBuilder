@@ -148,6 +148,26 @@ public:
 
    void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
 };
+class MOP_CMP_RR : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};
+class MOP_CMP_RI : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};
+class MOP_CMP_RM : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};
+class MOP_CMP_MI : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};
 class MOP_MOV_V64_M_R : public MOP_BASE{
 public:
 

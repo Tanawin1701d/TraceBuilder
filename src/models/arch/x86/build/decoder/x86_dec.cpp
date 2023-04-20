@@ -79,6 +79,10 @@ DECODER_X86::DECODER_X86(): DECODER_BASE(){
      decodeStorage.insert({"JBE$RR$R", (MOP_BASE*)(new MOP_JMP_R_R_R())});
      decodeStorage.insert({"JBE$RM$R", (MOP_BASE*)(new MOP_JMP_R_M_R())});
      decodeStorage.insert({"JBE$RI$R", (MOP_BASE*)(new MOP_JMP_R_I_R())});
+     decodeStorage.insert({"CMP$RR$", (MOP_BASE*)(new MOP_CMP_RR())});
+     decodeStorage.insert({"CMP$RI$", (MOP_BASE*)(new MOP_CMP_RI())});
+     decodeStorage.insert({"CMP$RM$", (MOP_BASE*)(new MOP_CMP_RM())});
+     decodeStorage.insert({"CMP$MI$", (MOP_BASE*)(new MOP_CMP_MI())});
      decodeStorage.insert({"V256_PSEUDO_MOV$R$R", (MOP_BASE*)(new MOP_MOV_V64_R_R())});
      decodeStorage.insert({"V256_PSEUDO_MOV$R$M", (MOP_BASE*)(new MOP_MOV_V64_R_M())});
      decodeStorage.insert({"V256_PSEUDO_MOV$M$R", (MOP_BASE*)(new MOP_MOV_V64_M_R())});
@@ -134,6 +138,8 @@ DECODER_X86::DECODER_X86(): DECODER_BASE(){
      decodeStorage.insert({"MOV$I$R", (MOP_BASE*)(new MOP_MOV_I_R())});
      decodeStorage.insert({"MOV$R$R", (MOP_BASE*)(new MOP_MOV_R_R())});
      decodeStorage.insert({"POP$M$R", (MOP_BASE*)(new MOP_MOV_M_R())});
+     decodeStorage.insert({"LEA$R$R", (MOP_BASE*)(new MOP_MOV_R_R())});
+     decodeStorage.insert({"LEA$RR$R", (MOP_BASE*)(new MOP_COMP_R_R_R())});
      decodeStorage.insert({"MOV$I$M", (MOP_BASE*)(new MOP_MOV_I_M())});
      decodeStorage.insert({"MOV$R$M", (MOP_BASE*)(new MOP_MOV_R_M())});
      decodeStorage.insert({"PUSH$R$M", (MOP_BASE*)(new MOP_MOV_R_M())});

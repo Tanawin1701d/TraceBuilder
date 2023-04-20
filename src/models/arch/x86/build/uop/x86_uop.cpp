@@ -810,6 +810,106 @@ addRegMeta(RIP->getMeta(), false);
 
 
 
+/////////////// UOP_GEN_CMP_RR
+
+UOP_GEN_CMP_RR::UOP_GEN_CMP_RR() : UOP_BASE(UOP_COMP){}
+
+void UOP_GEN_CMP_RR::doDepenCheck(UOP_WINDOW* uop_window) {
+    doRegDepenCheck(uop_window);
+    
+    ///// for future use
+    /////   doExeDepenCheck(uop_window)
+
+}
+
+void UOP_GEN_CMP_RR::addMeta(REG_OPERAND* A, REG_OPERAND* B){
+///////// input
+///REG with name A
+addRegMeta(A->getMeta(), true);
+///REG with name B
+addRegMeta(B->getMeta(), true);
+///////// output
+}
+
+//////////////////////////////////////
+
+
+
+/////////////// UOP_GEN_CMP_RI
+
+UOP_GEN_CMP_RI::UOP_GEN_CMP_RI() : UOP_BASE(UOP_COMP){}
+
+void UOP_GEN_CMP_RI::doDepenCheck(UOP_WINDOW* uop_window) {
+    doRegDepenCheck(uop_window);
+    
+    ///// for future use
+    /////   doExeDepenCheck(uop_window)
+
+}
+
+void UOP_GEN_CMP_RI::addMeta(REG_OPERAND* A, TREGNUM* B){
+///////// input
+///REG with name A
+addRegMeta(A->getMeta(), true);
+///TREG with name B
+addTRegMeta(*B, true);
+///////// output
+}
+
+//////////////////////////////////////
+
+
+
+/////////////// UOP_GEN_CMP_RM
+
+UOP_GEN_CMP_RM::UOP_GEN_CMP_RM() : UOP_BASE(UOP_COMP){}
+
+void UOP_GEN_CMP_RM::doDepenCheck(UOP_WINDOW* uop_window) {
+    doRegDepenCheck(uop_window);
+    
+    ///// for future use
+    /////   doExeDepenCheck(uop_window)
+
+}
+
+void UOP_GEN_CMP_RM::addMeta(REG_OPERAND* A, TREGNUM* B){
+///////// input
+///REG with name A
+addRegMeta(A->getMeta(), true);
+///TREG with name B
+addTRegMeta(*B, true);
+///////// output
+}
+
+//////////////////////////////////////
+
+
+
+/////////////// UOP_GEN_CMP_MI
+
+UOP_GEN_CMP_MI::UOP_GEN_CMP_MI() : UOP_BASE(UOP_COMP){}
+
+void UOP_GEN_CMP_MI::doDepenCheck(UOP_WINDOW* uop_window) {
+    
+    
+    ///// for future use
+    /////   doExeDepenCheck(uop_window)
+
+}
+
+void UOP_GEN_CMP_MI::addMeta(TREGNUM* A, TREGNUM* B){
+///////// input
+///TREG with name A
+addTRegMeta(*A, true);
+///TREG with name B
+addTRegMeta(*B, true);
+///////// output
+}
+
+//////////////////////////////////////
+
+
+
 /////////////// UOP_VEC_MEM_LD_T
 
 UOP_VEC_MEM_LD_T::UOP_VEC_MEM_LD_T() : UOP_BASE(UOP_LOAD){}

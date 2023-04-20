@@ -24,8 +24,8 @@ typedef uint64_t RT_INSTR_ID;
 class RT_INSTR{
 private:
     const std::string DEC_REG_OPR = "R";
-    const std::string DEC_LD_OPR  = "L";
-    const std::string DEC_ST_OPR  = "S";
+    const std::string DEC_LD_OPR  = "M";
+    const std::string DEC_ST_OPR  = "M";
     const std::string DEC_IMM_OPR = "I";
     const std::string DEC_DILEM   = "$";
 

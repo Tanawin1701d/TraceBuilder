@@ -3,8 +3,8 @@ from colorama import init
 from termcolor import colored
 
 # DECODE= { mnemonic: "add",
-#               inputType: "RLI"   <varTypeAKA> <varTypeAKA2>
-#               outputType: "RS"
+#               inputType: "RMID"   <varTypeAKA> <varTypeAKA2>
+#               outputType: "RMD"    D for dummy
 #               macroop: "ADD_I_M"
 # }
 
@@ -16,6 +16,7 @@ REF_VAL_DECODE_OUTPUT = "OUTPUT"
 REF_VAL_DECODE_TO     = "TO"
 
 DEC_IO_INPUT_TYPES = ["R", "I", "L"]
+DEC_IO_DUMMY       = "D"
 DEC_IO_OUTPUT_TYPE = ["R", "S"]
 DEC_IO_TYPE_IMM    = "I"
 
@@ -120,6 +121,8 @@ def interpret_decoder(linesToken):
         retDec.update({DEC_META_INPUT   :  singleLineToken[4]})
         retDec.update({DEC_META_OUTPUT  :  singleLineToken[6]})
         retDec.update({DEC_META_MACROOP :  singleLineToken[8]})
+        if DEC_IO_DUMMY in retDec[DEC_META_OUTPUT]:
+            retDec.update({DEC_META_OUTPUT  :  ""}) ###### fill it with empty string
         print(colored(f"[DEC GEN] interpret DEC: {retDec[DEC_META_NAME]}", "blue"))
         yield retDec
 
