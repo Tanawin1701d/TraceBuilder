@@ -28,9 +28,15 @@ class MOP_BASE:
                 if cur_uop.isSucInternalDepend(suc_uop):
                     self.uopInterDep[cur_idx].append(cur_uop)
 
-    def genCXXType(self)-> str:
-        return "{PREFIX}${INPUT_KEY}${OUTPUT_KEY}".format(
+    def genCXXType(self)-> str: ### also used in c++
+        return "{PREFIX}${SUFFIX}".format(
             PREFIX     = self.cxxType_prefix,
+            SUFFIX     = self.genCXX_decodeKey()
+        )
+
+    ##### this is seperated by $
+    def genCXX_decodeKey(self):
+        return "{INPUT_KEY}${OUTPUT_KEY}".format(
             INPUT_KEY  = self.io_input.genCXX_decodeKey(),
             OUTPUT_KEY = self.io_output.genCXX_decodeKey()
         )
@@ -97,3 +103,7 @@ class MOP_BASE:
         cppFile = cppFile + "}}\n"
         ##########################################################################################
         return cppFile
+
+    def genCXX_all(self):
+        self.genUopDep()
+        yield self.genCXXType(), self.genCXX_header(), self.genCXX_cpp()

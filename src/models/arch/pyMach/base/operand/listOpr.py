@@ -26,14 +26,14 @@ class LISTOPR_BASE :
             raise ListOprUsageError(f"can not addAcceptType "
                                     f"more than declared size: {self.size}")
         for st in newAcceptList :
-            if st is not set:
+            if type(st) is not set:
                 raise ListOprUsageError(f"can not addAcceptType with invalid argument args:{st}")
             ### we might set errror for invalid type in set
 
         for oprIdx, acceptSet in enumerate(newAcceptList) :
-            self.addAcceptype(oprIdx, acceptSet)
+            self.addAcceptType(oprIdx, acceptSet)
 
-    def addAcceptype(self, idx: int, setOfPerOprType: set):
+    def addAcceptType(self, idx: int, setOfPerOprType: set):
         if idx > self.size:
             raise ListOprUsageError(f"can not addAccepttype more than declared size: {self.size}")
         self.acceptableType[idx] = self.acceptableType[idx] = \
@@ -86,6 +86,12 @@ class LISTOPR_BASE :
 
     def getSize(self):
         return self.size
+
+    def clearOprMember(self):
+        for idx in range(self.size):
+            self.opr_ele[idx]  = None
+            self.opr_type[idx] = None
+
     ##############################################################################################
     ####### gen cxx method
     def genCXX_refVarDeclaration(self) -> str:
@@ -111,3 +117,5 @@ class LISTOPR_BASE :
 
     def genCXX_decodeKey(self) -> str:
         return "_".join([opr.getUniqDecodeName() for opr in self.getOprs()])
+    ##############################################################################################
+
