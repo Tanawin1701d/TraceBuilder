@@ -12,17 +12,17 @@ class MopGenUsageError(Exception):
 
 
 def addToMopGenGroup(mop): #### expect mop type
-    uuid, hpp, cpp = mop.genCXX_all()
+    for uuid, hpp, cpp in mop.genCXX_allPossible():
 
-    if (type(hpp) is not str) or (type(cpp) is not str):
-        MopGenUsageError("can not prepare Generate cxx type error")
+        if (type(hpp) is not str) or (type(cpp) is not str):
+            MopGenUsageError("can not prepare Generate cxx type error")
 
-    if uuid in genAlready:
-        return
+        if uuid in genAlready:
+            return
 
-    hppList.append(hpp)
-    cppList.append(cpp)
-    genAlready.add(uuid)
+        hppList.append(hpp)
+        cppList.append(cpp)
+        genAlready.add(uuid)
 
 
 def writeAllHppMop():
@@ -50,8 +50,8 @@ def writeAllHppMop():
 
 
 def writeAllCppMop():
-    cppStr = "include\"{MOP_HFILE_NAME}\"\n" \
-             "include\"{INC_RT_INSTR}\"\n".format(MOP_HFILE_NAME = hd.MOP_HFILE_NAME,
+    cppStr = "#include\"{MOP_HFILE_NAME}\"\n" \
+             "#include\"{INC_RT_INSTR}\"\n\n\n\n".format(MOP_HFILE_NAME = hd.MOP_HFILE_NAME,
                                                 INC_RT_INSTR   = hd.INC_RT_INSTR
                                               )
 

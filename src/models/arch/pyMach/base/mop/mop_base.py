@@ -1,4 +1,5 @@
 import base.operand.listOpr as oprLs
+import base.operand.opr_simple as oprSim
 
 class MopUsageError(Exception):
     def __init__(self, message):
@@ -9,15 +10,25 @@ class MOP_BASE:
     io_input       : oprLs.LISTOPR_BASE
     io_output      : oprLs.LISTOPR_BASE
     temp_opr       : oprLs.LISTOPR_BASE  ##### temporary operand which shared with uopList
-    uopList        : list()
-    uopInterDep    : list()
+    uopList        : list
+    uopInterDep    : list
 
     cxxType_prefix = "MOP_CHILD"
     cxxTypeParent  = "MOP_BASE"
 
-    def __init__(self, _name : str, _inputSize : int, _outputSize : int):
-        self.io_input  = oprLs.LISTOPR_BASE(_inputSize)
-        self.io_output = oprLs.LISTOPR_BASE(_outputSize)
+
+    def autoInit(self, _cxxType_prefix : str, _inputs:list, _outputs:list, _temp:list, _uops:list):
+        self.cxxType_prefix = _cxxType_prefix
+        ####### initialize mainStructure
+        self.io_input = oprLs.LISTOPR_BASE(len(_inputs))
+        self.io_input.autoInit(_inputs)
+
+        self.io_output = oprLs.LISTOPR_BASE(len(_outputs))
+        self.io_output.autoInit(_outputs)
+
+        self.temp_opr = oprLs.LISTOPR_BASE(len(_temp))
+        self.temp_opr.autoInit(_temp)
+        self.uopList  = _uops
 
     def genUopDep(self):
         self.uopInterDep = [[] for _ in range(len(self.uopList))]
@@ -65,24 +76,25 @@ class MOP_BASE:
         ##### new represent SRC EXTERNAL operand
         for idx, opr in enumerate(self.io_input.getOprs()):
             ###### declare variable with ref type
-             cppFile = cppFile + "{VAR_REF_DECLARE} = * (({VAR_TYPE}*)srcPool[idx])\n"\
+             cppFile = cppFile + "    {VAR_REF_DECLARE} = * (({VAR_TYPE}*)srcPool[idx])\n"\
                                     .format(VAR_REF_DECLARE = opr.genCXX_refVarDeclaration(),
                                             VAR_TYPE        = opr.genCXX_varType()
                                             )
         ##### new represent DES EXTERNAL operand
         for idx, opr in enumerate(self.io_output.getOprs()):
             ###### declare variable with ref type
-             cppFile = cppFile + "{VAR_REF_DECLARE} = * (({VAR_TYPE}*)desPool[idx]);\n"\
+             cppFile = cppFile + "    {VAR_REF_DECLARE} = * (({VAR_TYPE}*)desPool[idx]);\n"\
                                     .format(VAR_REF_DECLARE = opr.genCXX_refVarDeclaration(),
                                             VAR_TYPE        = opr.genCXX_varType()
                                             )
         ##### new variable SRC/DES operand
         for idx, opr in enumerate(self.temp_opr.getOprs()):
             ###### declare variable with ref type
-             cppFile = cppFile + "{VAR_REF_DECLARE} = * (({VAR_TYPE}*)new {VAR_TYPE}());\n"\
+             cppFile = cppFile + "    {VAR_REF_DECLARE} = * (({VAR_TYPE}*)new {VAR_TYPE}());\n"\
                                     .format(VAR_REF_DECLARE = opr.genCXX_refVarDeclaration(),
                                             VAR_TYPE        = opr.genCXX_varType()
                                             )
+        cppFile = cppFile + "///////////////////////////////////////////////////////////////////\n"
         ##########################################################################################
         ##### generate for each uop and connect dependency to it
         for idx, currentUop in enumerate(self.uopList):
@@ -93,17 +105,19 @@ class MOP_BASE:
                             UOP_TYPE = currentUop.genCXXType(),
                             PARAM    = currentUop.genCXX_callIoParamList()
                             )
-            for depIdx, currentDep in enumerate(self.uopList[idx]):
+            for depMop in self.uopInterDep[idx]:
                 cppFile = cppFile + \
                     "    {UOP_NAME}->addTemDep({DEP_UOP_NAME})\n".format(UOP_NAME = currentUop.genCXXVarName(),
-                                                                       DEP_UOP_NAME = currentDep[depIdx].genCXXVarName()
+                                                                       DEP_UOP_NAME = depMop.genCXXVarName()
                                                                        )
-            cppFile = cppFile + "///////////////////////////////////////////////////////////////////"
+            cppFile = cppFile + "///////////////////////////////////////////////////////////////////\n"
 
-        cppFile = cppFile + "}}\n"
+        cppFile = cppFile + "\n}\n"
         ##########################################################################################
         return cppFile
 
-    def genCXX_all(self):
+    def genCXX_allPossible(self):
         self.genUopDep()
         yield self.genCXXType(), self.genCXX_header(), self.genCXX_cpp()
+
+        return

@@ -32,13 +32,21 @@ public:
     size_t   getMcSideIdx() {return mcArgSIdx;}
 };
 
-
-/// register operand it is used at src and des operand
-class REG_OPERAND : public OPERAND{
+class OPR_TREG : public OPERAND{
 private:
     REGNUM regId;
 public:
-    REG_OPERAND(REGNUM _regId, size_t _mcArgSIdx);
+    OPR_TREG(REGNUM _tRegId, size_t _mcArgSize);
+    REGNUM getRegId() const;
+    REGNUM getMeta();
+};
+
+/// register operand it is used at src and des operand
+class OPR_REG : public OPERAND{
+private:
+    REGNUM regId;
+public:
+    OPR_REG(REGNUM _regId, size_t _mcArgSIdx);
     REGNUM getRegId() const;
     /////// get meta data of the operand that is fundamental of uop
     REGNUM getMeta();
@@ -46,7 +54,7 @@ public:
 
 
 /// memory operand
-class MEM_OPERAND : public OPERAND{
+class OPR_MEM : public OPERAND{
 private:
     const uint8_t MAX_BYTE_PER_MICROOP = 8;
     REGNUM baseRegId;
@@ -63,14 +71,14 @@ private:
     ADDR   nextPhyAddr; ///// next physical addr for microop and size
     ///////////////////////////////////////////////////////////////////
 public:
-    MEM_OPERAND(REGNUM _baseRegId,
-                REGNUM _indexRegId,
-                int    _scaleFactor,
-                IMM    _displacement,
-                ADDR    _size,
-                int    _memopNum,
-                OPR_TYPE _setOpr,
-                size_t _mcArgSIdx);
+    OPR_MEM(REGNUM _baseRegId,
+            REGNUM _indexRegId,
+            int    _scaleFactor,
+            IMM    _displacement,
+            ADDR    _size,
+            int    _memopNum,
+            OPR_TYPE _setOpr,
+            size_t _mcArgSIdx);
 
     REGNUM getBaseRegId() const;
 
@@ -94,10 +102,10 @@ public:
 
 };
 /// load operand
-class LD_OPERAND : public MEM_OPERAND{
+class OPR_MEM_LD : public OPR_MEM{
 public:
     // load operand
-    LD_OPERAND(REGNUM _baseRegId,
+    OPR_MEM_LD(REGNUM _baseRegId,
                REGNUM _indexRegId,
                int    _scaleFactor,
                IMM    _displacement,
@@ -106,10 +114,10 @@ public:
                size_t _mcArgSIdx);
 };
 /// store operand
-class ST_OPERAND : public MEM_OPERAND{
+class OPR_MEM_ST : public OPR_MEM{
 public:
     // store operand
-    ST_OPERAND(REGNUM _baseRegId,
+    OPR_MEM_ST(REGNUM _baseRegId,
                REGNUM _indexRegId,
                int    _scaleFactor,
                IMM    _displacement,
@@ -118,12 +126,12 @@ public:
                size_t _mcArgSIdx);
 };
 /// immediate operand
-class IMM_OPERAND : public OPERAND{
+class OPR_IMM : public OPERAND{
     // imm operand
 private:
     IMM imm;
 public:
-    IMM_OPERAND(IMM _imm);
+    OPR_IMM(IMM _imm);
 
     IMM getImm() const;
 

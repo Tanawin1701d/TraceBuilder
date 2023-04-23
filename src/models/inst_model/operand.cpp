@@ -9,20 +9,33 @@ OT(_OT),
 mcArgSIdx(_mcArgSIdx){}
 ///////////////////////////////////////////////////////////
 /// reg operand
-REG_OPERAND::REG_OPERAND(REGNUM _regId, size_t _mcArgSIdx):
-regId(_regId),
-OPERAND(O_REG, _mcArgSIdx)
+OPR_TREG::OPR_TREG(REGNUM _regId, size_t _mcArgSidx):
+        regId(_regId),
+        OPERAND(O_REG, _mcArgSidx)
 {}
 
-REGNUM REG_OPERAND::getRegId() const {
+REGNUM OPR_TREG::getRegId() const {
     return regId;
 }
 
 REGNUM
-REG_OPERAND::getMeta(){ return regId;}
+OPR_TREG::getMeta(){ return regId;}
+///////////////////////////////////////////////////////////
+/// reg operand
+OPR_REG::OPR_REG(REGNUM _regId, size_t _mcArgSIdx):
+regId(_regId),
+OPERAND(O_REG, _mcArgSIdx)
+{}
+
+REGNUM OPR_REG::getRegId() const {
+    return regId;
+}
+
+REGNUM
+OPR_REG::getMeta(){ return regId;}
 ///////////////////////////////////////////////////////////
 /// memory operand
-MEM_OPERAND::MEM_OPERAND(
+OPR_MEM::OPR_MEM(
                             REGNUM _baseRegId,
                             REGNUM _indexRegId,
                             int    _scaleFactor,
@@ -48,45 +61,45 @@ OPERAND(_setOpr, _mcArgSIdx)
 }
 
 REGNUM
-MEM_OPERAND::getBaseRegId() const {
+OPR_MEM::getBaseRegId() const {
     return baseRegId;
 }
 
 REGNUM
-MEM_OPERAND::getIndexRegId() const {
+OPR_MEM::getIndexRegId() const {
     return indexRegId;
 }
 
 int
-MEM_OPERAND::getScaleFactor() const {
+OPR_MEM::getScaleFactor() const {
     return scaleFactor;
 }
 
 IMM
-MEM_OPERAND::getDisplacement() const {
+OPR_MEM::getDisplacement() const {
     return displacement;
 }
 
 ADDR
-MEM_OPERAND::getSize() const {
+OPR_MEM::getSize() const {
     return size;
 }
 
-void MEM_OPERAND::setPhyAddr(ADDR _phyAddr) {
-    MEM_OPERAND::phyAddr = _phyAddr;
-    MEM_OPERAND::nextPhyAddr = _phyAddr;
+void OPR_MEM::setPhyAddr(ADDR _phyAddr) {
+    OPR_MEM::phyAddr = _phyAddr;
+    OPR_MEM::nextPhyAddr = _phyAddr;
 }
 
-int MEM_OPERAND::getMemopNum() const {
+int OPR_MEM::getMemopNum() const {
     return memopNum;
 }
 
-ADDR MEM_OPERAND::getPhyAddr() const {
+ADDR OPR_MEM::getPhyAddr() const {
     return phyAddr;
 }
 
 ADAS
-MEM_OPERAND::getMeta(){
+OPR_MEM::getMeta(){
     if (nextPhyAddr >= (phyAddr + size)){
         return {0, MAX_BYTE_PER_MICROOP};
     }
@@ -97,7 +110,7 @@ MEM_OPERAND::getMeta(){
 }
 
 void
-MEM_OPERAND::resetSharedOperandTracker(){
+OPR_MEM::resetSharedOperandTracker(){
     current_ruop_count = 0;
     nextPhyAddr        = phyAddr;
 }
@@ -105,7 +118,7 @@ MEM_OPERAND::resetSharedOperandTracker(){
 ///////////////////////////////////////////////////////////
 /// load operand
 
-LD_OPERAND::LD_OPERAND(
+OPR_MEM_LD::OPR_MEM_LD(
 REGNUM _baseRegId,
 REGNUM _indexRegId,
 int    _scaleFactor,
@@ -114,7 +127,7 @@ ADDR    _size,
 int    _memopNum,
 size_t _mcArgSIdx
 ):
-    MEM_OPERAND(_baseRegId,
+        OPR_MEM(_baseRegId,
                 _indexRegId,
                 _scaleFactor,
                 _displacement,
@@ -125,7 +138,7 @@ size_t _mcArgSIdx
 ///////////////////////////////////////////////////////////
 /// store operand
 
-ST_OPERAND::ST_OPERAND(REGNUM _baseRegId,
+OPR_MEM_ST::OPR_MEM_ST(REGNUM _baseRegId,
                        REGNUM _indexRegId,
                        int    _scaleFactor,
                        IMM    _displacement,
@@ -133,26 +146,26 @@ ST_OPERAND::ST_OPERAND(REGNUM _baseRegId,
                        int    _memopNum,
                        size_t _mcArgSIdx
                        ):
-        MEM_OPERAND(_baseRegId,
-                    _indexRegId,
-                    _scaleFactor,
-                    _displacement,
-                    _size,
-                    _memopNum,
-                    O_MEM_ST,
-                    _mcArgSIdx){}
+        OPR_MEM(_baseRegId,
+                _indexRegId,
+                _scaleFactor,
+                _displacement,
+                _size,
+                _memopNum,
+                O_MEM_ST,
+                _mcArgSIdx){}
 ///////////////////////////////////////////////////////////
 /// imm operand
 
-IMM_OPERAND::IMM_OPERAND(IMM _imm):
+OPR_IMM::OPR_IMM(IMM _imm):
 imm(_imm),
 OPERAND(O_IMM,-1)
 {}
 
 IMM
-IMM_OPERAND::getImm() const {
+OPR_IMM::getImm() const {
     return imm;
 };
 
 IMM
-IMM_OPERAND::getValue(){ return imm;}
+OPR_IMM::getValue(){ return imm;}

@@ -147,8 +147,7 @@ TEM_DEP::doTEMDepenCheck(std::vector<UOP_BASE *>& predecessor) {
 
 void
 TEM_DEP::addTRegMeta(const TREGNUM tregnum, bool isSrc){
-   auto& pushVec = isSrc ? srcTRegs : desTRegs;
-   pushVec.push_back(tregnum);
+    srcTRegs.push_back(tregnum);
 }
 
 std::unordered_set<UOP_BASE*>&

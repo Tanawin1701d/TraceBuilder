@@ -43,15 +43,15 @@ private:
     ADDR                addr{};
     int                 size{};
     /////// src operand data and metadata
-    std::vector<REG_OPERAND> srcRegOperands;
-    std::vector<LD_OPERAND>  srcLdOperands;
-    std::vector<IMM_OPERAND> srcImmOperands;
+    std::vector<OPR_REG> srcRegOperands;
+    std::vector<OPR_MEM_LD>  srcLdOperands;
+    std::vector<OPR_IMM> srcImmOperands;
     /////// pool operand to allow macro-op access in correct order
     std::vector<OPERAND*>    srcMacroPoolOperands; /// pool the  src operand for macroop will get it and fill into micro-op
     /////// des operand data and metadata
     /// for now we assume that order is matter to classify instruction and micro-op
-    std::vector<REG_OPERAND> desRegOperands;
-    std::vector<ST_OPERAND>  desStOperands;
+    std::vector<OPR_REG> desRegOperands;
+    std::vector<OPR_MEM_ST>  desStOperands;
     /////// pool operand to allow macro-op access in correct order
     std::vector<OPERAND*>    desMacroPoolOperands;/// pool the  des operand for macroop will get it and fill into micro-op
     /////// macro-op
@@ -88,12 +88,12 @@ public:
     int                getSize()           const {return size;};
     std::string        getDecodeKey();
     ////// get method
-    std::vector<REG_OPERAND>& getSrcRegOperands()       { return srcRegOperands;};
-    std::vector<LD_OPERAND>&  getSrcLdOperands()        { return srcLdOperands ;};
-    std::vector<IMM_OPERAND>& getSrcImmOperands()       { return srcImmOperands;};
+    std::vector<OPR_REG>& getSrcRegOperands()       { return srcRegOperands;};
+    std::vector<OPR_MEM_LD>&  getSrcLdOperands()        { return srcLdOperands ;};
+    std::vector<OPR_IMM>& getSrcImmOperands()       { return srcImmOperands;};
     std::vector<OPERAND*>&    getSrcMacroPoolOperands() { return srcMacroPoolOperands;};
-    std::vector<REG_OPERAND>& getDesRegOperands()       { return desRegOperands;};
-    std::vector<ST_OPERAND>&  getDesStOperands()        { return desStOperands ;};
+    std::vector<OPR_REG>& getDesRegOperands()       { return desRegOperands;};
+    std::vector<OPR_MEM_ST>&  getDesStOperands()        { return desStOperands ;};
     std::vector<OPERAND*>&    getDesMacroPoolOperands() { return desMacroPoolOperands;};
     MOP_BASE*                 getMacroop()              { return macroop;};
 

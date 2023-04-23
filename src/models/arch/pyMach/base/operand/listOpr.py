@@ -1,5 +1,3 @@
-import opr_base
-
 class ListOprUsageError(Exception):
     def __init__(self, message):
         super().__init__(message)
@@ -12,17 +10,25 @@ class LISTOPR_BASE :
     size          : int  #### operand type
 
     def __init__(self, _size: int):
+        self.initializeStructure(_size)
+
+    ###### auto initialize with sample operand
+    def  autoInit(self, _inputs):
+        self.addAcceptTypes     ([{type(my_opr)} for my_opr  in _inputs ])
+        self.setOprs            (_inputs)
+
+    def initializeStructure(self, _size: int):
         if _size < 0:
             raise ListOprUsageError("can not create list that size less than 0")
         self.size = _size
         self.acceptableType = [set() for _ in range(self.size)]
-        self.opr_ele        = [None  for _ in range(self.size)]
-        self.opr_type       = [None  for _ in range(self.size)]
+        self.opr_ele = [None for _ in range(self.size)]
+        self.opr_type = [None for _ in range(self.size)]
 
     ###### add accept type to input list
     def addAcceptTypes(self, newAcceptList: list):
         ##### check type
-        if len(list)  > self.size:
+        if len(newAcceptList)  > self.size:
             raise ListOprUsageError(f"can not addAcceptType "
                                     f"more than declared size: {self.size}")
         for st in newAcceptList :
@@ -46,7 +52,7 @@ class LISTOPR_BASE :
             raise ListOprUsageError(f"can not addOprs size:{self.size}")
 
         for idx, opr in enumerate(newAddOpr):
-            self.setOpr(set, idx, opr)
+            self.setOpr(idx, opr, True)
 
     def setOpr(self, idx: int, opr, force : bool):
         if idx > self.size:
@@ -95,7 +101,7 @@ class LISTOPR_BASE :
     ##############################################################################################
     ####### gen cxx method
     def genCXX_refVarDeclaration(self) -> str:
-        preRet : str
+        preRet = ""
         isFirst = True
         for oprRef in self.opr_ele:
             if isFirst:
@@ -103,9 +109,10 @@ class LISTOPR_BASE :
             else:
                 preRet = preRet + ", "
             preRet = preRet + oprRef.genCXX_refVarDeclaration()
+        return preRet
 
     def genCXX_call(self) -> str:
-        preRet : str
+        preRet = ""
         isFirst = True
         for opr in self.opr_ele:
             if isFirst:
@@ -114,6 +121,7 @@ class LISTOPR_BASE :
             else:
                 preRet = preRet + ", "
             preRet = preRet + opr.genCXX_varCall()
+        return preRet
 
     def genCXX_decodeKey(self) -> str:
         return "_".join([opr.getUniqDecodeName() for opr in self.getOprs()])

@@ -16,14 +16,15 @@ class UOP_BASE:
     name           : str
     namePrefix     = "uop"
     cxxType_prefix = "UOP_CHILD" #### please remind that cxxType is not finally
-    cxxTypeParent = "UOP_BASE"
+    cxxTypeParent  = "UOP_BASE"
+    isAutodepenCheck = True
 
-    def __init__(self, _cxxType_prefix : str, _name : str,_inputSize: int, _outputSize   : int):
-        self.io_input  = oprLs.LISTOPR_BASE(_inputSize)
-        self.io_output = oprLs.LISTOPR_BASE(_outputSize)
-        self.name      = _name
+    def __init__(self, _cxxType_prefix : str,_name : str,_inputSize: int, _outputSize   : int):
+        self.io_input       = oprLs.LISTOPR_BASE(_inputSize)
+        self.io_output      = oprLs.LISTOPR_BASE(_outputSize)
+        self.name           = _name
         self.cxxType_prefix = _cxxType_prefix
-
+        #UOP_COMP,UOP_LOAD,UOP_STORE,UOP_IMM,
         ###### check that current uop depend on other successor uop
     def isSucInternalDepend(self,sucUop):
         for sucDesOpr in sucUop.io_output.getOprs():
@@ -47,7 +48,10 @@ class UOP_BASE:
                 return False
         return True
 
-
+    def addIo(self, _inputs: list, _outputs: list):
+        ####### in this version we assume _input and _output is fully use
+        self.io_input .setOprs(_inputs )
+        self.io_output.setOprs(_outputs)
     def genCXXType(self) -> str:
         return "{PREFIX}${INPUT_KEY}${OUTPUT_KEY}".format(
             PREFIX     = self.cxxType_prefix,
@@ -63,26 +67,31 @@ class UOP_BASE:
         preRet : str
         BothSide = (self.io_input.getSize() > 0) and (self.io_output.getSize() > 0)
         preRet = self.io_input.genCXX_refVarDeclaration() + \
-                 " ," if BothSide else " " + \
-               self.io_output.genCXX_refVarDeclaration()
+                 (" ," if BothSide else " ") + \
+                 self.io_output.genCXX_refVarDeclaration()
         return preRet
 
     def genCXX_callIoParamList(self):
         preRet : str
         BothSide = (self.io_input.getSize() > 0) and (self.io_output.getSize() > 0)
         preRet = self.io_input.genCXX_call() + \
-                 " ," if BothSide else " " + \
+                 (" ," if BothSide else " ") + \
                  self.io_output.genCXX_call()
         return preRet
 
     def genCXX_header(self):
+
+        cxxClasify = "UOP_STORE" if (oprSm.OPR_MEM in self.io_output.getOprTypes()) else "UOP_COMP"
+        cxxClasify = "UOP_LOAD"  if (oprSm.OPR_MEM in self.io_input .getOprTypes()) else cxxClasify
+
         headerFile = "class {UOP_TYPE} : public {UOP_BASE_TYPE}{{\n" \
                      "public:\n" \
-                     "  {UOP_TYPE}();\n" \
+                     "  {UOP_TYPE}():UOP_BASE({UOP_CLASSFY}){{}};\n" \
                      "  void doDepenCheck(UOP_WINDOW* uop_window) override;\n" \
-                     "  void addMeta({PARAMLIST})\n" \
+                     "  void addMeta({PARAMLIST});\n" \
                      "}};".format(UOP_TYPE = self.genCXXType(),
                                   UOP_BASE_TYPE = self.cxxTypeParent,
+                                  UOP_CLASSFY   = cxxClasify,
                                   PARAMLIST = self.genCXX_refIoParamListDeclaration()
                                   )
         return headerFile
@@ -98,20 +107,20 @@ class UOP_BASE:
             cppFile = cppFile + "       " + opr.genCXX_callAddMeta() + ";\n"
         for opr in self.io_output.getOprs():
             cppFile = cppFile + "       " + opr.genCXX_callAddMeta() + ";\n"
-        cppFile = cppFile + "}}\n"
+        cppFile = cppFile + "}\n"
         ############################################################################
         ##### add do depend check function #### this is core of program
         cppFile = cppFile + \
-            "void {UOP_TYPE}::doDepenCheck(UOP_WINDOW* uop_window){{\n"
+            "void {UOP_TYPE}::doDepenCheck(UOP_WINDOW* uop_window){{\n".format(UOP_TYPE=self.genCXXType())
 
-        for opr in self.io_input.getOprs():
-            for myDepend in opr.genCXX_callDependCheck():
-                cppFile = cppFile + "       " + myDepend + ";\n"
-        for opr in self.io_output.getOprs():
-            for myDepend in opr.genCXX_callDependCheck():
-                cppFile = cppFile + "       " + myDepend + ";\n"
-
-        cppFile = cppFile + "}}\n"
+        if self.isAutodepenCheck:
+            if oprSm.OPR_REG in self.io_input.getOprTypes():
+                cppFile = cppFile + "   doRegDepenCheck(uop_window);\n"
+            if (oprSm.OPR_MEM in self.io_input.getOprTypes()) or (oprSm.OPR_MEM in self.io_output.getOprTypes()):
+                cppFile = cppFile + "   doMemDepenCheck(uop_window);\n"
+        else:
+            UopUsageError("manual depencheck is not available for this version")
+        cppFile = cppFile + "}\n"
         ############################################################################
 
         return cppFile

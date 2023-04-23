@@ -1,8 +1,8 @@
-import opr_base
+import base.operand.opr_base as opr_base
 
 TEMPLATE_REG_META  =  "addRegMeta ({REGNUM}, {DIREC})"
 TEMPLATE_MEM_META  =  "addMemMeta ({ADAS}, {DIREC})"
-TEMPLATE_TREG_META =  "addTRegMeta({REGNUM}, {DIREC})"
+TEMPLATE_TREG_META =  "addTRegMeta({REGNUM})"
 TEMPLATE_DEPEND_REG_CHECK = "doRegDepenCheck({WINDOW_NAME})"
 TEMPLATE_DEPEND_MEM_CHECK = "doRegDepenCheck({WINDOW_NAME})"
 
@@ -18,13 +18,10 @@ class OPR_REG(opr_base.OPR_BASE):
     ###### generate adding meta data to uop
     def genCXX_callAddMeta(self) -> str:
         preRet = TEMPLATE_REG_META.format(
-                    REGNUM = self.genCXX_varCall()+"->"+"getMeta()",
+                    REGNUM = self.genCXX_varCall()+"."+"getMeta()",
                     DIREC  =   "true" if self.isSrc else "false"
                                             )
         return preRet
-    ###### generate dependency checker uop
-    def genCXX_callDependCheck(self, uopWindowName: str) -> list():
-        return [TEMPLATE_DEPEND_REG_CHECK.format(WINDOW_NAME=uopWindowName)]
 
 
 
@@ -40,13 +37,11 @@ class OPR_MEM(opr_base.OPR_BASE):
 
     def genCXX_callAddMeta(self) -> str:
         preRet = TEMPLATE_MEM_META.format(
-                    REGNUM = self.genCXX_varCall()+"->"+"getMeta()",
+                    ADAS = self.genCXX_varCall()+"."+"getMeta()",
                     DIREC  =   "true" if self.isSrc else "false"
                                             )
+        #print("ddfdf", preRet)
         return preRet
-    ###### generate dependency checker uop
-    def genCXX_callDependCheck(self, uopWindowName: str) -> list():
-        return [TEMPLATE_DEPEND_MEM_CHECK.format(WINDOW_NAME = uopWindowName)]
 
 
 class OPR_TEMP(opr_base.OPR_BASE):
@@ -59,14 +54,9 @@ class OPR_TEMP(opr_base.OPR_BASE):
 
     def genCXX_callAddMeta(self) -> str:
         preRet = TEMPLATE_TREG_META.format(
-                    REGNUM = self.genCXX_varCall()+"->"+"getMeta()",
-                    DIREC  =   "true" if self.isSrc else "false"
+                    REGNUM = self.genCXX_varCall()+"."+"getMeta()"
                                             )
         return preRet
-
-    ###### generate dependency checker uop
-    def genCXX_callDependCheck(self, uopWindowName: str) -> list():
-        return []
 
 class OPR_IMM(opr_base.OPR_BASE):
 
@@ -78,7 +68,3 @@ class OPR_IMM(opr_base.OPR_BASE):
 
     def genCXX_callAddMeta(self) -> str:
         return "/* imm had no meta data*/"
-
-    ###### generate dependency checker uop
-    def genCXX_callDependCheck(self, uopWindowName: str) -> list():
-        return []

@@ -28,6 +28,7 @@ DEC_CFILE_NAME = "{ARCH}_dec.cpp".format(ARCH = ARCH)
 def initializeDir():
     if not os.path.exists(ARCH_HOME_DIR):
         print(colored(f"[{ARCH} INIT] directory not exist -> create New One", "yellow"))
+        os.mkdir(ARCH_HOME_DIR)
 
 def writeFile(desPath, dayta):
     with open(desPath, "w") as writeFile:

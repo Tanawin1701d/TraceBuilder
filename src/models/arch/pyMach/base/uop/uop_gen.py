@@ -16,17 +16,18 @@ class UopGenUsageError(Exception):
 
 
 def addToUopGenGroup(uop): #### expect uop type
-    uuid, hpp, cpp = uop.genCXX_all()
 
-    if (type(hpp) is not str) or (type(cpp) is not str):
-        UopGenUsageError("can not prepare Generate cxx type error")
+    for uuid, hpp, cpp in uop.genCXX_allPossible():
 
-    if uuid in genAlready:
-        return
+        if (type(hpp) is not str) or (type(cpp) is not str):
+            UopGenUsageError("can not prepare Generate cxx type error")
 
-    hppList.append(hpp)
-    cppList.append(cpp)
-    genAlready.add(uuid)
+        if uuid in genAlready:
+            return
+
+        hppList.append(hpp)
+        cppList.append(cpp)
+        genAlready.add(uuid)
 
 
 def writeAllHppUop():
@@ -54,8 +55,8 @@ def writeAllHppUop():
 
 
 def writeAllCppUop():
-    cppStr = "include\"{UOP_HFILE_NAME}\"\n" \
-             "include\"{INC_UOP_WD}\"\n".format(UOP_HFILE_NAME = hd.UOP_HFILE_NAME,
+    cppStr = "#include\"{UOP_HFILE_NAME}\"\n" \
+             "#include\"{INC_UOP_WD}\"\n".format(UOP_HFILE_NAME = hd.UOP_HFILE_NAME,
                                               INC_UOP_WD     =hd.INC_UOP_WD
                                               )
 

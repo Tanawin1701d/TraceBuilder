@@ -43,10 +43,6 @@ class OPR_BASE :
     def genCXX_callAddMeta(self) -> str: ## for add meta data of operand to dep base class
         return "/* base class addMeta called */"
 
-    ######### this is used inside uop only
-    def genCXX_callDependCheck(self, uopWindowName: str) -> list(): ## list of str
-        return ["/* base class depend check called*/"]
-
     ##### constructor
     def __init__(self, _name: str, _cxxType: str, _isInternal: bool, _uniqDecodeName : str):
         self.name = _name

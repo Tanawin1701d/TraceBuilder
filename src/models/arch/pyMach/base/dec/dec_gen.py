@@ -41,13 +41,14 @@ def writeAllHppDec():
                 )
 
     headerStr = headerStr + \
-        "class RT_INSTR" \
-        "class {ARCH}_DECODER : public DECODER_BASE{\n" \
+        "class RT_INSTR;\n" \
+        "class {ARCH}_DECODER : public DECODER_BASE{{\n" \
         "private:\n"\
         "       std::unordered_map<std::string, MOP_BASE*> decodeStorage;\n" \
         "public:\n" \
         "       {ARCH}_DECODER();\n" \
-        "       MOP_BASE* decodeMOP(RT_INSTR& rt_instr) override;\n".format(ARCH = hd.ARCH)
+        "       MOP_BASE* decodeMOP(RT_INSTR& rt_instr) override;\n" \
+        "}}".format(ARCH = hd.ARCH)
 
     headerStr = headerStr + "\n#endif"
 
@@ -65,7 +66,7 @@ def writeAllCppDec():
                                                   )
     cppStr = cppStr + "\n\n\n\n"
     ############ generate constructor
-    cppStr = cppStr + "{ARCH}_DECODER::{ARCH}_DECODER(): DECODER_BASE(){\n\n\n\n".format(ARCH = hd.ARCH)
+    cppStr = cppStr + "{ARCH}_DECODER::{ARCH}_DECODER(): DECODER_BASE(){{\n\n\n\n".format(ARCH = hd.ARCH)
     for traceCode, mopClass in decStorage:
         cppStr = cppStr + "     decodeStorage.insert({{\"{RTKEY}\", (MOP_BASE*)(new {MOPTYPE}())}});\n"\
                                     .format(RTKEY = traceCode, MOPTYPE = mopClass)
