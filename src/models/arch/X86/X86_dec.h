@@ -13,5 +13,5 @@ private:
 public:
        X86_DECODER();
        MOP_BASE* decodeMOP(RT_INSTR& rt_instr) override;
-}
+};
 #endif

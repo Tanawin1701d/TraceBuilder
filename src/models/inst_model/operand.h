@@ -36,9 +36,9 @@ class OPR_TREG : public OPERAND{
 private:
     REGNUM regId;
 public:
-    OPR_TREG(REGNUM _tRegId, size_t _mcArgSize);
+    OPR_TREG();
     REGNUM getRegId() const;
-    REGNUM getMeta();
+    REGNUM getMeta() const;
 };
 
 /// register operand it is used at src and des operand
@@ -49,7 +49,7 @@ public:
     OPR_REG(REGNUM _regId, size_t _mcArgSIdx);
     REGNUM getRegId() const;
     /////// get meta data of the operand that is fundamental of uop
-    REGNUM getMeta();
+    REGNUM getMeta() const;
 };
 
 
@@ -135,7 +135,7 @@ public:
 
     IMM getImm() const;
 
-    IMM getValue();
+    IMM getValue() const;
 };
 
 

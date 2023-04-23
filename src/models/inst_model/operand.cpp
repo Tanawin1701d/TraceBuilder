@@ -4,14 +4,14 @@
 
 #include "operand.h"
 
-OPERAND::OPERAND(OPR_TYPE _OT, size_t _mcArgSIdx):
-OT(_OT),
+OPERAND::OPERAND(OPR_TYPE OT, size_t _mcArgSIdx):
+OT(OT),
 mcArgSIdx(_mcArgSIdx){}
 ///////////////////////////////////////////////////////////
 /// reg operand
-OPR_TREG::OPR_TREG(REGNUM _regId, size_t _mcArgSidx):
-        regId(_regId),
-        OPERAND(O_REG, _mcArgSidx)
+OPR_TREG::OPR_TREG():
+        regId(0),
+        OPERAND(O_REG, 0)
 {}
 
 REGNUM OPR_TREG::getRegId() const {
@@ -19,7 +19,7 @@ REGNUM OPR_TREG::getRegId() const {
 }
 
 REGNUM
-OPR_TREG::getMeta(){ return regId;}
+OPR_TREG::getMeta() const{ return regId;}
 ///////////////////////////////////////////////////////////
 /// reg operand
 OPR_REG::OPR_REG(REGNUM _regId, size_t _mcArgSIdx):
@@ -32,7 +32,7 @@ REGNUM OPR_REG::getRegId() const {
 }
 
 REGNUM
-OPR_REG::getMeta(){ return regId;}
+OPR_REG::getMeta() const{ return regId;}
 ///////////////////////////////////////////////////////////
 /// memory operand
 OPR_MEM::OPR_MEM(
@@ -168,4 +168,4 @@ OPR_IMM::getImm() const {
 };
 
 IMM
-OPR_IMM::getValue(){ return imm;}
+OPR_IMM::getValue() const{ return imm;}

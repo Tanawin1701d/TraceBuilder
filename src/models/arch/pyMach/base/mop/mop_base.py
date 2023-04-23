@@ -69,23 +69,25 @@ class MOP_BASE:
                     format(MOP_TYPE = self.genCXXType())
 
         cppFile = cppFile + \
-                  "    auto srcPool = rt_instr->getSrcMacroPoolOperands();\n" \
-                  "    auto desPool = rt_instr->getDesMacroPoolOperands();\n"
+                  "    auto srcPool = _rt_instr->getSrcMacroPoolOperands();\n" \
+                  "    auto desPool = _rt_instr->getDesMacroPoolOperands();\n"
 
         ##########################################################################################
         ##### new represent SRC EXTERNAL operand
         for idx, opr in enumerate(self.io_input.getOprs()):
             ###### declare variable with ref type
-             cppFile = cppFile + "    {VAR_REF_DECLARE} = * (({VAR_TYPE}*)srcPool[idx])\n"\
+             cppFile = cppFile + "    {VAR_REF_DECLARE} = * (({VAR_TYPE}*)srcPool[{IDX}]);\n"\
                                     .format(VAR_REF_DECLARE = opr.genCXX_refVarDeclaration(),
-                                            VAR_TYPE        = opr.genCXX_varType()
+                                            VAR_TYPE        = opr.genCXX_varType(),
+                                            IDX             =  str(idx)
                                             )
         ##### new represent DES EXTERNAL operand
         for idx, opr in enumerate(self.io_output.getOprs()):
             ###### declare variable with ref type
-             cppFile = cppFile + "    {VAR_REF_DECLARE} = * (({VAR_TYPE}*)desPool[idx]);\n"\
+             cppFile = cppFile + "    {VAR_REF_DECLARE} = * (({VAR_TYPE}*)desPool[{IDX}]);\n"\
                                     .format(VAR_REF_DECLARE = opr.genCXX_refVarDeclaration(),
-                                            VAR_TYPE        = opr.genCXX_varType()
+                                            VAR_TYPE        = opr.genCXX_varType(),
+                                            IDX=str(idx)
                                             )
         ##### new variable SRC/DES operand
         for idx, opr in enumerate(self.temp_opr.getOprs()):
@@ -107,7 +109,7 @@ class MOP_BASE:
                             )
             for depMop in self.uopInterDep[idx]:
                 cppFile = cppFile + \
-                    "    {UOP_NAME}->addTemDep({DEP_UOP_NAME})\n".format(UOP_NAME = currentUop.genCXXVarName(),
+                    "    {UOP_NAME}->addTemDep({DEP_UOP_NAME});\n".format(UOP_NAME = currentUop.genCXXVarName(),
                                                                        DEP_UOP_NAME = depMop.genCXXVarName()
                                                                        )
             cppFile = cppFile + "///////////////////////////////////////////////////////////////////\n"

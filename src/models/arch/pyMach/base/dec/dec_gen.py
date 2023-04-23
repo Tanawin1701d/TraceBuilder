@@ -48,7 +48,7 @@ def writeAllHppDec():
         "public:\n" \
         "       {ARCH}_DECODER();\n" \
         "       MOP_BASE* decodeMOP(RT_INSTR& rt_instr) override;\n" \
-        "}}".format(ARCH = hd.ARCH)
+        "}};".format(ARCH = hd.ARCH)
 
     headerStr = headerStr + "\n#endif"
 
@@ -60,8 +60,8 @@ def writeAllHppDec():
 
 
 def writeAllCppDec():
-    cppStr = "include\"{DEC_HFILE_NAME}\"\n" \
-             "include\"{INC_RT_INSTR}\"\n".format(DEC_HFILE_NAME = hd.DEC_HFILE_NAME,
+    cppStr = "#include\"{DEC_HFILE_NAME}\"\n" \
+             "#include\"{INC_RT_INSTR}\"\n".format(DEC_HFILE_NAME = hd.DEC_HFILE_NAME,
                                                   INC_RT_INSTR=hd.INC_RT_INSTR
                                                   )
     cppStr = cppStr + "\n\n\n\n"
@@ -73,7 +73,8 @@ def writeAllCppDec():
     cppStr = cppStr + "}\n\n\n\n\n"
     ########################################################################################################
     ############ generate mapper
-    cppStr = "MOP_BASE*\n" \
+    cppStr = cppStr + \
+             "MOP_BASE*\n" \
              "{ARCH}_DECODER::decodeMOP(RT_INSTR& rt_instr) {{\n" \
              "\n" \
              "auto finder = decodeStorage.find(rt_instr.getDecodeKey());\n" \
