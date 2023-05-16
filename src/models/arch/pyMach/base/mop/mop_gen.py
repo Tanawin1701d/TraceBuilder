@@ -1,6 +1,6 @@
 import os
 from termcolor import colored
-
+import base.mop.mop_base    as mop_base
 import base.generator.header as hd
 
 hppList = [] #### list of generated string
@@ -12,7 +12,9 @@ class MopGenUsageError(Exception):
 
 
 def addToMopGenGroup(mop): #### expect mop type
-    for uuid, hpp, cpp in mop.genCXX_allPossible():
+
+    if isinstance(mop, mop_base.MOP_BASE):
+        uuid, hpp, cpp = mop.genCXX_all()
 
         if (type(hpp) is not str) or (type(cpp) is not str):
             MopGenUsageError("can not prepare Generate cxx type error")
@@ -23,6 +25,10 @@ def addToMopGenGroup(mop): #### expect mop type
         hppList.append(hpp)
         cppList.append(cpp)
         genAlready.add(uuid)
+
+    elif isinstance(mop, None):
+        pass
+        ####### for mop generating groups
 
 
 def writeAllHppMop():

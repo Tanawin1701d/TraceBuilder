@@ -3,6 +3,80 @@ import base.operand.opr_simple as opr
 import X86.uop.alu.comp_uop as  uop_comp_x86
 import X86.uop.mov.dataMov_uop as uop_mov_x86
 
+
+class MOP_COMP_ALL(mb.MOP_BASE):
+
+    uopVarUsedCount = 0
+    srcVarUsedCount = 0
+    tempvarUsedCount = 0
+
+    def initSrcLoad(self, srcOprType):
+        #        v------------ operand that need to load first
+        #              v----- operand that ready to inject to compute unit
+        res = (None, None, None) # <------- uop that use for loading
+        if srcOprType == opr.OPR_REG or srcOprType == opr.OPR_TEMP:
+            srcRegOpr = srcOprType(f"r_src_{str(self.srcVarUsedCount)}", True)
+            res =  (None, srcRegOpr, None)
+            self.srcVarUsedCount = self.srcVarUsedCount + 1
+        elif srcOprType == opr.OPR_MEM or srcOprType == opr.OPR_IMM:
+
+            cxxType, execUnit, memLoad = ("MEM_LOAD", 100, True ) if srcOprType == opr.OPR_MEM else \
+                                         ("IMM_LOAD", 102, False)
+
+            ####### create related uop to load value from src
+            srcOpr     = srcOprType(f"m_src_{str(self.srcVarUsedCount)}", True) if memLoad else \
+                         srcOprType(f"i_src_{str(self.srcVarUsedCount)}"      )
+            desTempOpr =  opr.OPR_TEMP(f"t_{str(self.tempvarUsedCount)}")
+
+            relatedUop = uop_mov_x86.UOP_MOV(f"uop_ld_{self.uopVarUsedCount}",
+                                             cxxType,
+                                             execUnit
+                                             )
+            relatedUop.addIo([srcOpr], [desTempOpr])
+
+            self.uopVarUsedCount  = self.uopVarUsedCount  + 1
+            self.srcVarUsedCount  = self.srcVarUsedCount  + 1
+            self.tempvarUsedCount = self.tempvarUsedCount + 1
+
+            res = (srcOpr, desTempOpr, relatedUop)
+        else:
+            raise mb.MopUsageError(f"invalid src operand for mop generating@initSrcLoad got {srcOprType}")
+
+        return res
+
+
+
+
+    def __init__(self, srcOpr0Type, srcOpr1Type, desOpr0Type, compUnit:str):
+
+        ####### reserve uop
+
+        ##### src operand
+        srcPreUse0, srcCanUse0, uopUsed0 = self.initSrcLoad(srcOpr0Type)
+        srcPreUse1, srcCanUse1, uopUsed1 = self.initSrcLoad(srcOpr1Type)
+
+        ##### computation
+
+        ##### des operand
+        desOprFromUop = None
+        desNeededOpr
+
+        if desOpr0Type == opr.OPR_MEM:
+            desOprFromUop = opr.OPR_TEMP(f"t_{str(self.tempvarUsedCount)}")
+            self.tempvarUsedCount = self.tempvarUsedCount + 1
+
+        compUop = uop_comp_x86.UOP_COMP(f"uop_comp_{self.uopVarUsedCount}", compUnit)
+
+        compUop.addIo([srcCanUse0, srcCanUse1], [])
+
+        self.uopVarUsedCount = self.uopVarUsedCount + 1
+
+        if desOpr0Type == opr.OPR_MEM:
+            pass
+        elif desOpr0Type == opr.OPR_REG:
+            pass
+
+
 class MOP_COMP_R_R_M(mb.MOP_BASE):
 
     def __init__(self):

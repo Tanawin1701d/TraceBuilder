@@ -17,17 +17,17 @@ class UopGenUsageError(Exception):
 
 def addToUopGenGroup(uop): #### expect uop type
 
-    for uuid, hpp, cpp in uop.genCXX_allPossible():
+    uuid, hpp, cpp = uop.genCXX_allPossible()
 
-        if (type(hpp) is not str) or (type(cpp) is not str):
-            UopGenUsageError("can not prepare Generate cxx type error")
+    if (type(hpp) is not str) or (type(cpp) is not str):
+        UopGenUsageError("can not prepare Generate cxx type error")
 
-        if uuid in genAlready:
-            return
+    if uuid in genAlready:
+        return
 
-        hppList.append(hpp)
-        cppList.append(cpp)
-        genAlready.add(uuid)
+    hppList.append(hpp)
+    cppList.append(cpp)
+    genAlready.add(uuid)
 
 
 def writeAllHppUop():

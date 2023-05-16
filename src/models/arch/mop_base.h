@@ -22,7 +22,7 @@ public:
     virtual  void genUop(std::vector<UOP_BASE*>& results,
                          RT_INSTR* _rt_instr) = 0;
 
-    bool getIsAutoGen(){return isAutoGen;}
+    bool getIsAutoGen() const{return isAutoGen;}
     void setIsAutoGen(){isAutoGen = true;}
 
 };

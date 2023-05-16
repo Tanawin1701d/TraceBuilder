@@ -61,7 +61,7 @@ private:
     REGNUM indexRegId;
     int    scaleFactor;
     IMM    displacement;
-    ADDR    size;
+    ADDR   size;
     int    memopNum;
     ADDR   phyAddr;
     ////// for some memory operand expect to divided into multiple uop (multiple meta data)

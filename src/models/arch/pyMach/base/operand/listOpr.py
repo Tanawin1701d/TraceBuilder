@@ -101,29 +101,11 @@ class LISTOPR_BASE :
     ##############################################################################################
     ####### gen cxx method
     def genCXX_refVarDeclaration(self) -> str:
-        preRet = ""
-        isFirst = True
-        for oprRef in self.opr_ele:
-            if isFirst:
-                isFirst = False
-            else:
-                preRet = preRet + ", "
-            preRet = preRet + oprRef.genCXX_refVarDeclaration()
-        return preRet
+        return ", ".join([oprRef.genCXX_refVarDeclaration() for oprRef in self.opr_ele])
 
     def genCXX_call(self) -> str:
-        preRet = ""
-        isFirst = True
-        for opr in self.opr_ele:
-            if isFirst:
-                isFirst = False
-                preRet = preRet + " "
-            else:
-                preRet = preRet + ", "
-            preRet = preRet + opr.genCXX_varCall()
-        return preRet
+        return ", ".join([opr.genCXX_varCall() for opr in self.opr_ele])
 
     def genCXX_decodeKey(self) -> str:
         return "_".join([opr.getUniqDecodeName() for opr in self.getOprs()])
     ##############################################################################################
-
