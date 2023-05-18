@@ -2,7 +2,7 @@ import inspect
 import base.mop.mop_gen as m_gen
 import base.dec.dec_gen  as d_gen
 import X86.mop.alu.compDesReg_mop as comp_mop_1
-import X86.mop.alu.compDesMem_mop as comp_mop_2
+import X86.mop.alu.comp_mop as comp_mop_2
 
 def gen():
     mopDesReg = inspect.getmembers(comp_mop_1, inspect.isclass)
