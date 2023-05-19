@@ -9,24 +9,10 @@ class DecGenUsageError(Exception):
     def __init__(self, message):
         super().__init__(message)
 
-def __addToDecGenGroup(prefix, mop):
-    ###### for now we are sure that suffix is string
-    traceMatch = "{TRACE_PREFIX}${TRACE_SUFFIX}"\
-                                  .format(TRACE_PREFIX = prefix, TRACE_SUFFIX = mop.genCXX_decodeKey())
-    decodeMatch = "{MOPTYPE}".format(MOPTYPE = mop.genCXXType())
-    decStorage.append((traceMatch, decodeMatch))
+def addToDecGenGroup(mop):
 
-## addto gen group must be generated to string immediately
-def addToDecGenGroup(prefix, mop):
-    if (type(prefix) is not str) and (type(prefix) is not list):
-        raise DecGenUsageError(f"invalid add data to decoder : {prefix}")
-    prefixs = []
-
-    prefixs = prefix if type(prefix) is list else [prefix]
-
-    #### it is supposed to list
-    for single_prefix in prefixs:
-        __addToDecGenGroup(single_prefix, mop)
+    for decodeIdentifier in mop.genCXX_decodeKey:
+        decStorage.append((decodeIdentifier,mop.genCXXType()))
 
 
 def writeAllHppDec():

@@ -11,24 +11,33 @@ class MOP_BASE:
     io_output      : oprLs.LISTOPR_BASE
     temp_opr       : oprLs.LISTOPR_BASE  ##### temporary operand which shared with uopList
     uopList        : list
+    decKeys        : list
     uopInterDep    : list ## list of list which contains dependent precedence uop
 
     cxxType_prefix = "MOP_CHILD"
     cxxTypeParent  = "MOP_BASE"
 
 
-    def autoInit(self, _cxxType_prefix : str, _inputs:list, _outputs:list, _temp:list, _uops:list):
+    def autoInit(self, _cxxType_prefix : str, _inputs:list, _outputs:list, _temp:list, _uops:list, _decKeys: list):
         self.cxxType_prefix = _cxxType_prefix
         ####### initialize mainStructure
+
+        ######## set input operand
         self.io_input = oprLs.LISTOPR_BASE(len(_inputs))
         self.io_input.autoInit(_inputs)
-
+        ######## set output operand
         self.io_output = oprLs.LISTOPR_BASE(len(_outputs))
         self.io_output.autoInit(_outputs)
-
+        ######## set temporary operand
         self.temp_opr = oprLs.LISTOPR_BASE(len(_temp))
         self.temp_opr.autoInit(_temp)
+        ######## set uops
         self.uopList  = _uops
+        ######## set decoder Key
+        self.decKeys = _decKeys
+
+    def getUops(self):
+        return self.uopList
 
     def genUopDep(self):
         self.uopInterDep = [[] for _ in range(len(self.uopList))]
@@ -40,19 +49,22 @@ class MOP_BASE:
                     self.uopInterDep[cur_idx].append(cur_uop)
 
     def genCXXType(self)-> str: ### also used in c++
-        return "{PREFIX}${SUFFIX}".format(
-            PREFIX     = self.cxxType_prefix,
-            SUFFIX     = self.genCXX_decodeKey()
+        return "{PREFIX}${INPUT_SUFFIX}${OUTPUT_SUFFIX}".format(
+            PREFIX           = self.cxxType_prefix,
+            INPUT_SUFFIX     = self.io_input.genCXX_decodeKey(),
+            OUTPUT_SUFFIX    = self.io_output.genCXX_decodeKey(),
         )
 
     ##### this is seperated by $
-    def genCXX_decodeKey(self):
-        return "{INPUT_KEY}${OUTPUT_KEY}${EXEC_ID}".format(
-            INPUT_KEY  = self.io_input.genCXX_decodeKey(),
-            OUTPUT_KEY = self.io_output.genCXX_decodeKey(),
-            EXEC_ID    = str(self.execUnit)
-        )
-
+    def genCXX_decodeKey(self) -> list:
+        preResult = []
+        for decodeKey in self.decKeys:
+            preResult.append("{INSTR_PREFIX}${INPUT_KEY}${OUTPUT_KEY}".format(
+                INSTR_PREFIX = decodeKey,
+                INPUT_KEY  = self.io_input.genCXX_decodeKey(),
+                OUTPUT_KEY = self.io_output.genCXX_decodeKey(),
+            ))
+        return preResult
 
     def genCXX_header(self):
         headerFile =\

@@ -1,5 +1,6 @@
-import base.mop.mop_base as mop_base
 import base.mop.mop_gen  as mop_gen
+import base.uop.uop_gen  as uop_gen
+import base.dec.dec_gen  as dec_gen
 
 class MopGroupError(Exception):
     def __init__(self, message):
@@ -28,3 +29,6 @@ class MOP_GROUP_BASE:
         for arg in self.args:
             mop = self.MOP_TEMPLATE(*arg)
             mop_gen.addToMopGenGroup(mop)
+            dec_gen.addToDecGenGroup(mop)
+            for uop in mop.getUops():
+                uop_gen.addToUopGenGroup(uop)
