@@ -8,8 +8,16 @@ import X86.uop.mov.dataMov_uop as uop_mov_x86
 
 class MOP_BASE_X86(mb.MOP_BASE):
 
-    inputListSummary, outputListSummary, tempListSummary, uopListSummary = [[], [], [], []]
+    inputListSummary  : list
+    outputListSummary : list
+    tempListSummary   : list
+    uopListSummary    : list
 
+    def __init__(self):
+        self.inputListSummary = []
+        self.outputListSummary = []
+        self.tempListSummary = []
+        self.uopListSummary = []
 
     """
     @brief generate uop and neccessary operand to load to value and add to preBuilt list

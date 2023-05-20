@@ -1,6 +1,11 @@
 import os
 from colorama import init
 from termcolor import colored
+
+import base.dec.dec_gen as dec_gen
+import base.mop.mop_gen as mop_gen
+import base.uop.uop_gen as uop_gen
+
 ARCH          = "X86"
 THIS_FILE_DIR = os.path.dirname(os.path.realpath(__file__))
 TARGET_DIR    = f"../../../{ARCH}"
@@ -34,3 +39,8 @@ def writeFile(desPath, dayta):
     with open(desPath, "w") as writeFile:
         writeFile.write(dayta)
     writeFile.close()
+
+def flush():
+    uop_gen.writeAll()
+    mop_gen.writeAll()
+    dec_gen.writeAll()

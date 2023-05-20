@@ -11,7 +11,7 @@ class DecGenUsageError(Exception):
 
 def addToDecGenGroup(mop):
 
-    for decodeIdentifier in mop.genCXX_decodeKey:
+    for decodeIdentifier in mop.genCXX_decodeKey():
         decStorage.append((decodeIdentifier,mop.genCXXType()))
 
 

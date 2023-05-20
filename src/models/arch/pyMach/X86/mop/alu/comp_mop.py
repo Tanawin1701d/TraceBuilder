@@ -7,6 +7,7 @@ import X86.uop.mov.dataMov_uop as uop_mov_x86
 
 class MOP_COMP_ALL(mop_cen_x86.MOP_BASE_X86):
     def __init__(self, srcOpr0Type, srcOpr1Type, desOpr0Type, _cxxType_prefix:str, _decKeys: list):
+        super().__init__()
         ##### src operand
         srcPreUse0, srcCanUse0, uopUsed0 = self.initSrcLoad(srcOpr0Type, "0", True)
         srcPreUse1, srcCanUse1, uopUsed1 = self.initSrcLoad(srcOpr1Type, "1", True)
@@ -37,7 +38,7 @@ class MOP_COMP_ALL(mop_cen_x86.MOP_BASE_X86):
 
 class MOP_COMP128_ALL(mop_cen_x86.MOP_BASE_X86):
     def __init__(self, srcOpr0Type, srcOpr1Type, desOpr0Type, _cxxType_prefix:str, _decKeys: list):
-
+        super().__init__()
         ##### src operand
         srcPreUse0, srcCanUse0, uopUsed0 = self.initSrcLoad(srcOpr0Type, "0", True)
         srcPreUse1, srcCanUse1, uopUsed1 = self.initSrcLoad(srcOpr1Type, "1", True)

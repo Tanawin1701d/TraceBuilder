@@ -1,3 +1,5 @@
+import itertools
+
 import base.mop.mop_gen  as mop_gen
 import base.uop.uop_gen  as uop_gen
 import base.dec.dec_gen  as dec_gen
@@ -25,8 +27,17 @@ class MOP_GROUP_BASE:
 
         self.args.append(arg)
 
-    def genMop(self):
+    def addMopArgExtractComb(self, arg : tuple):
+        isValidArg =  all(isinstance(ele, (list, tuple)) for ele in arg)
+        if not isValidArg:
+            MopGroupError(f"can't extract args with {arg}")
+        for exactArg  in itertools.product(*arg):
+            self.addMopArg(exactArg)
+
+
+    def gen(self):
         for arg in self.args:
+            #print(arg)
             mop = self.MOP_TEMPLATE(*arg)
             mop_gen.addToMopGenGroup(mop)
             dec_gen.addToDecGenGroup(mop)

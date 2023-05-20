@@ -17,7 +17,7 @@ class UopGenUsageError(Exception):
 
 def addToUopGenGroup(uop): #### expect uop type
 
-    uuid, hpp, cpp = uop.genCXX_allPossible()
+    uuid, hpp, cpp = uop.genCXX_all()
 
     if (type(hpp) is not str) or (type(cpp) is not str):
         UopGenUsageError("can not prepare Generate cxx type error")

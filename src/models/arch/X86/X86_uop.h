@@ -6,469 +6,343 @@
 
 
 
-class COMP$T_T$T : public UOP_BASE{
+class SIM_ALU$R_R$R$0 : public UOP_BASE{
 public:
-  COMP$T_T$T():UOP_BASE(UOP_COMP){};
+  SIM_ALU$R_R$R$0():UOP_BASE(){};
   void doDepenCheck(UOP_WINDOW* uop_window) override;
-  void addMeta(OPR_TREG& opr_a0, OPR_TREG& opr_a1 ,OPR_TREG& opr_b0);
+  void addMeta(OPR_REG& opr_r_src_0, OPR_REG& opr_r_src_1 ,OPR_REG& opr_r_des_0);
 };///////////////////////////////////////////////////////////////
 
 
 
-class COMP$T_T$R : public UOP_BASE{
+class SIM_ALU$R_R$T$0 : public UOP_BASE{
 public:
-  COMP$T_T$R():UOP_BASE(UOP_COMP){};
+  SIM_ALU$R_R$T$0():UOP_BASE(){};
   void doDepenCheck(UOP_WINDOW* uop_window) override;
-  void addMeta(OPR_TREG& opr_a0, OPR_TREG& opr_a1 ,OPR_REG& opr_b0);
+  void addMeta(OPR_REG& opr_r_src_0, OPR_REG& opr_r_src_1 ,OPR_TREG& opr_preDes);
 };///////////////////////////////////////////////////////////////
 
 
 
-class COMP$T_T$M : public UOP_BASE{
+class MOV_MEM_ST$T$M$0 : public UOP_BASE{
 public:
-  COMP$T_T$M():UOP_BASE(UOP_STORE){};
+  MOV_MEM_ST$T$M$0():UOP_BASE(){};
   void doDepenCheck(UOP_WINDOW* uop_window) override;
-  void addMeta(OPR_TREG& opr_a0, OPR_TREG& opr_a1 ,OPR_MEM& opr_b0);
+  void addMeta(OPR_TREG& opr_preDes ,OPR_MEM& opr_m_des_0);
 };///////////////////////////////////////////////////////////////
 
 
 
-class COMP$T_R$T : public UOP_BASE{
+class MOV_MEM_LD$I$T$0 : public UOP_BASE{
 public:
-  COMP$T_R$T():UOP_BASE(UOP_COMP){};
+  MOV_MEM_LD$I$T$0():UOP_BASE(){};
   void doDepenCheck(UOP_WINDOW* uop_window) override;
-  void addMeta(OPR_TREG& opr_a0, OPR_REG& opr_a1 ,OPR_TREG& opr_b0);
+  void addMeta(OPR_IMM& opr_i_src_1 ,OPR_TREG& opr_t_1);
 };///////////////////////////////////////////////////////////////
 
 
 
-class COMP$T_R$R : public UOP_BASE{
+class SIM_ALU$R_T$R$0 : public UOP_BASE{
 public:
-  COMP$T_R$R():UOP_BASE(UOP_COMP){};
+  SIM_ALU$R_T$R$0():UOP_BASE(){};
   void doDepenCheck(UOP_WINDOW* uop_window) override;
-  void addMeta(OPR_TREG& opr_a0, OPR_REG& opr_a1 ,OPR_REG& opr_b0);
+  void addMeta(OPR_REG& opr_r_src_0, OPR_TREG& opr_t_1 ,OPR_REG& opr_r_des_0);
 };///////////////////////////////////////////////////////////////
 
 
 
-class COMP$T_R$M : public UOP_BASE{
+class SIM_ALU$R_T$T$0 : public UOP_BASE{
 public:
-  COMP$T_R$M():UOP_BASE(UOP_STORE){};
+  SIM_ALU$R_T$T$0():UOP_BASE(){};
   void doDepenCheck(UOP_WINDOW* uop_window) override;
-  void addMeta(OPR_TREG& opr_a0, OPR_REG& opr_a1 ,OPR_MEM& opr_b0);
+  void addMeta(OPR_REG& opr_r_src_0, OPR_TREG& opr_t_1 ,OPR_TREG& opr_preDes);
 };///////////////////////////////////////////////////////////////
 
 
 
-class COMP$T_I$T : public UOP_BASE{
+class MOV_MEM_LD$M$T$0 : public UOP_BASE{
 public:
-  COMP$T_I$T():UOP_BASE(UOP_COMP){};
+  MOV_MEM_LD$M$T$0():UOP_BASE(){};
   void doDepenCheck(UOP_WINDOW* uop_window) override;
-  void addMeta(OPR_TREG& opr_a0, OPR_IMM& opr_a1 ,OPR_TREG& opr_b0);
+  void addMeta(OPR_MEM& opr_m_src_1 ,OPR_TREG& opr_t_1);
 };///////////////////////////////////////////////////////////////
 
 
 
-class COMP$T_I$R : public UOP_BASE{
+class SIM_ALU$T_R$R$0 : public UOP_BASE{
 public:
-  COMP$T_I$R():UOP_BASE(UOP_COMP){};
+  SIM_ALU$T_R$R$0():UOP_BASE(){};
   void doDepenCheck(UOP_WINDOW* uop_window) override;
-  void addMeta(OPR_TREG& opr_a0, OPR_IMM& opr_a1 ,OPR_REG& opr_b0);
+  void addMeta(OPR_TREG& opr_t_0, OPR_REG& opr_r_src_1 ,OPR_REG& opr_r_des_0);
 };///////////////////////////////////////////////////////////////
 
 
 
-class COMP$T_I$M : public UOP_BASE{
+class SIM_ALU$T_R$T$0 : public UOP_BASE{
 public:
-  COMP$T_I$M():UOP_BASE(UOP_STORE){};
+  SIM_ALU$T_R$T$0():UOP_BASE(){};
   void doDepenCheck(UOP_WINDOW* uop_window) override;
-  void addMeta(OPR_TREG& opr_a0, OPR_IMM& opr_a1 ,OPR_MEM& opr_b0);
+  void addMeta(OPR_TREG& opr_t_0, OPR_REG& opr_r_src_1 ,OPR_TREG& opr_preDes);
 };///////////////////////////////////////////////////////////////
 
 
 
-class COMP$T_M$T : public UOP_BASE{
+class SIM_ALU$T_T$R$0 : public UOP_BASE{
 public:
-  COMP$T_M$T():UOP_BASE(UOP_LOAD){};
+  SIM_ALU$T_T$R$0():UOP_BASE(){};
   void doDepenCheck(UOP_WINDOW* uop_window) override;
-  void addMeta(OPR_TREG& opr_a0, OPR_MEM& opr_a1 ,OPR_TREG& opr_b0);
+  void addMeta(OPR_TREG& opr_t_0, OPR_TREG& opr_t_1 ,OPR_REG& opr_r_des_0);
 };///////////////////////////////////////////////////////////////
 
 
 
-class COMP$T_M$R : public UOP_BASE{
+class SIM_ALU$T_T$T$0 : public UOP_BASE{
 public:
-  COMP$T_M$R():UOP_BASE(UOP_LOAD){};
+  SIM_ALU$T_T$T$0():UOP_BASE(){};
   void doDepenCheck(UOP_WINDOW* uop_window) override;
-  void addMeta(OPR_TREG& opr_a0, OPR_MEM& opr_a1 ,OPR_REG& opr_b0);
+  void addMeta(OPR_TREG& opr_t_0, OPR_TREG& opr_t_1 ,OPR_TREG& opr_preDes);
 };///////////////////////////////////////////////////////////////
 
 
 
-class COMP$T_M$M : public UOP_BASE{
+class MUL_ALU$R_R$R$0 : public UOP_BASE{
 public:
-  COMP$T_M$M():UOP_BASE(UOP_LOAD){};
+  MUL_ALU$R_R$R$0():UOP_BASE(){};
   void doDepenCheck(UOP_WINDOW* uop_window) override;
-  void addMeta(OPR_TREG& opr_a0, OPR_MEM& opr_a1 ,OPR_MEM& opr_b0);
+  void addMeta(OPR_REG& opr_r_src_0, OPR_REG& opr_r_src_1 ,OPR_REG& opr_r_des_0);
 };///////////////////////////////////////////////////////////////
 
 
 
-class COMP$R_T$T : public UOP_BASE{
+class MUL_ALU$R_R$T$0 : public UOP_BASE{
 public:
-  COMP$R_T$T():UOP_BASE(UOP_COMP){};
+  MUL_ALU$R_R$T$0():UOP_BASE(){};
   void doDepenCheck(UOP_WINDOW* uop_window) override;
-  void addMeta(OPR_REG& opr_a0, OPR_TREG& opr_a1 ,OPR_TREG& opr_b0);
+  void addMeta(OPR_REG& opr_r_src_0, OPR_REG& opr_r_src_1 ,OPR_TREG& opr_preDes);
 };///////////////////////////////////////////////////////////////
 
 
 
-class COMP$R_T$R : public UOP_BASE{
+class MUL_ALU$R_T$R$0 : public UOP_BASE{
 public:
-  COMP$R_T$R():UOP_BASE(UOP_COMP){};
+  MUL_ALU$R_T$R$0():UOP_BASE(){};
   void doDepenCheck(UOP_WINDOW* uop_window) override;
-  void addMeta(OPR_REG& opr_a0, OPR_TREG& opr_a1 ,OPR_REG& opr_b0);
+  void addMeta(OPR_REG& opr_r_src_0, OPR_TREG& opr_t_1 ,OPR_REG& opr_r_des_0);
 };///////////////////////////////////////////////////////////////
 
 
 
-class COMP$R_T$M : public UOP_BASE{
+class MUL_ALU$R_T$T$0 : public UOP_BASE{
 public:
-  COMP$R_T$M():UOP_BASE(UOP_STORE){};
+  MUL_ALU$R_T$T$0():UOP_BASE(){};
   void doDepenCheck(UOP_WINDOW* uop_window) override;
-  void addMeta(OPR_REG& opr_a0, OPR_TREG& opr_a1 ,OPR_MEM& opr_b0);
+  void addMeta(OPR_REG& opr_r_src_0, OPR_TREG& opr_t_1 ,OPR_TREG& opr_preDes);
 };///////////////////////////////////////////////////////////////
 
 
 
-class COMP$R_R$T : public UOP_BASE{
+class MUL_ALU$T_R$R$0 : public UOP_BASE{
 public:
-  COMP$R_R$T():UOP_BASE(UOP_COMP){};
+  MUL_ALU$T_R$R$0():UOP_BASE(){};
   void doDepenCheck(UOP_WINDOW* uop_window) override;
-  void addMeta(OPR_REG& opr_a0, OPR_REG& opr_a1 ,OPR_TREG& opr_b0);
+  void addMeta(OPR_TREG& opr_t_0, OPR_REG& opr_r_src_1 ,OPR_REG& opr_r_des_0);
 };///////////////////////////////////////////////////////////////
 
 
 
-class COMP$R_R$R : public UOP_BASE{
+class MUL_ALU$T_R$T$0 : public UOP_BASE{
 public:
-  COMP$R_R$R():UOP_BASE(UOP_COMP){};
+  MUL_ALU$T_R$T$0():UOP_BASE(){};
   void doDepenCheck(UOP_WINDOW* uop_window) override;
-  void addMeta(OPR_REG& opr_a0, OPR_REG& opr_a1 ,OPR_REG& opr_b0);
+  void addMeta(OPR_TREG& opr_t_0, OPR_REG& opr_r_src_1 ,OPR_TREG& opr_preDes);
 };///////////////////////////////////////////////////////////////
 
 
 
-class COMP$R_R$M : public UOP_BASE{
+class MUL_ALU$T_T$R$0 : public UOP_BASE{
 public:
-  COMP$R_R$M():UOP_BASE(UOP_STORE){};
+  MUL_ALU$T_T$R$0():UOP_BASE(){};
   void doDepenCheck(UOP_WINDOW* uop_window) override;
-  void addMeta(OPR_REG& opr_a0, OPR_REG& opr_a1 ,OPR_MEM& opr_b0);
+  void addMeta(OPR_TREG& opr_t_0, OPR_TREG& opr_t_1 ,OPR_REG& opr_r_des_0);
 };///////////////////////////////////////////////////////////////
 
 
 
-class COMP$R_I$T : public UOP_BASE{
+class MUL_ALU$T_T$T$0 : public UOP_BASE{
 public:
-  COMP$R_I$T():UOP_BASE(UOP_COMP){};
+  MUL_ALU$T_T$T$0():UOP_BASE(){};
   void doDepenCheck(UOP_WINDOW* uop_window) override;
-  void addMeta(OPR_REG& opr_a0, OPR_IMM& opr_a1 ,OPR_TREG& opr_b0);
+  void addMeta(OPR_TREG& opr_t_0, OPR_TREG& opr_t_1 ,OPR_TREG& opr_preDes);
 };///////////////////////////////////////////////////////////////
 
 
 
-class COMP$R_I$R : public UOP_BASE{
+class DIV_ALU$R_R$R$0 : public UOP_BASE{
 public:
-  COMP$R_I$R():UOP_BASE(UOP_COMP){};
+  DIV_ALU$R_R$R$0():UOP_BASE(){};
   void doDepenCheck(UOP_WINDOW* uop_window) override;
-  void addMeta(OPR_REG& opr_a0, OPR_IMM& opr_a1 ,OPR_REG& opr_b0);
+  void addMeta(OPR_REG& opr_r_src_0, OPR_REG& opr_r_src_1 ,OPR_REG& opr_r_des_0);
 };///////////////////////////////////////////////////////////////
 
 
 
-class COMP$R_I$M : public UOP_BASE{
+class DIV_ALU$R_R$T$0 : public UOP_BASE{
 public:
-  COMP$R_I$M():UOP_BASE(UOP_STORE){};
+  DIV_ALU$R_R$T$0():UOP_BASE(){};
   void doDepenCheck(UOP_WINDOW* uop_window) override;
-  void addMeta(OPR_REG& opr_a0, OPR_IMM& opr_a1 ,OPR_MEM& opr_b0);
+  void addMeta(OPR_REG& opr_r_src_0, OPR_REG& opr_r_src_1 ,OPR_TREG& opr_preDes);
 };///////////////////////////////////////////////////////////////
 
 
 
-class COMP$R_M$T : public UOP_BASE{
+class DIV_ALU$R_T$R$0 : public UOP_BASE{
 public:
-  COMP$R_M$T():UOP_BASE(UOP_LOAD){};
+  DIV_ALU$R_T$R$0():UOP_BASE(){};
   void doDepenCheck(UOP_WINDOW* uop_window) override;
-  void addMeta(OPR_REG& opr_a0, OPR_MEM& opr_a1 ,OPR_TREG& opr_b0);
+  void addMeta(OPR_REG& opr_r_src_0, OPR_TREG& opr_t_1 ,OPR_REG& opr_r_des_0);
 };///////////////////////////////////////////////////////////////
 
 
 
-class COMP$R_M$R : public UOP_BASE{
+class DIV_ALU$R_T$T$0 : public UOP_BASE{
 public:
-  COMP$R_M$R():UOP_BASE(UOP_LOAD){};
+  DIV_ALU$R_T$T$0():UOP_BASE(){};
   void doDepenCheck(UOP_WINDOW* uop_window) override;
-  void addMeta(OPR_REG& opr_a0, OPR_MEM& opr_a1 ,OPR_REG& opr_b0);
+  void addMeta(OPR_REG& opr_r_src_0, OPR_TREG& opr_t_1 ,OPR_TREG& opr_preDes);
 };///////////////////////////////////////////////////////////////
 
 
 
-class COMP$R_M$M : public UOP_BASE{
+class DIV_ALU$T_R$R$0 : public UOP_BASE{
 public:
-  COMP$R_M$M():UOP_BASE(UOP_LOAD){};
+  DIV_ALU$T_R$R$0():UOP_BASE(){};
   void doDepenCheck(UOP_WINDOW* uop_window) override;
-  void addMeta(OPR_REG& opr_a0, OPR_MEM& opr_a1 ,OPR_MEM& opr_b0);
+  void addMeta(OPR_TREG& opr_t_0, OPR_REG& opr_r_src_1 ,OPR_REG& opr_r_des_0);
 };///////////////////////////////////////////////////////////////
 
 
 
-class COMP$M_T$T : public UOP_BASE{
+class DIV_ALU$T_R$T$0 : public UOP_BASE{
 public:
-  COMP$M_T$T():UOP_BASE(UOP_LOAD){};
+  DIV_ALU$T_R$T$0():UOP_BASE(){};
   void doDepenCheck(UOP_WINDOW* uop_window) override;
-  void addMeta(OPR_MEM& opr_a0, OPR_TREG& opr_a1 ,OPR_TREG& opr_b0);
+  void addMeta(OPR_TREG& opr_t_0, OPR_REG& opr_r_src_1 ,OPR_TREG& opr_preDes);
 };///////////////////////////////////////////////////////////////
 
 
 
-class COMP$M_T$R : public UOP_BASE{
+class DIV_ALU$T_T$R$0 : public UOP_BASE{
 public:
-  COMP$M_T$R():UOP_BASE(UOP_LOAD){};
+  DIV_ALU$T_T$R$0():UOP_BASE(){};
   void doDepenCheck(UOP_WINDOW* uop_window) override;
-  void addMeta(OPR_MEM& opr_a0, OPR_TREG& opr_a1 ,OPR_REG& opr_b0);
+  void addMeta(OPR_TREG& opr_t_0, OPR_TREG& opr_t_1 ,OPR_REG& opr_r_des_0);
 };///////////////////////////////////////////////////////////////
 
 
 
-class COMP$M_T$M : public UOP_BASE{
+class DIV_ALU$T_T$T$0 : public UOP_BASE{
 public:
-  COMP$M_T$M():UOP_BASE(UOP_LOAD){};
+  DIV_ALU$T_T$T$0():UOP_BASE(){};
   void doDepenCheck(UOP_WINDOW* uop_window) override;
-  void addMeta(OPR_MEM& opr_a0, OPR_TREG& opr_a1 ,OPR_MEM& opr_b0);
+  void addMeta(OPR_TREG& opr_t_0, OPR_TREG& opr_t_1 ,OPR_TREG& opr_preDes);
 };///////////////////////////////////////////////////////////////
 
 
 
-class COMP$M_R$T : public UOP_BASE{
+class MOV$R$R$0 : public UOP_BASE{
 public:
-  COMP$M_R$T():UOP_BASE(UOP_LOAD){};
+  MOV$R$R$0():UOP_BASE(){};
   void doDepenCheck(UOP_WINDOW* uop_window) override;
-  void addMeta(OPR_MEM& opr_a0, OPR_REG& opr_a1 ,OPR_TREG& opr_b0);
+  void addMeta(OPR_REG& opr_r_src_0 ,OPR_REG& opr_x_des_0);
 };///////////////////////////////////////////////////////////////
 
 
 
-class COMP$M_R$R : public UOP_BASE{
+class MOV$R$M$0 : public UOP_BASE{
 public:
-  COMP$M_R$R():UOP_BASE(UOP_LOAD){};
+  MOV$R$M$0():UOP_BASE(){};
   void doDepenCheck(UOP_WINDOW* uop_window) override;
-  void addMeta(OPR_MEM& opr_a0, OPR_REG& opr_a1 ,OPR_REG& opr_b0);
+  void addMeta(OPR_REG& opr_r_src_0 ,OPR_MEM& opr_x_des_0);
 };///////////////////////////////////////////////////////////////
 
 
 
-class COMP$M_R$M : public UOP_BASE{
+class MOV$I$R$0 : public UOP_BASE{
 public:
-  COMP$M_R$M():UOP_BASE(UOP_LOAD){};
+  MOV$I$R$0():UOP_BASE(){};
   void doDepenCheck(UOP_WINDOW* uop_window) override;
-  void addMeta(OPR_MEM& opr_a0, OPR_REG& opr_a1 ,OPR_MEM& opr_b0);
+  void addMeta(OPR_IMM& opr_i_src_0 ,OPR_REG& opr_x_des_0);
 };///////////////////////////////////////////////////////////////
 
 
 
-class COMP$M_I$T : public UOP_BASE{
+class MOV$I$T$0 : public UOP_BASE{
 public:
-  COMP$M_I$T():UOP_BASE(UOP_LOAD){};
+  MOV$I$T$0():UOP_BASE(){};
   void doDepenCheck(UOP_WINDOW* uop_window) override;
-  void addMeta(OPR_MEM& opr_a0, OPR_IMM& opr_a1 ,OPR_TREG& opr_b0);
+  void addMeta(OPR_IMM& opr_i_src_0 ,OPR_TREG& opr_t_0);
 };///////////////////////////////////////////////////////////////
 
 
 
-class COMP$M_I$R : public UOP_BASE{
+class MOV$T$M$0 : public UOP_BASE{
 public:
-  COMP$M_I$R():UOP_BASE(UOP_LOAD){};
+  MOV$T$M$0():UOP_BASE(){};
   void doDepenCheck(UOP_WINDOW* uop_window) override;
-  void addMeta(OPR_MEM& opr_a0, OPR_IMM& opr_a1 ,OPR_REG& opr_b0);
+  void addMeta(OPR_TREG& opr_t_0 ,OPR_MEM& opr_x_des_0);
 };///////////////////////////////////////////////////////////////
 
 
 
-class COMP$M_I$M : public UOP_BASE{
+class MOV$M$R$0 : public UOP_BASE{
 public:
-  COMP$M_I$M():UOP_BASE(UOP_LOAD){};
+  MOV$M$R$0():UOP_BASE(){};
   void doDepenCheck(UOP_WINDOW* uop_window) override;
-  void addMeta(OPR_MEM& opr_a0, OPR_IMM& opr_a1 ,OPR_MEM& opr_b0);
+  void addMeta(OPR_MEM& opr_m_src_0 ,OPR_REG& opr_x_des_0);
 };///////////////////////////////////////////////////////////////
 
 
 
-class COMP$M_M$T : public UOP_BASE{
+class MOV$M$T$0 : public UOP_BASE{
 public:
-  COMP$M_M$T():UOP_BASE(UOP_LOAD){};
+  MOV$M$T$0():UOP_BASE(){};
   void doDepenCheck(UOP_WINDOW* uop_window) override;
-  void addMeta(OPR_MEM& opr_a0, OPR_MEM& opr_a1 ,OPR_TREG& opr_b0);
+  void addMeta(OPR_MEM& opr_m_src_0 ,OPR_TREG& opr_t_0);
 };///////////////////////////////////////////////////////////////
 
 
 
-class COMP$M_M$R : public UOP_BASE{
+class MOV_INTERNAL$R$R$0 : public UOP_BASE{
 public:
-  COMP$M_M$R():UOP_BASE(UOP_LOAD){};
+  MOV_INTERNAL$R$R$0():UOP_BASE(){};
   void doDepenCheck(UOP_WINDOW* uop_window) override;
-  void addMeta(OPR_MEM& opr_a0, OPR_MEM& opr_a1 ,OPR_REG& opr_b0);
+  void addMeta(OPR_REG& opr_r_src_0 ,OPR_REG& opr_r_des_0);
 };///////////////////////////////////////////////////////////////
 
 
 
-class COMP$M_M$M : public UOP_BASE{
+class MOV_MEM_ST$R$M$0 : public UOP_BASE{
 public:
-  COMP$M_M$M():UOP_BASE(UOP_LOAD){};
+  MOV_MEM_ST$R$M$0():UOP_BASE(){};
   void doDepenCheck(UOP_WINDOW* uop_window) override;
-  void addMeta(OPR_MEM& opr_a0, OPR_MEM& opr_a1 ,OPR_MEM& opr_b0);
+  void addMeta(OPR_REG& opr_r_src_0 ,OPR_MEM& opr_m_des_0);
 };///////////////////////////////////////////////////////////////
 
 
 
-class MOV$T$T : public UOP_BASE{
+class MOV_MEM_LD$I$R$0 : public UOP_BASE{
 public:
-  MOV$T$T():UOP_BASE(UOP_COMP){};
+  MOV_MEM_LD$I$R$0():UOP_BASE(){};
   void doDepenCheck(UOP_WINDOW* uop_window) override;
-  void addMeta(OPR_TREG& opr_a0 ,OPR_TREG& opr_b0);
+  void addMeta(OPR_IMM& opr_i_src_0 ,OPR_REG& opr_x_des_0);
 };///////////////////////////////////////////////////////////////
 
 
 
-class MOV$T$R : public UOP_BASE{
+class MOV_MEM_LD$M$R$0 : public UOP_BASE{
 public:
-  MOV$T$R():UOP_BASE(UOP_COMP){};
+  MOV_MEM_LD$M$R$0():UOP_BASE(){};
   void doDepenCheck(UOP_WINDOW* uop_window) override;
-  void addMeta(OPR_TREG& opr_a0 ,OPR_REG& opr_b0);
-};///////////////////////////////////////////////////////////////
-
-
-
-class MOV$T$I : public UOP_BASE{
-public:
-  MOV$T$I():UOP_BASE(UOP_COMP){};
-  void doDepenCheck(UOP_WINDOW* uop_window) override;
-  void addMeta(OPR_TREG& opr_a0 ,OPR_IMM& opr_b0);
-};///////////////////////////////////////////////////////////////
-
-
-
-class MOV$T$M : public UOP_BASE{
-public:
-  MOV$T$M():UOP_BASE(UOP_STORE){};
-  void doDepenCheck(UOP_WINDOW* uop_window) override;
-  void addMeta(OPR_TREG& opr_a0 ,OPR_MEM& opr_b0);
-};///////////////////////////////////////////////////////////////
-
-
-
-class MOV$R$T : public UOP_BASE{
-public:
-  MOV$R$T():UOP_BASE(UOP_COMP){};
-  void doDepenCheck(UOP_WINDOW* uop_window) override;
-  void addMeta(OPR_REG& opr_a0 ,OPR_TREG& opr_b0);
-};///////////////////////////////////////////////////////////////
-
-
-
-class MOV$R$R : public UOP_BASE{
-public:
-  MOV$R$R():UOP_BASE(UOP_COMP){};
-  void doDepenCheck(UOP_WINDOW* uop_window) override;
-  void addMeta(OPR_REG& opr_a0 ,OPR_REG& opr_b0);
-};///////////////////////////////////////////////////////////////
-
-
-
-class MOV$R$I : public UOP_BASE{
-public:
-  MOV$R$I():UOP_BASE(UOP_COMP){};
-  void doDepenCheck(UOP_WINDOW* uop_window) override;
-  void addMeta(OPR_REG& opr_a0 ,OPR_IMM& opr_b0);
-};///////////////////////////////////////////////////////////////
-
-
-
-class MOV$R$M : public UOP_BASE{
-public:
-  MOV$R$M():UOP_BASE(UOP_STORE){};
-  void doDepenCheck(UOP_WINDOW* uop_window) override;
-  void addMeta(OPR_REG& opr_a0 ,OPR_MEM& opr_b0);
-};///////////////////////////////////////////////////////////////
-
-
-
-class MOV$I$T : public UOP_BASE{
-public:
-  MOV$I$T():UOP_BASE(UOP_COMP){};
-  void doDepenCheck(UOP_WINDOW* uop_window) override;
-  void addMeta(OPR_IMM& opr_a0 ,OPR_TREG& opr_b0);
-};///////////////////////////////////////////////////////////////
-
-
-
-class MOV$I$R : public UOP_BASE{
-public:
-  MOV$I$R():UOP_BASE(UOP_COMP){};
-  void doDepenCheck(UOP_WINDOW* uop_window) override;
-  void addMeta(OPR_IMM& opr_a0 ,OPR_REG& opr_b0);
-};///////////////////////////////////////////////////////////////
-
-
-
-class MOV$I$I : public UOP_BASE{
-public:
-  MOV$I$I():UOP_BASE(UOP_COMP){};
-  void doDepenCheck(UOP_WINDOW* uop_window) override;
-  void addMeta(OPR_IMM& opr_a0 ,OPR_IMM& opr_b0);
-};///////////////////////////////////////////////////////////////
-
-
-
-class MOV$I$M : public UOP_BASE{
-public:
-  MOV$I$M():UOP_BASE(UOP_STORE){};
-  void doDepenCheck(UOP_WINDOW* uop_window) override;
-  void addMeta(OPR_IMM& opr_a0 ,OPR_MEM& opr_b0);
-};///////////////////////////////////////////////////////////////
-
-
-
-class MOV$M$T : public UOP_BASE{
-public:
-  MOV$M$T():UOP_BASE(UOP_LOAD){};
-  void doDepenCheck(UOP_WINDOW* uop_window) override;
-  void addMeta(OPR_MEM& opr_a0 ,OPR_TREG& opr_b0);
-};///////////////////////////////////////////////////////////////
-
-
-
-class MOV$M$R : public UOP_BASE{
-public:
-  MOV$M$R():UOP_BASE(UOP_LOAD){};
-  void doDepenCheck(UOP_WINDOW* uop_window) override;
-  void addMeta(OPR_MEM& opr_a0 ,OPR_REG& opr_b0);
-};///////////////////////////////////////////////////////////////
-
-
-
-class MOV$M$I : public UOP_BASE{
-public:
-  MOV$M$I():UOP_BASE(UOP_LOAD){};
-  void doDepenCheck(UOP_WINDOW* uop_window) override;
-  void addMeta(OPR_MEM& opr_a0 ,OPR_IMM& opr_b0);
-};///////////////////////////////////////////////////////////////
-
-
-
-class MOV$M$M : public UOP_BASE{
-public:
-  MOV$M$M():UOP_BASE(UOP_LOAD){};
-  void doDepenCheck(UOP_WINDOW* uop_window) override;
-  void addMeta(OPR_MEM& opr_a0 ,OPR_MEM& opr_b0);
+  void addMeta(OPR_MEM& opr_m_src_0 ,OPR_REG& opr_x_des_0);
 };
 #endif

@@ -6,7 +6,7 @@ import X86.uop.mov.dataMov_uop as uop_mov_x86
 
 class MOP_MOV_ALL(mop_cen_x86.MOP_BASE_X86):
     def __init__(self, srcOpr0Type, desOpr0Type, _cxxType_prefix:str, _decKeys: list):
-
+        super().__init__()
         #### load the value
         if srcOpr0Type in [opr.OPR_IMM, opr.OPR_MEM]:
             memLoad = srcOpr0Type == opr.OPR_MEM
@@ -33,12 +33,12 @@ class MOP_MOV_ALL(mop_cen_x86.MOP_BASE_X86):
             srcOpr  = opr.OPR_REG("r_src_0", True)
             desOpr  = desOpr0Type("x_des_0", False)
             storeUop = uop_mov_x86.UOP_MOV(f"uop_st_0", "MOV")
-            storeUop.addIo([srcOpr], desOpr)
+            storeUop.addIo([srcOpr], [desOpr])
             self.autoInit(_cxxType_prefix, [srcOpr], [desOpr], [], [storeUop], _decKeys)
 
 class MOP_MOV256_ALL(mop_cen_x86.MOP_BASE_X86):
     def __init__(self, srcOpr0Type, desOpr0Type, _cxxType_prefix:str, _decKeys: list):
-
+        super().__init__()
         #### load the value
         if srcOpr0Type in [opr.OPR_IMM, opr.OPR_MEM]:
             memLoad = srcOpr0Type == opr.OPR_MEM
