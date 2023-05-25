@@ -13,36 +13,9 @@ bool DEP_BASE::addDep(UOP_BASE* uop) {
     return isNew;
 }
 
+////////////////////////////////////
 ////// register dependency
-
-
-bool REG_DEP::isdependOnReg(const REGNUM &sucReg){
-    return std::find(desReg.begin(), desReg.end(),sucReg) != desReg.end();
-}
-
-void REG_DEP::doRegDepenCheck(UOP_WINDOW *traceWindow){
-    assert(traceWindow != nullptr);
-
-    for (auto mySrcReg: srcReg){
-        auto dependUop = traceWindow->regDependHelp(mySrcReg);
-        if (dependUop != nullptr) {
-            addRegDep(dependUop);
-        }
-    }
-}
-
-std::vector<REGNUM> &REG_DEP::getdesReg() {
-    return desReg;
-}
-
-void REG_DEP::addRegMeta(const REGNUM regnum, bool isSrc) {
-    if (regnum == unusedReg){return;}
-    std::vector<REGNUM>* targetVec = isSrc ? &srcReg : &desReg;
-    targetVec->push_back(regnum);
-}
-
-
-
+////////////////////////////////////
 
 bool REG_DEP::addRegDep(UOP_BASE *uop) {
     return addDep(uop);
@@ -53,10 +26,22 @@ REG_DEP::getRegDep() {
     return predecessors;
 }
 
+void
+REG_DEP::addRegMeta(const REGNUM regnum, bool isSrc){
+    if (regnum == unusedReg){return;}
+    std::vector<REGNUM>* targetVec = isSrc ? &srcReg : &desReg;
+    targetVec->push_back(regnum);
+}
 
+std::vector<REGNUM> &REG_DEP::getdesReg() {
+    return desReg;
+}
+
+////////////////////////////////////
 ////// memory addresss dependency
+////////////////////////////////////
 
-bool MEM_DEP::scanOverlap(const ADAS adas, std::vector<ADAS>& adasVec){
+bool MEM_DEP::scanOverlap(ADAS adas, std::vector<ADAS>& adasVec){
     for(auto& loadCheck: adasVec){
         if (isADASoverlap(loadCheck, adas)){
             return true;
@@ -75,28 +60,6 @@ bool MEM_DEP::isdependOnMem(const ADAS adas, bool isLoad)  {
 
 }
 
-void MEM_DEP::doMemDepenCheck(UOP_WINDOW *traceWindow) {
-    assert(traceWindow != nullptr);
-    auto uopWindow_ptr = traceWindow->getUopwindow();
-    ////// TODO we might upgrade for clever method to achieve better performance
-    /////////// like line sweep algorithm
-    for (auto & uopWindow_itr : *uopWindow_ptr){
-        for (auto& ldAdas : loadAdas){
-            if (uopWindow_itr->isdependOnMem(ldAdas, true))
-                addMemDep(uopWindow_itr);
-        }
-        for (auto& stAdas : storeAdas){
-            if (uopWindow_itr->isdependOnMem(stAdas, false))
-                addMemDep(uopWindow_itr);
-        }
-    }
-}
-
-void MEM_DEP::addMemMeta(ADAS adas, bool isLoad) {
-    std::vector<ADAS>* targetVec = isLoad ? &loadAdas : &storeAdas;
-    targetVec->push_back(adas);
-}
-
 bool MEM_DEP::addMemDep(UOP_BASE *uop) {
     assert(uop != nullptr);
     return addDep(uop);
@@ -107,50 +70,39 @@ MEM_DEP::getMemDep() {
     return predecessors;
 }
 
-////// execution dep
-
-bool EXE_DEP::addExeDep(UOP_BASE *uop) {
-    assert(uop != nullptr);
-    return addDep(uop);
+void MEM_DEP::addMemMeta(ADAS adas, bool isLoad) {
+    std::vector<ADAS>* targetVec = isLoad ? &loadAdas : &storeAdas;
+    targetVec->push_back(adas);
 }
-
-std::unordered_set<UOP_BASE*>&
-EXE_DEP::getExeDep() {
-    return predecessors;
-}
-
+////////////////////////////////////
 ////// temporary register dependency
-
+////////////////////////////////////
 
 bool TEM_DEP::addTemDep(UOP_BASE *uop) {
     return addDep(uop);
 }
 
-
-
-bool
-TEM_DEP::isdepenOnTEM(const TREGNUM sucTreg) {
-    return std::find(desTRegs.begin(), desTRegs.end(), sucTreg)
-            != desTRegs.end();
+std::unordered_set<UOP_BASE*>&
+TEM_DEP::getTemDep() {
+    return predecessors;
 }
 
 void
-TEM_DEP::doTEMDepenCheck(std::vector<UOP_BASE *>& predecessor) {
-    for (auto uop_ptr: predecessor){
-        for (auto src_treg: srcTRegs) {
-            if (uop_ptr->isdepenOnTEM(src_treg)){
-                addTemDep(uop_ptr);
-            }
-        }
-    }
-}
-
-void
-TEM_DEP::addTRegMeta(const TREGNUM tregnum, bool isSrc){
+TEM_DEP::addTRegMeta(TREGNUM tregnum){
     srcTRegs.push_back(tregnum);
 }
 
-std::unordered_set<UOP_BASE*>&
-TEM_DEP::getTemDep() {
+////////////////////////////////////
+////// exec_unit dep
+////////////////////////////////////
+
+bool
+EXEC_UNIT_DEP::addExecDep(UOP_BASE* uop) {
+    assert(uop != nullptr);
+    return addDep(uop);
+}
+
+std::unordered_set<UOP_BASE *>&
+EXEC_UNIT_DEP::getExecDep() {
     return predecessors;
 }

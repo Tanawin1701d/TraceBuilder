@@ -439,6 +439,438 @@ public:
 
 
 
+class SIM128_ALU$R_R$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class SIM128_ALU$R_R$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class SIM128_ALU$R_I$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class SIM128_ALU$R_I$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class SIM128_ALU$R_M$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class SIM128_ALU$R_M$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class SIM128_ALU$I_R$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class SIM128_ALU$I_R$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class SIM128_ALU$I_I$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class SIM128_ALU$I_I$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class SIM128_ALU$I_M$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class SIM128_ALU$I_M$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class SIM128_ALU$M_R$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class SIM128_ALU$M_R$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class SIM128_ALU$M_I$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class SIM128_ALU$M_I$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class SIM128_ALU$M_M$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class SIM128_ALU$M_M$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class MUL128_ALU$R_R$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class MUL128_ALU$R_R$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class MUL128_ALU$R_I$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class MUL128_ALU$R_I$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class MUL128_ALU$R_M$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class MUL128_ALU$R_M$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class MUL128_ALU$I_R$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class MUL128_ALU$I_R$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class MUL128_ALU$I_I$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class MUL128_ALU$I_I$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class MUL128_ALU$I_M$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class MUL128_ALU$I_M$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class MUL128_ALU$M_R$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class MUL128_ALU$M_R$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class MUL128_ALU$M_I$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class MUL128_ALU$M_I$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class MUL128_ALU$M_M$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class MUL128_ALU$M_M$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class DIV128_ALU$R_R$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class DIV128_ALU$R_R$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class DIV128_ALU$R_I$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class DIV128_ALU$R_I$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class DIV128_ALU$R_M$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class DIV128_ALU$R_M$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class DIV128_ALU$I_R$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class DIV128_ALU$I_R$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class DIV128_ALU$I_I$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class DIV128_ALU$I_I$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class DIV128_ALU$I_M$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class DIV128_ALU$I_M$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class DIV128_ALU$M_R$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class DIV128_ALU$M_R$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class DIV128_ALU$M_I$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class DIV128_ALU$M_I$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class DIV128_ALU$M_M$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class DIV128_ALU$M_M$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
 class SIM_MOV$R$R : public MOP_BASE{
 public:
 
@@ -487,7 +919,7 @@ public:
 
 
 
-class SIM256_MOV$R$R : public MOP_BASE{
+class SIM_MOV128$R$R : public MOP_BASE{
 public:
 
    void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
@@ -495,7 +927,7 @@ public:
 
 
 
-class SIM256_MOV$R$M : public MOP_BASE{
+class SIM_MOV128$R$M : public MOP_BASE{
 public:
 
    void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
@@ -503,7 +935,7 @@ public:
 
 
 
-class SIM256_MOV$I$R : public MOP_BASE{
+class SIM_MOV128$I$R : public MOP_BASE{
 public:
 
    void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
@@ -511,7 +943,7 @@ public:
 
 
 
-class SIM256_MOV$I$M : public MOP_BASE{
+class SIM_MOV128$I$M : public MOP_BASE{
 public:
 
    void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
@@ -519,7 +951,7 @@ public:
 
 
 
-class SIM256_MOV$M$R : public MOP_BASE{
+class SIM_MOV128$M$R : public MOP_BASE{
 public:
 
    void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
@@ -527,7 +959,7 @@ public:
 
 
 
-class SIM256_MOV$M$M : public MOP_BASE{
+class SIM_MOV128$M$M : public MOP_BASE{
 public:
 
    void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;

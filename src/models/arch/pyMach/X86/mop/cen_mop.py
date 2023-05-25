@@ -2,6 +2,7 @@ import base.mop.mop_base as mb
 import base.operand.opr_simple as opr
 import X86.uop.alu.comp_uop as  uop_comp_x86
 import X86.uop.mov.dataMov_uop as uop_mov_x86
+import X86.uop.resMap as resMap
 
 
 
@@ -48,7 +49,7 @@ class MOP_BASE_X86(mb.MOP_BASE):
                      srcOprType(f"i_src_{uuid}")
             desTempOpr = opr.OPR_TEMP(f"t_{uuid}")
             ####### create related uop
-            relatedUop = uop_mov_x86.UOP_MOV(f"uop_ld_{uuid}","MOV_MEM_LD")
+            relatedUop = uop_mov_x86.UOP_MOV(f"uop_ld_{uuid}",resMap.cxxTypeUOP_LOAD)
             relatedUop.addIo([srcOpr], [desTempOpr])
             ####### add to pre marcro-op built list
             if addToSummaryList:
@@ -83,7 +84,7 @@ class MOP_BASE_X86(mb.MOP_BASE):
             ##### create operand
             desOpr = opr.OPR_MEM(f"m_des_{uuid}", False)
             ##### create uop
-            relatedUop = uop_mov_x86.UOP_MOV(f"uop_st_{uuid}", "MOV_MEM_ST")
+            relatedUop = uop_mov_x86.UOP_MOV(f"uop_st_{uuid}", resMap.cxxTypeUOP_STORE)
             relatedUop.addIo([fromOpr], [desOpr])
             ##### add to macro-op built list
             if addToSummaryList:
@@ -133,10 +134,10 @@ class MOP_BASE_X86(mb.MOP_BASE):
             desTempOpr = opr.OPR_TEMP(f"t_{uuid}")
             ####### create related uop
             ##### low
-            relatedUopl = uop_mov_x86.UOP_MOV(f"uop_ldl_{uuid}","MOV_MEM_LD")
+            relatedUopl = uop_mov_x86.UOP_MOV(f"uop_ldl_{uuid}",resMap.cxxTypeUOP_LOAD)
             relatedUopl.addIo([srcOpr], [desTempOpr])
             ##### high
-            relatedUoph = uop_mov_x86.UOP_MOV(f"uop_ldh_{uuid}", "MOV_MEM_LD")
+            relatedUoph = uop_mov_x86.UOP_MOV(f"uop_ldh_{uuid}", resMap.cxxTypeUOP_LOAD)
             relatedUoph.addIo([srcOpr], [desTempOpr])
             ####### add to pre marcro-op built list
             if addToSummaryList:
@@ -171,9 +172,9 @@ class MOP_BASE_X86(mb.MOP_BASE):
             ##### create operand
             desOpr = opr.OPR_MEM(f"m_des_{uuid}", False)
             ##### create uop
-            relatedUopl = uop_mov_x86.UOP_MOV(f"uop_stl_{uuid}", "MOV_MEM_ST")
+            relatedUopl = uop_mov_x86.UOP_MOV(f"uop_stl_{uuid}", resMap.cxxTypeUOP_STORE)
             relatedUopl.addIo([fromOpr], [desOpr])
-            relatedUoph = uop_mov_x86.UOP_MOV(f"uop_sth_{uuid}", "MOV_MEM_ST")
+            relatedUoph = uop_mov_x86.UOP_MOV(f"uop_sth_{uuid}", resMap.cxxTypeUOP_STORE)
             relatedUopl.addIo([fromOpr], [desOpr])
             ##### add to macro-op built list
             if addToSummaryList:

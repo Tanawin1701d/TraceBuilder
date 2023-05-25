@@ -9,7 +9,7 @@ class MOP_GROUP_COMP(mop_group.MOP_GROUP_BASE):
     decKeys0 = ["ADC" , "ADD", "AND" , "OR" , "ROL",
                 "ROR" , "SAL", "SAR" , "SBB", "SHL",
                 "SHLD", "SHR", "SHRD", "SUB", "XCHG", "XOR",
-                "CMP" , "INC", "RCL" , "RCR", "V64_COMP"]
+                "CMP" , "INC", "RCL" , "RCR", "V64_COMP", "JMP"]
 
     decKeys1 = ["MUL", "IMUL", "MULX", "V64_MUL"]
 
@@ -38,14 +38,14 @@ class MOP_GROUP_COMP128(mop_group.MOP_GROUP_BASE):
 
     def __init__(self):
         super().__init__(5, mop_alu_x86.MOP_COMP128_ALL)
-        self.addMopArgExtractComb((self.srcOpr, self.srcOpr, self.desOpr,["SIM_ALU"], [self.decKeys0]))
-        self.addMopArgExtractComb((self.srcOpr, self.srcOpr, self.desOpr,["MUL_ALU"], [self.decKeys0]))
-        self.addMopArgExtractComb((self.srcOpr, self.srcOpr, self.desOpr,["DIV_ALU"], [self.decKeys0]))
+        self.addMopArgExtractComb((self.srcOpr, self.srcOpr, self.desOpr,["SIM128_ALU"], [self.decKeys0]))
+        self.addMopArgExtractComb((self.srcOpr, self.srcOpr, self.desOpr,["MUL128_ALU"], [self.decKeys0]))
+        self.addMopArgExtractComb((self.srcOpr, self.srcOpr, self.desOpr,["DIV128_ALU"], [self.decKeys0]))
 
 ###### mov mop group
 
 class MOP_GROUP_MOV(mop_group.MOP_GROUP_BASE):
-    decKeys0 = ["MOV", "LEA", "PUSH", "POP", "V64_MOV"]
+    decKeys0 = ["MOV", "LEA", "PUSH", "POP", "V64_MOV", "JMP"]
     srcOpr = [opr.OPR_REG, opr.OPR_IMM, opr.OPR_MEM]
     desOpr = [opr.OPR_REG, opr.OPR_MEM]
 
@@ -60,4 +60,4 @@ class MOP_GROUP_MOV128(mop_group.MOP_GROUP_BASE):
 
     def __init__(self):
         super().__init__(4, mop_mov_x86.MOP_MOV256_ALL)
-        self.addMopArgExtractComb((self.srcOpr, self.desOpr, ["SIM256_MOV"], [self.decKeys0]))
+        self.addMopArgExtractComb((self.srcOpr, self.desOpr, ["SIM_MOV128"], [self.decKeys0]))

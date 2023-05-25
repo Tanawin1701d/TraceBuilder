@@ -11,24 +11,20 @@ UOP_WINDOW::UOP_WINDOW(int _window_size){
     assert(_window_size >= 10);
     window_size = _window_size;
     //// this is used for record who is the latest modifier
-    for (auto & lastOwner : lastOwnerReg){
-        lastOwner = nullptr;
-    }
+
 }
 
 void
 UOP_WINDOW::tryPopFromQ(){
     if ( !uop_window.empty() ) {
+        /////// who will be deleted
         UOP_BASE* preDelete = uop_window.back();
-
-        for (REGNUM desReg: preDelete->getdesReg()){
-            //// we can ensure that no unused reg(-1) righthere
-            if (preDelete == lastOwnerReg[desReg]){
-                lastOwnerReg[desReg] = nullptr;
-            }
+        assert(preDelete != nullptr);
+        ////// notify dep helper on pop oldest uop to window
+        for(auto& depHelpEle: depHelperPool){
+            depHelpEle->onPopFromWd(preDelete, this);
         }
-
-
+        /////// pop data from window
         delete preDelete;
         uop_window.pop_back();
     }
@@ -45,18 +41,12 @@ UOP_WINDOW::addUop(UOP_BASE* newUop){
     assert(newUop != nullptr);
     if (isFull())
         tryPopFromQ();
+    ////// notify dep helper on adding new uop to window
+    for(auto& depHelpEle : depHelperPool){
+        depHelpEle->onPushToWd(newUop, this);
+    }
     ///// push and pop side from the queue is critical
     uop_window.push_front(newUop);
 
-    for (REGNUM desReg: newUop->getdesReg()){
-        //// we can ensure that no unused reg(-1) righthere
-        lastOwnerReg[desReg] = newUop;
-    }
 
 }
-
-UOP_BASE *UOP_WINDOW::regDependHelp(REGNUM regNum) {
-    assert(regNum != unusedReg);
-    return lastOwnerReg[regNum];
-}
-

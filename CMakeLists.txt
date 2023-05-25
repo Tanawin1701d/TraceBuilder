@@ -45,7 +45,7 @@ add_executable(
         ${SRC_IOHCC}
         ${SRC_ARCH_X86}
         ${SRC_EXAMPLE}
-        )
+        src/core/tracers/uopWdDepHelp/depHelp_reg.h src/core/tracers/uopWdDepHelp/depHelp_issBarier.cpp src/core/tracers/uopWdDepHelp/depHelp_issBarier.h src/core/resMng/execUnit/execUnit.cpp)
 
 TARGET_LINK_LIBRARIES( traceBuilder PRIVATE ${Boost_LIBRARIES} Threads::Threads ${PROTOBUF_LIBRARY} )
 

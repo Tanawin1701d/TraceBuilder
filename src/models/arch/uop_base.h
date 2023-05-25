@@ -22,7 +22,7 @@ enum UOP_TYPE{
     UOP_DUMMY
 };
 
-class UOP_BASE: public REG_DEP, public MEM_DEP, public EXE_DEP, public TEM_DEP{
+class UOP_BASE: public REG_DEP, public MEM_DEP, public TEM_DEP, public EXEC_UNIT_DEP{
 protected:
     uint64_t seqNum;// sequence number of uop in each thread
     UOP_TYPE uop_type;
@@ -43,6 +43,12 @@ public:
     //// use to ask successor to check dependecy and store ourself dependency
     ////// crucial this is fundamental of the program the program
     virtual void doDepenCheck(UOP_WINDOW* uop_window) = 0;
+    void doRegDepenCheck(UOP_WINDOW* uop_window)  override;
+    void doMemDepenCheck(UOP_WINDOW* uop_window)  override;
+    void doTemDepenCheck(UOP_WINDOW* uop_window)  override;
+    void doExecDepenCheck(UOP_WINDOW* uop_window) override;
+
+
 
 };
 
