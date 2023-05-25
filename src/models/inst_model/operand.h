@@ -131,7 +131,7 @@ class OPR_IMM : public OPERAND{
 private:
     IMM imm;
 public:
-    OPR_IMM(IMM _imm);
+    OPR_IMM(IMM _imm, size_t _mcArgSIdx);
 
     IMM getImm() const;
 

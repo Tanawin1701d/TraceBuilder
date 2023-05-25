@@ -6,7 +6,7 @@
 #include "core/tracerFrontEnd/legacyPin/lagacy_pin.h"
 #include "core/resultFrontEnd/legacyGem5/resultFed_gemLagacy.h"
 #include "core/core.h"
-#include "models/arch/x86/build/decoder/x86_dec.h"
+#include "models/arch/X86/X86_dec.h"
 
 
 SIMPLE_PIN_GEM::SIMPLE_PIN_GEM(const std::string _inputPinFile_instr,
@@ -29,12 +29,19 @@ SIMPLE_PIN_GEM::start(){
     RESULT_FRONT_END_GEM_LAGACY* gemFrontend = new RESULT_FRONT_END_GEM_LAGACY (outProtoFile_data, outProtoFile_instr);
 
     //////// mem manager && decoder
-    ADDR memSize        = ((ADDR)1) << (4 + 30);
-    MEM_MNG* memMng     = new MEM_MNG(12, 6, memSize, 0);
-    DECODER_X86* x86Dec = new DECODER_X86();
-
+    ADDR           memSize       = ((ADDR)1) << (4 + 30);
+    MEM_MNG*       memMng        = new MEM_MNG(12, 6, memSize, 0);
+    X86_DECODER*   x86Dec        = new X86_DECODER();
+    EXEC_UNIT_RES* execUnit_info = new EXEC_UNIT_RES(9,10);
+    execUnit_info->setMaxAvailable(1,5);
+    execUnit_info->setMaxAvailable(2,3);
+    execUnit_info->setMaxAvailable(3,2);
+    execUnit_info->setMaxAvailable(4,1);
+    execUnit_info->setMaxAvailable(5,1);
+    execUnit_info->setMaxAvailable(6,1);
+    execUnit_info->setMaxAvailable(7,10);
     //////// core start
-    CORE*  traceCore = new CORE(memMng, x86Dec);
+    CORE*  traceCore = new CORE(memMng, x86Dec, execUnit_info);
     traceCore->addWorker(pinTracer, gemFrontend, 100);
     ///////////////////////////////////////////////////////////////////////////////
     //////// start simulation

@@ -23,19 +23,20 @@ typedef uint64_t RT_INSTR_ID;
 
 class RT_INSTR{
 private:
-    const std::string DEC_REG_OPR = "R";
-    const std::string DEC_LD_OPR  = "M";
-    const std::string DEC_ST_OPR  = "M";
-    const std::string DEC_IMM_OPR = "I";
-    const std::string DEC_DILEM   = "$";
+    const std::string DEC_REG_OPR   = "R";
+    const std::string DEC_LD_OPR    = "M";
+    const std::string DEC_ST_OPR    = "M";
+    const std::string DEC_IMM_OPR   = "I";
+    const std::string DEC_DILEM     = "$";
+    const std::string DEC_DILEM_OPR = "_";
 
 
     /////// id and identifier
     uint64_t              rt_instr_id{};
     /////// for debug and provide information
     std::string              mnemonic;
-    std::string              srcDecodeKey;
-    std::string              desDecodeKey;
+    std::vector<std::string> srcDecodeKey;
+    std::vector<std::string> desDecodeKey;
     std::string              debugDecodeKey;
     std::string              debugName; //// the instruction that obtain from raw data
     /////// instruction metadata
@@ -65,7 +66,7 @@ protected:
     virtual void interpretLOperand  (std::vector<std::string>& tokens, size_t& lstSrcMacroIdx, size_t& lstDesMacroIdx);
     virtual void interpretSOperand  (std::vector<std::string>& tokens, size_t& lstSrcMacroIdx, size_t& lstDesMacroIdx);
     virtual void interpretLSOperand (std::vector<std::string>& tokens, bool isLoad, size_t& lstSrcMacroIdx, size_t& lstDesMacroIdx);
-    virtual void interpretImmOperand(std::vector<std::string>& tokens);
+    virtual void interpretImmOperand(std::vector<std::string>& tokens, size_t& lstSrcMacroIdx, size_t& lstDesMacroIdx);
     virtual void interpretFetch     (std::vector<std::string>& tokens);
     virtual void interpretDebugStr  (std::vector<std::string>& tokens);
 

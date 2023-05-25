@@ -66,7 +66,7 @@ RT_INSTR::interpretStaticTracedData(const std::vector<std::string>& st_raw) {
         }else if (opr_tokens[ST_IDX_COMPO_TYP] == ST_VAL_COMPO_ST){
             interpretSOperand(opr_tokens, lstSrcMacroIdx, lstDesMacroIdx);
         }else if (opr_tokens[ST_IDX_COMPO_TYP] == ST_VAL_COMPO_IMM){
-            interpretImmOperand(opr_tokens);
+            interpretImmOperand(opr_tokens, lstSrcMacroIdx, lstDesMacroIdx);
         }else if (opr_tokens[ST_IDX_COMPO_TYP] == ST_VAL_COMPO_FETCH){
             interpretFetch(opr_tokens);
         }else if (opr_tokens[ST_IDX_COMPO_TYP] == ST_VAL_COMPO_DEC){
@@ -83,35 +83,24 @@ RT_INSTR::interpretStaticTracedData(const std::vector<std::string>& st_raw) {
 
 void
 RT_INSTR::fillDynData(CVT_RT_OBJ& cvtDynData){
-
     ////////// fill physical address of each load operand
-    for (int ldIdx = 0 ;
-             (ldIdx < maxMemOpPerLS)  &&
-             (cvtDynData.loadMemOpNum[ldIdx] != DUMMY_MEM_OP_NUM);
-             ldIdx++
-        ){
+    for (int ldIdx = 0 ; ldIdx < cvtDynData.amt_load; ldIdx++){
         ////// for backward compatability
         /////// we assume that memop may be reordered arbitrary.
         srcLdOperands[ldIdx].setPhyAddr(cvtDynData.phyLoadAddr[ldIdx]);
     }
-    ////////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////
     ////////// fill physical address of each store operand
-    for (int stIdx = 0 ;
-         (stIdx < maxMemOpPerLS)  &&
-         (cvtDynData.storeMemOpNum[stIdx] != DUMMY_MEM_OP_NUM);
-         stIdx++
-            ){
+    for (int stIdx = 0 ; stIdx < cvtDynData.amt_store; stIdx++){
         ////// for backward compatability
         /////// we assume that memop may be reordered arbitrary.
         desStOperands[stIdx].setPhyAddr(cvtDynData.phyStoreAddr[stIdx]);
     }
-
 }
 
 void
 RT_INSTR::genUOPS(std::vector<UOP_BASE*>& results) {
     assert(macroop != nullptr);
-
     ////// one micro-op may share the same operand due to huge load or store
     //////////in each uop generating, we must reset the shared tracker
     for (auto& ldOpr: srcLdOperands){
@@ -136,11 +125,11 @@ RT_INSTR::interpretRegOperand(std::vector<std::string> &tokens, size_t& lstSrcMa
     if (isSrc){
         srcRegOperands.emplace_back(newRegName, lstSrcMacroIdx++);
         srcMacroPoolOperands.push_back(&(*srcRegOperands.rbegin()));
-        srcDecodeKey += DEC_REG_OPR;
+        srcDecodeKey.push_back(DEC_REG_OPR);
     }else if ( isDes ){
         desRegOperands.emplace_back(newRegName, lstDesMacroIdx++);
         desMacroPoolOperands.push_back(&(*desRegOperands.rbegin()));
-        desDecodeKey += DEC_REG_OPR;
+        desDecodeKey.push_back(DEC_REG_OPR);
     }else{
         throw std::invalid_argument(
                 "invalid static trace for reg operand " + tokens[ST_IDX_DIRO]
@@ -172,13 +161,13 @@ RT_INSTR::interpretLSOperand(std::vector<std::string> &tokens, bool isLoad, size
         srcLdOperands.emplace_back(baseReg, indexReg,scale,
                                    displacement, size, memopNum,lstSrcMacroIdx++);
         srcMacroPoolOperands.push_back(&(*srcLdOperands.rbegin()));
-        srcDecodeKey += DEC_LD_OPR;
+        srcDecodeKey.push_back(DEC_LD_OPR);
     }
     else { // store
         desStOperands.emplace_back(baseReg, indexReg, scale,
                                    displacement, size, memopNum, lstDesMacroIdx++);
         desMacroPoolOperands.push_back(&(*desStOperands.rbegin()));
-        desDecodeKey +=  DEC_ST_OPR;
+        desDecodeKey.push_back(DEC_ST_OPR);
     }
 }
 
@@ -203,15 +192,17 @@ RT_INSTR::interpretSOperand(std::vector<std::string> &tokens, size_t& lstSrcMacr
 }
 
 void
-RT_INSTR::interpretImmOperand(std::vector<std::string>& tokens) {
+RT_INSTR::interpretImmOperand(std::vector<std::string>& tokens, size_t& lstSrcMacroIdx, size_t& lstDesMacroIdx) {
     assert(tokens[ST_IDX_COMPO_TYP] == ST_VAL_COMPO_IMM);
     assert(tokens.size() == ST_IDX_IMM_AMT);
     assert(tokens[ST_IDX_DIRO] == ST_VAL_DIRO_SRC);
     IMM imm = stoull(tokens[ST_IDX_IMM_IMM]);
 
-    srcImmOperands.emplace_back(imm);
-    srcDecodeKey += DEC_IMM_OPR;
-    //// we do not push to MacroPooloperand due to current version regardless about imm
+    srcImmOperands.emplace_back(imm, lstSrcMacroIdx++);
+    srcMacroPoolOperands.push_back(&(*srcImmOperands.rbegin()));
+    srcDecodeKey.push_back(DEC_IMM_OPR);
+
+
 }
 
 void
@@ -243,7 +234,7 @@ RT_INSTR::interpretDebugStr(std::vector<std::string> &tokens) {
 }
 
 std::string RT_INSTR::getDecodeKey(){
-    return mnemonic     + DEC_DILEM  +
-           srcDecodeKey + DEC_DILEM  +
-           desDecodeKey;
+    return mnemonic + DEC_DILEM +
+           concatVec(srcDecodeKey, DEC_DILEM_OPR) + DEC_DILEM +
+           concatVec(desDecodeKey, DEC_DILEM_OPR);
 }

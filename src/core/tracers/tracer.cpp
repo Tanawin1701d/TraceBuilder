@@ -18,62 +18,56 @@ TRACER_BASE::TRACER_BASE(THREAD_ID          _tid,
         threadModel (_threadModel),
         nextUopId   (1)
 {
-
     assert( _decoder     != nullptr);
     assert( _resFed      != nullptr);
     assert( _uopWindow   != nullptr);
     assert( _memMng      != nullptr);
     assert( _threadModel != nullptr);
-
 }
 
 
 void
 TRACER_BASE::cvtLoadOrStoreToPhyAddr(RT_OBJ&           rt_obj,
                                      RT_INSTR&         rt_instr,
-                                     CVT_RT_OBJ& results,
+                                     CVT_RT_OBJ&       results,
                                      bool              isLoad) { /// else is store
 
-    /////// for load
-    int idx = 0;
-    int opNum;
-    ////// from rt_instr
-    auto& ldOprs = rt_instr.getSrcLdOperands();
-    auto& stOprs = rt_instr.getDesStOperands();
 
-    ///// from rt_obj which from traced front-end
-    uint64_t* dynVirAddr = isLoad ? rt_obj.loadAddr     : rt_obj.storeAddr;
-    uint8_t*  dynOpNums  = isLoad ? rt_obj.loadMemOpNum : rt_obj.storeMemOpNum;
+    uint64_t* vAddrs; ///// virtual address
+    uint8_t   amt;     ///// amount operand need to convert
+    uint64_t* pAddrs; ///// physical address FOR FILL RESULT
+    uint64_t* sizes;   ///// size that need to load
 
-    ///// to result
-    uint64_t* resPhyAddrs   = isLoad ? results.phyLoadAddr : results.phyStoreAddr;
-    uint8_t*  resopNums     = isLoad ? results.loadMemOpNum: results.storeMemOpNum;
-
-    //// initialize op number
-    for (uint32_t idx = 0; idx < maxMemOpPerLS; idx++){
-        resopNums[idx] = dynOpNums[idx];
-    }
-
-    //// iterate to check whether are there address use
-
-    while(idx < maxMemOpPerLS){
-        opNum = dynOpNums[idx];
-        if (opNum == DUMMY_MEM_OP_NUM){
-            break;
+    if (isLoad){
+        vAddrs = rt_obj.loadAddr;
+        amt    = rt_obj.amt_load;
+        results.amt_load = amt; ////// fill number of loaded operand
+        pAddrs = results.phyLoadAddr;
+        assert( (amt) == rt_instr.countSrcLdOpeands());
+        /////// fill size that operand need to load
+        sizes = new uint64_t[amt];
+        auto& ldOpr = rt_instr.getSrcLdOperands();
+        for (size_t idx = 0; idx < amt; idx++){
+            sizes[idx] = ldOpr[idx].getSize();
         }
-
-        //// get data from rt_obj and rt_instr
-        uint64_t addr = dynVirAddr[idx];
-        uint64_t size = isLoad ? ldOprs[idx].getSize() : stOprs[idx].getSize();
-
-        //// convert virtual address to physical address
-        std::vector<ADAS> addrCvtResults; /// TODO fornow wew assume 1 operand per 1 ADAS
-        memMng->v2pConvert(addr, (int)size, addrCvtResults);
-        assert(!addrCvtResults.empty());
-        //// fill the converted result
-        resPhyAddrs[idx]  = addrCvtResults[0].addr;
-        //// iterate to next
-        idx++;
+    }else{ //// store
+        vAddrs = rt_obj.storeAddr;
+        amt    = rt_obj.amt_store;
+        results.amt_store = amt; /////// fill number of stored operand
+        pAddrs = results.phyStoreAddr;
+        assert( (amt) == rt_instr.countDesStOperands());
+        /////// fill size that operand need to store
+        sizes = new uint64_t[amt];
+        auto& stOpr = rt_instr.getDesStOperands();
+        for (size_t idx = 0; idx < amt; idx++){
+            sizes[idx] = stOpr[idx].getSize();
+        }
+    }
+    /////// fill the physical address
+    for (size_t idx = 0; idx < amt; idx++){
+        std::vector<ADAS> phyAddressResult;
+        memMng->v2pConvert(vAddrs[idx], (int)sizes[idx], phyAddressResult);
+        pAddrs[idx] = phyAddressResult[0].addr; ///// for now we assume mem mng return only size of one
     }
 
 }
@@ -89,7 +83,6 @@ TRACER_BASE::cvt_rtobj_tracable(RT_OBJ&           rt_obj,
     cvtLoadOrStoreToPhyAddr(rt_obj, rt_instr, results, true);
     /////// for store
     cvtLoadOrStoreToPhyAddr(rt_obj, rt_instr, results, false);
-
 }
 
 
@@ -99,7 +92,9 @@ TRACER_BASE::onGetDynTraceValue(dynTraceData dyndata) {
     /////// convert virtual memory address to simulated address
     assert(dyndata.rawData.fetchId < rt_instrs.size());
     auto* rt_instr = rt_instrs[dyndata.rawData.fetchId];
-    /////////////////////////////////////////////////////////// stat
+    //////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////// stat /////////
+    //////////////////////////////////////////////////////////////////////////
     MAIN_STAT["dynTrace"]["MNEMONIC"][rt_instr->getMnemonic()].asUINT()++;
     MAIN_STAT["dynTrace"]["MNEMONIC"][rt_instr->getMnemonic()][rt_instr->getMacroop()->getIsAutoGen() ? "miss" : "hit"].asUINT()++;
     MAIN_STAT["dynTrace"]["MOP_COUNT"].asUINT()++;
@@ -111,6 +106,8 @@ TRACER_BASE::onGetDynTraceValue(dynTraceData dyndata) {
     if ( (MAIN_STAT["dynTrace"]["MOP_COUNT"].asUINT() % 1000000) == 0 ){
         std::cout << getProgPf(__FILE__, __LINE__) <<" pass : " <<   MAIN_STAT["dynTrace"]["MOP_COUNT"].asUINT() << " instructions" << std::endl;
     }
+    ///////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////////////
     CVT_RT_OBJ cvt_trace_data{};
     cvt_rtobj_tracable(dyndata.rawData, *rt_instr, cvt_trace_data);

@@ -157,9 +157,9 @@ OPR_MEM_ST::OPR_MEM_ST(REGNUM _baseRegId,
 ///////////////////////////////////////////////////////////
 /// imm operand
 
-OPR_IMM::OPR_IMM(IMM _imm):
+OPR_IMM::OPR_IMM(IMM _imm, size_t _mcArgSIdx):
 imm(_imm),
-OPERAND(O_IMM,-1)
+OPERAND(O_IMM,_mcArgSIdx)
 {}
 
 IMM
