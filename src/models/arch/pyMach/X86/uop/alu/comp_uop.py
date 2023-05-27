@@ -7,7 +7,7 @@ class UOP_COMP(ub.UOP_BASE):
     def __init__(self, _name : str, _cxxType_prefix : str):
         super().__init__(_cxxType_prefix, _name    ,
                                        2,     1    ,
-                              "UOP_COMP", resMap.cxxTypeToExecUnit.get(_cxxType_prefix, 0)
+                        resMap.cxxTypeToGemType.get(_cxxType_prefix, resMap.default_gemType), resMap.cxxTypeToExecUnit.get(_cxxType_prefix, 0)
                          )
 
         ##### TODO exec unit must be intepret from _cxxType_prefix
@@ -30,7 +30,7 @@ class UOP_CMP(ub.UOP_BASE):
     def __init__(self, _name : str, _cxxType_prefix : str):
         super().__init__(_cxxType_prefix, _name,
                                        1,     1,
-                         "UOP_COMP", resMap.cxxTypeToExecUnit.get(_cxxType_prefix, 0)
+                         resMap.cxxTypeToGemType.get(_cxxType_prefix, resMap.default_gemType), resMap.cxxTypeToExecUnit.get(_cxxType_prefix, 0)
                          )
         self.io_input .addAcceptType(0, {opr.OPR_REG, opr.OPR_MEM, opr.OPR_TEMP, opr.OPR_IMM})
         self.io_output.addAcceptType(0, {opr.OPR_REG, opr.OPR_MEM, opr.OPR_TEMP, opr.OPR_IMM})

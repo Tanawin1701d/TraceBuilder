@@ -21,7 +21,7 @@ INCLUDE_DIRECTORIES( ./src )
 
 add_custom_target(
         x86sim ALL
-        COMMAND python3 ${CMAKE_SOURCE_DIR}/src/models/arch/x86/template/gen.py
+        COMMAND python3 ${CMAKE_SOURCE_DIR}/src/models/arch/pyMach/gen_main.py
         COMMENT "generating the x86 model"
 )
 
@@ -45,7 +45,7 @@ add_executable(
         ${SRC_IOHCC}
         ${SRC_ARCH_X86}
         ${SRC_EXAMPLE}
-        src/core/tracers/uopWdDepHelp/depHelp_reg.h src/core/tracers/uopWdDepHelp/depHelp_issBarier.cpp src/core/tracers/uopWdDepHelp/depHelp_issBarier.h src/core/resMng/execUnit/execUnit.cpp)
+)
 
 TARGET_LINK_LIBRARIES( traceBuilder PRIVATE ${Boost_LIBRARIES} Threads::Threads ${PROTOBUF_LIBRARY} )
 

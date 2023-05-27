@@ -9,6 +9,7 @@
 #include "ioHelp/protoHelp/protoio.hh"
 #include "ioHelp/protoHelp/inst_dep_record.pb.h"
 #include "ioHelp/protoHelp/packet.pb.h"
+#include "core/resMng/execUnit/execUnit.h"
 
 class RESULT_FRONT_END_GEM_LAGACY : public RESULT_FRONT_END{
 
@@ -16,7 +17,7 @@ private:
     ProtoOutputStream* dataProtoStream;
     ProtoOutputStream* instrProtoStream;
     uint64_t           lastTick;
-
+    EXEC_UNIT_RES*     execUnit_info;
 
 public:
 
@@ -27,7 +28,9 @@ public:
 
     void onGetUopsResult(std::vector<UOP_BASE*>& uops,
                          RT_INSTR*          rt_instr
-    );
+    ) override;
+
+    void setExecUnit_info(EXEC_UNIT_RES* _execUnit_info);
 
 };
 

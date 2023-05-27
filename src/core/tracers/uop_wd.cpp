@@ -6,11 +6,16 @@
 
 
 ///// constructor
-UOP_WINDOW::UOP_WINDOW(int _window_size){
+UOP_WINDOW::UOP_WINDOW(int _window_size, EXEC_UNIT_RES* exeUnit_pool)
+{
     ///// minimum uop window is 10
     assert(_window_size >= 10);
+    assert(exeUnit_pool != nullptr);
     window_size = _window_size;
-    //// this is used for record who is the latest modifier
+    ///// insert new dep help to depHelperPool
+    depHelperPool.resize(DEP_HELP_IDX::HELP_SIZE);
+    depHelperPool[DEP_HELP_IDX::HELP_REG] = new DEP_HELP_REG();
+    depHelperPool[DEP_HELP_IDX::HELP_ISS_BAR] = new DEP_HELP_ISS_BARIER(exeUnit_pool);
 
 }
 

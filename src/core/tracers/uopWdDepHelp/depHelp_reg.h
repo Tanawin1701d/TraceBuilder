@@ -7,7 +7,7 @@
 
 #include"depHelpBase.h"
 
-class DEP_HELP_REG: DEP_HELP_BASE{
+class DEP_HELP_REG: public DEP_HELP_BASE{
 private:
     ////// last uop that fill data to the regId
     UOP_BASE* lastOwnerReg[MAXREG_AMT]; /// use regId as index to access array

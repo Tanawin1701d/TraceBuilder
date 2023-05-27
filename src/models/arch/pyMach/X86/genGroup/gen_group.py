@@ -9,11 +9,13 @@ class MOP_GROUP_COMP(mop_group.MOP_GROUP_BASE):
     decKeys0 = ["ADC" , "ADD", "AND" , "OR" , "ROL",
                 "ROR" , "SAL", "SAR" , "SBB", "SHL",
                 "SHLD", "SHR", "SHRD", "SUB", "XCHG", "XOR",
-                "CMP" , "INC", "RCL" , "RCR", "V64_COMP", "JMP"]
+                "CMP" , "INC", "RCL" , "RCR",  "JMP"]
 
-    decKeys1 = ["MUL", "IMUL", "MULX", "V64_MUL"]
+    decKeys1 = ["MUL", "IMUL", "MULX", "DIV", "IDIV"]
 
-    decKeys2 = ["DIV", "IDIV", "V64_DIV"]
+    decKeys2 = ["V64_COMP"]
+
+    decKeys3 = ["V64_MUL", "V64_DIV"]
 
     srcOpr   = [opr.OPR_REG, opr.OPR_IMM, opr.OPR_MEM]
 
@@ -23,24 +25,23 @@ class MOP_GROUP_COMP(mop_group.MOP_GROUP_BASE):
     def __init__(self):
         ###### simple alu
         super().__init__(5, mop_alu_x86.MOP_COMP_ALL)
-        self.addMopArgExtractComb((self.srcOpr, self.srcOpr, self.desOpr,["SIM_ALU"], [self.decKeys0]))
-        self.addMopArgExtractComb((self.srcOpr, self.srcOpr, self.desOpr,["MUL_ALU"], [self.decKeys1]))
-        self.addMopArgExtractComb((self.srcOpr, self.srcOpr, self.desOpr,["DIV_ALU"], [self.decKeys2]))
+        self.addMopArgExtractComb((self.srcOpr, self.srcOpr, self.desOpr, ["INT_SIM_ALU"]      , [self.decKeys0]))
+        self.addMopArgExtractComb((self.srcOpr, self.srcOpr, self.desOpr, ["INT_MUL_DIV_ALU"]  , [self.decKeys1]))
+        self.addMopArgExtractComb((self.srcOpr, self.srcOpr, self.desOpr, ["SIM128_ALU"]       , [self.decKeys2]))
+        self.addMopArgExtractComb((self.srcOpr, self.srcOpr, self.desOpr, ["SIM128_ALU"]       , [self.decKeys3]))
 
 
 class MOP_GROUP_COMP128(mop_group.MOP_GROUP_BASE):
     decKeys0 = ["V128_COMP"]
-    decKeys1 = ["V128_MUL"]
-    decKeys2 = ["V128_DIV"]
+    decKeys1 = ["V128_MUL","V128_DIV"]
 
     srcOpr = [opr.OPR_REG, opr.OPR_IMM, opr.OPR_MEM]
     desOpr = [opr.OPR_REG, opr.OPR_MEM]
 
     def __init__(self):
         super().__init__(5, mop_alu_x86.MOP_COMP128_ALL)
-        self.addMopArgExtractComb((self.srcOpr, self.srcOpr, self.desOpr,["SIM128_ALU"], [self.decKeys0]))
-        self.addMopArgExtractComb((self.srcOpr, self.srcOpr, self.desOpr,["MUL128_ALU"], [self.decKeys0]))
-        self.addMopArgExtractComb((self.srcOpr, self.srcOpr, self.desOpr,["DIV128_ALU"], [self.decKeys0]))
+        self.addMopArgExtractComb((self.srcOpr, self.srcOpr, self.desOpr,["SIM128_ALU"    ], [self.decKeys0]))
+        self.addMopArgExtractComb((self.srcOpr, self.srcOpr, self.desOpr,["SIM128_ALU"]    , [self.decKeys1]))
 
 ###### mov mop group
 

@@ -8,7 +8,7 @@
 #include"depHelpBase.h"
 #include<deque>
 
-class DEP_HELP_ISS_BARIER: DEP_HELP_BASE{
+class DEP_HELP_ISS_BARIER: public DEP_HELP_BASE{
 private:
     std::deque<UOP_BASE*> units[MAX_UNIT_ID];
     EXEC_UNIT_RES* exe_unit_info;

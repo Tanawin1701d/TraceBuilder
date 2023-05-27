@@ -114,7 +114,7 @@ class UOP_BASE:
         for opr in self.io_output.getOprs():
             cppFile = cppFile + "       " + opr.genCXX_callAddMeta() + ";\n"
 
-        if self.execUnit < 0 :
+        if self.execUnit < -1 :
             raise(UopUsageError(f"uop cpp generating fail! due to invalid exec_unit or forget to assign exec unit : {str(self.execUnit)}"))
 
         ######### set type and exec unit

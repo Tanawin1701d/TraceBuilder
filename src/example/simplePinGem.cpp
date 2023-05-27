@@ -33,13 +33,18 @@ SIMPLE_PIN_GEM::start(){
     MEM_MNG*       memMng        = new MEM_MNG(12, 6, memSize, 0);
     X86_DECODER*   x86Dec        = new X86_DECODER();
     EXEC_UNIT_RES* execUnit_info = new EXEC_UNIT_RES(9,10);
-    execUnit_info->setMaxAvailable(1,5);
-    execUnit_info->setMaxAvailable(2,3);
-    execUnit_info->setMaxAvailable(3,2);
-    execUnit_info->setMaxAvailable(4,1);
-    execUnit_info->setMaxAvailable(5,1);
-    execUnit_info->setMaxAvailable(6,1);
-    execUnit_info->setMaxAvailable(7,10);
+    execUnit_info->setMaxAvailable(1,6); ///"INT_SIM_ALU"
+    execUnit_info->setMaxAvailable(2,2); ///"INT_MUL_DIV_ALU"
+    execUnit_info->setMaxAvailable(3,4); ///"FLOAT_SIM_ALU"
+    execUnit_info->setMaxAvailable(4,2); ///"FLOAT_MUL_DIV_ALU"
+    execUnit_info->setMaxAvailable(5,1); ///"SIM128_ALU"
+    execUnit_info->setMaxAvailable(6,4); ///"MOV_MEM_LD"
+    execUnit_info->setLatencyCycle(1,1); ///"INT_SIM_ALU"
+    execUnit_info->setLatencyCycle(2,3); ///"INT_MUL_DIV_ALU"
+    execUnit_info->setLatencyCycle(3,2); ///"FLOAT_SIM_ALU"
+    execUnit_info->setLatencyCycle(4,4); ///"FLOAT_MUL_DIV_ALU"
+    execUnit_info->setLatencyCycle(5,1); ///"SIM128_ALU"
+    execUnit_info->setLatencyCycle(6,1); ///"MOV_MEM_LD"
     //////// core start
     CORE*  traceCore = new CORE(memMng, x86Dec, execUnit_info);
     traceCore->addWorker(pinTracer, gemFrontend, 100);

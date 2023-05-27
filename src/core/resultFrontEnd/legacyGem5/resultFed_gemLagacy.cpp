@@ -55,7 +55,7 @@ RESULT_FRONT_END_GEM_LAGACY::onGetUopsResult(
         ProtoMessage::InstDepRecord dep_pkt;
         dep_pkt.set_seq_num(uop->getSeqNum());
         dep_pkt.set_flags(0);
-        dep_pkt.set_comp_delay(500);
+        dep_pkt.set_comp_delay(execUnit_info->getLatencyCycle(uop->getExecUnit()) * 500);
         dep_pkt.set_weight(1);
         dep_pkt.set_pc(0);
         ///////////////////////////////////////////////////////
@@ -68,8 +68,12 @@ RESULT_FRONT_END_GEM_LAGACY::onGetUopsResult(
             dep_pkt.add_reg_dep(regDepUop->getSeqNum());
         }
         for (auto* tempRegDepUop: uop->getTemDep()){
-            MAIN_STAT["DepGem5"]["reg"].asUINT()++;
+            MAIN_STAT["DepGem5"]["Treg"].asUINT()++;
             dep_pkt.add_reg_dep(tempRegDepUop->getSeqNum());
+        }
+        for (auto* execDepUop : uop->getExecDep()){
+            MAIN_STAT["DepGem5"]["Exec"].asUINT()++;
+            dep_pkt.add_reg_dep(execDepUop->getSeqNum());
         }
         for (auto* memDepUop: uop->getMemDep()){
             MAIN_STAT["DepGem5"]["mem"].asUINT()++;
@@ -120,4 +124,9 @@ RESULT_FRONT_END_GEM_LAGACY::onGetUopsResult(
     instr_pkt.set_size(4);
     instrProtoStream->write(instr_pkt);
 
+}
+
+void RESULT_FRONT_END_GEM_LAGACY::setExecUnit_info(EXEC_UNIT_RES *_execUnit_info) {
+    assert(_execUnit_info != nullptr);
+    execUnit_info = _execUnit_info;
 }
