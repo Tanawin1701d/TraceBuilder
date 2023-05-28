@@ -29,8 +29,8 @@ struct RT_OBJ{
     uint64_t loadAddr     [maxMemOpPerLS];
     uint64_t storeAddr    [maxMemOpPerLS];
     uint32_t fetchId;
-    uint8_t  loadMemOpNum [maxMemOpPerLS];
-    uint8_t  storeMemOpNum[maxMemOpPerLS];
+    uint8_t  amt_load;
+    uint8_t  amt_store;
 };
 #pragma pack(pop)
 
@@ -75,14 +75,14 @@ std::string getDebugOutcome(const RT_OBJ& obj) {
     }
     ss.seekp(-2, ss.cur);
     ss << "], fetchId: " << std::dec << obj.fetchId << ", loadMemOpNum: [";
-    for (int i = 0; i < 2; i++) {
-        ss << (int)obj.loadMemOpNum[i] << ", ";
-    }
+    // for (int i = 0; i < 2; i++) {
+    //     ss << (int)obj.loadMemOpNum[i] << ", ";
+    // }
     ss.seekp(-2, ss.cur);
     ss << "], storeMemOpNum: [";
-    for (int i = 0; i < 2; i++) {
-        ss << (int)obj.storeMemOpNum[i] << ", ";
-    }
+    // for (int i = 0; i < 2; i++) {
+    //     ss << (int)obj.storeMemOpNum[i] << ", ";
+    // }
     ss.seekp(-2, ss.cur);
     ss << "]";
     return ss.str();
@@ -99,25 +99,23 @@ VOID flushRuntimeData(){
 VOID bufferInitialize(UINT32 initIdx){
 
     for (uint32_t i = 0; i < maxMemOpPerLS; i++){
-        preWriteRt[initIdx].loadMemOpNum [i] = UNUSED_MEMOP;
-        preWriteRt[initIdx].storeMemOpNum[i] = UNUSED_MEMOP;
+        preWriteRt[initIdx].amt_load  = 0;
+        preWriteRt[initIdx].amt_store = 0;
     }
 
 }
 
-VOID L_TRACE(ADDRINT addr, UINT32 lsFieldId, UINT32 memop){
-    preWriteRt[preWriteRt_idx].loadAddr    [lsFieldId] = addr;
-    preWriteRt[preWriteRt_idx].loadMemOpNum[lsFieldId] = (uint8_t)memop;
+VOID L_TRACE(ADDRINT addr, UINT32 lsFieldId){
+    preWriteRt[preWriteRt_idx].loadAddr[ lsFieldId ] = addr;
+    preWriteRt[preWriteRt_idx].amt_load++;
 }
 
-VOID S_TRACE(ADDRINT addr, UINT32 lsFieldId, UINT32 memop){
-    preWriteRt[preWriteRt_idx].storeAddr    [lsFieldId] = addr;     // update address;
-    preWriteRt[preWriteRt_idx].storeMemOpNum[lsFieldId] = (uint8_t)memop; //update memory operand number
+VOID S_TRACE(ADDRINT addr, UINT32 lsFieldId){
+    preWriteRt[preWriteRt_idx].storeAddr[lsFieldId] = addr;     // update address;
+    preWriteRt[preWriteRt_idx].amt_store++;
 }
 
-VOID ButtomEachIntr(
-        UINT32 fetchId
-                ){
+VOID ButtomEachIntr(UINT32 fetchId){
     preWriteRt[preWriteRt_idx].fetchId = fetchId;
     //// we print debug before debug
     //preWriteRuntimeDebg += getDebugOutcome(preWriteRt[preWriteRt_idx]) + '\n';
@@ -133,8 +131,6 @@ VOID ButtomEachIntr(
     /// initilize for next instruction
     /// this is crucial due to inconsistent state exist
     bufferInitialize(preWriteRt_idx);
-
-
 }
 
 // The Instruction function is called for every instruction
@@ -300,7 +296,6 @@ VOID Instruction(INS ins, VOID* v)
                                     (AFUNPTR)L_TRACE,
                                     IARG_MEMORYOP_EA, memOp,
                                     IARG_UINT32, loaded_amt,
-                                    IARG_UINT32, memOp,
                                     IARG_END
                                     );
                     loaded_amt++;
@@ -373,9 +368,9 @@ VOID Instruction(INS ins, VOID* v)
         }
         ///////// add pseudo suffix operand size
         if (opr_count == 2){
-            preWrite += "PSEUDO_MOV";
+            preWrite += "MOV";
         }else{
-            preWrite += "PSEUDO_COMP";
+            preWrite += "COMP";
         }
     }else{
         preWrite += INS_Mnemonic(ins);

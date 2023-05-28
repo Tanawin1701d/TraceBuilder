@@ -135,6 +135,7 @@ class UOP_BASE:
                 cppFile = cppFile + "   doRegDepenCheck(uop_window);\n"
             if (oprSm.OPR_MEM in self.io_input.getOprTypes()) or (oprSm.OPR_MEM in self.io_output.getOprTypes()):
                 cppFile = cppFile + "   doMemDepenCheck(uop_window);\n"
+            cppFile = cppFile + "   doExecDepenCheck(uop_window);\n"
         else:
             UopUsageError("manual depencheck is not available for this version")
         cppFile = cppFile + "}\n"

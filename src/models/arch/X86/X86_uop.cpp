@@ -9,6 +9,7 @@ void INT_SIM_ALU$R_R$R$1::addMeta(OPR_REG& opr_r_src_0, OPR_REG& opr_r_src_1 ,OP
 }
 void INT_SIM_ALU$R_R$R$1::doDepenCheck(UOP_WINDOW* uop_window){
    doRegDepenCheck(uop_window);
+   doExecDepenCheck(uop_window);
 }
 ///////////////////////////////////////////////////////////////
 
@@ -23,6 +24,7 @@ void INT_SIM_ALU$R_R$T$1::addMeta(OPR_REG& opr_r_src_0, OPR_REG& opr_r_src_1 ,OP
 }
 void INT_SIM_ALU$R_R$T$1::doDepenCheck(UOP_WINDOW* uop_window){
    doRegDepenCheck(uop_window);
+   doExecDepenCheck(uop_window);
 }
 ///////////////////////////////////////////////////////////////
 
@@ -36,6 +38,7 @@ void MOV_MEM_ST$T$M$99::addMeta(OPR_TREG& opr_preDes ,OPR_MEM& opr_m_des_0){
 }
 void MOV_MEM_ST$T$M$99::doDepenCheck(UOP_WINDOW* uop_window){
    doMemDepenCheck(uop_window);
+   doExecDepenCheck(uop_window);
 }
 ///////////////////////////////////////////////////////////////
 
@@ -48,6 +51,7 @@ void MOV_MEM_LD$I$T$6::addMeta(OPR_IMM& opr_i_src_1 ,OPR_TREG& opr_t_1){
        setExecUnit(6);
 }
 void MOV_MEM_LD$I$T$6::doDepenCheck(UOP_WINDOW* uop_window){
+   doExecDepenCheck(uop_window);
 }
 ///////////////////////////////////////////////////////////////
 
@@ -62,6 +66,7 @@ void INT_SIM_ALU$R_T$R$1::addMeta(OPR_REG& opr_r_src_0, OPR_TREG& opr_t_1 ,OPR_R
 }
 void INT_SIM_ALU$R_T$R$1::doDepenCheck(UOP_WINDOW* uop_window){
    doRegDepenCheck(uop_window);
+   doExecDepenCheck(uop_window);
 }
 ///////////////////////////////////////////////////////////////
 
@@ -76,6 +81,7 @@ void INT_SIM_ALU$R_T$T$1::addMeta(OPR_REG& opr_r_src_0, OPR_TREG& opr_t_1 ,OPR_T
 }
 void INT_SIM_ALU$R_T$T$1::doDepenCheck(UOP_WINDOW* uop_window){
    doRegDepenCheck(uop_window);
+   doExecDepenCheck(uop_window);
 }
 ///////////////////////////////////////////////////////////////
 
@@ -89,6 +95,7 @@ void MOV_MEM_LD$M$T$6::addMeta(OPR_MEM& opr_m_src_1 ,OPR_TREG& opr_t_1){
 }
 void MOV_MEM_LD$M$T$6::doDepenCheck(UOP_WINDOW* uop_window){
    doMemDepenCheck(uop_window);
+   doExecDepenCheck(uop_window);
 }
 ///////////////////////////////////////////////////////////////
 
@@ -103,6 +110,7 @@ void INT_SIM_ALU$T_R$R$1::addMeta(OPR_TREG& opr_t_0, OPR_REG& opr_r_src_1 ,OPR_R
 }
 void INT_SIM_ALU$T_R$R$1::doDepenCheck(UOP_WINDOW* uop_window){
    doRegDepenCheck(uop_window);
+   doExecDepenCheck(uop_window);
 }
 ///////////////////////////////////////////////////////////////
 
@@ -117,6 +125,7 @@ void INT_SIM_ALU$T_R$T$1::addMeta(OPR_TREG& opr_t_0, OPR_REG& opr_r_src_1 ,OPR_T
 }
 void INT_SIM_ALU$T_R$T$1::doDepenCheck(UOP_WINDOW* uop_window){
    doRegDepenCheck(uop_window);
+   doExecDepenCheck(uop_window);
 }
 ///////////////////////////////////////////////////////////////
 
@@ -130,6 +139,7 @@ void INT_SIM_ALU$T_T$R$1::addMeta(OPR_TREG& opr_t_0, OPR_TREG& opr_t_1 ,OPR_REG&
        setExecUnit(1);
 }
 void INT_SIM_ALU$T_T$R$1::doDepenCheck(UOP_WINDOW* uop_window){
+   doExecDepenCheck(uop_window);
 }
 ///////////////////////////////////////////////////////////////
 
@@ -143,6 +153,7 @@ void INT_SIM_ALU$T_T$T$1::addMeta(OPR_TREG& opr_t_0, OPR_TREG& opr_t_1 ,OPR_TREG
        setExecUnit(1);
 }
 void INT_SIM_ALU$T_T$T$1::doDepenCheck(UOP_WINDOW* uop_window){
+   doExecDepenCheck(uop_window);
 }
 ///////////////////////////////////////////////////////////////
 
@@ -157,6 +168,7 @@ void INT_MUL_DIV_ALU$R_R$R$2::addMeta(OPR_REG& opr_r_src_0, OPR_REG& opr_r_src_1
 }
 void INT_MUL_DIV_ALU$R_R$R$2::doDepenCheck(UOP_WINDOW* uop_window){
    doRegDepenCheck(uop_window);
+   doExecDepenCheck(uop_window);
 }
 ///////////////////////////////////////////////////////////////
 
@@ -171,6 +183,7 @@ void INT_MUL_DIV_ALU$R_R$T$2::addMeta(OPR_REG& opr_r_src_0, OPR_REG& opr_r_src_1
 }
 void INT_MUL_DIV_ALU$R_R$T$2::doDepenCheck(UOP_WINDOW* uop_window){
    doRegDepenCheck(uop_window);
+   doExecDepenCheck(uop_window);
 }
 ///////////////////////////////////////////////////////////////
 
@@ -185,6 +198,7 @@ void INT_MUL_DIV_ALU$R_T$R$2::addMeta(OPR_REG& opr_r_src_0, OPR_TREG& opr_t_1 ,O
 }
 void INT_MUL_DIV_ALU$R_T$R$2::doDepenCheck(UOP_WINDOW* uop_window){
    doRegDepenCheck(uop_window);
+   doExecDepenCheck(uop_window);
 }
 ///////////////////////////////////////////////////////////////
 
@@ -199,6 +213,7 @@ void INT_MUL_DIV_ALU$R_T$T$2::addMeta(OPR_REG& opr_r_src_0, OPR_TREG& opr_t_1 ,O
 }
 void INT_MUL_DIV_ALU$R_T$T$2::doDepenCheck(UOP_WINDOW* uop_window){
    doRegDepenCheck(uop_window);
+   doExecDepenCheck(uop_window);
 }
 ///////////////////////////////////////////////////////////////
 
@@ -213,6 +228,7 @@ void INT_MUL_DIV_ALU$T_R$R$2::addMeta(OPR_TREG& opr_t_0, OPR_REG& opr_r_src_1 ,O
 }
 void INT_MUL_DIV_ALU$T_R$R$2::doDepenCheck(UOP_WINDOW* uop_window){
    doRegDepenCheck(uop_window);
+   doExecDepenCheck(uop_window);
 }
 ///////////////////////////////////////////////////////////////
 
@@ -227,6 +243,7 @@ void INT_MUL_DIV_ALU$T_R$T$2::addMeta(OPR_TREG& opr_t_0, OPR_REG& opr_r_src_1 ,O
 }
 void INT_MUL_DIV_ALU$T_R$T$2::doDepenCheck(UOP_WINDOW* uop_window){
    doRegDepenCheck(uop_window);
+   doExecDepenCheck(uop_window);
 }
 ///////////////////////////////////////////////////////////////
 
@@ -240,6 +257,7 @@ void INT_MUL_DIV_ALU$T_T$R$2::addMeta(OPR_TREG& opr_t_0, OPR_TREG& opr_t_1 ,OPR_
        setExecUnit(2);
 }
 void INT_MUL_DIV_ALU$T_T$R$2::doDepenCheck(UOP_WINDOW* uop_window){
+   doExecDepenCheck(uop_window);
 }
 ///////////////////////////////////////////////////////////////
 
@@ -253,6 +271,7 @@ void INT_MUL_DIV_ALU$T_T$T$2::addMeta(OPR_TREG& opr_t_0, OPR_TREG& opr_t_1 ,OPR_
        setExecUnit(2);
 }
 void INT_MUL_DIV_ALU$T_T$T$2::doDepenCheck(UOP_WINDOW* uop_window){
+   doExecDepenCheck(uop_window);
 }
 ///////////////////////////////////////////////////////////////
 
@@ -267,6 +286,7 @@ void SIM128_ALU$R_R$R$5::addMeta(OPR_REG& opr_r_src_0, OPR_REG& opr_r_src_1 ,OPR
 }
 void SIM128_ALU$R_R$R$5::doDepenCheck(UOP_WINDOW* uop_window){
    doRegDepenCheck(uop_window);
+   doExecDepenCheck(uop_window);
 }
 ///////////////////////////////////////////////////////////////
 
@@ -281,6 +301,7 @@ void SIM128_ALU$R_R$T$5::addMeta(OPR_REG& opr_r_src_0, OPR_REG& opr_r_src_1 ,OPR
 }
 void SIM128_ALU$R_R$T$5::doDepenCheck(UOP_WINDOW* uop_window){
    doRegDepenCheck(uop_window);
+   doExecDepenCheck(uop_window);
 }
 ///////////////////////////////////////////////////////////////
 
@@ -295,6 +316,7 @@ void SIM128_ALU$R_T$R$5::addMeta(OPR_REG& opr_r_src_0, OPR_TREG& opr_t_1 ,OPR_RE
 }
 void SIM128_ALU$R_T$R$5::doDepenCheck(UOP_WINDOW* uop_window){
    doRegDepenCheck(uop_window);
+   doExecDepenCheck(uop_window);
 }
 ///////////////////////////////////////////////////////////////
 
@@ -309,6 +331,7 @@ void SIM128_ALU$R_T$T$5::addMeta(OPR_REG& opr_r_src_0, OPR_TREG& opr_t_1 ,OPR_TR
 }
 void SIM128_ALU$R_T$T$5::doDepenCheck(UOP_WINDOW* uop_window){
    doRegDepenCheck(uop_window);
+   doExecDepenCheck(uop_window);
 }
 ///////////////////////////////////////////////////////////////
 
@@ -323,6 +346,7 @@ void SIM128_ALU$T_R$R$5::addMeta(OPR_TREG& opr_t_0, OPR_REG& opr_r_src_1 ,OPR_RE
 }
 void SIM128_ALU$T_R$R$5::doDepenCheck(UOP_WINDOW* uop_window){
    doRegDepenCheck(uop_window);
+   doExecDepenCheck(uop_window);
 }
 ///////////////////////////////////////////////////////////////
 
@@ -337,6 +361,7 @@ void SIM128_ALU$T_R$T$5::addMeta(OPR_TREG& opr_t_0, OPR_REG& opr_r_src_1 ,OPR_TR
 }
 void SIM128_ALU$T_R$T$5::doDepenCheck(UOP_WINDOW* uop_window){
    doRegDepenCheck(uop_window);
+   doExecDepenCheck(uop_window);
 }
 ///////////////////////////////////////////////////////////////
 
@@ -350,6 +375,7 @@ void SIM128_ALU$T_T$R$5::addMeta(OPR_TREG& opr_t_0, OPR_TREG& opr_t_1 ,OPR_REG& 
        setExecUnit(5);
 }
 void SIM128_ALU$T_T$R$5::doDepenCheck(UOP_WINDOW* uop_window){
+   doExecDepenCheck(uop_window);
 }
 ///////////////////////////////////////////////////////////////
 
@@ -363,6 +389,7 @@ void SIM128_ALU$T_T$T$5::addMeta(OPR_TREG& opr_t_0, OPR_TREG& opr_t_1 ,OPR_TREG&
        setExecUnit(5);
 }
 void SIM128_ALU$T_T$T$5::doDepenCheck(UOP_WINDOW* uop_window){
+   doExecDepenCheck(uop_window);
 }
 ///////////////////////////////////////////////////////////////
 
@@ -376,6 +403,7 @@ void MOV_REG$R$R$1::addMeta(OPR_REG& opr_r_src_0 ,OPR_REG& opr_x_des_0){
 }
 void MOV_REG$R$R$1::doDepenCheck(UOP_WINDOW* uop_window){
    doRegDepenCheck(uop_window);
+   doExecDepenCheck(uop_window);
 }
 ///////////////////////////////////////////////////////////////
 
@@ -390,6 +418,7 @@ void MOV_REG$R$M$1::addMeta(OPR_REG& opr_r_src_0 ,OPR_MEM& opr_x_des_0){
 void MOV_REG$R$M$1::doDepenCheck(UOP_WINDOW* uop_window){
    doRegDepenCheck(uop_window);
    doMemDepenCheck(uop_window);
+   doExecDepenCheck(uop_window);
 }
 ///////////////////////////////////////////////////////////////
 
@@ -402,6 +431,7 @@ void MOV_MEM_LD$I$R$6::addMeta(OPR_IMM& opr_i_src_0 ,OPR_REG& opr_x_des_0){
        setExecUnit(6);
 }
 void MOV_MEM_LD$I$R$6::doDepenCheck(UOP_WINDOW* uop_window){
+   doExecDepenCheck(uop_window);
 }
 ///////////////////////////////////////////////////////////////
 
@@ -415,6 +445,7 @@ void MOV_MEM_LD$M$R$6::addMeta(OPR_MEM& opr_m_src_0 ,OPR_REG& opr_x_des_0){
 }
 void MOV_MEM_LD$M$R$6::doDepenCheck(UOP_WINDOW* uop_window){
    doMemDepenCheck(uop_window);
+   doExecDepenCheck(uop_window);
 }
 ///////////////////////////////////////////////////////////////
 
@@ -429,4 +460,5 @@ void MOV_MEM_ST$R$M$99::addMeta(OPR_REG& opr_r_src_0 ,OPR_MEM& opr_m_des_0){
 void MOV_MEM_ST$R$M$99::doDepenCheck(UOP_WINDOW* uop_window){
    doRegDepenCheck(uop_window);
    doMemDepenCheck(uop_window);
+   doExecDepenCheck(uop_window);
 }

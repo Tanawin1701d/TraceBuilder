@@ -102,12 +102,11 @@ class MOP_BASE:
                                             VAR_TYPE        = opr.genCXX_varType(),
                                             IDX=str(idx)
                                             )
-        ##### new variable SRC/DES operand
+        ##### new variable TEMP operand
         for idx, opr in enumerate(self.temp_opr.getOprs()):
             ###### declare variable with ref type
-             cppFile = cppFile + "    {VAR_REF_DECLARE} = * (({VAR_TYPE}*)new {VAR_TYPE}());\n"\
-                                    .format(VAR_REF_DECLARE = opr.genCXX_refVarDeclaration(),
-                                            VAR_TYPE        = opr.genCXX_varType()
+             cppFile = cppFile + "    {VAR_DECLARE};\n"\
+                                    .format(VAR_DECLARE = opr.genCXX_varDeclaration(),
                                             )
         cppFile = cppFile + "///////////////////////////////////////////////////////////////////\n"
         ##########################################################################################
@@ -125,6 +124,8 @@ class MOP_BASE:
                     "    {UOP_NAME}->addTemDep({DEP_UOP_NAME});\n".format(UOP_NAME = currentUop.genCXXVarName(),
                                                                        DEP_UOP_NAME = depMop.genCXXVarName()
                                                                        )
+            cppFile = cppFile + \
+                "    results.push_back({UOP_NAME});\n".format(UOP_NAME = currentUop.genCXXVarName())
             cppFile = cppFile + "///////////////////////////////////////////////////////////////////\n"
 
         cppFile = cppFile + "\n}\n"

@@ -69,6 +69,7 @@ TRACER_BASE::cvtLoadOrStoreToPhyAddr(RT_OBJ&           rt_obj,
         memMng->v2pConvert(vAddrs[idx], (int)sizes[idx], phyAddressResult);
         pAddrs[idx] = phyAddressResult[0].addr; ///// for now we assume mem mng return only size of one
     }
+    delete[] sizes;
 
 }
 

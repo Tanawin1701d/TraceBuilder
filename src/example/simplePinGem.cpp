@@ -32,7 +32,7 @@ SIMPLE_PIN_GEM::start(){
     ADDR           memSize       = ((ADDR)1) << (4 + 30);
     MEM_MNG*       memMng        = new MEM_MNG(12, 6, memSize, 0);
     X86_DECODER*   x86Dec        = new X86_DECODER();
-    EXEC_UNIT_RES* execUnit_info = new EXEC_UNIT_RES(9,10);
+    EXEC_UNIT_RES* execUnit_info = new EXEC_UNIT_RES(98,99);
     execUnit_info->setMaxAvailable(1,6); ///"INT_SIM_ALU"
     execUnit_info->setMaxAvailable(2,2); ///"INT_MUL_DIV_ALU"
     execUnit_info->setMaxAvailable(3,4); ///"FLOAT_SIM_ALU"
@@ -45,6 +45,7 @@ SIMPLE_PIN_GEM::start(){
     execUnit_info->setLatencyCycle(4,4); ///"FLOAT_MUL_DIV_ALU"
     execUnit_info->setLatencyCycle(5,1); ///"SIM128_ALU"
     execUnit_info->setLatencyCycle(6,1); ///"MOV_MEM_LD"
+    gemFrontend->setExecUnit_info(execUnit_info);
     //////// core start
     CORE*  traceCore = new CORE(memMng, x86Dec, execUnit_info);
     traceCore->addWorker(pinTracer, gemFrontend, 100);
