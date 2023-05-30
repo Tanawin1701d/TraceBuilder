@@ -36,26 +36,26 @@ class UOP_BASE:
         #UOP_COMP,UOP_LOAD,UOP_STORE,UOP_IMM,
         ###### check that current uop depend on other successor uop
     def isSucInternalDepend(self,sucUop):
-        for sucDesOpr in sucUop.io_output.getOprs():
+        for sucDesOpr in sucUop.io_output.getOprsWoDummy():
             ###### check type that is temporaly register
             if type(sucDesOpr) is oprSm.OPR_TEMP:
-                if sucDesOpr in self.io_input.getOprs():
+                if sucDesOpr in self.io_input.getOprsWoDummy():
                     return True
         return False
 
     ########## genCXX_allPossible will use it to check
-    def isSyntasizable(self, input_oprs: tuple, output_oprs: tuple) -> bool:   ##### list of operand type
-        ####### check sizing
-        if (len(input_oprs) != self.io_input.getSize()) or (len(output_oprs) != self.io_output.getSize()):
-            return False
-
-        for idx, input_opr in enumerate(input_oprs):
-            if type(input_opr) not in self.io_input.getAcceptableTypeOpr(idx):
-                return False
-        for idx, output_opr in enumerate(output_oprs):
-            if type(output_opr) not in self.io_output.getAcceptableTypeOpr(idx):
-                return False
-        return True
+    # def isSyntasizable(self, input_oprs: tuple, output_oprs: tuple) -> bool:   ##### list of operand type
+    #     ####### check sizing
+    #     if (len(input_oprs) != self.io_input.getSize()) or (len(output_oprs) != self.io_output.getSize()):
+    #         return False
+    #
+    #     for idx, input_opr in enumerate(input_oprs):
+    #         if type(input_opr) not in self.io_input.getAcceptableTypeOpr(idx):
+    #             return False
+    #     for idx, output_opr in enumerate(output_oprs):
+    #         if type(output_opr) not in self.io_output.getAcceptableTypeOpr(idx):
+    #             return False
+    #     return True
 
     def addIo(self, _inputs: list, _outputs: list):
         ####### in this version we assume _input and _output is fully use
@@ -75,7 +75,7 @@ class UOP_BASE:
     ####### paramlist for c++ that have variable type for example    "OPR_REG& r1, OPR_REG& r2, OPR_MEM& r3"
     def genCXX_refIoParamListDeclaration(self):
         preRet : str
-        BothSide = (self.io_input.getSize() > 0) and (self.io_output.getSize() > 0)
+        BothSide = (self.io_input.getSizeWoDummy() > 0) and (self.io_output.getSizeWoDummy() > 0)
         preRet = self.io_input.genCXX_refVarDeclaration() + \
                  (" ," if BothSide else " ") + \
                  self.io_output.genCXX_refVarDeclaration()
@@ -83,7 +83,7 @@ class UOP_BASE:
 
     def genCXX_callIoParamList(self):
         preRet : str
-        BothSide = (self.io_input.getSize() > 0) and (self.io_output.getSize() > 0)
+        BothSide = (self.io_input.getSizeWoDummy() > 0) and (self.io_output.getSizeWoDummy() > 0)
         preRet = self.io_input.genCXX_call() + \
                  (" ," if BothSide else " ") + \
                  self.io_output.genCXX_call()
@@ -109,9 +109,9 @@ class UOP_BASE:
                                             PARAMLIST=self.genCXX_refIoParamListDeclaration()
                                             )
         ######## for reg or mem operand lets it call operand and add it to dep group
-        for opr in self.io_input.getOprs():
+        for opr in self.io_input.getOprsWoDummy():
             cppFile = cppFile + "       " + opr.genCXX_callAddMeta() + ";\n"
-        for opr in self.io_output.getOprs():
+        for opr in self.io_output.getOprsWoDummy():
             cppFile = cppFile + "       " + opr.genCXX_callAddMeta() + ";\n"
 
         if self.execUnit < -1 :
@@ -131,9 +131,9 @@ class UOP_BASE:
             "void {UOP_TYPE}::doDepenCheck(UOP_WINDOW* uop_window){{\n".format(UOP_TYPE=self.genCXXType())
 
         if self.isAutodepenCheck:
-            if oprSm.OPR_REG in self.io_input.getOprTypes():
+            if oprSm.OPR_REG in self.io_input.getOprTypesWoDummy():
                 cppFile = cppFile + "   doRegDepenCheck(uop_window);\n"
-            if (oprSm.OPR_MEM in self.io_input.getOprTypes()) or (oprSm.OPR_MEM in self.io_output.getOprTypes()):
+            if (oprSm.OPR_MEM in self.io_input.getOprTypesWoDummy()) or (oprSm.OPR_MEM in self.io_output.getOprTypesWoDummy()):
                 cppFile = cppFile + "   doMemDepenCheck(uop_window);\n"
             cppFile = cppFile + "   doExecDepenCheck(uop_window);\n"
         else:
@@ -147,47 +147,3 @@ class UOP_BASE:
     def genCXX_all(self):
             ######  uuid                   header            c++ code
             return self.genCXXType(), self.genCXX_header(), self.genCXX_cpp()
-
-
-    # def genPseudoOpr(self, isInput : bool, opr_name_prefix: str):
-    #     targetOprList  = self.io_input if isInput else self.io_output
-    #     ###### it is list of set of operand type
-    #     for oprs in itertools.product(*targetOprList.getAcceptableTypeOprs()):
-    #         for idx, MY_OPR in enumerate(oprs):  #### MY_OPR is operand CLASS template
-    #             if MY_OPR is oprSm.OPR_REG:
-    #                 targetOprList.setOpr(idx, MY_OPR(opr_name_prefix + str(idx), isInput), True)
-    #             elif MY_OPR is oprSm.OPR_MEM:
-    #                 targetOprList.setOpr(idx, MY_OPR(opr_name_prefix + str(idx), isInput), True)
-    #             elif MY_OPR is oprSm.OPR_TEMP:
-    #                 targetOprList.setOpr(idx, MY_OPR(opr_name_prefix + str(idx))      , True)
-    #             elif MY_OPR is oprSm.OPR_IMM:
-    #                 targetOprList.setOpr(idx, MY_OPR(opr_name_prefix + str(idx))      , True)
-    #             else:
-    #                 ##### none type will occure here
-    #                 UopUsageError(f"[UOP gen] can not set un recognize type as operand {MY_OPR}")
-    #         yield
-    #
-    # def genCXX_allPossible(self):
-    #     self.io_input.clearOprMember()
-    #     self.io_output.clearOprMember()
-    #     ########## in case both input and output have their at least one operand
-    #     if (self.io_input.getSize()  != 0) and (self.io_output.getSize()  != 0):
-    #         for _ in self.genPseudoOpr(True, "a"):
-    #             for _ in self.genPseudoOpr(False, "b"):
-    #                 yield self.genCXXType(), self.genCXX_header(), self.genCXX_cpp()
-    #         return
-    #     ########## in case there are only input but output is 0 membership
-    #     if self.io_input.getSize() != 0:
-    #         for _ in self.genPseudoOpr(True, "a"):
-    #             yield self.genCXXType(), self.genCXX_header(), self.genCXX_cpp()
-    #         return
-    #
-    #     ########## in case there are only output but output is 0 membership
-    #     if self.io_output.getSize() != 0:
-    #         for _ in self.genPseudoOpr(False, "b"):
-    #             yield self.genCXXType(), self.genCXX_header(), self.genCXX_cpp()
-    #         return
-    #
-    #     ########## in case there is no operand in uop
-    #     yield self.genCXXType(), self.genCXX_header(), self.genCXX_cpp()
-    #     return

@@ -6,9 +6,12 @@ cxxTypeToExecUnit = {
     "FLOAT_SIM_ALU": 3,
     "FLOAT_MUL_DIV_ALU": 4,
     "SIM128_ALU" : 5,
+    "SIM64_ALU"  : 5,
     "MOV_MEM_LD" : 6,
     "MOV_MEM_ST" : ExecUnit_dummy,
-    "MOV_REG"    : 1
+    "MOV_REG"    : 1,
+    "CMP_SIM_ALU": 1,
+    "JMP_SIM_ALU": 1
 
 }
 

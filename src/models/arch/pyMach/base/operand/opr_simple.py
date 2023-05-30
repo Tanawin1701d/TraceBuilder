@@ -68,3 +68,14 @@ class OPR_IMM(opr_base.OPR_BASE):
 
     def genCXX_callAddMeta(self) -> str:
         return "/* imm had no meta data*/"
+
+
+class OPR_DUMMY(opr_base.OPR_BASE):
+    def getVarType(self):
+        return OPR_DUMMY
+
+    def __init__(self, _name: str):
+        super().__init__(_name, "OPR_DUMMY", True, "X")
+
+    def genCXX_callAddMeta(self) -> str:
+        raise opr_base.OperandUsageError("can not call addMeta in DUMMY OPERAND")

@@ -40,6 +40,6 @@ void DEP_HELP_ISS_BARIER::assignDepHelp(UOP_BASE *uop, UOP_WINDOW *wd) {
     assert(maxAvailableUnit > 0);
     if (units[execId].size() >= maxAvailableUnit){
         int targetDepUnitIdx = maxAvailableUnit - 1;
-        uop->addExecDep(units[targetDepUnitIdx][targetDepUnitIdx]);
+        uop->addExecDep(units[execId][targetDepUnitIdx]);
     }
 }

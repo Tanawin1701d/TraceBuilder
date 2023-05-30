@@ -78,9 +78,14 @@ uintptr_t decStr2uint(std::string raw) {
 
 std::string concatVec ( std::vector<std::string>& raws, std::string catTok){
     std::string preRet;
+    bool isFirst = true;
     for (auto& e : raws){
+        if (isFirst){
+            isFirst = false;
+        }else{
+            preRet += catTok;
+        }
         preRet += e;
-        preRet += catTok;
     }
     return preRet;
 }

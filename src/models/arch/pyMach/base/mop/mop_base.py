@@ -1,5 +1,5 @@
 import base.operand.listOpr as oprLs
-import base.operand.opr_simple as oprSim
+import base.operand.opr_simple as opr_simple
 
 class MopUsageError(Exception):
     def __init__(self, message):
@@ -87,7 +87,7 @@ class MOP_BASE:
 
         ##########################################################################################
         ##### new represent SRC EXTERNAL operand
-        for idx, opr in enumerate(self.io_input.getOprs()):
+        for idx, opr in enumerate(self.io_input.getOprsWoDummy()):
             ###### declare variable with ref type
              cppFile = cppFile + "    {VAR_REF_DECLARE} = * (({VAR_TYPE}*)srcPool[{IDX}]);\n"\
                                     .format(VAR_REF_DECLARE = opr.genCXX_refVarDeclaration(),
@@ -95,7 +95,7 @@ class MOP_BASE:
                                             IDX             =  str(idx)
                                             )
         ##### new represent DES EXTERNAL operand
-        for idx, opr in enumerate(self.io_output.getOprs()):
+        for idx, opr in enumerate(self.io_output.getOprsWoDummy()):
             ###### declare variable with ref type
              cppFile = cppFile + "    {VAR_REF_DECLARE} = * (({VAR_TYPE}*)desPool[{IDX}]);\n"\
                                     .format(VAR_REF_DECLARE = opr.genCXX_refVarDeclaration(),
@@ -103,7 +103,7 @@ class MOP_BASE:
                                             IDX=str(idx)
                                             )
         ##### new variable TEMP operand
-        for idx, opr in enumerate(self.temp_opr.getOprs()):
+        for idx, opr in enumerate(self.temp_opr.getOprsWoDummy()):
             ###### declare variable with ref type
              cppFile = cppFile + "    {VAR_DECLARE};\n"\
                                     .format(VAR_DECLARE = opr.genCXX_varDeclaration(),

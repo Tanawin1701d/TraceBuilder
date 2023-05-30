@@ -68,8 +68,7 @@ STAT& STAT::operator[](std::string key) {
 
 ///////// stat manager
 
-void STAT_MNG::preparePrint( std::vector<std::string>& prefixs,
-                      STAT *stat) {
+void STAT_MNG::preparePrint( std::vector<std::string>& prefixs, STAT *stat) {
 
     assert(stat != nullptr);
 
@@ -91,6 +90,7 @@ void STAT_MNG::print(){
     for (size_t idx = 0; idx < keys.size(); idx++){
         std::cout << keys[idx]
                   << genRepeatStr(maxLength - keys[idx].size(), " ")
+                  << " "
                   << values[idx]
                   << "\n";
     }
