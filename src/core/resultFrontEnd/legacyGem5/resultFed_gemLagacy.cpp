@@ -6,10 +6,25 @@
 
 
 RESULT_FRONT_END_GEM_LAGACY::
-RESULT_FRONT_END_GEM_LAGACY(const std::string& filePath_data, const std::string& filePath_instr)
+RESULT_FRONT_END_GEM_LAGACY(const std::string& filePath_data,
+                            const std::string& filePath_instr,
+                            const int freq,
+                            const int windowSize)
 : lastTick(0){
-    dataProtoStream  = new ProtoOutputStream(filePath_data) ;
     instrProtoStream = new ProtoOutputStream(filePath_instr);
+    dataProtoStream  = new ProtoOutputStream(filePath_data) ;
+    ////// write header for instruction dep trace
+    ProtoMessage::PacketHeader inst_pkt_header;
+    inst_pkt_header.set_obj_id("gem5");
+    inst_pkt_header.set_tick_freq(freq);
+    instrProtoStream->write(inst_pkt_header);
+    ////// write header for data dep trace
+    ProtoMessage::InstDepRecordHeader data_rec_header;
+    data_rec_header.set_obj_id("gem5");
+    data_rec_header.set_tick_freq(freq);
+    data_rec_header.set_window_size(windowSize);
+    dataProtoStream->write(data_rec_header);
+
 }
 
 RESULT_FRONT_END_GEM_LAGACY::~RESULT_FRONT_END_GEM_LAGACY() {

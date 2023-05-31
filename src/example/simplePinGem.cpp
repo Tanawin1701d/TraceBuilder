@@ -26,7 +26,7 @@ SIMPLE_PIN_GEM::start(){
     ///////// front end from pintool and gem5
 
     LAGACY_PIN_TRACER*           pinTracer   = new LAGACY_PIN_TRACER(inputPinFile_instr, inputPinFile_data);
-    RESULT_FRONT_END_GEM_LAGACY* gemFrontend = new RESULT_FRONT_END_GEM_LAGACY (outProtoFile_data, outProtoFile_instr);
+    RESULT_FRONT_END_GEM_LAGACY* gemFrontend = new RESULT_FRONT_END_GEM_LAGACY (outProtoFile_data, outProtoFile_instr, 1000000000, 100);
 
     //////// mem manager && decoder
     ADDR           memSize       = ((ADDR)1) << (4 + 30);

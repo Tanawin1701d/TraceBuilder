@@ -22,7 +22,9 @@ private:
 public:
 
     RESULT_FRONT_END_GEM_LAGACY(const std::string& filePath_data,
-                                const std::string& filePath_instr);
+                                const std::string& filePath_instr,
+                                const int freq,
+                                const int windowSize); ///// tick per/sec
 
     ~RESULT_FRONT_END_GEM_LAGACY();
 
