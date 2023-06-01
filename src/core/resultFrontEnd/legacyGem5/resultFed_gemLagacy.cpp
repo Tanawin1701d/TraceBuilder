@@ -134,7 +134,7 @@ RESULT_FRONT_END_GEM_LAGACY::onGetUopsResult(
     ProtoMessage::Packet instr_pkt;
     lastTick += 500;
     instr_pkt.set_tick(lastTick);
-    instr_pkt.set_cmd(0);
+    instr_pkt.set_cmd(1);
     instr_pkt.set_addr(lastTick % 1000000);
     instr_pkt.set_size(4);
     instrProtoStream->write(instr_pkt);

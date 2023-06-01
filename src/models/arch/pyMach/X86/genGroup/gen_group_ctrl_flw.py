@@ -3,7 +3,7 @@ import base.operand.opr_simple as opr
 import X86.mop.ctrlFlow.ctrl_mop  as mop_ctrl_flw_x86
 
 class MOP_GROUP_CMP(mop_group.MOP_GROUP_BASE):
-    decKeys0 = ["CMP"]
+    decKeys0 = ["CMP", "TEST", "JNB"]
 
     srcOpr   = [opr.OPR_REG, opr.OPR_IMM, opr.OPR_MEM]
 
@@ -14,7 +14,10 @@ class MOP_GROUP_CMP(mop_group.MOP_GROUP_BASE):
 
 
 class MOP_GROUP_JMP(mop_group.MOP_GROUP_BASE):
-    decKeys0 = ["JMP", "JE", "JZ", "JNE", "JNZ", "JL", "JB", "JLE", "JBE", "JG", "JA", "JGE", "JAE"]
+    decKeys0 = ["JMP", "JE", "JZ",  "JL", "JB",
+                "JLE", "JBE", "JG", "JA", "JGE",
+                "JAE", "JNL", "JNE", "JNZ","JNB",
+                "JNBE"]
 
     srcdesOpr = [opr.OPR_REG]
 

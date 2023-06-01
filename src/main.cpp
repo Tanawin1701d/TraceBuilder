@@ -13,8 +13,8 @@ int main() {
     auto test = SIMPLE_PIN_GEM(
                 "/media/tanawin/tanawin1701e/Project/sms/pintool/msmsPin/traceBuilder/pin/PinOutput/fluidanimate/static",
                 "/media/tanawin/tanawin1701e/Project/sms/pintool/msmsPin/traceBuilder/pin/PinOutput/fluidanimate/dynamic",
-                "/media/tanawin/tanawin1701e/Project/sms/pintool/msmsPin/traceBuilder/pin/TbOutput/fluidanimate/instr2",
-                "/media/tanawin/tanawin1701e/Project/sms/pintool/msmsPin/traceBuilder/pin/TbOutput/fluidanimate/data2"
+                "/media/tanawin/tanawin1701e/Project/sms/pintool/msmsPin/traceBuilder/pin/TbOutput/fluidanimate/instr3",
+                "/media/tanawin/tanawin1701e/Project/sms/pintool/msmsPin/traceBuilder/pin/TbOutput/fluidanimate/data3"
             );
 
     test.start();
@@ -22,7 +22,7 @@ int main() {
     std::vector<std::string> statHelper;
     MAIN_STAT_MNG.preparePrint(statHelper);
     MAIN_STAT_MNG.print();
-    MAIN_STAT_MNG.saveToFile("/media/tanawin/tanawin1701e/Project/sms/pintool/msmsPin/traceBuilder/pin/TbOutput/fluidanimate/stat2");
+    MAIN_STAT_MNG.saveToFile("/media/tanawin/tanawin1701e/Project/sms/pintool/msmsPin/traceBuilder/pin/TbOutput/fluidanimate/stat3");
     MAIN_STAT_MNG.clearStat();
 
     ///////// duration count

@@ -5,7 +5,7 @@ class MOP_GROUP_COMP(mop_group.MOP_GROUP_BASE):
     decKeys0 = ["ADC" , "ADD", "AND" , "OR" , "ROL",
                 "ROR" , "SAL", "SAR" , "SBB", "SHL",
                 "SHLD", "SHR", "SHRD", "SUB", "XCHG", "XOR",
-                "CMP" , "INC", "RCL" , "RCR",  "JMP"]
+                "CMP" , "INC", "RCL" , "RCR",  "JMP", "LEA"]
 
     decKeys1 = ["MUL", "IMUL", "MULX", "DIV", "IDIV"]
 

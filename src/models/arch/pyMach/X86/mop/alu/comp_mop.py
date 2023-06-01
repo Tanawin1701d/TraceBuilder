@@ -79,9 +79,13 @@ class MOP_COMP128_ALL(mop_cen_x86.MOP_BASE_X86):
         else:
             raise mb.MopUsageError(f"can't build MOP_COMP_ALL with destination to {desOpr1Type}")
         ##### create uop for computation
-        comp_uop = uop_comp_x86.UOP_COMP("uop_comp", _cxxType_prefix)
-        comp_uop.addIo([srcCanUse0, srcCanUse1], [oprFromUop0, oprFromUop1])
-        self.uopListSummary.append(comp_uop)
+        comp_uop_0 = uop_comp_x86.UOP_COMP("uop_comp_0", _cxxType_prefix)
+        comp_uop_0.addIo([srcCanUse0, srcCanUse1], [oprFromUop0, oprFromUop1])
+        self.uopListSummary.append(comp_uop_0)
+
+        comp_uop_1 = uop_comp_x86.UOP_COMP("uop_comp_1", _cxxType_prefix)
+        comp_uop_1.addIo([srcCanUse0, srcCanUse1], [oprFromUop0, oprFromUop1])
+        self.uopListSummary.append(comp_uop_1)
         ##### des operand
         self.initDesStore128(oprFromUop0, desOpr0Type, "0", True)
         self.initDesStore128(oprFromUop1, desOpr1Type, "1", True)

@@ -29,6 +29,7 @@ X86_DECODER::X86_DECODER(): DECODER_BASE(){
      decodeStorage.insert({"RCL$R_R$R_R", (MOP_BASE*)(new INT_SIM_ALU$R_R$R_R())});
      decodeStorage.insert({"RCR$R_R$R_R", (MOP_BASE*)(new INT_SIM_ALU$R_R$R_R())});
      decodeStorage.insert({"JMP$R_R$R_R", (MOP_BASE*)(new INT_SIM_ALU$R_R$R_R())});
+     decodeStorage.insert({"LEA$R_R$R_R", (MOP_BASE*)(new INT_SIM_ALU$R_R$R_R())});
      decodeStorage.insert({"ADC$R_R$R_M", (MOP_BASE*)(new INT_SIM_ALU$R_R$R_M())});
      decodeStorage.insert({"ADD$R_R$R_M", (MOP_BASE*)(new INT_SIM_ALU$R_R$R_M())});
      decodeStorage.insert({"AND$R_R$R_M", (MOP_BASE*)(new INT_SIM_ALU$R_R$R_M())});
@@ -50,6 +51,7 @@ X86_DECODER::X86_DECODER(): DECODER_BASE(){
      decodeStorage.insert({"RCL$R_R$R_M", (MOP_BASE*)(new INT_SIM_ALU$R_R$R_M())});
      decodeStorage.insert({"RCR$R_R$R_M", (MOP_BASE*)(new INT_SIM_ALU$R_R$R_M())});
      decodeStorage.insert({"JMP$R_R$R_M", (MOP_BASE*)(new INT_SIM_ALU$R_R$R_M())});
+     decodeStorage.insert({"LEA$R_R$R_M", (MOP_BASE*)(new INT_SIM_ALU$R_R$R_M())});
      decodeStorage.insert({"ADC$R_R$R", (MOP_BASE*)(new INT_SIM_ALU$R_R$R())});
      decodeStorage.insert({"ADD$R_R$R", (MOP_BASE*)(new INT_SIM_ALU$R_R$R())});
      decodeStorage.insert({"AND$R_R$R", (MOP_BASE*)(new INT_SIM_ALU$R_R$R())});
@@ -71,6 +73,7 @@ X86_DECODER::X86_DECODER(): DECODER_BASE(){
      decodeStorage.insert({"RCL$R_R$R", (MOP_BASE*)(new INT_SIM_ALU$R_R$R())});
      decodeStorage.insert({"RCR$R_R$R", (MOP_BASE*)(new INT_SIM_ALU$R_R$R())});
      decodeStorage.insert({"JMP$R_R$R", (MOP_BASE*)(new INT_SIM_ALU$R_R$R())});
+     decodeStorage.insert({"LEA$R_R$R", (MOP_BASE*)(new INT_SIM_ALU$R_R$R())});
      decodeStorage.insert({"ADC$R_R$M_R", (MOP_BASE*)(new INT_SIM_ALU$R_R$M_R())});
      decodeStorage.insert({"ADD$R_R$M_R", (MOP_BASE*)(new INT_SIM_ALU$R_R$M_R())});
      decodeStorage.insert({"AND$R_R$M_R", (MOP_BASE*)(new INT_SIM_ALU$R_R$M_R())});
@@ -92,6 +95,7 @@ X86_DECODER::X86_DECODER(): DECODER_BASE(){
      decodeStorage.insert({"RCL$R_R$M_R", (MOP_BASE*)(new INT_SIM_ALU$R_R$M_R())});
      decodeStorage.insert({"RCR$R_R$M_R", (MOP_BASE*)(new INT_SIM_ALU$R_R$M_R())});
      decodeStorage.insert({"JMP$R_R$M_R", (MOP_BASE*)(new INT_SIM_ALU$R_R$M_R())});
+     decodeStorage.insert({"LEA$R_R$M_R", (MOP_BASE*)(new INT_SIM_ALU$R_R$M_R())});
      decodeStorage.insert({"ADC$R_R$M_M", (MOP_BASE*)(new INT_SIM_ALU$R_R$M_M())});
      decodeStorage.insert({"ADD$R_R$M_M", (MOP_BASE*)(new INT_SIM_ALU$R_R$M_M())});
      decodeStorage.insert({"AND$R_R$M_M", (MOP_BASE*)(new INT_SIM_ALU$R_R$M_M())});
@@ -113,6 +117,7 @@ X86_DECODER::X86_DECODER(): DECODER_BASE(){
      decodeStorage.insert({"RCL$R_R$M_M", (MOP_BASE*)(new INT_SIM_ALU$R_R$M_M())});
      decodeStorage.insert({"RCR$R_R$M_M", (MOP_BASE*)(new INT_SIM_ALU$R_R$M_M())});
      decodeStorage.insert({"JMP$R_R$M_M", (MOP_BASE*)(new INT_SIM_ALU$R_R$M_M())});
+     decodeStorage.insert({"LEA$R_R$M_M", (MOP_BASE*)(new INT_SIM_ALU$R_R$M_M())});
      decodeStorage.insert({"ADC$R_R$M", (MOP_BASE*)(new INT_SIM_ALU$R_R$M())});
      decodeStorage.insert({"ADD$R_R$M", (MOP_BASE*)(new INT_SIM_ALU$R_R$M())});
      decodeStorage.insert({"AND$R_R$M", (MOP_BASE*)(new INT_SIM_ALU$R_R$M())});
@@ -134,6 +139,7 @@ X86_DECODER::X86_DECODER(): DECODER_BASE(){
      decodeStorage.insert({"RCL$R_R$M", (MOP_BASE*)(new INT_SIM_ALU$R_R$M())});
      decodeStorage.insert({"RCR$R_R$M", (MOP_BASE*)(new INT_SIM_ALU$R_R$M())});
      decodeStorage.insert({"JMP$R_R$M", (MOP_BASE*)(new INT_SIM_ALU$R_R$M())});
+     decodeStorage.insert({"LEA$R_R$M", (MOP_BASE*)(new INT_SIM_ALU$R_R$M())});
      decodeStorage.insert({"ADC$R_I$R_R", (MOP_BASE*)(new INT_SIM_ALU$R_I$R_R())});
      decodeStorage.insert({"ADD$R_I$R_R", (MOP_BASE*)(new INT_SIM_ALU$R_I$R_R())});
      decodeStorage.insert({"AND$R_I$R_R", (MOP_BASE*)(new INT_SIM_ALU$R_I$R_R())});
@@ -155,6 +161,7 @@ X86_DECODER::X86_DECODER(): DECODER_BASE(){
      decodeStorage.insert({"RCL$R_I$R_R", (MOP_BASE*)(new INT_SIM_ALU$R_I$R_R())});
      decodeStorage.insert({"RCR$R_I$R_R", (MOP_BASE*)(new INT_SIM_ALU$R_I$R_R())});
      decodeStorage.insert({"JMP$R_I$R_R", (MOP_BASE*)(new INT_SIM_ALU$R_I$R_R())});
+     decodeStorage.insert({"LEA$R_I$R_R", (MOP_BASE*)(new INT_SIM_ALU$R_I$R_R())});
      decodeStorage.insert({"ADC$R_I$R_M", (MOP_BASE*)(new INT_SIM_ALU$R_I$R_M())});
      decodeStorage.insert({"ADD$R_I$R_M", (MOP_BASE*)(new INT_SIM_ALU$R_I$R_M())});
      decodeStorage.insert({"AND$R_I$R_M", (MOP_BASE*)(new INT_SIM_ALU$R_I$R_M())});
@@ -176,6 +183,7 @@ X86_DECODER::X86_DECODER(): DECODER_BASE(){
      decodeStorage.insert({"RCL$R_I$R_M", (MOP_BASE*)(new INT_SIM_ALU$R_I$R_M())});
      decodeStorage.insert({"RCR$R_I$R_M", (MOP_BASE*)(new INT_SIM_ALU$R_I$R_M())});
      decodeStorage.insert({"JMP$R_I$R_M", (MOP_BASE*)(new INT_SIM_ALU$R_I$R_M())});
+     decodeStorage.insert({"LEA$R_I$R_M", (MOP_BASE*)(new INT_SIM_ALU$R_I$R_M())});
      decodeStorage.insert({"ADC$R_I$R", (MOP_BASE*)(new INT_SIM_ALU$R_I$R())});
      decodeStorage.insert({"ADD$R_I$R", (MOP_BASE*)(new INT_SIM_ALU$R_I$R())});
      decodeStorage.insert({"AND$R_I$R", (MOP_BASE*)(new INT_SIM_ALU$R_I$R())});
@@ -197,6 +205,7 @@ X86_DECODER::X86_DECODER(): DECODER_BASE(){
      decodeStorage.insert({"RCL$R_I$R", (MOP_BASE*)(new INT_SIM_ALU$R_I$R())});
      decodeStorage.insert({"RCR$R_I$R", (MOP_BASE*)(new INT_SIM_ALU$R_I$R())});
      decodeStorage.insert({"JMP$R_I$R", (MOP_BASE*)(new INT_SIM_ALU$R_I$R())});
+     decodeStorage.insert({"LEA$R_I$R", (MOP_BASE*)(new INT_SIM_ALU$R_I$R())});
      decodeStorage.insert({"ADC$R_I$M_R", (MOP_BASE*)(new INT_SIM_ALU$R_I$M_R())});
      decodeStorage.insert({"ADD$R_I$M_R", (MOP_BASE*)(new INT_SIM_ALU$R_I$M_R())});
      decodeStorage.insert({"AND$R_I$M_R", (MOP_BASE*)(new INT_SIM_ALU$R_I$M_R())});
@@ -218,6 +227,7 @@ X86_DECODER::X86_DECODER(): DECODER_BASE(){
      decodeStorage.insert({"RCL$R_I$M_R", (MOP_BASE*)(new INT_SIM_ALU$R_I$M_R())});
      decodeStorage.insert({"RCR$R_I$M_R", (MOP_BASE*)(new INT_SIM_ALU$R_I$M_R())});
      decodeStorage.insert({"JMP$R_I$M_R", (MOP_BASE*)(new INT_SIM_ALU$R_I$M_R())});
+     decodeStorage.insert({"LEA$R_I$M_R", (MOP_BASE*)(new INT_SIM_ALU$R_I$M_R())});
      decodeStorage.insert({"ADC$R_I$M_M", (MOP_BASE*)(new INT_SIM_ALU$R_I$M_M())});
      decodeStorage.insert({"ADD$R_I$M_M", (MOP_BASE*)(new INT_SIM_ALU$R_I$M_M())});
      decodeStorage.insert({"AND$R_I$M_M", (MOP_BASE*)(new INT_SIM_ALU$R_I$M_M())});
@@ -239,6 +249,7 @@ X86_DECODER::X86_DECODER(): DECODER_BASE(){
      decodeStorage.insert({"RCL$R_I$M_M", (MOP_BASE*)(new INT_SIM_ALU$R_I$M_M())});
      decodeStorage.insert({"RCR$R_I$M_M", (MOP_BASE*)(new INT_SIM_ALU$R_I$M_M())});
      decodeStorage.insert({"JMP$R_I$M_M", (MOP_BASE*)(new INT_SIM_ALU$R_I$M_M())});
+     decodeStorage.insert({"LEA$R_I$M_M", (MOP_BASE*)(new INT_SIM_ALU$R_I$M_M())});
      decodeStorage.insert({"ADC$R_I$M", (MOP_BASE*)(new INT_SIM_ALU$R_I$M())});
      decodeStorage.insert({"ADD$R_I$M", (MOP_BASE*)(new INT_SIM_ALU$R_I$M())});
      decodeStorage.insert({"AND$R_I$M", (MOP_BASE*)(new INT_SIM_ALU$R_I$M())});
@@ -260,6 +271,7 @@ X86_DECODER::X86_DECODER(): DECODER_BASE(){
      decodeStorage.insert({"RCL$R_I$M", (MOP_BASE*)(new INT_SIM_ALU$R_I$M())});
      decodeStorage.insert({"RCR$R_I$M", (MOP_BASE*)(new INT_SIM_ALU$R_I$M())});
      decodeStorage.insert({"JMP$R_I$M", (MOP_BASE*)(new INT_SIM_ALU$R_I$M())});
+     decodeStorage.insert({"LEA$R_I$M", (MOP_BASE*)(new INT_SIM_ALU$R_I$M())});
      decodeStorage.insert({"ADC$R_M$R_R", (MOP_BASE*)(new INT_SIM_ALU$R_M$R_R())});
      decodeStorage.insert({"ADD$R_M$R_R", (MOP_BASE*)(new INT_SIM_ALU$R_M$R_R())});
      decodeStorage.insert({"AND$R_M$R_R", (MOP_BASE*)(new INT_SIM_ALU$R_M$R_R())});
@@ -281,6 +293,7 @@ X86_DECODER::X86_DECODER(): DECODER_BASE(){
      decodeStorage.insert({"RCL$R_M$R_R", (MOP_BASE*)(new INT_SIM_ALU$R_M$R_R())});
      decodeStorage.insert({"RCR$R_M$R_R", (MOP_BASE*)(new INT_SIM_ALU$R_M$R_R())});
      decodeStorage.insert({"JMP$R_M$R_R", (MOP_BASE*)(new INT_SIM_ALU$R_M$R_R())});
+     decodeStorage.insert({"LEA$R_M$R_R", (MOP_BASE*)(new INT_SIM_ALU$R_M$R_R())});
      decodeStorage.insert({"ADC$R_M$R_M", (MOP_BASE*)(new INT_SIM_ALU$R_M$R_M())});
      decodeStorage.insert({"ADD$R_M$R_M", (MOP_BASE*)(new INT_SIM_ALU$R_M$R_M())});
      decodeStorage.insert({"AND$R_M$R_M", (MOP_BASE*)(new INT_SIM_ALU$R_M$R_M())});
@@ -302,6 +315,7 @@ X86_DECODER::X86_DECODER(): DECODER_BASE(){
      decodeStorage.insert({"RCL$R_M$R_M", (MOP_BASE*)(new INT_SIM_ALU$R_M$R_M())});
      decodeStorage.insert({"RCR$R_M$R_M", (MOP_BASE*)(new INT_SIM_ALU$R_M$R_M())});
      decodeStorage.insert({"JMP$R_M$R_M", (MOP_BASE*)(new INT_SIM_ALU$R_M$R_M())});
+     decodeStorage.insert({"LEA$R_M$R_M", (MOP_BASE*)(new INT_SIM_ALU$R_M$R_M())});
      decodeStorage.insert({"ADC$R_M$R", (MOP_BASE*)(new INT_SIM_ALU$R_M$R())});
      decodeStorage.insert({"ADD$R_M$R", (MOP_BASE*)(new INT_SIM_ALU$R_M$R())});
      decodeStorage.insert({"AND$R_M$R", (MOP_BASE*)(new INT_SIM_ALU$R_M$R())});
@@ -323,6 +337,7 @@ X86_DECODER::X86_DECODER(): DECODER_BASE(){
      decodeStorage.insert({"RCL$R_M$R", (MOP_BASE*)(new INT_SIM_ALU$R_M$R())});
      decodeStorage.insert({"RCR$R_M$R", (MOP_BASE*)(new INT_SIM_ALU$R_M$R())});
      decodeStorage.insert({"JMP$R_M$R", (MOP_BASE*)(new INT_SIM_ALU$R_M$R())});
+     decodeStorage.insert({"LEA$R_M$R", (MOP_BASE*)(new INT_SIM_ALU$R_M$R())});
      decodeStorage.insert({"ADC$R_M$M_R", (MOP_BASE*)(new INT_SIM_ALU$R_M$M_R())});
      decodeStorage.insert({"ADD$R_M$M_R", (MOP_BASE*)(new INT_SIM_ALU$R_M$M_R())});
      decodeStorage.insert({"AND$R_M$M_R", (MOP_BASE*)(new INT_SIM_ALU$R_M$M_R())});
@@ -344,6 +359,7 @@ X86_DECODER::X86_DECODER(): DECODER_BASE(){
      decodeStorage.insert({"RCL$R_M$M_R", (MOP_BASE*)(new INT_SIM_ALU$R_M$M_R())});
      decodeStorage.insert({"RCR$R_M$M_R", (MOP_BASE*)(new INT_SIM_ALU$R_M$M_R())});
      decodeStorage.insert({"JMP$R_M$M_R", (MOP_BASE*)(new INT_SIM_ALU$R_M$M_R())});
+     decodeStorage.insert({"LEA$R_M$M_R", (MOP_BASE*)(new INT_SIM_ALU$R_M$M_R())});
      decodeStorage.insert({"ADC$R_M$M_M", (MOP_BASE*)(new INT_SIM_ALU$R_M$M_M())});
      decodeStorage.insert({"ADD$R_M$M_M", (MOP_BASE*)(new INT_SIM_ALU$R_M$M_M())});
      decodeStorage.insert({"AND$R_M$M_M", (MOP_BASE*)(new INT_SIM_ALU$R_M$M_M())});
@@ -365,6 +381,7 @@ X86_DECODER::X86_DECODER(): DECODER_BASE(){
      decodeStorage.insert({"RCL$R_M$M_M", (MOP_BASE*)(new INT_SIM_ALU$R_M$M_M())});
      decodeStorage.insert({"RCR$R_M$M_M", (MOP_BASE*)(new INT_SIM_ALU$R_M$M_M())});
      decodeStorage.insert({"JMP$R_M$M_M", (MOP_BASE*)(new INT_SIM_ALU$R_M$M_M())});
+     decodeStorage.insert({"LEA$R_M$M_M", (MOP_BASE*)(new INT_SIM_ALU$R_M$M_M())});
      decodeStorage.insert({"ADC$R_M$M", (MOP_BASE*)(new INT_SIM_ALU$R_M$M())});
      decodeStorage.insert({"ADD$R_M$M", (MOP_BASE*)(new INT_SIM_ALU$R_M$M())});
      decodeStorage.insert({"AND$R_M$M", (MOP_BASE*)(new INT_SIM_ALU$R_M$M())});
@@ -386,6 +403,7 @@ X86_DECODER::X86_DECODER(): DECODER_BASE(){
      decodeStorage.insert({"RCL$R_M$M", (MOP_BASE*)(new INT_SIM_ALU$R_M$M())});
      decodeStorage.insert({"RCR$R_M$M", (MOP_BASE*)(new INT_SIM_ALU$R_M$M())});
      decodeStorage.insert({"JMP$R_M$M", (MOP_BASE*)(new INT_SIM_ALU$R_M$M())});
+     decodeStorage.insert({"LEA$R_M$M", (MOP_BASE*)(new INT_SIM_ALU$R_M$M())});
      decodeStorage.insert({"ADC$I_R$R_R", (MOP_BASE*)(new INT_SIM_ALU$I_R$R_R())});
      decodeStorage.insert({"ADD$I_R$R_R", (MOP_BASE*)(new INT_SIM_ALU$I_R$R_R())});
      decodeStorage.insert({"AND$I_R$R_R", (MOP_BASE*)(new INT_SIM_ALU$I_R$R_R())});
@@ -407,6 +425,7 @@ X86_DECODER::X86_DECODER(): DECODER_BASE(){
      decodeStorage.insert({"RCL$I_R$R_R", (MOP_BASE*)(new INT_SIM_ALU$I_R$R_R())});
      decodeStorage.insert({"RCR$I_R$R_R", (MOP_BASE*)(new INT_SIM_ALU$I_R$R_R())});
      decodeStorage.insert({"JMP$I_R$R_R", (MOP_BASE*)(new INT_SIM_ALU$I_R$R_R())});
+     decodeStorage.insert({"LEA$I_R$R_R", (MOP_BASE*)(new INT_SIM_ALU$I_R$R_R())});
      decodeStorage.insert({"ADC$I_R$R_M", (MOP_BASE*)(new INT_SIM_ALU$I_R$R_M())});
      decodeStorage.insert({"ADD$I_R$R_M", (MOP_BASE*)(new INT_SIM_ALU$I_R$R_M())});
      decodeStorage.insert({"AND$I_R$R_M", (MOP_BASE*)(new INT_SIM_ALU$I_R$R_M())});
@@ -428,6 +447,7 @@ X86_DECODER::X86_DECODER(): DECODER_BASE(){
      decodeStorage.insert({"RCL$I_R$R_M", (MOP_BASE*)(new INT_SIM_ALU$I_R$R_M())});
      decodeStorage.insert({"RCR$I_R$R_M", (MOP_BASE*)(new INT_SIM_ALU$I_R$R_M())});
      decodeStorage.insert({"JMP$I_R$R_M", (MOP_BASE*)(new INT_SIM_ALU$I_R$R_M())});
+     decodeStorage.insert({"LEA$I_R$R_M", (MOP_BASE*)(new INT_SIM_ALU$I_R$R_M())});
      decodeStorage.insert({"ADC$I_R$R", (MOP_BASE*)(new INT_SIM_ALU$I_R$R())});
      decodeStorage.insert({"ADD$I_R$R", (MOP_BASE*)(new INT_SIM_ALU$I_R$R())});
      decodeStorage.insert({"AND$I_R$R", (MOP_BASE*)(new INT_SIM_ALU$I_R$R())});
@@ -449,6 +469,7 @@ X86_DECODER::X86_DECODER(): DECODER_BASE(){
      decodeStorage.insert({"RCL$I_R$R", (MOP_BASE*)(new INT_SIM_ALU$I_R$R())});
      decodeStorage.insert({"RCR$I_R$R", (MOP_BASE*)(new INT_SIM_ALU$I_R$R())});
      decodeStorage.insert({"JMP$I_R$R", (MOP_BASE*)(new INT_SIM_ALU$I_R$R())});
+     decodeStorage.insert({"LEA$I_R$R", (MOP_BASE*)(new INT_SIM_ALU$I_R$R())});
      decodeStorage.insert({"ADC$I_R$M_R", (MOP_BASE*)(new INT_SIM_ALU$I_R$M_R())});
      decodeStorage.insert({"ADD$I_R$M_R", (MOP_BASE*)(new INT_SIM_ALU$I_R$M_R())});
      decodeStorage.insert({"AND$I_R$M_R", (MOP_BASE*)(new INT_SIM_ALU$I_R$M_R())});
@@ -470,6 +491,7 @@ X86_DECODER::X86_DECODER(): DECODER_BASE(){
      decodeStorage.insert({"RCL$I_R$M_R", (MOP_BASE*)(new INT_SIM_ALU$I_R$M_R())});
      decodeStorage.insert({"RCR$I_R$M_R", (MOP_BASE*)(new INT_SIM_ALU$I_R$M_R())});
      decodeStorage.insert({"JMP$I_R$M_R", (MOP_BASE*)(new INT_SIM_ALU$I_R$M_R())});
+     decodeStorage.insert({"LEA$I_R$M_R", (MOP_BASE*)(new INT_SIM_ALU$I_R$M_R())});
      decodeStorage.insert({"ADC$I_R$M_M", (MOP_BASE*)(new INT_SIM_ALU$I_R$M_M())});
      decodeStorage.insert({"ADD$I_R$M_M", (MOP_BASE*)(new INT_SIM_ALU$I_R$M_M())});
      decodeStorage.insert({"AND$I_R$M_M", (MOP_BASE*)(new INT_SIM_ALU$I_R$M_M())});
@@ -491,6 +513,7 @@ X86_DECODER::X86_DECODER(): DECODER_BASE(){
      decodeStorage.insert({"RCL$I_R$M_M", (MOP_BASE*)(new INT_SIM_ALU$I_R$M_M())});
      decodeStorage.insert({"RCR$I_R$M_M", (MOP_BASE*)(new INT_SIM_ALU$I_R$M_M())});
      decodeStorage.insert({"JMP$I_R$M_M", (MOP_BASE*)(new INT_SIM_ALU$I_R$M_M())});
+     decodeStorage.insert({"LEA$I_R$M_M", (MOP_BASE*)(new INT_SIM_ALU$I_R$M_M())});
      decodeStorage.insert({"ADC$I_R$M", (MOP_BASE*)(new INT_SIM_ALU$I_R$M())});
      decodeStorage.insert({"ADD$I_R$M", (MOP_BASE*)(new INT_SIM_ALU$I_R$M())});
      decodeStorage.insert({"AND$I_R$M", (MOP_BASE*)(new INT_SIM_ALU$I_R$M())});
@@ -512,6 +535,7 @@ X86_DECODER::X86_DECODER(): DECODER_BASE(){
      decodeStorage.insert({"RCL$I_R$M", (MOP_BASE*)(new INT_SIM_ALU$I_R$M())});
      decodeStorage.insert({"RCR$I_R$M", (MOP_BASE*)(new INT_SIM_ALU$I_R$M())});
      decodeStorage.insert({"JMP$I_R$M", (MOP_BASE*)(new INT_SIM_ALU$I_R$M())});
+     decodeStorage.insert({"LEA$I_R$M", (MOP_BASE*)(new INT_SIM_ALU$I_R$M())});
      decodeStorage.insert({"ADC$I_I$R_R", (MOP_BASE*)(new INT_SIM_ALU$I_I$R_R())});
      decodeStorage.insert({"ADD$I_I$R_R", (MOP_BASE*)(new INT_SIM_ALU$I_I$R_R())});
      decodeStorage.insert({"AND$I_I$R_R", (MOP_BASE*)(new INT_SIM_ALU$I_I$R_R())});
@@ -533,6 +557,7 @@ X86_DECODER::X86_DECODER(): DECODER_BASE(){
      decodeStorage.insert({"RCL$I_I$R_R", (MOP_BASE*)(new INT_SIM_ALU$I_I$R_R())});
      decodeStorage.insert({"RCR$I_I$R_R", (MOP_BASE*)(new INT_SIM_ALU$I_I$R_R())});
      decodeStorage.insert({"JMP$I_I$R_R", (MOP_BASE*)(new INT_SIM_ALU$I_I$R_R())});
+     decodeStorage.insert({"LEA$I_I$R_R", (MOP_BASE*)(new INT_SIM_ALU$I_I$R_R())});
      decodeStorage.insert({"ADC$I_I$R_M", (MOP_BASE*)(new INT_SIM_ALU$I_I$R_M())});
      decodeStorage.insert({"ADD$I_I$R_M", (MOP_BASE*)(new INT_SIM_ALU$I_I$R_M())});
      decodeStorage.insert({"AND$I_I$R_M", (MOP_BASE*)(new INT_SIM_ALU$I_I$R_M())});
@@ -554,6 +579,7 @@ X86_DECODER::X86_DECODER(): DECODER_BASE(){
      decodeStorage.insert({"RCL$I_I$R_M", (MOP_BASE*)(new INT_SIM_ALU$I_I$R_M())});
      decodeStorage.insert({"RCR$I_I$R_M", (MOP_BASE*)(new INT_SIM_ALU$I_I$R_M())});
      decodeStorage.insert({"JMP$I_I$R_M", (MOP_BASE*)(new INT_SIM_ALU$I_I$R_M())});
+     decodeStorage.insert({"LEA$I_I$R_M", (MOP_BASE*)(new INT_SIM_ALU$I_I$R_M())});
      decodeStorage.insert({"ADC$I_I$R", (MOP_BASE*)(new INT_SIM_ALU$I_I$R())});
      decodeStorage.insert({"ADD$I_I$R", (MOP_BASE*)(new INT_SIM_ALU$I_I$R())});
      decodeStorage.insert({"AND$I_I$R", (MOP_BASE*)(new INT_SIM_ALU$I_I$R())});
@@ -575,6 +601,7 @@ X86_DECODER::X86_DECODER(): DECODER_BASE(){
      decodeStorage.insert({"RCL$I_I$R", (MOP_BASE*)(new INT_SIM_ALU$I_I$R())});
      decodeStorage.insert({"RCR$I_I$R", (MOP_BASE*)(new INT_SIM_ALU$I_I$R())});
      decodeStorage.insert({"JMP$I_I$R", (MOP_BASE*)(new INT_SIM_ALU$I_I$R())});
+     decodeStorage.insert({"LEA$I_I$R", (MOP_BASE*)(new INT_SIM_ALU$I_I$R())});
      decodeStorage.insert({"ADC$I_I$M_R", (MOP_BASE*)(new INT_SIM_ALU$I_I$M_R())});
      decodeStorage.insert({"ADD$I_I$M_R", (MOP_BASE*)(new INT_SIM_ALU$I_I$M_R())});
      decodeStorage.insert({"AND$I_I$M_R", (MOP_BASE*)(new INT_SIM_ALU$I_I$M_R())});
@@ -596,6 +623,7 @@ X86_DECODER::X86_DECODER(): DECODER_BASE(){
      decodeStorage.insert({"RCL$I_I$M_R", (MOP_BASE*)(new INT_SIM_ALU$I_I$M_R())});
      decodeStorage.insert({"RCR$I_I$M_R", (MOP_BASE*)(new INT_SIM_ALU$I_I$M_R())});
      decodeStorage.insert({"JMP$I_I$M_R", (MOP_BASE*)(new INT_SIM_ALU$I_I$M_R())});
+     decodeStorage.insert({"LEA$I_I$M_R", (MOP_BASE*)(new INT_SIM_ALU$I_I$M_R())});
      decodeStorage.insert({"ADC$I_I$M_M", (MOP_BASE*)(new INT_SIM_ALU$I_I$M_M())});
      decodeStorage.insert({"ADD$I_I$M_M", (MOP_BASE*)(new INT_SIM_ALU$I_I$M_M())});
      decodeStorage.insert({"AND$I_I$M_M", (MOP_BASE*)(new INT_SIM_ALU$I_I$M_M())});
@@ -617,6 +645,7 @@ X86_DECODER::X86_DECODER(): DECODER_BASE(){
      decodeStorage.insert({"RCL$I_I$M_M", (MOP_BASE*)(new INT_SIM_ALU$I_I$M_M())});
      decodeStorage.insert({"RCR$I_I$M_M", (MOP_BASE*)(new INT_SIM_ALU$I_I$M_M())});
      decodeStorage.insert({"JMP$I_I$M_M", (MOP_BASE*)(new INT_SIM_ALU$I_I$M_M())});
+     decodeStorage.insert({"LEA$I_I$M_M", (MOP_BASE*)(new INT_SIM_ALU$I_I$M_M())});
      decodeStorage.insert({"ADC$I_I$M", (MOP_BASE*)(new INT_SIM_ALU$I_I$M())});
      decodeStorage.insert({"ADD$I_I$M", (MOP_BASE*)(new INT_SIM_ALU$I_I$M())});
      decodeStorage.insert({"AND$I_I$M", (MOP_BASE*)(new INT_SIM_ALU$I_I$M())});
@@ -638,6 +667,7 @@ X86_DECODER::X86_DECODER(): DECODER_BASE(){
      decodeStorage.insert({"RCL$I_I$M", (MOP_BASE*)(new INT_SIM_ALU$I_I$M())});
      decodeStorage.insert({"RCR$I_I$M", (MOP_BASE*)(new INT_SIM_ALU$I_I$M())});
      decodeStorage.insert({"JMP$I_I$M", (MOP_BASE*)(new INT_SIM_ALU$I_I$M())});
+     decodeStorage.insert({"LEA$I_I$M", (MOP_BASE*)(new INT_SIM_ALU$I_I$M())});
      decodeStorage.insert({"ADC$I_M$R_R", (MOP_BASE*)(new INT_SIM_ALU$I_M$R_R())});
      decodeStorage.insert({"ADD$I_M$R_R", (MOP_BASE*)(new INT_SIM_ALU$I_M$R_R())});
      decodeStorage.insert({"AND$I_M$R_R", (MOP_BASE*)(new INT_SIM_ALU$I_M$R_R())});
@@ -659,6 +689,7 @@ X86_DECODER::X86_DECODER(): DECODER_BASE(){
      decodeStorage.insert({"RCL$I_M$R_R", (MOP_BASE*)(new INT_SIM_ALU$I_M$R_R())});
      decodeStorage.insert({"RCR$I_M$R_R", (MOP_BASE*)(new INT_SIM_ALU$I_M$R_R())});
      decodeStorage.insert({"JMP$I_M$R_R", (MOP_BASE*)(new INT_SIM_ALU$I_M$R_R())});
+     decodeStorage.insert({"LEA$I_M$R_R", (MOP_BASE*)(new INT_SIM_ALU$I_M$R_R())});
      decodeStorage.insert({"ADC$I_M$R_M", (MOP_BASE*)(new INT_SIM_ALU$I_M$R_M())});
      decodeStorage.insert({"ADD$I_M$R_M", (MOP_BASE*)(new INT_SIM_ALU$I_M$R_M())});
      decodeStorage.insert({"AND$I_M$R_M", (MOP_BASE*)(new INT_SIM_ALU$I_M$R_M())});
@@ -680,6 +711,7 @@ X86_DECODER::X86_DECODER(): DECODER_BASE(){
      decodeStorage.insert({"RCL$I_M$R_M", (MOP_BASE*)(new INT_SIM_ALU$I_M$R_M())});
      decodeStorage.insert({"RCR$I_M$R_M", (MOP_BASE*)(new INT_SIM_ALU$I_M$R_M())});
      decodeStorage.insert({"JMP$I_M$R_M", (MOP_BASE*)(new INT_SIM_ALU$I_M$R_M())});
+     decodeStorage.insert({"LEA$I_M$R_M", (MOP_BASE*)(new INT_SIM_ALU$I_M$R_M())});
      decodeStorage.insert({"ADC$I_M$R", (MOP_BASE*)(new INT_SIM_ALU$I_M$R())});
      decodeStorage.insert({"ADD$I_M$R", (MOP_BASE*)(new INT_SIM_ALU$I_M$R())});
      decodeStorage.insert({"AND$I_M$R", (MOP_BASE*)(new INT_SIM_ALU$I_M$R())});
@@ -701,6 +733,7 @@ X86_DECODER::X86_DECODER(): DECODER_BASE(){
      decodeStorage.insert({"RCL$I_M$R", (MOP_BASE*)(new INT_SIM_ALU$I_M$R())});
      decodeStorage.insert({"RCR$I_M$R", (MOP_BASE*)(new INT_SIM_ALU$I_M$R())});
      decodeStorage.insert({"JMP$I_M$R", (MOP_BASE*)(new INT_SIM_ALU$I_M$R())});
+     decodeStorage.insert({"LEA$I_M$R", (MOP_BASE*)(new INT_SIM_ALU$I_M$R())});
      decodeStorage.insert({"ADC$I_M$M_R", (MOP_BASE*)(new INT_SIM_ALU$I_M$M_R())});
      decodeStorage.insert({"ADD$I_M$M_R", (MOP_BASE*)(new INT_SIM_ALU$I_M$M_R())});
      decodeStorage.insert({"AND$I_M$M_R", (MOP_BASE*)(new INT_SIM_ALU$I_M$M_R())});
@@ -722,6 +755,7 @@ X86_DECODER::X86_DECODER(): DECODER_BASE(){
      decodeStorage.insert({"RCL$I_M$M_R", (MOP_BASE*)(new INT_SIM_ALU$I_M$M_R())});
      decodeStorage.insert({"RCR$I_M$M_R", (MOP_BASE*)(new INT_SIM_ALU$I_M$M_R())});
      decodeStorage.insert({"JMP$I_M$M_R", (MOP_BASE*)(new INT_SIM_ALU$I_M$M_R())});
+     decodeStorage.insert({"LEA$I_M$M_R", (MOP_BASE*)(new INT_SIM_ALU$I_M$M_R())});
      decodeStorage.insert({"ADC$I_M$M_M", (MOP_BASE*)(new INT_SIM_ALU$I_M$M_M())});
      decodeStorage.insert({"ADD$I_M$M_M", (MOP_BASE*)(new INT_SIM_ALU$I_M$M_M())});
      decodeStorage.insert({"AND$I_M$M_M", (MOP_BASE*)(new INT_SIM_ALU$I_M$M_M())});
@@ -743,6 +777,7 @@ X86_DECODER::X86_DECODER(): DECODER_BASE(){
      decodeStorage.insert({"RCL$I_M$M_M", (MOP_BASE*)(new INT_SIM_ALU$I_M$M_M())});
      decodeStorage.insert({"RCR$I_M$M_M", (MOP_BASE*)(new INT_SIM_ALU$I_M$M_M())});
      decodeStorage.insert({"JMP$I_M$M_M", (MOP_BASE*)(new INT_SIM_ALU$I_M$M_M())});
+     decodeStorage.insert({"LEA$I_M$M_M", (MOP_BASE*)(new INT_SIM_ALU$I_M$M_M())});
      decodeStorage.insert({"ADC$I_M$M", (MOP_BASE*)(new INT_SIM_ALU$I_M$M())});
      decodeStorage.insert({"ADD$I_M$M", (MOP_BASE*)(new INT_SIM_ALU$I_M$M())});
      decodeStorage.insert({"AND$I_M$M", (MOP_BASE*)(new INT_SIM_ALU$I_M$M())});
@@ -764,6 +799,7 @@ X86_DECODER::X86_DECODER(): DECODER_BASE(){
      decodeStorage.insert({"RCL$I_M$M", (MOP_BASE*)(new INT_SIM_ALU$I_M$M())});
      decodeStorage.insert({"RCR$I_M$M", (MOP_BASE*)(new INT_SIM_ALU$I_M$M())});
      decodeStorage.insert({"JMP$I_M$M", (MOP_BASE*)(new INT_SIM_ALU$I_M$M())});
+     decodeStorage.insert({"LEA$I_M$M", (MOP_BASE*)(new INT_SIM_ALU$I_M$M())});
      decodeStorage.insert({"ADC$M_R$R_R", (MOP_BASE*)(new INT_SIM_ALU$M_R$R_R())});
      decodeStorage.insert({"ADD$M_R$R_R", (MOP_BASE*)(new INT_SIM_ALU$M_R$R_R())});
      decodeStorage.insert({"AND$M_R$R_R", (MOP_BASE*)(new INT_SIM_ALU$M_R$R_R())});
@@ -785,6 +821,7 @@ X86_DECODER::X86_DECODER(): DECODER_BASE(){
      decodeStorage.insert({"RCL$M_R$R_R", (MOP_BASE*)(new INT_SIM_ALU$M_R$R_R())});
      decodeStorage.insert({"RCR$M_R$R_R", (MOP_BASE*)(new INT_SIM_ALU$M_R$R_R())});
      decodeStorage.insert({"JMP$M_R$R_R", (MOP_BASE*)(new INT_SIM_ALU$M_R$R_R())});
+     decodeStorage.insert({"LEA$M_R$R_R", (MOP_BASE*)(new INT_SIM_ALU$M_R$R_R())});
      decodeStorage.insert({"ADC$M_R$R_M", (MOP_BASE*)(new INT_SIM_ALU$M_R$R_M())});
      decodeStorage.insert({"ADD$M_R$R_M", (MOP_BASE*)(new INT_SIM_ALU$M_R$R_M())});
      decodeStorage.insert({"AND$M_R$R_M", (MOP_BASE*)(new INT_SIM_ALU$M_R$R_M())});
@@ -806,6 +843,7 @@ X86_DECODER::X86_DECODER(): DECODER_BASE(){
      decodeStorage.insert({"RCL$M_R$R_M", (MOP_BASE*)(new INT_SIM_ALU$M_R$R_M())});
      decodeStorage.insert({"RCR$M_R$R_M", (MOP_BASE*)(new INT_SIM_ALU$M_R$R_M())});
      decodeStorage.insert({"JMP$M_R$R_M", (MOP_BASE*)(new INT_SIM_ALU$M_R$R_M())});
+     decodeStorage.insert({"LEA$M_R$R_M", (MOP_BASE*)(new INT_SIM_ALU$M_R$R_M())});
      decodeStorage.insert({"ADC$M_R$R", (MOP_BASE*)(new INT_SIM_ALU$M_R$R())});
      decodeStorage.insert({"ADD$M_R$R", (MOP_BASE*)(new INT_SIM_ALU$M_R$R())});
      decodeStorage.insert({"AND$M_R$R", (MOP_BASE*)(new INT_SIM_ALU$M_R$R())});
@@ -827,6 +865,7 @@ X86_DECODER::X86_DECODER(): DECODER_BASE(){
      decodeStorage.insert({"RCL$M_R$R", (MOP_BASE*)(new INT_SIM_ALU$M_R$R())});
      decodeStorage.insert({"RCR$M_R$R", (MOP_BASE*)(new INT_SIM_ALU$M_R$R())});
      decodeStorage.insert({"JMP$M_R$R", (MOP_BASE*)(new INT_SIM_ALU$M_R$R())});
+     decodeStorage.insert({"LEA$M_R$R", (MOP_BASE*)(new INT_SIM_ALU$M_R$R())});
      decodeStorage.insert({"ADC$M_R$M_R", (MOP_BASE*)(new INT_SIM_ALU$M_R$M_R())});
      decodeStorage.insert({"ADD$M_R$M_R", (MOP_BASE*)(new INT_SIM_ALU$M_R$M_R())});
      decodeStorage.insert({"AND$M_R$M_R", (MOP_BASE*)(new INT_SIM_ALU$M_R$M_R())});
@@ -848,6 +887,7 @@ X86_DECODER::X86_DECODER(): DECODER_BASE(){
      decodeStorage.insert({"RCL$M_R$M_R", (MOP_BASE*)(new INT_SIM_ALU$M_R$M_R())});
      decodeStorage.insert({"RCR$M_R$M_R", (MOP_BASE*)(new INT_SIM_ALU$M_R$M_R())});
      decodeStorage.insert({"JMP$M_R$M_R", (MOP_BASE*)(new INT_SIM_ALU$M_R$M_R())});
+     decodeStorage.insert({"LEA$M_R$M_R", (MOP_BASE*)(new INT_SIM_ALU$M_R$M_R())});
      decodeStorage.insert({"ADC$M_R$M_M", (MOP_BASE*)(new INT_SIM_ALU$M_R$M_M())});
      decodeStorage.insert({"ADD$M_R$M_M", (MOP_BASE*)(new INT_SIM_ALU$M_R$M_M())});
      decodeStorage.insert({"AND$M_R$M_M", (MOP_BASE*)(new INT_SIM_ALU$M_R$M_M())});
@@ -869,6 +909,7 @@ X86_DECODER::X86_DECODER(): DECODER_BASE(){
      decodeStorage.insert({"RCL$M_R$M_M", (MOP_BASE*)(new INT_SIM_ALU$M_R$M_M())});
      decodeStorage.insert({"RCR$M_R$M_M", (MOP_BASE*)(new INT_SIM_ALU$M_R$M_M())});
      decodeStorage.insert({"JMP$M_R$M_M", (MOP_BASE*)(new INT_SIM_ALU$M_R$M_M())});
+     decodeStorage.insert({"LEA$M_R$M_M", (MOP_BASE*)(new INT_SIM_ALU$M_R$M_M())});
      decodeStorage.insert({"ADC$M_R$M", (MOP_BASE*)(new INT_SIM_ALU$M_R$M())});
      decodeStorage.insert({"ADD$M_R$M", (MOP_BASE*)(new INT_SIM_ALU$M_R$M())});
      decodeStorage.insert({"AND$M_R$M", (MOP_BASE*)(new INT_SIM_ALU$M_R$M())});
@@ -890,6 +931,7 @@ X86_DECODER::X86_DECODER(): DECODER_BASE(){
      decodeStorage.insert({"RCL$M_R$M", (MOP_BASE*)(new INT_SIM_ALU$M_R$M())});
      decodeStorage.insert({"RCR$M_R$M", (MOP_BASE*)(new INT_SIM_ALU$M_R$M())});
      decodeStorage.insert({"JMP$M_R$M", (MOP_BASE*)(new INT_SIM_ALU$M_R$M())});
+     decodeStorage.insert({"LEA$M_R$M", (MOP_BASE*)(new INT_SIM_ALU$M_R$M())});
      decodeStorage.insert({"ADC$M_I$R_R", (MOP_BASE*)(new INT_SIM_ALU$M_I$R_R())});
      decodeStorage.insert({"ADD$M_I$R_R", (MOP_BASE*)(new INT_SIM_ALU$M_I$R_R())});
      decodeStorage.insert({"AND$M_I$R_R", (MOP_BASE*)(new INT_SIM_ALU$M_I$R_R())});
@@ -911,6 +953,7 @@ X86_DECODER::X86_DECODER(): DECODER_BASE(){
      decodeStorage.insert({"RCL$M_I$R_R", (MOP_BASE*)(new INT_SIM_ALU$M_I$R_R())});
      decodeStorage.insert({"RCR$M_I$R_R", (MOP_BASE*)(new INT_SIM_ALU$M_I$R_R())});
      decodeStorage.insert({"JMP$M_I$R_R", (MOP_BASE*)(new INT_SIM_ALU$M_I$R_R())});
+     decodeStorage.insert({"LEA$M_I$R_R", (MOP_BASE*)(new INT_SIM_ALU$M_I$R_R())});
      decodeStorage.insert({"ADC$M_I$R_M", (MOP_BASE*)(new INT_SIM_ALU$M_I$R_M())});
      decodeStorage.insert({"ADD$M_I$R_M", (MOP_BASE*)(new INT_SIM_ALU$M_I$R_M())});
      decodeStorage.insert({"AND$M_I$R_M", (MOP_BASE*)(new INT_SIM_ALU$M_I$R_M())});
@@ -932,6 +975,7 @@ X86_DECODER::X86_DECODER(): DECODER_BASE(){
      decodeStorage.insert({"RCL$M_I$R_M", (MOP_BASE*)(new INT_SIM_ALU$M_I$R_M())});
      decodeStorage.insert({"RCR$M_I$R_M", (MOP_BASE*)(new INT_SIM_ALU$M_I$R_M())});
      decodeStorage.insert({"JMP$M_I$R_M", (MOP_BASE*)(new INT_SIM_ALU$M_I$R_M())});
+     decodeStorage.insert({"LEA$M_I$R_M", (MOP_BASE*)(new INT_SIM_ALU$M_I$R_M())});
      decodeStorage.insert({"ADC$M_I$R", (MOP_BASE*)(new INT_SIM_ALU$M_I$R())});
      decodeStorage.insert({"ADD$M_I$R", (MOP_BASE*)(new INT_SIM_ALU$M_I$R())});
      decodeStorage.insert({"AND$M_I$R", (MOP_BASE*)(new INT_SIM_ALU$M_I$R())});
@@ -953,6 +997,7 @@ X86_DECODER::X86_DECODER(): DECODER_BASE(){
      decodeStorage.insert({"RCL$M_I$R", (MOP_BASE*)(new INT_SIM_ALU$M_I$R())});
      decodeStorage.insert({"RCR$M_I$R", (MOP_BASE*)(new INT_SIM_ALU$M_I$R())});
      decodeStorage.insert({"JMP$M_I$R", (MOP_BASE*)(new INT_SIM_ALU$M_I$R())});
+     decodeStorage.insert({"LEA$M_I$R", (MOP_BASE*)(new INT_SIM_ALU$M_I$R())});
      decodeStorage.insert({"ADC$M_I$M_R", (MOP_BASE*)(new INT_SIM_ALU$M_I$M_R())});
      decodeStorage.insert({"ADD$M_I$M_R", (MOP_BASE*)(new INT_SIM_ALU$M_I$M_R())});
      decodeStorage.insert({"AND$M_I$M_R", (MOP_BASE*)(new INT_SIM_ALU$M_I$M_R())});
@@ -974,6 +1019,7 @@ X86_DECODER::X86_DECODER(): DECODER_BASE(){
      decodeStorage.insert({"RCL$M_I$M_R", (MOP_BASE*)(new INT_SIM_ALU$M_I$M_R())});
      decodeStorage.insert({"RCR$M_I$M_R", (MOP_BASE*)(new INT_SIM_ALU$M_I$M_R())});
      decodeStorage.insert({"JMP$M_I$M_R", (MOP_BASE*)(new INT_SIM_ALU$M_I$M_R())});
+     decodeStorage.insert({"LEA$M_I$M_R", (MOP_BASE*)(new INT_SIM_ALU$M_I$M_R())});
      decodeStorage.insert({"ADC$M_I$M_M", (MOP_BASE*)(new INT_SIM_ALU$M_I$M_M())});
      decodeStorage.insert({"ADD$M_I$M_M", (MOP_BASE*)(new INT_SIM_ALU$M_I$M_M())});
      decodeStorage.insert({"AND$M_I$M_M", (MOP_BASE*)(new INT_SIM_ALU$M_I$M_M())});
@@ -995,6 +1041,7 @@ X86_DECODER::X86_DECODER(): DECODER_BASE(){
      decodeStorage.insert({"RCL$M_I$M_M", (MOP_BASE*)(new INT_SIM_ALU$M_I$M_M())});
      decodeStorage.insert({"RCR$M_I$M_M", (MOP_BASE*)(new INT_SIM_ALU$M_I$M_M())});
      decodeStorage.insert({"JMP$M_I$M_M", (MOP_BASE*)(new INT_SIM_ALU$M_I$M_M())});
+     decodeStorage.insert({"LEA$M_I$M_M", (MOP_BASE*)(new INT_SIM_ALU$M_I$M_M())});
      decodeStorage.insert({"ADC$M_I$M", (MOP_BASE*)(new INT_SIM_ALU$M_I$M())});
      decodeStorage.insert({"ADD$M_I$M", (MOP_BASE*)(new INT_SIM_ALU$M_I$M())});
      decodeStorage.insert({"AND$M_I$M", (MOP_BASE*)(new INT_SIM_ALU$M_I$M())});
@@ -1016,6 +1063,7 @@ X86_DECODER::X86_DECODER(): DECODER_BASE(){
      decodeStorage.insert({"RCL$M_I$M", (MOP_BASE*)(new INT_SIM_ALU$M_I$M())});
      decodeStorage.insert({"RCR$M_I$M", (MOP_BASE*)(new INT_SIM_ALU$M_I$M())});
      decodeStorage.insert({"JMP$M_I$M", (MOP_BASE*)(new INT_SIM_ALU$M_I$M())});
+     decodeStorage.insert({"LEA$M_I$M", (MOP_BASE*)(new INT_SIM_ALU$M_I$M())});
      decodeStorage.insert({"ADC$M_M$R_R", (MOP_BASE*)(new INT_SIM_ALU$M_M$R_R())});
      decodeStorage.insert({"ADD$M_M$R_R", (MOP_BASE*)(new INT_SIM_ALU$M_M$R_R())});
      decodeStorage.insert({"AND$M_M$R_R", (MOP_BASE*)(new INT_SIM_ALU$M_M$R_R())});
@@ -1037,6 +1085,7 @@ X86_DECODER::X86_DECODER(): DECODER_BASE(){
      decodeStorage.insert({"RCL$M_M$R_R", (MOP_BASE*)(new INT_SIM_ALU$M_M$R_R())});
      decodeStorage.insert({"RCR$M_M$R_R", (MOP_BASE*)(new INT_SIM_ALU$M_M$R_R())});
      decodeStorage.insert({"JMP$M_M$R_R", (MOP_BASE*)(new INT_SIM_ALU$M_M$R_R())});
+     decodeStorage.insert({"LEA$M_M$R_R", (MOP_BASE*)(new INT_SIM_ALU$M_M$R_R())});
      decodeStorage.insert({"ADC$M_M$R_M", (MOP_BASE*)(new INT_SIM_ALU$M_M$R_M())});
      decodeStorage.insert({"ADD$M_M$R_M", (MOP_BASE*)(new INT_SIM_ALU$M_M$R_M())});
      decodeStorage.insert({"AND$M_M$R_M", (MOP_BASE*)(new INT_SIM_ALU$M_M$R_M())});
@@ -1058,6 +1107,7 @@ X86_DECODER::X86_DECODER(): DECODER_BASE(){
      decodeStorage.insert({"RCL$M_M$R_M", (MOP_BASE*)(new INT_SIM_ALU$M_M$R_M())});
      decodeStorage.insert({"RCR$M_M$R_M", (MOP_BASE*)(new INT_SIM_ALU$M_M$R_M())});
      decodeStorage.insert({"JMP$M_M$R_M", (MOP_BASE*)(new INT_SIM_ALU$M_M$R_M())});
+     decodeStorage.insert({"LEA$M_M$R_M", (MOP_BASE*)(new INT_SIM_ALU$M_M$R_M())});
      decodeStorage.insert({"ADC$M_M$R", (MOP_BASE*)(new INT_SIM_ALU$M_M$R())});
      decodeStorage.insert({"ADD$M_M$R", (MOP_BASE*)(new INT_SIM_ALU$M_M$R())});
      decodeStorage.insert({"AND$M_M$R", (MOP_BASE*)(new INT_SIM_ALU$M_M$R())});
@@ -1079,6 +1129,7 @@ X86_DECODER::X86_DECODER(): DECODER_BASE(){
      decodeStorage.insert({"RCL$M_M$R", (MOP_BASE*)(new INT_SIM_ALU$M_M$R())});
      decodeStorage.insert({"RCR$M_M$R", (MOP_BASE*)(new INT_SIM_ALU$M_M$R())});
      decodeStorage.insert({"JMP$M_M$R", (MOP_BASE*)(new INT_SIM_ALU$M_M$R())});
+     decodeStorage.insert({"LEA$M_M$R", (MOP_BASE*)(new INT_SIM_ALU$M_M$R())});
      decodeStorage.insert({"ADC$M_M$M_R", (MOP_BASE*)(new INT_SIM_ALU$M_M$M_R())});
      decodeStorage.insert({"ADD$M_M$M_R", (MOP_BASE*)(new INT_SIM_ALU$M_M$M_R())});
      decodeStorage.insert({"AND$M_M$M_R", (MOP_BASE*)(new INT_SIM_ALU$M_M$M_R())});
@@ -1100,6 +1151,7 @@ X86_DECODER::X86_DECODER(): DECODER_BASE(){
      decodeStorage.insert({"RCL$M_M$M_R", (MOP_BASE*)(new INT_SIM_ALU$M_M$M_R())});
      decodeStorage.insert({"RCR$M_M$M_R", (MOP_BASE*)(new INT_SIM_ALU$M_M$M_R())});
      decodeStorage.insert({"JMP$M_M$M_R", (MOP_BASE*)(new INT_SIM_ALU$M_M$M_R())});
+     decodeStorage.insert({"LEA$M_M$M_R", (MOP_BASE*)(new INT_SIM_ALU$M_M$M_R())});
      decodeStorage.insert({"ADC$M_M$M_M", (MOP_BASE*)(new INT_SIM_ALU$M_M$M_M())});
      decodeStorage.insert({"ADD$M_M$M_M", (MOP_BASE*)(new INT_SIM_ALU$M_M$M_M())});
      decodeStorage.insert({"AND$M_M$M_M", (MOP_BASE*)(new INT_SIM_ALU$M_M$M_M())});
@@ -1121,6 +1173,7 @@ X86_DECODER::X86_DECODER(): DECODER_BASE(){
      decodeStorage.insert({"RCL$M_M$M_M", (MOP_BASE*)(new INT_SIM_ALU$M_M$M_M())});
      decodeStorage.insert({"RCR$M_M$M_M", (MOP_BASE*)(new INT_SIM_ALU$M_M$M_M())});
      decodeStorage.insert({"JMP$M_M$M_M", (MOP_BASE*)(new INT_SIM_ALU$M_M$M_M())});
+     decodeStorage.insert({"LEA$M_M$M_M", (MOP_BASE*)(new INT_SIM_ALU$M_M$M_M())});
      decodeStorage.insert({"ADC$M_M$M", (MOP_BASE*)(new INT_SIM_ALU$M_M$M())});
      decodeStorage.insert({"ADD$M_M$M", (MOP_BASE*)(new INT_SIM_ALU$M_M$M())});
      decodeStorage.insert({"AND$M_M$M", (MOP_BASE*)(new INT_SIM_ALU$M_M$M())});
@@ -1142,6 +1195,7 @@ X86_DECODER::X86_DECODER(): DECODER_BASE(){
      decodeStorage.insert({"RCL$M_M$M", (MOP_BASE*)(new INT_SIM_ALU$M_M$M())});
      decodeStorage.insert({"RCR$M_M$M", (MOP_BASE*)(new INT_SIM_ALU$M_M$M())});
      decodeStorage.insert({"JMP$M_M$M", (MOP_BASE*)(new INT_SIM_ALU$M_M$M())});
+     decodeStorage.insert({"LEA$M_M$M", (MOP_BASE*)(new INT_SIM_ALU$M_M$M())});
      decodeStorage.insert({"MUL$R_R$R_R", (MOP_BASE*)(new INT_MUL_DIV_ALU$R_R$R_R())});
      decodeStorage.insert({"IMUL$R_R$R_R", (MOP_BASE*)(new INT_MUL_DIV_ALU$R_R$R_R())});
      decodeStorage.insert({"MULX$R_R$R_R", (MOP_BASE*)(new INT_MUL_DIV_ALU$R_R$R_R())});
@@ -1563,19 +1617,35 @@ X86_DECODER::X86_DECODER(): DECODER_BASE(){
      decodeStorage.insert({"V128_MOV$M$R", (MOP_BASE*)(new SIM_MOV128$M$R())});
      decodeStorage.insert({"V128_MOV$M$M", (MOP_BASE*)(new SIM_MOV128$M$M())});
      decodeStorage.insert({"CMP$R_R$", (MOP_BASE*)(new CMP_SIM_ALU$R_R$())});
+     decodeStorage.insert({"TEST$R_R$", (MOP_BASE*)(new CMP_SIM_ALU$R_R$())});
+     decodeStorage.insert({"JNB$R_R$", (MOP_BASE*)(new CMP_SIM_ALU$R_R$())});
      decodeStorage.insert({"CMP$R_I$", (MOP_BASE*)(new CMP_SIM_ALU$R_I$())});
+     decodeStorage.insert({"TEST$R_I$", (MOP_BASE*)(new CMP_SIM_ALU$R_I$())});
+     decodeStorage.insert({"JNB$R_I$", (MOP_BASE*)(new CMP_SIM_ALU$R_I$())});
      decodeStorage.insert({"CMP$R_M$", (MOP_BASE*)(new CMP_SIM_ALU$R_M$())});
+     decodeStorage.insert({"TEST$R_M$", (MOP_BASE*)(new CMP_SIM_ALU$R_M$())});
+     decodeStorage.insert({"JNB$R_M$", (MOP_BASE*)(new CMP_SIM_ALU$R_M$())});
      decodeStorage.insert({"CMP$I_R$", (MOP_BASE*)(new CMP_SIM_ALU$I_R$())});
+     decodeStorage.insert({"TEST$I_R$", (MOP_BASE*)(new CMP_SIM_ALU$I_R$())});
+     decodeStorage.insert({"JNB$I_R$", (MOP_BASE*)(new CMP_SIM_ALU$I_R$())});
      decodeStorage.insert({"CMP$I_I$", (MOP_BASE*)(new CMP_SIM_ALU$I_I$())});
+     decodeStorage.insert({"TEST$I_I$", (MOP_BASE*)(new CMP_SIM_ALU$I_I$())});
+     decodeStorage.insert({"JNB$I_I$", (MOP_BASE*)(new CMP_SIM_ALU$I_I$())});
      decodeStorage.insert({"CMP$I_M$", (MOP_BASE*)(new CMP_SIM_ALU$I_M$())});
+     decodeStorage.insert({"TEST$I_M$", (MOP_BASE*)(new CMP_SIM_ALU$I_M$())});
+     decodeStorage.insert({"JNB$I_M$", (MOP_BASE*)(new CMP_SIM_ALU$I_M$())});
      decodeStorage.insert({"CMP$M_R$", (MOP_BASE*)(new CMP_SIM_ALU$M_R$())});
+     decodeStorage.insert({"TEST$M_R$", (MOP_BASE*)(new CMP_SIM_ALU$M_R$())});
+     decodeStorage.insert({"JNB$M_R$", (MOP_BASE*)(new CMP_SIM_ALU$M_R$())});
      decodeStorage.insert({"CMP$M_I$", (MOP_BASE*)(new CMP_SIM_ALU$M_I$())});
+     decodeStorage.insert({"TEST$M_I$", (MOP_BASE*)(new CMP_SIM_ALU$M_I$())});
+     decodeStorage.insert({"JNB$M_I$", (MOP_BASE*)(new CMP_SIM_ALU$M_I$())});
      decodeStorage.insert({"CMP$M_M$", (MOP_BASE*)(new CMP_SIM_ALU$M_M$())});
+     decodeStorage.insert({"TEST$M_M$", (MOP_BASE*)(new CMP_SIM_ALU$M_M$())});
+     decodeStorage.insert({"JNB$M_M$", (MOP_BASE*)(new CMP_SIM_ALU$M_M$())});
      decodeStorage.insert({"JMP$R$R", (MOP_BASE*)(new JMP_SIM_ALU$R$R())});
      decodeStorage.insert({"JE$R$R", (MOP_BASE*)(new JMP_SIM_ALU$R$R())});
      decodeStorage.insert({"JZ$R$R", (MOP_BASE*)(new JMP_SIM_ALU$R$R())});
-     decodeStorage.insert({"JNE$R$R", (MOP_BASE*)(new JMP_SIM_ALU$R$R())});
-     decodeStorage.insert({"JNZ$R$R", (MOP_BASE*)(new JMP_SIM_ALU$R$R())});
      decodeStorage.insert({"JL$R$R", (MOP_BASE*)(new JMP_SIM_ALU$R$R())});
      decodeStorage.insert({"JB$R$R", (MOP_BASE*)(new JMP_SIM_ALU$R$R())});
      decodeStorage.insert({"JLE$R$R", (MOP_BASE*)(new JMP_SIM_ALU$R$R())});
@@ -1584,6 +1654,10 @@ X86_DECODER::X86_DECODER(): DECODER_BASE(){
      decodeStorage.insert({"JA$R$R", (MOP_BASE*)(new JMP_SIM_ALU$R$R())});
      decodeStorage.insert({"JGE$R$R", (MOP_BASE*)(new JMP_SIM_ALU$R$R())});
      decodeStorage.insert({"JAE$R$R", (MOP_BASE*)(new JMP_SIM_ALU$R$R())});
+     decodeStorage.insert({"JNL$R$R", (MOP_BASE*)(new JMP_SIM_ALU$R$R())});
+     decodeStorage.insert({"JNE$R$R", (MOP_BASE*)(new JMP_SIM_ALU$R$R())});
+     decodeStorage.insert({"JNZ$R$R", (MOP_BASE*)(new JMP_SIM_ALU$R$R())});
+     decodeStorage.insert({"JNB$R$R", (MOP_BASE*)(new JMP_SIM_ALU$R$R())});
 }
 
 
