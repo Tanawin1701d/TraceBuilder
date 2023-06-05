@@ -6,7 +6,7 @@ import X86.mop.mov.mov_mop     as mop_mov_x86
 ###### mov mop group
 
 class MOP_GROUP_MOV(mop_group.MOP_GROUP_BASE):
-    decKeys0 = ["MOV", "LEA", "PUSH", "POP", "V64_MOV", "JMP"]
+    decKeys0 = ["MOV", "LEA", "PUSH", "POP", "V64_MOV", "JMP", "MOVSXD", "MOVZX"]
     srcOpr = [opr.OPR_REG, opr.OPR_IMM, opr.OPR_MEM]
     desOpr = [opr.OPR_REG, opr.OPR_MEM]
 

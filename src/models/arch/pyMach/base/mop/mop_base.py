@@ -44,9 +44,9 @@ class MOP_BASE:
 
         ##### please remind that temporary register is expected to shared producer
         for cur_idx, cur_uop in enumerate(self.uopList):
-            for suc_uop in self.uopList[0: cur_idx]:
-                if cur_uop.isSucInternalDepend(suc_uop):
-                    self.uopInterDep[cur_idx].append(cur_uop)
+            for pre_uop in self.uopList[0: cur_idx]:
+                if cur_uop.isPreInternalDepend(pre_uop):
+                    self.uopInterDep[cur_idx].append(pre_uop)
 
     def genCXXType(self)-> str: ### also used in c++
         return "{PREFIX}${INPUT_SUFFIX}${OUTPUT_SUFFIX}".format(

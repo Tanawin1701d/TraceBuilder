@@ -69,9 +69,9 @@ public:
 
 
 
-class MOV_MEM_LD$I$T$6 : public UOP_BASE{
+class MOV_MEM_LDI$I$T$1 : public UOP_BASE{
 public:
-  MOV_MEM_LD$I$T$6():UOP_BASE(){};
+  MOV_MEM_LDI$I$T$1():UOP_BASE(){};
   void doDepenCheck(UOP_WINDOW* uop_window) override;
   void addMeta(OPR_IMM& opr_i_src_1 ,OPR_TREG& opr_t_1);
 };///////////////////////////////////////////////////////////////
@@ -906,18 +906,18 @@ public:
 
 
 
-class MOV_REG$R$M$1 : public UOP_BASE{
+class MOV_MEM_ST$R$M$99 : public UOP_BASE{
 public:
-  MOV_REG$R$M$1():UOP_BASE(){};
+  MOV_MEM_ST$R$M$99():UOP_BASE(){};
   void doDepenCheck(UOP_WINDOW* uop_window) override;
   void addMeta(OPR_REG& opr_r_src_0 ,OPR_MEM& opr_x_des_0);
 };///////////////////////////////////////////////////////////////
 
 
 
-class MOV_MEM_LD$I$R$6 : public UOP_BASE{
+class MOV_MEM_LDI$I$R$1 : public UOP_BASE{
 public:
-  MOV_MEM_LD$I$R$6():UOP_BASE(){};
+  MOV_MEM_LDI$I$R$1():UOP_BASE(){};
   void doDepenCheck(UOP_WINDOW* uop_window) override;
   void addMeta(OPR_IMM& opr_i_src_0 ,OPR_REG& opr_x_des_0);
 };///////////////////////////////////////////////////////////////
@@ -929,15 +929,6 @@ public:
   MOV_MEM_LD$M$R$6():UOP_BASE(){};
   void doDepenCheck(UOP_WINDOW* uop_window) override;
   void addMeta(OPR_MEM& opr_m_src_0 ,OPR_REG& opr_x_des_0);
-};///////////////////////////////////////////////////////////////
-
-
-
-class MOV_MEM_ST$R$M$99 : public UOP_BASE{
-public:
-  MOV_MEM_ST$R$M$99():UOP_BASE(){};
-  void doDepenCheck(UOP_WINDOW* uop_window) override;
-  void addMeta(OPR_REG& opr_r_src_0 ,OPR_MEM& opr_m_des_0);
 };///////////////////////////////////////////////////////////////
 
 

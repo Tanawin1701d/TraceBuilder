@@ -35,11 +35,11 @@ class UOP_BASE:
         self.execUnit       = _execUnit
         #UOP_COMP,UOP_LOAD,UOP_STORE,UOP_IMM,
         ###### check that current uop depend on other successor uop
-    def isSucInternalDepend(self,sucUop):
-        for sucDesOpr in sucUop.io_output.getOprsWoDummy():
+    def isPreInternalDepend(self,preUop):
+        for preDesOpr in preUop.io_output.getOprsWoDummy():
             ###### check type that is temporaly register
-            if type(sucDesOpr) is oprSm.OPR_TEMP:
-                if sucDesOpr in self.io_input.getOprsWoDummy():
+            if type(preDesOpr) is oprSm.OPR_TEMP:
+                if preDesOpr in self.io_input.getOprsWoDummy():
                     return True
         return False
 

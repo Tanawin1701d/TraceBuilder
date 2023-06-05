@@ -43,13 +43,13 @@ class MOP_BASE_X86(mb.MOP_BASE):
         elif srcOprType == opr.OPR_MEM or srcOprType == opr.OPR_IMM:
             #
             # ##### determine is mem or imm
-            memLoad = srcOprType == opr.OPR_MEM
+            isMemLoad = srcOprType == opr.OPR_MEM
             ####### create related operand
-            srcOpr = srcOprType(f"m_src_{uuid}", True) if memLoad else \
+            srcOpr = srcOprType(f"m_src_{uuid}", True) if isMemLoad else \
                      srcOprType(f"i_src_{uuid}")
             desTempOpr = opr.OPR_TEMP(f"t_{uuid}")
             ####### create related uop
-            relatedUop = uop_mov_x86.UOP_MOV(f"uop_ld_{uuid}",resMap.cxxTypeUOP_LOAD)
+            relatedUop = uop_mov_x86.UOP_MOV(f"uop_ld_{uuid}",resMap.cxxTypeUOP_LOAD if isMemLoad else resMap.cxxTypeUOP_IMM)
             relatedUop.addIo([srcOpr], [desTempOpr])
             ####### add to pre marcro-op built list
             if addToSummaryList:
@@ -140,10 +140,10 @@ class MOP_BASE_X86(mb.MOP_BASE):
             desTempOpr = opr.OPR_TEMP(f"t_{uuid}")
             ####### create related uop
             ##### low
-            relatedUopl = uop_mov_x86.UOP_MOV(f"uop_ldl_{uuid}",resMap.cxxTypeUOP_LOAD)
+            relatedUopl = uop_mov_x86.UOP_MOV(f"uop_ldl_{uuid}", resMap.cxxTypeUOP_LOAD if memLoad else resMap.cxxTypeUOP_IMM)
             relatedUopl.addIo([srcOpr], [desTempOpr])
             ##### high
-            relatedUoph = uop_mov_x86.UOP_MOV(f"uop_ldh_{uuid}", resMap.cxxTypeUOP_LOAD)
+            relatedUoph = uop_mov_x86.UOP_MOV(f"uop_ldh_{uuid}", resMap.cxxTypeUOP_LOAD if memLoad else resMap.cxxTypeUOP_IMM)
             relatedUoph.addIo([srcOpr], [desTempOpr])
             ####### add to pre marcro-op built list
             if addToSummaryList:

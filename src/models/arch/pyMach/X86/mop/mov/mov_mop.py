@@ -18,7 +18,7 @@ class MOP_MOV_ALL(mop_cen_x86.MOP_BASE_X86):
             tempOpr = opr.OPR_TEMP(f"t_0")
             desOpr  = desOpr0Type(f"x_des_0", False) ##### Flase is des for reg and mem
             ####### create related uop
-            loadUop = uop_mov_x86.UOP_MOV(f"uop_ld_0", resMap.cxxTypeUOP_LOAD)
+            loadUop = uop_mov_x86.UOP_MOV(f"uop_ld_0", resMap.cxxTypeUOP_LOAD if memLoad else resMap.cxxTypeUOP_IMM)
             if desOpr0Type == opr.OPR_MEM:
                 loadUop.addIo([srcOpr], [tempOpr])
                 storeUop = uop_mov_x86.UOP_MOV(f"uop_st_0", resMap.cxxTypeUOP_STORE)
@@ -31,9 +31,10 @@ class MOP_MOV_ALL(mop_cen_x86.MOP_BASE_X86):
                 self.autoInit(_cxxType_prefix, [srcOpr], [desOpr], [], [loadUop], _decKeys)
 
         elif srcOpr0Type == opr.OPR_REG:
+            isDesMemStore = desOpr0Type == opr.OPR_MEM
             srcOpr  = opr.OPR_REG("r_src_0", True)
             desOpr  = desOpr0Type("x_des_0", False)
-            storeUop = uop_mov_x86.UOP_MOV(f"uop_st_0", resMap.cxxTypeUOP_MOVREG)
+            storeUop = uop_mov_x86.UOP_MOV(f"uop_st_0", resMap.cxxTypeUOP_STORE if isDesMemStore else resMap.cxxTypeUOP_MOVREG)
             storeUop.addIo([srcOpr], [desOpr])
             self.autoInit(_cxxType_prefix, [srcOpr], [desOpr], [], [storeUop], _decKeys)
 
@@ -50,8 +51,8 @@ class MOP_MOV256_ALL(mop_cen_x86.MOP_BASE_X86):
             tempOpr = opr.OPR_TEMP(f"t_0")
             desOpr  = desOpr0Type(f"x_des_0", False) ##### Flase is des for reg and mem
             ####### create related uop
-            loadUoph = uop_mov_x86.UOP_MOV(f"uop_ldh_0", resMap.cxxTypeUOP_LOAD)
-            loadUopl = uop_mov_x86.UOP_MOV(f"uop_ldl_0", resMap.cxxTypeUOP_LOAD)
+            loadUoph = uop_mov_x86.UOP_MOV(f"uop_ldh_0", resMap.cxxTypeUOP_LOAD if memLoad else resMap.cxxTypeUOP_IMM)
+            loadUopl = uop_mov_x86.UOP_MOV(f"uop_ldl_0", resMap.cxxTypeUOP_LOAD if memLoad else resMap.cxxTypeUOP_IMM)
             if desOpr0Type == opr.OPR_MEM:
                 loadUoph.addIo([srcOpr], [tempOpr])
                 loadUopl.addIo([srcOpr], [tempOpr])

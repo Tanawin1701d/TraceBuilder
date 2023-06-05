@@ -9,18 +9,21 @@ cxxTypeToExecUnit = {
     "SIM64_ALU"  : 5,
     "MOV_MEM_LD" : 6,
     "MOV_MEM_ST" : ExecUnit_dummy,
+    "MOV_MEM_LDI": 1,
     "MOV_REG"    : 1,
     "CMP_SIM_ALU": 1,
     "JMP_SIM_ALU": 1
 
 }
 
-cxxTypeToGemType = {
-    "MOV_MEM_LD" : "UOP_LOAD",
-    "MOV_MEM_ST" : "UOP_STORE"
+cxxTypeToUopType = {
+    "MOV_MEM_LD"  : "UOP_LOAD",
+    "MOV_MEM_LDI" : "UOP_IMM",
+    "MOV_MEM_ST"  : "UOP_STORE"
 }
-default_gemType = "UOP_COMP"
+default_uopType = "UOP_COMP"
 
 cxxTypeUOP_LOAD  = "MOV_MEM_LD"
 cxxTypeUOP_STORE = "MOV_MEM_ST"
+cxxTypeUOP_IMM   = "MOV_MEM_LDI"
 cxxTypeUOP_MOVREG = "MOV_REG"

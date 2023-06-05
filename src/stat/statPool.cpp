@@ -107,7 +107,7 @@ void STAT_MNG::saveToFile(const std::string filePath) {
     }
 
     for (size_t idx = 0; idx < keys.size(); idx++){
-        outFile << keys[idx] << genRepeatStr(maxLength - keys[idx].size(), " ") << values[idx] << '\n';
+        outFile << keys[idx] << genRepeatStr(maxLength - keys[idx].size(), " ") << " " << values[idx] << '\n';
     }
     outFile.close();
 

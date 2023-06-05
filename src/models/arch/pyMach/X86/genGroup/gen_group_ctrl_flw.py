@@ -17,7 +17,7 @@ class MOP_GROUP_JMP(mop_group.MOP_GROUP_BASE):
     decKeys0 = ["JMP", "JE", "JZ",  "JL", "JB",
                 "JLE", "JBE", "JG", "JA", "JGE",
                 "JAE", "JNL", "JNE", "JNZ","JNB",
-                "JNBE"]
+                "JNBE", "JNLE"]
 
     srcdesOpr = [opr.OPR_REG]
 

@@ -71,29 +71,44 @@ RESULT_FRONT_END_GEM_LAGACY::onGetUopsResult(
         dep_pkt.set_seq_num(uop->getSeqNum());
         dep_pkt.set_flags(0);
         dep_pkt.set_comp_delay(execUnit_info->getLatencyCycle(uop->getExecUnit()) * 500);
-        dep_pkt.set_weight(1);
+        dep_pkt.set_weight(0);
         dep_pkt.set_pc(0);
         ///////////////////////////////////////////////////////
         ////////// add dependency for each uop instruction type
         ///////////////////////////////////////////////////////
         ///// you can trust that the uops dependency which get from ONGETUOPSRESULTS is not deleted
         //////// by uop window but it maybe deleted after finish this function.
+        std::unordered_set<uint64_t> preRegDep;
         for (auto* regDepUop: uop->getRegDep()){
             MAIN_STAT["DepGem5"]["reg"].asUINT()++;
-            dep_pkt.add_reg_dep(regDepUop->getSeqNum());
+            preRegDep.insert(regDepUop->getSeqNum());
+            //dep_pkt.add_reg_dep(regDepUop->getSeqNum());
         }
         for (auto* tempRegDepUop: uop->getTemDep()){
             MAIN_STAT["DepGem5"]["Treg"].asUINT()++;
-            dep_pkt.add_reg_dep(tempRegDepUop->getSeqNum());
+            preRegDep.insert(tempRegDepUop->getSeqNum());
+            //dep_pkt.add_reg_dep(tempRegDepUop->getSeqNum());
         }
         for (auto* execDepUop : uop->getExecDep()){
             MAIN_STAT["DepGem5"]["Exec"].asUINT()++;
-            dep_pkt.add_reg_dep(execDepUop->getSeqNum());
+            preRegDep.insert(execDepUop->getSeqNum());
+            //dep_pkt.add_reg_dep(execDepUop->getSeqNum());
         }
         for (auto* memDepUop: uop->getMemDep()){
             MAIN_STAT["DepGem5"]["mem"].asUINT()++;
-            dep_pkt.add_rob_dep(memDepUop->getSeqNum());
+            uint64_t depSeqNum = memDepUop->getSeqNum();
+            if (preRegDep.find(depSeqNum) == preRegDep.end()){
+                dep_pkt.add_rob_dep(depSeqNum);
+            }
         }
+
+        /////// pool the reg dep in to packet
+        for (auto dep : preRegDep){
+
+            dep_pkt.add_reg_dep(dep);
+        }
+        MAIN_STAT["DepGem5"]["MERGE"].asUINT() = preRegDep.size();
+
 
         /////////////////////////////////////////////////////
         ////////// add explicit for each uop instruction type
@@ -132,7 +147,7 @@ RESULT_FRONT_END_GEM_LAGACY::onGetUopsResult(
     ////////////////////////////////////////////////////////
 
     ProtoMessage::Packet instr_pkt;
-    lastTick += 500;
+    lastTick += 1;
     instr_pkt.set_tick(lastTick);
     instr_pkt.set_cmd(1);
     instr_pkt.set_addr(lastTick % 1000000);

@@ -1,6 +1,6 @@
 
 cmake_minimum_required(VERSION 3.23)
-project(traceBuilder)
+project(traceBuilder2)
 set(CMAKE_CXX_STANDARD 17)
 
 
@@ -36,7 +36,7 @@ FILE(GLOB_RECURSE SRC_ARCH_X86 RELATIVE ${CMAKE_SOURCE_DIR} "src/models/arch/X86
 FILE(GLOB_RECURSE SRC_EXAMPLE  RELATIVE ${CMAKE_SOURCE_DIR} "src/example/*.cpp")
 
 add_executable(
-        traceBuilder
+        traceBuilder2
         src/main.cpp
         ${SRC_CORE}
         ${SRC_MODEL}
@@ -47,6 +47,6 @@ add_executable(
         ${SRC_EXAMPLE}
 )
 
-TARGET_LINK_LIBRARIES( traceBuilder PRIVATE ${Boost_LIBRARIES} Threads::Threads ${PROTOBUF_LIBRARY} )
+TARGET_LINK_LIBRARIES( traceBuilder2 PRIVATE ${Boost_LIBRARIES} Threads::Threads ${PROTOBUF_LIBRARY} )
 
-ADD_DEPENDENCIES(traceBuilder x86sim)
+ADD_DEPENDENCIES(traceBuilder2 x86sim)
