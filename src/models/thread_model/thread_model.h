@@ -7,32 +7,39 @@
 
 #include "models/inst_model/rt_instr.h"
 #include <sstream>
-#include "core/resMng/regMap/regMapper.h"
+#include "models/res_model/regMap/regMapper.h"
 //// [WARN] please beware about circular link
 #include "core/tracerFrontEnd/staticTraceVar.h"
 #include "core/tracerFrontEnd/dynTraceVar.h"
 
-typedef int THREAD_ID;
+namespace traceBuilder::model {
 
-class THREAD_MODEL{
+    using namespace traceBuilder::core;
 
-private:
+    typedef int THREAD_ID;
 
-    std::unordered_map<uint64_t, RT_INSTR*> instr_pool; /// map runtime instruction id to runtime instruction
+    class THREAD_MODEL {
+
+    private:
+
+        std::unordered_map<uint64_t, RT_INSTR *> instr_pool; /// map runtime instruction id to runtime instruction
 
 
-public:
-    explicit THREAD_MODEL();
-    ~THREAD_MODEL();
+    public:
+        explicit THREAD_MODEL();
 
-    /////// get runtime instruction that not decoded to generate micro-op or added with
-    ////////////// runtime data
-    RT_INSTR* getInstrTemplate(uint64_t instr_id);
+        ~THREAD_MODEL();
 
-    //////// when tracer collect raw static instruction token which we will decoded it
-    void onGetStTraceValue(staticTraceData stData); // for only per instruction
+        /////// get runtime instruction that not decoded to generate micro-op or added with
+        ////////////// runtime data
+        RT_INSTR *getInstrTemplate(uint64_t instr_id);
 
-};
+        //////// when tracer collect raw static instruction token which we will decoded it
+        void onGetStTraceValue(staticTraceData stData); // for only per instruction
+
+    };
+
+}
 
 
 #endif //TRACEBUILDER_THREAD_MODEL_H

@@ -14,50 +14,59 @@
 #include "ioHelp/strHelp.h"
 #include "statRecType.h"
 
+namespace traceBuilder::stat {
 
-class  STAT{
-private:
-    /// for now we support only uint64 stat for convenient use
-    std::unordered_map<std::string, STAT*> chainStat;
-    STAT_REC_TYPE* recordedValue;
-    STAT_TYPE      recordedType;
+    class STAT {
+    private:
+        /// for now we support only uint64 stat for convenient use
+        std::unordered_map<std::string, STAT *> chainStat;
+        STAT_REC_TYPE *recordedValue;
+        STAT_TYPE recordedType;
 
-public:
-    explicit STAT();
-    STAT&    operator[] (std::string key);
-    bool         isValueEmpty();
-    std::string  getReport(); /////// please not that this function is assume that there are value @recorder
-    int64_t&     asUINT();
-    std::string& asSTR();
-    std::unordered_map<std::string, STAT*>& getChainStat(){return chainStat;};
+    public:
+        explicit STAT();
 
-};
+        STAT &operator[](std::string key);
 
-///////////////////////////////////////
-///////////////////////////////////////
-extern  STAT     MAIN_STAT;
-///////////////////////////////////////
-///////////////////////////////////////
+        bool isValueEmpty();
 
-class STAT_MNG{
-    size_t maxLength = 0;
-    std::vector<std::string> keys;
-    std::vector<std::string> values;
-public:
-    void preparePrint(std::vector<std::string>& prefixs,
-               STAT* stat = &MAIN_STAT
-               );
+        std::string getReport(); /////// please not that this function is assume that there are value @recorder
+        int64_t &asUINT();
 
-    void print();
-    void saveToFile(const std::string filePath);
-    void clearStat();
-};
+        std::string &asSTR();
+
+        std::unordered_map<std::string, STAT *> &getChainStat() { return chainStat; };
+
+    };
 
 ///////////////////////////////////////
 ///////////////////////////////////////
-extern STAT_MNG MAIN_STAT_MNG;
+    extern STAT MAIN_STAT;
 ///////////////////////////////////////
 ///////////////////////////////////////
 
+    class STAT_MNG {
+        size_t maxLength = 0;
+        std::vector<std::string> keys;
+        std::vector<std::string> values;
+    public:
+        void preparePrint(std::vector<std::string> &prefixs,
+                          STAT *stat = &MAIN_STAT
+        );
+
+        void print();
+
+        void saveToFile(const std::string& filePath);
+
+        void clearStat();
+    };
+
+///////////////////////////////////////
+///////////////////////////////////////
+    extern STAT_MNG MAIN_STAT_MNG;
+///////////////////////////////////////
+///////////////////////////////////////
+
+}
 
 #endif //TRACEBUILDER_STATPOOL_H

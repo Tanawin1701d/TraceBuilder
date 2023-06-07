@@ -1,6 +1,6 @@
 
 cmake_minimum_required(VERSION 3.23)
-project(traceBuilder2)
+project(traceBuilder)
 set(CMAKE_CXX_STANDARD 17)
 
 
@@ -21,7 +21,7 @@ INCLUDE_DIRECTORIES( ./src )
 
 add_custom_target(
         x86sim ALL
-        COMMAND python3 ${CMAKE_SOURCE_DIR}/src/models/arch/pyMach/gen_main.py
+        COMMAND python3 ${CMAKE_SOURCE_DIR}/src/models/uop_model/pyMach/gen_main.py
         COMMENT "generating the x86 model"
 )
 
@@ -36,7 +36,7 @@ FILE(GLOB_RECURSE SRC_ARCH_X86 RELATIVE ${CMAKE_SOURCE_DIR} "src/models/arch/X86
 FILE(GLOB_RECURSE SRC_EXAMPLE  RELATIVE ${CMAKE_SOURCE_DIR} "src/example/*.cpp")
 
 add_executable(
-        traceBuilder2
+        traceBuilder
         src/main.cpp
         ${SRC_CORE}
         ${SRC_MODEL}
@@ -47,6 +47,6 @@ add_executable(
         ${SRC_EXAMPLE}
 )
 
-TARGET_LINK_LIBRARIES( traceBuilder2 PRIVATE ${Boost_LIBRARIES} Threads::Threads ${PROTOBUF_LIBRARY} )
+TARGET_LINK_LIBRARIES( traceBuilder PRIVATE ${Boost_LIBRARIES} Threads::Threads ${PROTOBUF_LIBRARY} )
 
-ADD_DEPENDENCIES(traceBuilder2 x86sim)
+ADD_DEPENDENCIES(traceBuilder x86sim)

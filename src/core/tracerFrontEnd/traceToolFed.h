@@ -8,26 +8,30 @@
 #include <fstream>
 #include <cassert>
 #include "core/tracers/tracer.h"
+#include "models/thread_model/thread_model.h"
 
-class THREAD_MODEL;
+namespace traceBuilder::core {
+
 
 ///// for now we assume that stream front-end and file front end share same input trace function
-class TRACE_TOOL_FRONT_END{
-protected:
-    THREAD_MODEL*    tmd; // for static trace to send static instruction to build runtime instruction
-    TRACER_BASE*     tracer; // for runtime trace; the runtime data will be integrate with
-    // runtime instruction to generate precise micro op
+    class TRACE_TOOL_FRONT_END {
+    protected:
+        THREAD_MODEL *tmd; // for static trace to send static instruction to build runtime instruction
+        TRACER_BASE *tracer; // for runtime trace; the runtime data will be integrate with
+        // runtime instruction to generate precise micro op
 
-public:
+    public:
 
-    TRACE_TOOL_FRONT_END();
+        TRACE_TOOL_FRONT_END();
 
-    void setListenners(THREAD_MODEL* _tmd, TRACER_BASE* _tracer);
+        void setListenners(THREAD_MODEL *_tmd, TRACER_BASE *_tracer);
 
-    virtual ~TRACE_TOOL_FRONT_END();
+        virtual ~TRACE_TOOL_FRONT_END();
 
-    virtual void start() = 0;
+        virtual void start() = 0;
 
-};
+    };
+
+}
 
 #endif //TRACEBUILDER_TRACETOOLFED_H

@@ -4,3 +4,5 @@
 
 #include "resultFed.h"
 
+namespace traceBuilder::core {
+}

@@ -6,18 +6,23 @@
 #include "staticTraceVar.h"
 #include "models/thread_model/thread_model.h"
 
-TRACE_TOOL_FRONT_END::TRACE_TOOL_FRONT_END(){}
 
-TRACE_TOOL_FRONT_END::~TRACE_TOOL_FRONT_END(){}
+namespace traceBuilder::core {
 
-void
-TRACE_TOOL_FRONT_END::setListenners(THREAD_MODEL* _tmd,
-                                    TRACER_BASE* _tracer){
 
-    tmd = _tmd;
-    tracer = _tracer;
+    TRACE_TOOL_FRONT_END::TRACE_TOOL_FRONT_END() {}
 
-    assert(tmd != nullptr);
-    assert(tracer != nullptr);
+    TRACE_TOOL_FRONT_END::~TRACE_TOOL_FRONT_END() {}
+
+    void
+    TRACE_TOOL_FRONT_END::setListenners(THREAD_MODEL *_tmd,
+                                        TRACER_BASE *_tracer) {
+
+        tmd = _tmd;
+        tracer = _tracer;
+
+        assert(tmd != nullptr);
+        assert(tracer != nullptr);
+    }
+
 }
-
