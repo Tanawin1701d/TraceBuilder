@@ -1,6 +1,6 @@
 #ifndef X86_MOPL_H
 #define X86_MOPL_H
-#include"models/uop_model/dep.h"
+#include"models/uop_model/dep_base.h"
 #include"models/uop_model/mop_base.h"
 #include"X86_uop.h"
 

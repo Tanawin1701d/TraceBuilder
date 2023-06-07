@@ -6,7 +6,8 @@
 #define TRACEBUILDER_UOP_BASE_H
 
 
-#include "dep.h"
+#include "dep_base.h"
+#include "dep_simple.h"
 #include "models/inst_model/operand.h"
 #include "models/res_model/execUnit/execUnit.h"
 #include "stat/statPool.h"
@@ -34,6 +35,7 @@ namespace traceBuilder::model {
         uint64_t seqNum;// sequence number of uop in each thread
         UOP_TYPE uop_type;
         EXEC_UNIT_ID exec_unit_id;
+        DEP_BASE dep_pool_owner;
 
     public:
         UOP_BASE();

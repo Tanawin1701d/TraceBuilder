@@ -8,11 +8,12 @@ namespace traceBuilder::core {
 
 
 ///// constructor
-    UOP_WINDOW::UOP_WINDOW(int _window_size, EXEC_UNIT_RES *exeUnit_pool) {
+    UOP_WINDOW::UOP_WINDOW(EXEC_UNIT_RES *exeUnit_pool):
+            last_push_seq(-1)
+    {
         ///// minimum uop window is 10
-        assert(_window_size >= 10);
+        assert(UOP_WINDOW_SIZE > 10);
         assert(exeUnit_pool != nullptr);
-        window_size = _window_size;
         ///// insert new dep help to depHelperPool
         depHelperPool.resize(DEP_HELP_IDX::HELP_SIZE);
         depHelperPool[DEP_HELP_IDX::HELP_REG] = new DEP_HELP_REG();
@@ -25,6 +26,10 @@ namespace traceBuilder::core {
         if (!uop_window.empty()) {
             /////// who will be deleted
             UOP_BASE *preDelete = uop_window.back();
+            /////// update last push to queue
+            if (preDelete->getSeqNum() == last_push_seq){
+                last_push_seq = -1;
+            }
             assert(preDelete != nullptr);
             ////// notify dep helper on pop oldest uop to window
             for (auto &depHelpEle: depHelperPool) {
@@ -39,7 +44,7 @@ namespace traceBuilder::core {
 //// check is full?
     bool
     UOP_WINDOW::isFull() {
-        return uop_window.size() >= window_size;
+        return uop_window.size() >= UOP_WINDOW_SIZE;
     }
 
     void
@@ -47,13 +52,18 @@ namespace traceBuilder::core {
         assert(newUop != nullptr);
         if (isFull())
             tryPopFromQ();
+        /////// increase last added to queue
+        ++last_push_seq;
+        ///// check that sequence number is correctly assigned from tracer
+        assert(last_push_seq == newUop->getSeqNum());
         ////// notify dep helper on adding new uop to window
         for (auto &depHelpEle: depHelperPool) {
             depHelpEle->onPushToWd(newUop, this);
         }
         ///// push and pop side from the queue is critical
+        /////// update last push to queue
+        last_push_seq = newUop->getSeqNum();
         uop_window.push_front(newUop);
-
 
     }
 

@@ -28,7 +28,7 @@ namespace traceBuilder::core {
     class UOP_WINDOW {
     private:
         std::deque<UOP_BASE *> uop_window;
-        int window_size;
+        uint64_t last_push_seq;
         std::vector<DEP_HELP_BASE *> depHelperPool;
 
         bool isFull();
@@ -36,11 +36,13 @@ namespace traceBuilder::core {
         void tryPopFromQ();
         /////// dependency helper
     public:
-        UOP_WINDOW(int _window_size, EXEC_UNIT_RES *exeUnit_pool);
+        UOP_WINDOW(EXEC_UNIT_RES *exeUnit_pool);
 
         void addUop(UOP_BASE *newUop);
 
         std::deque<UOP_BASE *> *getUopwindow() { return &uop_window; }
+
+        uint64_t getLastPushSeqNum() const {return last_push_seq;}
 
         ////// represent an proxy function
         void assignRegDep(UOP_BASE *uop) { depHelperPool[DEP_HELP_IDX::HELP_REG]->assignDepHelp(uop, this); }

@@ -133,6 +133,7 @@ namespace traceBuilder::core {
         resFed->onGetUopsResult(inflight_uops, rt_instr);
         /////// push data to uop window
         for (auto *uop: inflight_uops) {
+            uop->finalizeTemDep(uopWindow);
             uopWindow->addUop(uop);
         }
 

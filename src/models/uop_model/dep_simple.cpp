@@ -1,43 +1,19 @@
 //
-// Created by tanawin on 12/2/2566.
+// Created by tanawin on 7/6/2566.
 //
 
-#include "dep.h"
-#include "core/tracers/uop_wd.h"
+#include "dep_simple.h"
 
 namespace traceBuilder::model {
-
-
-    bool DEP_BASE::addDep(UOP_BASE *uop) {
-        auto find_iterator = predecessors.find(uop);
-        bool isNew = find_iterator == predecessors.end();
-        if (isNew)
-            predecessors.insert(uop);
-        return isNew;
-    }
 
 ////////////////////////////////////
 ////// register dependency
 ////////////////////////////////////
-
-    bool REG_DEP::addRegDep(UOP_BASE *uop) {
-        return addDep(uop);
-    }
-
-    std::unordered_set<UOP_BASE *> &
-    REG_DEP::getRegDep() {
-        return predecessors;
-    }
-
     void
     REG_DEP::addRegMeta(const REGNUM regnum, bool isSrc) {
         if (regnum == unusedReg) { return; }
         std::vector<REGNUM> *targetVec = isSrc ? &srcReg : &desReg;
         targetVec->push_back(regnum);
-    }
-
-    std::vector<REGNUM> &REG_DEP::getdesReg() {
-        return desReg;
     }
 
 ////////////////////////////////////
@@ -63,16 +39,6 @@ namespace traceBuilder::model {
 
     }
 
-    bool MEM_DEP::addMemDep(UOP_BASE *uop) {
-        assert(uop != nullptr);
-        return addDep(uop);
-    }
-
-    std::unordered_set<UOP_BASE *> &
-    MEM_DEP::getMemDep() {
-        return predecessors;
-    }
-
     void MEM_DEP::addMemMeta(ADAS adas, bool isLoad) {
         std::vector<ADAS> *targetVec = isLoad ? &loadAdas : &storeAdas;
         targetVec->push_back(adas);
@@ -80,14 +46,16 @@ namespace traceBuilder::model {
 ////////////////////////////////////
 ////// temporary register dependency
 ////////////////////////////////////
-
-    bool TEM_DEP::addTemDep(UOP_BASE *uop) {
-        return addDep(uop);
+    void
+    TEM_DEP::addTemDep(UOP_BASE* uop) {
+        preAddedDep.push_back(uop);
     }
 
-    std::unordered_set<UOP_BASE *> &
-    TEM_DEP::getTemDep() {
-        return predecessors;
+    void
+    TEM_DEP::finalizeTemDep(UOP_WINDOW* trace_window){
+        for (auto uop : preAddedDep){
+            addDep(uop, trace_window);
+        }
     }
 
     void
@@ -98,16 +66,5 @@ namespace traceBuilder::model {
 ////////////////////////////////////
 ////// exec_unit dep
 ////////////////////////////////////
-
-    bool
-    EXEC_UNIT_DEP::addExecDep(UOP_BASE *uop) {
-        assert(uop != nullptr);
-        return addDep(uop);
-    }
-
-    std::unordered_set<UOP_BASE *> &
-    EXEC_UNIT_DEP::getExecDep() {
-        return predecessors;
-    }
 
 }

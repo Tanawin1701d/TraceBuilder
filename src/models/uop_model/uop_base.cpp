@@ -16,7 +16,12 @@ namespace traceBuilder::model {
     UOP_BASE::UOP_BASE() :
             seqNum(UINT64_MAX),
             uop_type(UOP_DUMMY),
-            exec_unit_id(DUMMY_EXEC_UNIT_ID) {}
+            exec_unit_id(DUMMY_EXEC_UNIT_ID) {
+        REG_DEP::setDepPool(&dep_pool_owner);
+        MEM_DEP::setDepPool(&dep_pool_owner);
+        TEM_DEP::setDepPool(&dep_pool_owner);
+        EXEC_UNIT_DEP::setDepPool(&dep_pool_owner);
+    }
 
     void UOP_BASE::doRegDepenCheck(UOP_WINDOW *uop_window) {
         uop_window->assignRegDep(this);
@@ -30,11 +35,11 @@ namespace traceBuilder::model {
         for (auto &uopWindow_itr: *uopWindow_ptr) {
             for (auto &ldAdas: loadAdas) {
                 if (uopWindow_itr->isdependOnMem(ldAdas, true))
-                    addMemDep(uopWindow_itr);
+                    addMemDep(uopWindow_itr, uop_window);
             }
             for (auto &stAdas: storeAdas) {
                 if (uopWindow_itr->isdependOnMem(stAdas, false))
-                    addMemDep(uopWindow_itr);
+                    addMemDep(uopWindow_itr, uop_window);
             }
         }
     }

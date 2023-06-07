@@ -15,7 +15,6 @@ namespace traceBuilder::core {
 
     using namespace traceBuilder::util;
     class RESULT_FRONT_END_GEM_LAGACY : public RESULT_FRONT_END {
-
     private:
         ProtoOutputStream *dataProtoStream;
         ProtoOutputStream *instrProtoStream;
