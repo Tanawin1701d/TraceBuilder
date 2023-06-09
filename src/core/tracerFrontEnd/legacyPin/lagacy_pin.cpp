@@ -3,14 +3,15 @@
 //
 
 #include "lagacy_pin.h"
+#include "core/core.h"
 
 
 ////////// lagacy pin tracer
 
 namespace traceBuilder::core {
 
-    LAGACY_PIN_TRACER::LAGACY_PIN_TRACER(const std::string &_fileName_static,
-                                         const std::string &_fileName_dyn) :
+    LAGACY_PIN_TRACER::LAGACY_PIN_TRACER(std::string _fileName_static,
+                                         std::string _fileName_dyn) :
             TRACE_TOOL_FRONT_END() {
         staticFile = new std::ifstream(_fileName_static);
         dynFile = new std::ifstream(_fileName_dyn);
@@ -112,5 +113,24 @@ namespace traceBuilder::core {
         startDynTrace();
 
     }
+
+    void LAGACY_PIN_TRACER::setRes(CORE *_core,
+                                   SHARED_TRACEINFO* _sharedInfo,
+                                   SPECIFIC_TRACEINFO* _specificInfo) {
+        tmd = _specificInfo->threadModel;
+        tracer = _specificInfo->tracer;
+
+    }
+
+
+    void BIND_LAGACY_PIN_TRACER(py::module& m){
+        py::class_<LAGACY_PIN_TRACER, TRACE_TOOL_FRONT_END>(m, "LAGACY_PIN_TRACER")
+                .def(py::init<std::string, std::string>(),
+                     py::arg("fileName_static"),
+                     py::arg("fileName_dyn"),
+                     "static/dynfile Name"
+                );
+    }
+
 
 }

@@ -30,7 +30,7 @@ namespace traceBuilder::stat {
     public:
         STAT_REC_TYPE_UINT();
 
-        int64_t &getRef() { return value; };
+        int64_t& getRef() { return value; };
 
         int64_t getVal() { return value; };
 

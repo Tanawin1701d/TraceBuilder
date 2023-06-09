@@ -50,9 +50,9 @@ namespace traceBuilder {
         execUnit_info->setLatencyCycle(4, 4); ///"FLOAT_MUL_DIV_ALU"
         execUnit_info->setLatencyCycle(5, 1); ///"SIM128_ALU"
         execUnit_info->setLatencyCycle(6, 1); ///"MOV_MEM_LD"
-        gemFrontend->setExecUnit_info(execUnit_info);
+        //gemFrontend->setExecUnit_info(execUnit_info);
         //////// core start
-        CORE *traceCore = new CORE(memMng, x86Dec, execUnit_info);
+        CORE *traceCore = new CORE(memMng, execUnit_info);
         traceCore->addWorker(pinTracer, gemFrontend, 256);
         ///////////////////////////////////////////////////////////////////////////////
         //////// start simulation

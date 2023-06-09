@@ -35,7 +35,7 @@ namespace traceBuilder::model {
         uint64_t seqNum;// sequence number of uop in each thread
         UOP_TYPE uop_type;
         EXEC_UNIT_ID exec_unit_id;
-        DEP_BASE dep_pool_owner;
+        DEP_RWD_BASE dep_rwd_pool_owner;
 
     public:
         UOP_BASE();
@@ -53,6 +53,8 @@ namespace traceBuilder::model {
         UOP_TYPE getUopType() const { return uop_type; };
 
         EXEC_UNIT_ID getExecUnit() const { return exec_unit_id; };
+
+        DEP_RWD_BASE& getDep_Rwd_pool(){return dep_rwd_pool_owner;};
 
         //// use to ask successor to check dependecy and store ourself dependency
         ////// crucial this is fundamental of the program the program

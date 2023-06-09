@@ -6,14 +6,29 @@
 
 namespace traceBuilder::core {
 
-    CORE::CORE(MEM_MNG *_memMng, DECODER_BASE *_decBase, EXEC_UNIT_RES *_execUnit_info) :
-            amountThread(0),
-            memMng(_memMng),
-            decoder(_decBase),
-            execUnit_info(_execUnit_info) {
+    CORE::CORE(MEM_MNG *_memMng, EXEC_UNIT_RES *_execUnit_info) :
+            amountThread(0){
         assert(_memMng != nullptr);
-        assert(_decBase != nullptr);
         assert(_execUnit_info != nullptr);
+
+        /////////// set decoder according to architecture
+        #ifdef X86
+              sharedInfo.decoder = new X86_DECODER();
+        #else
+              decoder = new DECODER_BASE();
+        #endif
+        /////////////////////////////////////////////////////
+        sharedInfo.memMng = _memMng;
+        sharedInfo.execUnit_info = _execUnit_info;
+
+    }
+
+    CORE::~CORE(){
+        delete sharedInfo.decoder;
+        delete sharedInfo.memMng;
+        delete sharedInfo.execUnit_info;
+
+
     }
 
 
@@ -22,43 +37,53 @@ namespace traceBuilder::core {
                     RESULT_FRONT_END *_result_frontEnd,
                     int _obsSize
     ) {
+        assert(_trace_tool != nullptr);
+        assert(_result_frontEnd != nullptr);
 
-        /////// for now we assume that each trace worker have their own thread model
-        //////////// In the future, we might support shared thread model to optimize the performance
+        /////////////////////////////////////////////////
+        //////// set tracing element
+        auto* specificInfo = new SPECIFIC_TRACEINFO();
 
-        ////////// build uop window and thread model for tracer and traceTool
-        UOP_WINDOW *uopWindow = new UOP_WINDOW(_obsSize, execUnit_info);
-        THREAD_MODEL *tmd = new THREAD_MODEL();
+        specificInfo->tid = amountThread;
+        specificInfo->uopWindow = new UOP_WINDOW(sharedInfo.execUnit_info);
+        specificInfo->threadModel = new THREAD_MODEL();
+
+
+        specificInfo->traceToolFed = _trace_tool;
+        specificInfo->resultFed = _result_frontEnd;
         ///////// tracer
-        TRACER_BASE *tracer = new TRACER_BASE(amountThread,
-                                              _result_frontEnd,
-                                              uopWindow,
-                                              decoder,
-                                              memMng,
-                                              tmd
-        );
+        specificInfo->tracer = new TRACER_BASE(this,
+                                              &sharedInfo,
+                                              specificInfo);
+        ///////// result frontEnd
+        _result_frontEnd->setRes(this, &sharedInfo, specificInfo);
         ///////// traceTool
-        _trace_tool->setListenners(tmd, tracer);
+        _trace_tool->setRes(this, &sharedInfo, specificInfo);
         ///////// add Tracer
-        traceWorkers.insert({amountThread, tracer});
-        traceTools.insert({amountThread, _trace_tool});
+        traceWorkers.insert({amountThread, specificInfo});
         amountThread++;
     }
 
 
     void
     CORE::start(bool parallel) {
-
         if (parallel) {
             //////TODO make it run in parallel
             assert(false);
         } else {
-            for (auto &traceTool: traceTools) {
-                assert(traceTool.second != nullptr);
-                traceTool.second->start();
+            for (auto&[tid, specInfo]: traceWorkers) {
+                specInfo->traceToolFed->start();
             }
         }
     }
+
+    void BIND_CORE(py::module& m){
+        py::class_<CORE>(m, "CORE")
+                .def(py::init<MEM_MNG*, EXEC_UNIT_RES*>())
+                .def("addWorker", &CORE::addWorker)
+                .def("start", &CORE::start);
+    }
+
 
 
 }

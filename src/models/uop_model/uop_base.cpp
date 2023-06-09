@@ -17,10 +17,10 @@ namespace traceBuilder::model {
             seqNum(UINT64_MAX),
             uop_type(UOP_DUMMY),
             exec_unit_id(DUMMY_EXEC_UNIT_ID) {
-        REG_DEP::setDepPool(&dep_pool_owner);
-        MEM_DEP::setDepPool(&dep_pool_owner);
-        TEM_DEP::setDepPool(&dep_pool_owner);
-        EXEC_UNIT_DEP::setDepPool(&dep_pool_owner);
+        REG_DEP::setDepPool(&dep_rwd_pool_owner);
+        MEM_DEP::setDepPool(&dep_rwd_pool_owner);
+        /// tempDep not need the pool due to it is uniq from uop manner
+        EXEC_UNIT_DEP::setDepPool(&dep_rwd_pool_owner);
     }
 
     void UOP_BASE::doRegDepenCheck(UOP_WINDOW *uop_window) {

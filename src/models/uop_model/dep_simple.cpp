@@ -48,14 +48,7 @@ namespace traceBuilder::model {
 ////////////////////////////////////
     void
     TEM_DEP::addTemDep(UOP_BASE* uop) {
-        preAddedDep.push_back(uop);
-    }
-
-    void
-    TEM_DEP::finalizeTemDep(UOP_WINDOW* trace_window){
-        for (auto uop : preAddedDep){
-            addDep(uop, trace_window);
-        }
+        DEP_ULS_BASE::addDep(uop, nullptr);
     }
 
     void

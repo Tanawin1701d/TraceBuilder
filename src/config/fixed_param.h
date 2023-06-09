@@ -10,6 +10,7 @@
 #include <climits>
 
 #define UOP_WINDOW_SIZE 200
+#define PY_MODULE_NAME traceBuilder
 const   int AMT_BIT_UINT64   = sizeof(uint64_t) * CHAR_BIT;
 const   int AMT_USED_UOP_REP = (UOP_WINDOW_SIZE + AMT_BIT_UINT64 - 1) / AMT_BIT_UINT64;
 

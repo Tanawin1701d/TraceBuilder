@@ -38,7 +38,7 @@ namespace traceBuilder::core {
         for (auto &regNum: uop->getdesReg()) {
             assert(regNum != unusedReg);
             if (lastOwnerReg[regNum] != nullptr) {
-                uop->addRegDep(lastOwnerReg[regNum]);
+                uop->addRegDep(lastOwnerReg[regNum], wd);
             }
         }
     }

@@ -5,6 +5,7 @@
 #ifndef TRACEBUILDER_MEMMNG_H
 #define TRACEBUILDER_MEMMNG_H
 
+#include <pybind11/pybind11.h>
 #include <cstdint>
 #include <unordered_map>
 #include <vector>
@@ -52,6 +53,11 @@ namespace traceBuilder::model {
         void v2pConvert(ADDR _vaddr, int _size, std::vector<ADAS> &results);
 
     };
+
+    ////////////////////////////////////////////////////////////////////////////////////////
+    ///////// pybind declaration
+    namespace py = pybind11;
+    void BIND_MEM_MNG(py::module& m);
 
 }
 

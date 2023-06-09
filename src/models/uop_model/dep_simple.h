@@ -9,7 +9,7 @@
 
 namespace traceBuilder::model {
 
-    class REG_DEP : public DEP_BASE {
+    class REG_DEP : public DEP_RWD_BASE {
     private:
         std::vector <REGNUM> srcReg;
         std::vector <REGNUM> desReg;
@@ -37,7 +37,7 @@ namespace traceBuilder::model {
 
 
 ////// memory addresss dependency
-    class MEM_DEP : public DEP_BASE {
+    class MEM_DEP : public DEP_RWD_BASE {
     protected:
         std::vector <ADAS> loadAdas;
         std::vector <ADAS> storeAdas;
@@ -72,10 +72,9 @@ namespace traceBuilder::model {
     };
 
 ////// temporary register  order dependency some physical register
-    class TEM_DEP : public DEP_BASE {
+////// due to the fact that macro-op add the dep by themselves so, we must use ULS instead RWD
+    class TEM_DEP : public DEP_ULS_BASE {
         std::vector<TREGNUM> srcTRegs;
-        std::vector<UOP_BASE*>  preAddedDep; /// bacause dep's uop is added before it is pushed to uop_window
-                                                /// we first added to this vector and tracer will add to main dep when ready
     public:
         ///////////////
         ///// dependMng
@@ -83,9 +82,6 @@ namespace traceBuilder::model {
         virtual void doTemDepenCheck(UOP_WINDOW* uop_window) = 0;
         ///// for get
         void addTemDep(UOP_BASE* uop);
-        void finalizeTemDep(UOP_WINDOW* trace_window);
-
-
         dep_iter getTemDep() {return getDep_iter();};
 
         ///////////////
@@ -98,7 +94,7 @@ namespace traceBuilder::model {
     };
 ///////////////////////////////////////////////////////////////////////
 
-    class EXEC_UNIT_DEP : public DEP_BASE {
+    class EXEC_UNIT_DEP : public DEP_RWD_BASE {
     public:
         ///////////////
         ///// dependMng
@@ -107,7 +103,7 @@ namespace traceBuilder::model {
         ///// for add dependency
         bool addExecDep(UOP_BASE *uop, UOP_WINDOW *traceWindow) {return addDep(uop, traceWindow);};
         ///// for get dependency
-        dep_iter getExecDep() {return getDep_iter();};
+        dep_iter getExecDep_iter() {return getDep_iter();};
     };
 
 }

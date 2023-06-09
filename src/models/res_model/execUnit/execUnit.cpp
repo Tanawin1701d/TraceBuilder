@@ -36,4 +36,12 @@ namespace traceBuilder::model {
         cycleUsed[id] = cycleSize;
     }
 
+    void BIND_EXEC_UNIT_RES(py::module& m){
+        py::class_<EXEC_UNIT_RES>(m, "EXEC_UNIT_RES")
+                .def(py::init<int, int>())
+                .def("setMaxAvailable", &EXEC_UNIT_RES::setMaxAvailable)
+                .def("setLatencyCycle", &EXEC_UNIT_RES::setLatencyCycle);
+    }
+
+
 }

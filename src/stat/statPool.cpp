@@ -17,7 +17,6 @@ namespace traceBuilder::stat {
             recordedValue(nullptr),
             recordedType(STAT_T_EMPTY) {}
 
-
     bool
     STAT::isValueEmpty() {
         return recordedType == STAT_T_EMPTY;
@@ -28,7 +27,6 @@ namespace traceBuilder::stat {
         assert(recordedValue != nullptr);
         return recordedValue->printReport();
     }
-
 
     int64_t &
     STAT::asUINT() {
@@ -53,7 +51,6 @@ namespace traceBuilder::stat {
 
     }
 
-
     STAT &STAT::operator[](std::string key) {
         auto finder = chainStat.find(key);
 
@@ -72,6 +69,7 @@ namespace traceBuilder::stat {
     void STAT_MNG::preparePrint(std::vector<std::string> &prefixs, STAT *stat) {
 
         assert(stat != nullptr);
+        isKV_finalized = true;
 
         if (!stat->isValueEmpty()) {
             std::string myKey = concatVec(prefixs, "::");
@@ -79,12 +77,17 @@ namespace traceBuilder::stat {
             values.push_back(stat->getReport());
             maxLength = std::max(maxLength, myKey.size());
         }
-        for (auto ele: stat->getChainStat()) {
-            prefixs.push_back(ele.first);
-            preparePrint(prefixs, ele.second);
+        for (auto[new_prefix, recur_stat]: stat->getChainStat()) {
+            prefixs.push_back(new_prefix);
+            preparePrint(prefixs, recur_stat);
             prefixs.pop_back();
         }
 
+    }
+
+    std::pair<std::vector<std::string>, std::vector<std::string>>
+    STAT_MNG::getStat(){
+        return {keys, values};
     }
 
     void STAT_MNG::print() {
@@ -118,6 +121,32 @@ namespace traceBuilder::stat {
         keys.clear();
         values.clear();
         maxLength = 0;
+    }
+
+///////// stat wrapper
+
+    void BIND_STAT(py::module& m){
+        ////// bring MAIN_STAT as key and value then save it to key value list
+        m.def("finalizeStat", [](){
+            ///// we must prepare keys and values first
+            std::vector<std::string> prefixs; //// reserve
+            ///// we must prepare keys and values first
+            MAIN_STAT_MNG.preparePrint(prefixs, &MAIN_STAT);
+        });
+        ////// get stat as pair of keys(list of string) and value (list of string)
+        m.def("getStat", [](){
+            assert(MAIN_STAT_MNG.isReady());
+            return MAIN_STAT_MNG.getStat();
+        }, "get stat as list of key and value");
+        ////// save stat as pair of keys(list of string) and value (list of string)
+        m.def("saveStat", [](const std::string& savePath){
+            MAIN_STAT_MNG.saveToFile(savePath);
+        });
+        /////// clear stat from MAIN_STAT_MNG
+        m.def("clearStat", [](){
+            MAIN_STAT_MNG.clearStat();
+        });
+
     }
 
 }

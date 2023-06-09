@@ -18,7 +18,7 @@ NSP_UTIL  = "util"
 NSP_STAT  = "stat"
 
 ######### model include path
-INC_DEP_BASE  = "models/uop_model/dep.h"
+INC_DEP_BASE  = "models/uop_model/dep_simple.h"
 INC_UOP_BASE  = "models/uop_model/uop_base.h"
 INC_MOP_BASE  = "models/uop_model/mop_base.h"
 INC_DEC_BASE  = "models/uop_model/decoder.h"

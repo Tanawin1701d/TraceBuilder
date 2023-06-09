@@ -4,6 +4,8 @@
 
 #ifndef TRACEBUILDER_STATPOOL_H
 #define TRACEBUILDER_STATPOOL_H
+
+#include<pybind11/pybind11.h>
 #include<iostream>
 #include<string>
 #include<unordered_map>
@@ -32,7 +34,6 @@ namespace traceBuilder::stat {
 
         std::string getReport(); /////// please not that this function is assume that there are value @recorder
         int64_t &asUINT();
-
         std::string &asSTR();
 
         std::unordered_map<std::string, STAT *> &getChainStat() { return chainStat; };
@@ -46,13 +47,20 @@ namespace traceBuilder::stat {
 ///////////////////////////////////////
 
     class STAT_MNG {
+        bool isKV_finalized = false;
         size_t maxLength = 0;
         std::vector<std::string> keys;
         std::vector<std::string> values;
     public:
+
+        bool isReady() const{return isKV_finalized;}
+
         void preparePrint(std::vector<std::string> &prefixs,
                           STAT *stat = &MAIN_STAT
         );
+
+        std::pair<std::vector<std::string>, std::vector<std::string>>
+            getStat();
 
         void print();
 
@@ -66,6 +74,12 @@ namespace traceBuilder::stat {
     extern STAT_MNG MAIN_STAT_MNG;
 ///////////////////////////////////////
 ///////////////////////////////////////
+
+////////////////////////////////////////
+//////// pybind for stat
+////////
+namespace py = pybind11;
+void BIND_STAT(py::module& m);
 
 }
 

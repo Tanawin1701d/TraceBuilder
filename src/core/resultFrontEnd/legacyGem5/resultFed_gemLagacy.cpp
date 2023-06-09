@@ -3,6 +3,7 @@
 //
 
 #include "resultFed_gemLagacy.h"
+#include "core/core.h"
 
 namespace traceBuilder::core {
 
@@ -78,37 +79,37 @@ namespace traceBuilder::core {
             ////////// add dependency for each uop instruction type
             ///////////////////////////////////////////////////////
             ///// you can trust that the uops dependency which get from ONGETUOPSRESULTS is not deleted
-            //////// by uop window but it maybe deleted after finish this function.
-            std::unordered_set<uint64_t> preRegDep;
-            for (auto *regDepUop: uop->getRegDep()) {
+            //////// by uop window but it maybe deleted after this function is finised.
+            for (auto regDepUop: uop->getRegDep_iter()) {
                 stat::MAIN_STAT["DepGem5"]["reg"].asUINT()++;
-                preRegDep.insert(regDepUop->getSeqNum());
-                //dep_pkt.add_reg_dep(regDepUop->getSeqNum());
+
             }
             for (auto *tempRegDepUop: uop->getTemDep()) {
                 stat::MAIN_STAT["DepGem5"]["Treg"].asUINT()++;
-                preRegDep.insert(tempRegDepUop->getSeqNum());
-                //dep_pkt.add_reg_dep(tempRegDepUop->getSeqNum());
+
             }
-            for (auto *execDepUop: uop->getExecDep()) {
+            for (auto *execDepUop: uop->getExecDep_iter()) {
                 stat::MAIN_STAT["DepGem5"]["Exec"].asUINT()++;
-                preRegDep.insert(execDepUop->getSeqNum());
-                //dep_pkt.add_reg_dep(execDepUop->getSeqNum());
+
             }
-            for (auto *memDepUop: uop->getMemDep()) {
+            for (auto *memDepUop: uop->getMemDep_iter()) {
                 stat::MAIN_STAT["DepGem5"]["mem"].asUINT()++;
                 uint64_t depSeqNum = memDepUop->getSeqNum();
-                if (preRegDep.find(depSeqNum) == preRegDep.end()) {
-                    dep_pkt.add_rob_dep(depSeqNum);
-                }
+
             }
 
-            /////// pool the reg dep in to packet
-            for (auto dep: preRegDep) {
 
-                dep_pkt.add_reg_dep(dep);
+            /////// get all dep
+            //////////////////
+            ////  the tem dep is not associated with RWS because the it is used with out uop window help
+            /////// all dep w/o tem dep
+            for (auto depUop: uop->getDep_Rwd_pool().getDep_iter()) {
+                dep_pkt.add_reg_dep(depUop->getSeqNum());
             }
-            stat::MAIN_STAT["DepGem5"]["MERGE"].asUINT() = preRegDep.size();
+            /////// tem dep
+            for (auto depUop: uop->getTemDep()) {
+                dep_pkt.add_reg_dep(depUop->getSeqNum());
+            }
 
 
             /////////////////////////////////////////////////////
@@ -143,6 +144,7 @@ namespace traceBuilder::core {
             dataProtoStream->write(dep_pkt);
         }
 
+
         ////////////////////////////////////////////////////////
         //////// generate dynamic static record FOR gem5
         ////////////////////////////////////////////////////////
@@ -157,9 +159,18 @@ namespace traceBuilder::core {
 
     }
 
-    void RESULT_FRONT_END_GEM_LAGACY::setExecUnit_info(EXEC_UNIT_RES *_execUnit_info) {
-        assert(_execUnit_info != nullptr);
-        execUnit_info = _execUnit_info;
+    void RESULT_FRONT_END_GEM_LAGACY::setRes(CORE* _core,
+                                             SHARED_TRACEINFO* _sharedInfo,
+                                             SPECIFIC_TRACEINFO* _specificInfo){
+        execUnit_info = _sharedInfo->execUnit_info;
+        assert(execUnit_info != nullptr);
     }
+
+    void BIND_RESULT_FRONT_END_GEM_LAGACY(py::module& m){
+        py::class_<RESULT_FRONT_END_GEM_LAGACY, RESULT_FRONT_END>(m, "RESULT_FRONT_END_GEM_LAGACY")
+                .def(py::init<std::string&, std::string&, const int, const int>());
+    }
+
+
 
 }

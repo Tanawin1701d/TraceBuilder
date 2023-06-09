@@ -76,6 +76,12 @@ namespace traceBuilder::model {
 
     }
 
+    void BIND_MEM_MNG(py::module& m){
+        py::class_<MEM_MNG>(m, "MEM_MNG")
+                .def(py::init<uint64_t, uint64_t, uint64_t, uint64_t>());
+    }
+
+
 }
 
 

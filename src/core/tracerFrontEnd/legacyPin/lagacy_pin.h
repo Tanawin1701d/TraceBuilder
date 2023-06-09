@@ -32,15 +32,24 @@ namespace traceBuilder::core {
 
     public:
         LAGACY_PIN_TRACER(
-                const std::string &_fileName_static,
-                const std::string &_fileName_dyn
+                std::string _fileName_static,
+                std::string _fileName_dyn
         );
 
         ~LAGACY_PIN_TRACER() override;
 
         void start();
 
+        void setRes(CORE* _core,
+                    SHARED_TRACEINFO* _sharedInfo,
+                    SPECIFIC_TRACEINFO* _specificInfo) override;
+
     };
+
+    ////////////////////////////////////////////////////////////////////////////////////////
+    ///////// pybind declaration
+    namespace py = pybind11;
+    void BIND_LAGACY_PIN_TRACER(py::module& m);
 }
 
 #endif //TRACEBUILDER_LAGACY_PIN_H

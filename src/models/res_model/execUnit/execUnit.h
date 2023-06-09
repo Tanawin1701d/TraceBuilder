@@ -4,6 +4,8 @@
 
 #ifndef TRACEBUILDER_EXECUNIT_H
 #define TRACEBUILDER_EXECUNIT_H
+
+#include <pybind11/pybind11.h>
 #include <cstdint>
 #include <cassert>
 #include <algorithm>
@@ -34,6 +36,12 @@ namespace traceBuilder::model {
 
         void setLatencyCycle(EXEC_UNIT_ID id, int cycleSize);
     };
+
+    ////////////////////////////////////////////////////////////////////////////////////////
+    ///////// pybind declaration
+
+    namespace py = pybind11;
+    void BIND_EXEC_UNIT_RES(py::module& m);
 
 }
 

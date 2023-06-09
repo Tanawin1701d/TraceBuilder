@@ -14,12 +14,13 @@
 namespace traceBuilder::core {
 
     using namespace traceBuilder::util;
+
     class RESULT_FRONT_END_GEM_LAGACY : public RESULT_FRONT_END {
     private:
-        ProtoOutputStream *dataProtoStream;
-        ProtoOutputStream *instrProtoStream;
+        ProtoOutputStream* dataProtoStream;
+        ProtoOutputStream* instrProtoStream;
         uint64_t lastTick;
-        EXEC_UNIT_RES *execUnit_info;
+        EXEC_UNIT_RES* execUnit_info;
 
     public:
 
@@ -34,9 +35,14 @@ namespace traceBuilder::core {
                              RT_INSTR *rt_instr
         ) override;
 
-        void setExecUnit_info(EXEC_UNIT_RES *_execUnit_info);
+        void setRes(CORE* _core, SHARED_TRACEINFO* _sharedInfo, SPECIFIC_TRACEINFO* _specificInfo) override;
 
     };
+
+    ////////////////////////////////////////////////////////////////////////////////////////
+    ///////// pybind declaration
+    namespace py = pybind11;
+    void BIND_RESULT_FRONT_END_GEM_LAGACY(py::module& m);
 
 }
 

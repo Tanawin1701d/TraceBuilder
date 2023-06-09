@@ -3,30 +3,21 @@
 //
 
 #include "tracer.h"
+#include "core/core.h"
 
 namespace traceBuilder::core {
 
     using namespace traceBuilder::model;
 
 
-    TRACER_BASE::TRACER_BASE(THREAD_ID _tid,
-                             RESULT_FRONT_END *_resFed,
-                             UOP_WINDOW *_uopWindow,
-                             DECODER_BASE *_decoder,
-                             MEM_MNG *_memMng,
-                             THREAD_MODEL *_threadModel) :
-            tid(_tid),
-            resFed(_resFed),
-            uopWindow(_uopWindow),
-            decoder(_decoder),
-            memMng(_memMng),
-            threadModel(_threadModel),
-            nextUopId(1) {
-        assert(_decoder != nullptr);
-        assert(_resFed != nullptr);
-        assert(_uopWindow != nullptr);
-        assert(_memMng != nullptr);
-        assert(_threadModel != nullptr);
+    TRACER_BASE::TRACER_BASE(CORE *_core,
+                             SHARED_TRACEINFO* _sharedInfo,
+                             SPECIFIC_TRACEINFO* _specificInfo):
+            sharedSimEle(_sharedInfo),
+            specificSimEle(_specificInfo){
+
+        assert(sharedSimEle != nullptr);
+        assert(specificSimEle != nullptr);
     }
 
 
@@ -70,7 +61,7 @@ namespace traceBuilder::core {
         /////// fill the physical address
         for (size_t idx = 0; idx < amt; idx++) {
             std::vector<ADAS> phyAddressResult;
-            memMng->v2pConvert(vAddrs[idx], (int) sizes[idx], phyAddressResult);
+            sharedSimEle->memMng->v2pConvert(vAddrs[idx], (int) sizes[idx], phyAddressResult);
             pAddrs[idx] = phyAddressResult[0].addr; ///// for now we assume mem mng return only size of one
         }
         delete[] sizes;
@@ -86,6 +77,11 @@ namespace traceBuilder::core {
         cvtLoadOrStoreToPhyAddr(rt_obj, rt_instr, results, true);
         /////// for store
         cvtLoadOrStoreToPhyAddr(rt_obj, rt_instr, results, false);
+    }
+
+    uint64_t
+    TRACER_BASE::genSeqNum_fromIdx(size_t idx){
+        return specificSimEle->uopWindow->getLastPushSeqNum() + idx + 1;
     }
 
 
@@ -124,17 +120,18 @@ namespace traceBuilder::core {
         rt_instr->genUOPS(inflight_uops);
         /////// interact with uop windows BUT DO NOT PUSH TO UOP WINDOW
         ////// we must notify result front-end first
-        for (auto *uop: inflight_uops) {
+        for (size_t idx = 0; idx < inflight_uops.size(); idx++) {
             stat::MAIN_STAT["dynTrace"]["UOP_COUNT"].asUINT()++;
-            uop->setSeqNum(nextUopId++);
-            uop->doDepenCheck(uopWindow);
+            auto uop = inflight_uops[idx];
+            ///// fullfil uop meta data before doDepenCHeck
+            uop->setSeqNum(genSeqNum_fromIdx(idx));
+            uop->doDepenCheck(specificSimEle->uopWindow);
         }
         /////// send to result front-end
-        resFed->onGetUopsResult(inflight_uops, rt_instr);
+        specificSimEle->resultFed->onGetUopsResult(inflight_uops, rt_instr);
         /////// push data to uop window
         for (auto *uop: inflight_uops) {
-            uop->finalizeTemDep(uopWindow);
-            uopWindow->addUop(uop);
+            specificSimEle->uopWindow->addUop(uop);
         }
 
     }
@@ -146,9 +143,9 @@ namespace traceBuilder::core {
         //// for fetch (build new) the runtime instruction for this worker
         //// and decode it to get macrop and push it to our runtime instruction.
         for (uint64_t rtInstrId = 0; rtInstrId < lastRTinstr; rtInstrId++) {
-            auto *rt_instr = threadModel->getInstrTemplate(rtInstrId);
+            auto *rt_instr = specificSimEle->threadModel->getInstrTemplate(rtInstrId);
             assert(rt_instr != nullptr);
-            auto *mop = decoder->decodeMOP(*rt_instr);
+            auto *mop = sharedSimEle->decoder->decodeMOP(*rt_instr);
             assert(mop != nullptr);
             rt_instr->setMacroop(mop);
             rt_instrs.push_back(rt_instr);

@@ -63,14 +63,14 @@ namespace traceBuilder::model {
         /////////// dependency connection
         ////////////// connect comp uop to imm uop and ld uop
         for (auto ldUop: ldUops) {
-            compUop->addRegDep(ldUop);
+            compUop->addTemDep(ldUop);
         }
         for (auto immUop: immUops) {
             compUop->addTemDep(immUop);
         }
         ////////////// connect store uop to comp uop
         for (auto stUop: stUops) {
-            stUop->addMemDep(compUop);
+            stUop->addTemDep(compUop);
         }
         /////////////return the pooled uop
     }
