@@ -19,7 +19,7 @@ namespace traceBuilder::model {
         if (depPool != nullptr){
             depPool->addDep(uop, traceWindow);
         }
-        if (isThereDep(uop, traceWindow)){
+        if (!isThereDep(uop, traceWindow)){
             auto[idxInDepSet, idxInDepSetEle] = getDepSetIdx(uop, traceWindow);
             uint64_t bitCheck = ((uint64_t)1) << idxInDepSetEle;
             depSet[idxInDepSet] |= bitCheck;
@@ -49,7 +49,7 @@ namespace traceBuilder::model {
     }
 
 ////////////////////////////////////
-////// RWD(related to uop window) dependency
+////// ULS(uniq list) dependency
 ////////////////////////////////////
 
 

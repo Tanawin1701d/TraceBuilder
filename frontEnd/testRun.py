@@ -1,5 +1,6 @@
 import sys
 import os
+import time
 
 thisFolderPath = os.path.dirname(os.path.realpath(__file__))
 projectPath    = os.path.join(thisFolderPath, "../")
@@ -11,7 +12,13 @@ sys.path.append(tbdLibDirPath)
 import traceBuilder as tbd
 pid = os.getpid()
 print("Process ID:", pid)
-x = input()
+
+cmd = int(input("fluidAnimate press 1 / blackholes press 2"))
+if (cmd != 1 and cmd != 2):
+    exit(1)
+cmd = "fluidanimate" if cmd == 1 else "blackscholes"
+
+
 
 mem_mng = tbd.MEM_MNG(12, 6, 1 << (4 + 30), 0)
 
@@ -31,19 +38,26 @@ exec_res.setLatencyCycle(6, 1) #///"MOV_MEM_LD"
 
 
 
-PinStaticPath = os.path.join(projectPath, "pin/PinOutput/fluidanimate/static")
-PinDynPath    = os.path.join(projectPath, "pin/PinOutput/fluidanimate/dynamic")
+PinStaticPath = os.path.join(projectPath, "pin/PinOutput/{workLoad}/static" .format(workLoad = cmd))
+PinDynPath    = os.path.join(projectPath, "pin/PinOutput/{workLoad}/dynamic".format(workLoad = cmd))
 pinFed        = tbd.LAGACY_PIN_TRACER(PinStaticPath, PinDynPath)
 
-gem5InstrPath = os.path.join(projectPath, "pin/TbOutput/fluidanimate/testRunInstr")
-gem5dynPath   = os.path.join(projectPath, "pin/TbOutput/fluidanimate/testRunDyn")
-gem5Fed       = tbd.RESULT_FRONT_END_GEM_LAGACY(gem5InstrPath, gem5dynPath, 1000000000, 200)
+gem5InstrPath = os.path.join(projectPath, "pin/TbOutput/{workLoad}/testRunInstr256").format(workLoad = cmd)
+gem5dynPath   = os.path.join(projectPath, "pin/TbOutput/{workLoad}/testRunDyn256").format(workLoad = cmd)
+gem5Fed       = tbd.RESULT_FRONT_END_GEM_LAGACY(gem5dynPath, gem5InstrPath, 1000000000, 256)
 
 core          = tbd.CORE(mem_mng, exec_res)
-core.addWorker(pinFed, gem5Fed, 200)
+core.addWorker(pinFed, gem5Fed, 256)
+
+start = time.time()
 core.start(False)
+end = time.time()
+
+
+
+print("time use is ", end - start)
 
 tbd.finalizeStat()
-gem5StatPath   = os.path.join(projectPath, "pin/TbOutput/fluidanimate/testRunStat")
+gem5StatPath   = os.path.join(projectPath, "pin/TbOutput/{workLoad}/testRunStat256".format(workLoad = cmd))
 tbd.saveStat(gem5StatPath)
 

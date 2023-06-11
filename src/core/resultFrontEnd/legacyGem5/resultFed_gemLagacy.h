@@ -19,8 +19,9 @@ namespace traceBuilder::core {
     private:
         ProtoOutputStream* dataProtoStream;
         ProtoOutputStream* instrProtoStream;
-        uint64_t lastTick;
+        uint64_t       lastTick;
         EXEC_UNIT_RES* execUnit_info;
+        MEM_MNG*       mng;
 
     public:
 

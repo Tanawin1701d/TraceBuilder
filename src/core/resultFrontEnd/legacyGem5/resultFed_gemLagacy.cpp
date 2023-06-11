@@ -81,20 +81,23 @@ namespace traceBuilder::core {
             ///// you can trust that the uops dependency which get from ONGETUOPSRESULTS is not deleted
             //////// by uop window but it maybe deleted after this function is finised.
             for (auto regDepUop: uop->getRegDep_iter()) {
+                //std::cout << "reg added" << std::endl;
                 stat::MAIN_STAT["DepGem5"]["reg"].asUINT()++;
 
             }
             for (auto *tempRegDepUop: uop->getTemDep()) {
+                //std::cout << "temp added" << std::endl;
                 stat::MAIN_STAT["DepGem5"]["Treg"].asUINT()++;
 
             }
             for (auto *execDepUop: uop->getExecDep_iter()) {
+                //std::cout << "exec added" << std::endl;
                 stat::MAIN_STAT["DepGem5"]["Exec"].asUINT()++;
 
             }
             for (auto *memDepUop: uop->getMemDep_iter()) {
+                //std::cout << "mem added" << std::endl;
                 stat::MAIN_STAT["DepGem5"]["mem"].asUINT()++;
-                uint64_t depSeqNum = memDepUop->getSeqNum();
 
             }
 
@@ -148,13 +151,15 @@ namespace traceBuilder::core {
         ////////////////////////////////////////////////////////
         //////// generate dynamic static record FOR gem5
         ////////////////////////////////////////////////////////
-
+        std::vector<ADAS> phyInstrResult;
+        mng->v2pConvert(rt_instr->getAddr(), rt_instr->getSize(), phyInstrResult);
         ProtoMessage::Packet instr_pkt;
-        lastTick += 1;
+        lastTick += 100;
         instr_pkt.set_tick(lastTick);
+        instr_pkt.set_flags(256);
         instr_pkt.set_cmd(1);
-        instr_pkt.set_addr(lastTick % 1000000);
-        instr_pkt.set_size(4);
+        instr_pkt.set_addr(phyInstrResult[0].addr);
+        instr_pkt.set_size(phyInstrResult[0].size);
         instrProtoStream->write(instr_pkt);
 
     }
@@ -163,6 +168,7 @@ namespace traceBuilder::core {
                                              SHARED_TRACEINFO* _sharedInfo,
                                              SPECIFIC_TRACEINFO* _specificInfo){
         execUnit_info = _sharedInfo->execUnit_info;
+        mng           = _sharedInfo->memMng;
         assert(execUnit_info != nullptr);
     }
 

@@ -30,7 +30,7 @@ namespace traceBuilder::model {
             int curIdx{};
         public:
 
-            explicit dep_iter(DEP_BASE* _owner): owner(_owner){}
+            explicit dep_iter(DEP_BASE* _owner): owner(_owner){ }
             dep_iter(DEP_BASE* _owner, int _curIdx): owner(_owner), curIdx(_curIdx){
                 assert(curIdx >= 0 && curIdx <= owner->depCnt);
             }
@@ -49,6 +49,7 @@ namespace traceBuilder::model {
                 return {owner, 0};
             };
             dep_iter end(){
+                //std::cout << "end() invoke with => " << owner-> depCnt << std::endl;
                 return {owner, owner->depCnt};
             }
 

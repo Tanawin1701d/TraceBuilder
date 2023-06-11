@@ -58,6 +58,7 @@ ProtoOutputStream::ProtoOutputStream(const std::string& filename) :
         zeroCopyStream = gzipStream;
     } else {
         zeroCopyStream = wrappedFileStream;
+
     }
 
     // Write the magic number to the file

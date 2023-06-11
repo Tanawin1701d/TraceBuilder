@@ -76,3 +76,9 @@ sudo pin-3.25-98650-g8f6168173-gcc-linux/pin -t obj-intel64/tracer.so         \
 
 
 parsecmgmt -a pin -p fluidanimate  -c gcc-serial -i simmedium
+
+sudo pin-3.25-98650-g8f6168173-gcc-linux/pin -t obj-intel64/tracerWithSyscall.so         \
+-i /media/tanawin/tanawin1701e/Project/sms/pintool/msmsPin/traceBuilder/pin/PinOutput/syscall101/instr \
+-d /media/tanawin/tanawin1701e/Project/sms/pintool/msmsPin/traceBuilder/pin/PinOutput/syscall101/data  \
+-db /media/tanawin/tanawin1701e/Project/sms/pintool/msmsPin/traceBuilder/pin/PinOutput/syscall101/dbg \
+-- /media/tanawin/tanawin1701e/Project/sms/pintool/msmsPin/traceBuilder/pin/TestProgram/syscallProgram/mmap_app testFile
