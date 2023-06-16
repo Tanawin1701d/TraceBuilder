@@ -43,4 +43,17 @@ def plotBarCompare(tbd, gem_trace, gem5, header, ylabel, xlable, typeA, typeB):
 
 #plotBarCompare([3006, 715], [3032, 765], [3032, 765], "instruction count", "count (Million)", "workload", "fluidAnimate", "blackholes")
 #plotBarCompare([4652, 1168], [5496, 1412], [5469, 1408], "micro-op count", "count (Million)", "workload", "fluidAnimate", "blackholes")
-plotBarCompare([1097, 304], [853, 396], [0, 0], "d-side attempted", "count", "workload", "fluidAnimate", "blackholes")
+#plotBarCompare([1097, 304], [853, 396], [0, 0], "d-side attempted", "count", "workload", "fluidAnimate", "blackholes")
+
+
+#plotBarCompare([985, 225], [1198, 263], [1179, 206], "execute Time", "milisec", "workload", "fluidAnimate", "blackholes")
+
+#plotBarCompare([985, 225], [1198, 263], [1179, 206], "execute Time", "milisec", "workload", "fluidAnimate", "blackholes")
+
+#plotBarCompare([214492, 24202], [201954, 859], [181614, 901], "dcache Read hit/miss", "count(k)", "blackscholes", "hit", "miss")
+#plotBarCompare([58413, 25419], [58398, 143], [58421, 121], "dcache Write hit/miss", "count(k)", "blackscholes", "hit", "miss")
+
+
+#plotBarCompare([869246, 57550], [663850, 72782], [646446, 71264], "dcache Read hit/miss", "count(k)", "fluidanimate", "hit", "miss")
+#plotBarCompare([143391, 26833], [111561, 5418], [115552, 1464], "dcache Write hit/miss", "count(k)", "fluidanimate", "hit", "miss")
+#plotBarCompare([2860140, 146698], [470595, 6], [474045, 4.9], "icache read hit/miss", "count(k)", "fluidanimate", "hit", "miss")

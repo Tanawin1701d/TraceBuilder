@@ -31,7 +31,7 @@ add_custom_target(
 )
 
 
-
+FILE(GLOB_RECURSE SRC_BASE     RELATIVE ${CMAKE_SOURCE_DIR} "src/base/*.cpp")
 FILE(GLOB_RECURSE SRC_CORE     RELATIVE ${CMAKE_SOURCE_DIR} "src/core/*.cpp")
 FILE(GLOB_RECURSE SRC_PYBIND   RELATIVE ${CMAKE_SOURCE_DIR} "src/pyBind/*.cpp")
 FILE(GLOB_RECURSE SRC_MODEL    RELATIVE ${CMAKE_SOURCE_DIR} "src/models/*.cpp" EXCLUDE "src/models/uop_model/X86/*") # it may be changed due to architecture specification
@@ -43,6 +43,7 @@ FILE(GLOB_RECURSE SRC_EXAMPLE  RELATIVE ${CMAKE_SOURCE_DIR} "src/example/*.cpp")
 
 pybind11_add_module(traceBuilder
                     src/main.cpp
+                    ${SRC_BASE}
                     ${SRC_CORE}
                     ${SRC_PYBIND}
                     ${SRC_MODEL}
@@ -51,6 +52,7 @@ pybind11_add_module(traceBuilder
                     ${SRC_IOHCC}
                     ${SRC_ARCH_X86}
                     ${SRC_EXAMPLE}
+
         )
 
 TARGET_LINK_LIBRARIES( traceBuilder PRIVATE ${Boost_LIBRARIES} Threads::Threads ${PROTOBUF_LIBRARY} )
