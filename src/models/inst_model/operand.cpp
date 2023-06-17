@@ -12,10 +12,17 @@ namespace traceBuilder::model {
             mcArgSIdx(_mcArgSIdx) {}
 
 ///////////////////////////////////////////////////////////
-/// reg operand
+/// Treg operand
     OPR_TREG::OPR_TREG() :
             regId(0),
             OPERAND(O_REG, 0) {}
+
+    OPR_TREG::OPR_TREG(int regId) :
+            regId(regId),
+            OPERAND(O_TEMP, 0)
+    {
+        assert(regId != UNUSEDREG);
+    }
 
     REGNUM OPR_TREG::getRegId() const {
         return regId;

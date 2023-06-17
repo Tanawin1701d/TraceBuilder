@@ -19,7 +19,7 @@ namespace traceBuilder::model {
 
     extern std::map<std::string, REGNUM> regmap;
     extern int lastRegName;
-    static const int unusedReg = -1;
+    static const int UNUSEDREG = -1;
     static const int MAXREG_AMT = 1000;
     static const std::string unusedRegStr = "-1";
 

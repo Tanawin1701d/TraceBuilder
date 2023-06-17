@@ -2,7 +2,7 @@ import base.operand.opr_base as opr_base
 
 TEMPLATE_REG_META  =  "addRegMeta ({REGNUM}, {DIREC})"
 TEMPLATE_MEM_META  =  "addMemMeta ({ADAS}, {DIREC})"
-TEMPLATE_TREG_META =  "addTRegMeta({REGNUM})"
+TEMPLATE_TREG_META =  "addTRegMeta({REGNUM}, {DIREC})"
 TEMPLATE_DEPEND_REG_CHECK = "doRegDepenCheck({WINDOW_NAME})"
 TEMPLATE_DEPEND_MEM_CHECK = "doRegDepenCheck({WINDOW_NAME})"
 
@@ -45,6 +45,7 @@ class OPR_MEM(opr_base.OPR_BASE):
 
 
 class OPR_TEMP(opr_base.OPR_BASE):
+    kwargeforInitVar = "tregId" #### to initialize this class you must provide this kw type(int)
 
     def getVarType(self):
         return OPR_TEMP
@@ -52,10 +53,19 @@ class OPR_TEMP(opr_base.OPR_BASE):
     def __init__(self, _name: str):
         super().__init__(_name, "OPR_TREG", True, "T")
 
-    def genCXX_callAddMeta(self) -> str:
+    def genCXX_typeInitializer(self, **kwargs) -> str:
+        if (self.kwargeforInitVar in kwargs) and (type(kwargs[self.kwargeforInitVar]) == int):
+            return "{TEMPTYPE}({INITVAL})".format(TEMPTYPE = self.genCXX_varType(),
+                                                  INITVAL = kwargs[self.kwargeforInitVar])
+
+    def genCXX_callAddMeta(self, isSrc) -> str:
+        raise opr_base.OperandUsageError("can not call add meta for temp operand. Please use genCXX_callAddMetaWithDirec instead.")
+
+    def genCXX_callAddMetaWithDirec(self, isSrc)-> str:
         preRet = TEMPLATE_TREG_META.format(
-                    REGNUM = self.genCXX_varCall()+"."+"getMeta()"
-                                            )
+            REGNUM=self.genCXX_varCall() + "." + "getMeta()",
+            DIREC="true" if isSrc else "false"
+        )
         return preRet
 
 class OPR_IMM(opr_base.OPR_BASE):

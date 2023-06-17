@@ -23,7 +23,7 @@ namespace traceBuilder::model {
         ///// for get/set dependency
         bool addRegDep(UOP_BASE *uop, UOP_WINDOW *traceWindow){return addDep(uop, traceWindow);};
         ///// get reg dep
-        dep_iter getRegDep_iter() { return getDep_iter();};
+        DEP_BASE& getRegDep_iter() { return getDep_iter();};
         ///////////////
         ///// metaMng
         ///////////////
@@ -57,7 +57,7 @@ namespace traceBuilder::model {
         ///// for get/set dependency
         bool addMemDep(UOP_BASE *uop, UOP_WINDOW *traceWindow) {return addDep(uop, traceWindow);};
 
-        dep_iter getMemDep_iter() {return getDep_iter();};
+        DEP_BASE& getMemDep_iter() {return getDep_iter();};
 
         ///////////////
         ///// metaMng
@@ -75,6 +75,7 @@ namespace traceBuilder::model {
 ////// due to the fact that macro-op add the dep by themselves so, we must use ULS instead RWD
     class TEM_DEP : public DEP_ULS_BASE {
         std::vector<TREGNUM> srcTRegs;
+        std::vector<TREGNUM> desTReg;
     public:
         ///////////////
         ///// dependMng
@@ -82,15 +83,16 @@ namespace traceBuilder::model {
         virtual void doTemDepenCheck(UOP_WINDOW* uop_window) = 0;
         ///// for get
         void addTemDep(UOP_BASE* uop);
-        dep_iter getTemDep() {return getDep_iter();};
+        DEP_BASE& getTemDep() {return getDep_iter();};
 
         ///////////////
         ///// metaMng
         ///////////////
         ///// for adding source/des of the micro-op meta-data
-        void addTRegMeta(TREGNUM tregnum);
+        void addTRegMeta(TREGNUM tregnum, bool isSrc);
 
-        std::vector <TREGNUM> &getdesTRegs() { return srcTRegs; }
+        std::vector<TREGNUM>& getSrcTRegs() { return srcTRegs;}
+        std::vector<TREGNUM>& getdesTRegs() { return desTReg; }
     };
 ///////////////////////////////////////////////////////////////////////
 
@@ -103,7 +105,7 @@ namespace traceBuilder::model {
         ///// for add dependency
         bool addExecDep(UOP_BASE *uop, UOP_WINDOW *traceWindow) {return addDep(uop, traceWindow);};
         ///// for get dependency
-        dep_iter getExecDep_iter() {return getDep_iter();};
+        DEP_BASE& getExecDep_iter() {return getDep_iter();};
     };
 
 }

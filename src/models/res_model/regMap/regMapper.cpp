@@ -158,7 +158,7 @@ namespace traceBuilder::model {
         assert(!regName.empty());
 
         if (regName == unusedRegStr) {
-            return unusedReg;
+            return UNUSEDREG;
         }
 
         auto finder = regmap.find(regName);

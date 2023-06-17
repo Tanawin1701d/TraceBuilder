@@ -154,9 +154,9 @@ namespace traceBuilder::model {
         ///please reminde that register for load and store instruction may be unused which mean it will return as -1
         //// index base register
         REGNUM baseReg = (tokens[ST_IDX_LOAD_RB] != ST_VAL_LD_UNSED_REG) ? regMapAutoAdd(tokens[ST_IDX_LOAD_RB])
-                                                                         : unusedReg;
+                                                                         : UNUSEDREG;
         REGNUM indexReg = (tokens[ST_IDX_LOAD_RI] != ST_VAL_LD_UNSED_REG) ? regMapAutoAdd(tokens[ST_IDX_LOAD_RI])
-                                                                          : unusedReg;
+                                                                          : UNUSEDREG;
         /// TODO scale is hard wired to 4 byte
         int scale = 4;
         /// TODO displacement is hard wired to 0

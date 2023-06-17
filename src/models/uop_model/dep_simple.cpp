@@ -11,7 +11,7 @@ namespace traceBuilder::model {
 ////////////////////////////////////
     void
     REG_DEP::addRegMeta(const REGNUM regnum, bool isSrc) {
-        if (regnum == unusedReg) { return; }
+        if (regnum == UNUSEDREG) { return; }
         std::vector<REGNUM> *targetVec = isSrc ? &srcReg : &desReg;
         targetVec->push_back(regnum);
     }
@@ -52,8 +52,9 @@ namespace traceBuilder::model {
     }
 
     void
-    TEM_DEP::addTRegMeta(TREGNUM tregnum) {
-        srcTRegs.push_back(tregnum);
+    TEM_DEP::addTRegMeta(TREGNUM tregnum, bool isSrc) {
+        std::vector<TREGNUM>& targetVec = isSrc ? srcTRegs : desTReg;
+        targetVec.push_back(tregnum);
     }
 
 ////////////////////////////////////

@@ -36,7 +36,7 @@ namespace traceBuilder::core {
     void DEP_HELP_REG::assignDepHelp(UOP_BASE *uop, UOP_WINDOW *wd) {
         assert(uop != nullptr);
         for (auto &regNum: uop->getdesReg()) {
-            assert(regNum != unusedReg);
+            assert(regNum != UNUSEDREG);
             if (lastOwnerReg[regNum] != nullptr) {
                 uop->addRegDep(lastOwnerReg[regNum], wd);
             }

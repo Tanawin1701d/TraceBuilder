@@ -110,9 +110,14 @@ class UOP_BASE:
                                             )
         ######## for reg or mem operand lets it call operand and add it to dep group
         for opr in self.io_input.getOprsWoDummy():
-            cppFile = cppFile + "       " + opr.genCXX_callAddMeta() + ";\n"
+            callAddMetaStr = opr.genCXX_callAddMetaWithDirec(True) if type(opr) == oprSm.OPR_TEMP else \
+                             opr.genCXX_callAddMeta()
+            cppFile  = cppFile + "       " + callAddMetaStr + ";\n"
+
         for opr in self.io_output.getOprsWoDummy():
-            cppFile = cppFile + "       " + opr.genCXX_callAddMeta() + ";\n"
+            callAddMetaStr = opr.genCXX_callAddMetaWithDirec(False) if type(opr) == oprSm.OPR_TEMP else \
+                             opr.genCXX_callAddMeta()
+            cppFile = cppFile + "       " + callAddMetaStr + ";\n"
 
         if self.execUnit < -1 :
             raise(UopUsageError(f"uop cpp generating fail! due to invalid exec_unit or forget to assign exec unit : {str(self.execUnit)}"))

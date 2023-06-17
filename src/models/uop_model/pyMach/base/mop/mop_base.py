@@ -105,8 +105,9 @@ class MOP_BASE:
         ##### new variable TEMP operand
         for idx, opr in enumerate(self.temp_opr.getOprsWoDummy()):
             ###### declare variable with ref type
-             cppFile = cppFile + "    {VAR_DECLARE};\n"\
+             cppFile = cppFile + "    {VAR_DECLARE} = {VAR_INITIALIZER};\n"\
                                     .format(VAR_DECLARE = opr.genCXX_varDeclaration(),
+                                            VAR_INITIALIZER = opr.genCXX_typeInitializer(tregId = idx)
                                             )
         cppFile = cppFile + "///////////////////////////////////////////////////////////////////\n"
         ##########################################################################################

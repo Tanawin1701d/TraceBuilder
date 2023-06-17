@@ -39,7 +39,7 @@ void INT_SIM_ALU$R_R$R_M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_
     OPR_REG& opr_r_src_1 = * ((OPR_REG*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
     OPR_MEM& opr_m_des_1 = * ((OPR_MEM*)desPool[1]);
-    OPR_TREG opr_preDes_1;
+    OPR_TREG opr_preDes_1 = OPR_TREG(0);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_comp = new INT_SIM_ALU$R_R$R_T$1();
     uop_uop_comp->addMeta(opr_r_src_0, opr_r_src_1 ,opr_r_des_0, opr_preDes_1);
@@ -82,7 +82,7 @@ void INT_SIM_ALU$R_R$M_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_
     OPR_REG& opr_r_src_1 = * ((OPR_REG*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
     OPR_REG& opr_r_des_1 = * ((OPR_REG*)desPool[1]);
-    OPR_TREG opr_preDes_0;
+    OPR_TREG opr_preDes_0 = OPR_TREG(0);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_comp = new INT_SIM_ALU$R_R$T_R$1();
     uop_uop_comp->addMeta(opr_r_src_0, opr_r_src_1 ,opr_preDes_0, opr_r_des_1);
@@ -107,8 +107,8 @@ void INT_SIM_ALU$R_R$M_M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_
     OPR_REG& opr_r_src_1 = * ((OPR_REG*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
     OPR_MEM& opr_m_des_1 = * ((OPR_MEM*)desPool[1]);
-    OPR_TREG opr_preDes_0;
-    OPR_TREG opr_preDes_1;
+    OPR_TREG opr_preDes_0 = OPR_TREG(0);
+    OPR_TREG opr_preDes_1 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_comp = new INT_SIM_ALU$R_R$T_T$1();
     uop_uop_comp->addMeta(opr_r_src_0, opr_r_src_1 ,opr_preDes_0, opr_preDes_1);
@@ -137,7 +137,7 @@ void INT_SIM_ALU$R_R$M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_in
     OPR_REG& opr_r_src_0 = * ((OPR_REG*)srcPool[0]);
     OPR_REG& opr_r_src_1 = * ((OPR_REG*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
-    OPR_TREG opr_preDes_0;
+    OPR_TREG opr_preDes_0 = OPR_TREG(0);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_comp = new INT_SIM_ALU$R_R$T$1();
     uop_uop_comp->addMeta(opr_r_src_0, opr_r_src_1 ,opr_preDes_0);
@@ -162,7 +162,7 @@ void INT_SIM_ALU$R_I$R_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_
     OPR_IMM& opr_i_src_1 = * ((OPR_IMM*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
     OPR_REG& opr_r_des_1 = * ((OPR_REG*)desPool[1]);
-    OPR_TREG opr_t_1;
+    OPR_TREG opr_t_1 = OPR_TREG(0);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_1 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ld_1->addMeta(opr_i_src_1 ,opr_t_1);
@@ -187,8 +187,8 @@ void INT_SIM_ALU$R_I$R_M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_
     OPR_IMM& opr_i_src_1 = * ((OPR_IMM*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
     OPR_MEM& opr_m_des_1 = * ((OPR_MEM*)desPool[1]);
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes_1;
+    OPR_TREG opr_t_1 = OPR_TREG(0);
+    OPR_TREG opr_preDes_1 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_1 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ld_1->addMeta(opr_i_src_1 ,opr_t_1);
@@ -217,7 +217,7 @@ void INT_SIM_ALU$R_I$R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_in
     OPR_REG& opr_r_src_0 = * ((OPR_REG*)srcPool[0]);
     OPR_IMM& opr_i_src_1 = * ((OPR_IMM*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
-    OPR_TREG opr_t_1;
+    OPR_TREG opr_t_1 = OPR_TREG(0);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_1 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ld_1->addMeta(opr_i_src_1 ,opr_t_1);
@@ -242,8 +242,8 @@ void INT_SIM_ALU$R_I$M_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_
     OPR_IMM& opr_i_src_1 = * ((OPR_IMM*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
     OPR_REG& opr_r_des_1 = * ((OPR_REG*)desPool[1]);
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes_0;
+    OPR_TREG opr_t_1 = OPR_TREG(0);
+    OPR_TREG opr_preDes_0 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_1 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ld_1->addMeta(opr_i_src_1 ,opr_t_1);
@@ -273,9 +273,9 @@ void INT_SIM_ALU$R_I$M_M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_
     OPR_IMM& opr_i_src_1 = * ((OPR_IMM*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
     OPR_MEM& opr_m_des_1 = * ((OPR_MEM*)desPool[1]);
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes_0;
-    OPR_TREG opr_preDes_1;
+    OPR_TREG opr_t_1 = OPR_TREG(0);
+    OPR_TREG opr_preDes_0 = OPR_TREG(1);
+    OPR_TREG opr_preDes_1 = OPR_TREG(2);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_1 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ld_1->addMeta(opr_i_src_1 ,opr_t_1);
@@ -309,8 +309,8 @@ void INT_SIM_ALU$R_I$M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_in
     OPR_REG& opr_r_src_0 = * ((OPR_REG*)srcPool[0]);
     OPR_IMM& opr_i_src_1 = * ((OPR_IMM*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes_0;
+    OPR_TREG opr_t_1 = OPR_TREG(0);
+    OPR_TREG opr_preDes_0 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_1 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ld_1->addMeta(opr_i_src_1 ,opr_t_1);
@@ -340,7 +340,7 @@ void INT_SIM_ALU$R_M$R_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_
     OPR_MEM& opr_m_src_1 = * ((OPR_MEM*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
     OPR_REG& opr_r_des_1 = * ((OPR_REG*)desPool[1]);
-    OPR_TREG opr_t_1;
+    OPR_TREG opr_t_1 = OPR_TREG(0);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_1 = new MOV_MEM_LD$M$T$6();
     uop_uop_ld_1->addMeta(opr_m_src_1 ,opr_t_1);
@@ -365,8 +365,8 @@ void INT_SIM_ALU$R_M$R_M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_
     OPR_MEM& opr_m_src_1 = * ((OPR_MEM*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
     OPR_MEM& opr_m_des_1 = * ((OPR_MEM*)desPool[1]);
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes_1;
+    OPR_TREG opr_t_1 = OPR_TREG(0);
+    OPR_TREG opr_preDes_1 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_1 = new MOV_MEM_LD$M$T$6();
     uop_uop_ld_1->addMeta(opr_m_src_1 ,opr_t_1);
@@ -395,7 +395,7 @@ void INT_SIM_ALU$R_M$R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_in
     OPR_REG& opr_r_src_0 = * ((OPR_REG*)srcPool[0]);
     OPR_MEM& opr_m_src_1 = * ((OPR_MEM*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
-    OPR_TREG opr_t_1;
+    OPR_TREG opr_t_1 = OPR_TREG(0);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_1 = new MOV_MEM_LD$M$T$6();
     uop_uop_ld_1->addMeta(opr_m_src_1 ,opr_t_1);
@@ -420,8 +420,8 @@ void INT_SIM_ALU$R_M$M_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_
     OPR_MEM& opr_m_src_1 = * ((OPR_MEM*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
     OPR_REG& opr_r_des_1 = * ((OPR_REG*)desPool[1]);
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes_0;
+    OPR_TREG opr_t_1 = OPR_TREG(0);
+    OPR_TREG opr_preDes_0 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_1 = new MOV_MEM_LD$M$T$6();
     uop_uop_ld_1->addMeta(opr_m_src_1 ,opr_t_1);
@@ -451,9 +451,9 @@ void INT_SIM_ALU$R_M$M_M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_
     OPR_MEM& opr_m_src_1 = * ((OPR_MEM*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
     OPR_MEM& opr_m_des_1 = * ((OPR_MEM*)desPool[1]);
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes_0;
-    OPR_TREG opr_preDes_1;
+    OPR_TREG opr_t_1 = OPR_TREG(0);
+    OPR_TREG opr_preDes_0 = OPR_TREG(1);
+    OPR_TREG opr_preDes_1 = OPR_TREG(2);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_1 = new MOV_MEM_LD$M$T$6();
     uop_uop_ld_1->addMeta(opr_m_src_1 ,opr_t_1);
@@ -487,8 +487,8 @@ void INT_SIM_ALU$R_M$M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_in
     OPR_REG& opr_r_src_0 = * ((OPR_REG*)srcPool[0]);
     OPR_MEM& opr_m_src_1 = * ((OPR_MEM*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes_0;
+    OPR_TREG opr_t_1 = OPR_TREG(0);
+    OPR_TREG opr_preDes_0 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_1 = new MOV_MEM_LD$M$T$6();
     uop_uop_ld_1->addMeta(opr_m_src_1 ,opr_t_1);
@@ -518,7 +518,7 @@ void INT_SIM_ALU$I_R$R_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_
     OPR_REG& opr_r_src_1 = * ((OPR_REG*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
     OPR_REG& opr_r_des_1 = * ((OPR_REG*)desPool[1]);
-    OPR_TREG opr_t_0;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ld_0->addMeta(opr_i_src_0 ,opr_t_0);
@@ -543,8 +543,8 @@ void INT_SIM_ALU$I_R$R_M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_
     OPR_REG& opr_r_src_1 = * ((OPR_REG*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
     OPR_MEM& opr_m_des_1 = * ((OPR_MEM*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_preDes_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_preDes_1 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ld_0->addMeta(opr_i_src_0 ,opr_t_0);
@@ -573,7 +573,7 @@ void INT_SIM_ALU$I_R$R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_in
     OPR_IMM& opr_i_src_0 = * ((OPR_IMM*)srcPool[0]);
     OPR_REG& opr_r_src_1 = * ((OPR_REG*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
-    OPR_TREG opr_t_0;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ld_0->addMeta(opr_i_src_0 ,opr_t_0);
@@ -598,8 +598,8 @@ void INT_SIM_ALU$I_R$M_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_
     OPR_REG& opr_r_src_1 = * ((OPR_REG*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
     OPR_REG& opr_r_des_1 = * ((OPR_REG*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_preDes_0;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_preDes_0 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ld_0->addMeta(opr_i_src_0 ,opr_t_0);
@@ -629,9 +629,9 @@ void INT_SIM_ALU$I_R$M_M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_
     OPR_REG& opr_r_src_1 = * ((OPR_REG*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
     OPR_MEM& opr_m_des_1 = * ((OPR_MEM*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_preDes_0;
-    OPR_TREG opr_preDes_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_preDes_0 = OPR_TREG(1);
+    OPR_TREG opr_preDes_1 = OPR_TREG(2);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ld_0->addMeta(opr_i_src_0 ,opr_t_0);
@@ -665,8 +665,8 @@ void INT_SIM_ALU$I_R$M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_in
     OPR_IMM& opr_i_src_0 = * ((OPR_IMM*)srcPool[0]);
     OPR_REG& opr_r_src_1 = * ((OPR_REG*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_preDes_0;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_preDes_0 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ld_0->addMeta(opr_i_src_0 ,opr_t_0);
@@ -696,8 +696,8 @@ void INT_SIM_ALU$I_I$R_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_
     OPR_IMM& opr_i_src_1 = * ((OPR_IMM*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
     OPR_REG& opr_r_des_1 = * ((OPR_REG*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ld_0->addMeta(opr_i_src_0 ,opr_t_0);
@@ -727,9 +727,9 @@ void INT_SIM_ALU$I_I$R_M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_
     OPR_IMM& opr_i_src_1 = * ((OPR_IMM*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
     OPR_MEM& opr_m_des_1 = * ((OPR_MEM*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
+    OPR_TREG opr_preDes_1 = OPR_TREG(2);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ld_0->addMeta(opr_i_src_0 ,opr_t_0);
@@ -763,8 +763,8 @@ void INT_SIM_ALU$I_I$R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_in
     OPR_IMM& opr_i_src_0 = * ((OPR_IMM*)srcPool[0]);
     OPR_IMM& opr_i_src_1 = * ((OPR_IMM*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ld_0->addMeta(opr_i_src_0 ,opr_t_0);
@@ -794,9 +794,9 @@ void INT_SIM_ALU$I_I$M_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_
     OPR_IMM& opr_i_src_1 = * ((OPR_IMM*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
     OPR_REG& opr_r_des_1 = * ((OPR_REG*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes_0;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
+    OPR_TREG opr_preDes_0 = OPR_TREG(2);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ld_0->addMeta(opr_i_src_0 ,opr_t_0);
@@ -831,10 +831,10 @@ void INT_SIM_ALU$I_I$M_M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_
     OPR_IMM& opr_i_src_1 = * ((OPR_IMM*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
     OPR_MEM& opr_m_des_1 = * ((OPR_MEM*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes_0;
-    OPR_TREG opr_preDes_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
+    OPR_TREG opr_preDes_0 = OPR_TREG(2);
+    OPR_TREG opr_preDes_1 = OPR_TREG(3);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ld_0->addMeta(opr_i_src_0 ,opr_t_0);
@@ -873,9 +873,9 @@ void INT_SIM_ALU$I_I$M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_in
     OPR_IMM& opr_i_src_0 = * ((OPR_IMM*)srcPool[0]);
     OPR_IMM& opr_i_src_1 = * ((OPR_IMM*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes_0;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
+    OPR_TREG opr_preDes_0 = OPR_TREG(2);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ld_0->addMeta(opr_i_src_0 ,opr_t_0);
@@ -910,8 +910,8 @@ void INT_SIM_ALU$I_M$R_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_
     OPR_MEM& opr_m_src_1 = * ((OPR_MEM*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
     OPR_REG& opr_r_des_1 = * ((OPR_REG*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ld_0->addMeta(opr_i_src_0 ,opr_t_0);
@@ -941,9 +941,9 @@ void INT_SIM_ALU$I_M$R_M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_
     OPR_MEM& opr_m_src_1 = * ((OPR_MEM*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
     OPR_MEM& opr_m_des_1 = * ((OPR_MEM*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
+    OPR_TREG opr_preDes_1 = OPR_TREG(2);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ld_0->addMeta(opr_i_src_0 ,opr_t_0);
@@ -977,8 +977,8 @@ void INT_SIM_ALU$I_M$R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_in
     OPR_IMM& opr_i_src_0 = * ((OPR_IMM*)srcPool[0]);
     OPR_MEM& opr_m_src_1 = * ((OPR_MEM*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ld_0->addMeta(opr_i_src_0 ,opr_t_0);
@@ -1008,9 +1008,9 @@ void INT_SIM_ALU$I_M$M_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_
     OPR_MEM& opr_m_src_1 = * ((OPR_MEM*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
     OPR_REG& opr_r_des_1 = * ((OPR_REG*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes_0;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
+    OPR_TREG opr_preDes_0 = OPR_TREG(2);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ld_0->addMeta(opr_i_src_0 ,opr_t_0);
@@ -1045,10 +1045,10 @@ void INT_SIM_ALU$I_M$M_M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_
     OPR_MEM& opr_m_src_1 = * ((OPR_MEM*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
     OPR_MEM& opr_m_des_1 = * ((OPR_MEM*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes_0;
-    OPR_TREG opr_preDes_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
+    OPR_TREG opr_preDes_0 = OPR_TREG(2);
+    OPR_TREG opr_preDes_1 = OPR_TREG(3);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ld_0->addMeta(opr_i_src_0 ,opr_t_0);
@@ -1087,9 +1087,9 @@ void INT_SIM_ALU$I_M$M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_in
     OPR_IMM& opr_i_src_0 = * ((OPR_IMM*)srcPool[0]);
     OPR_MEM& opr_m_src_1 = * ((OPR_MEM*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes_0;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
+    OPR_TREG opr_preDes_0 = OPR_TREG(2);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ld_0->addMeta(opr_i_src_0 ,opr_t_0);
@@ -1124,7 +1124,7 @@ void INT_SIM_ALU$M_R$R_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_
     OPR_REG& opr_r_src_1 = * ((OPR_REG*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
     OPR_REG& opr_r_des_1 = * ((OPR_REG*)desPool[1]);
-    OPR_TREG opr_t_0;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LD$M$T$6();
     uop_uop_ld_0->addMeta(opr_m_src_0 ,opr_t_0);
@@ -1149,8 +1149,8 @@ void INT_SIM_ALU$M_R$R_M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_
     OPR_REG& opr_r_src_1 = * ((OPR_REG*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
     OPR_MEM& opr_m_des_1 = * ((OPR_MEM*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_preDes_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_preDes_1 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LD$M$T$6();
     uop_uop_ld_0->addMeta(opr_m_src_0 ,opr_t_0);
@@ -1179,7 +1179,7 @@ void INT_SIM_ALU$M_R$R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_in
     OPR_MEM& opr_m_src_0 = * ((OPR_MEM*)srcPool[0]);
     OPR_REG& opr_r_src_1 = * ((OPR_REG*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
-    OPR_TREG opr_t_0;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LD$M$T$6();
     uop_uop_ld_0->addMeta(opr_m_src_0 ,opr_t_0);
@@ -1204,8 +1204,8 @@ void INT_SIM_ALU$M_R$M_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_
     OPR_REG& opr_r_src_1 = * ((OPR_REG*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
     OPR_REG& opr_r_des_1 = * ((OPR_REG*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_preDes_0;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_preDes_0 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LD$M$T$6();
     uop_uop_ld_0->addMeta(opr_m_src_0 ,opr_t_0);
@@ -1235,9 +1235,9 @@ void INT_SIM_ALU$M_R$M_M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_
     OPR_REG& opr_r_src_1 = * ((OPR_REG*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
     OPR_MEM& opr_m_des_1 = * ((OPR_MEM*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_preDes_0;
-    OPR_TREG opr_preDes_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_preDes_0 = OPR_TREG(1);
+    OPR_TREG opr_preDes_1 = OPR_TREG(2);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LD$M$T$6();
     uop_uop_ld_0->addMeta(opr_m_src_0 ,opr_t_0);
@@ -1271,8 +1271,8 @@ void INT_SIM_ALU$M_R$M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_in
     OPR_MEM& opr_m_src_0 = * ((OPR_MEM*)srcPool[0]);
     OPR_REG& opr_r_src_1 = * ((OPR_REG*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_preDes_0;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_preDes_0 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LD$M$T$6();
     uop_uop_ld_0->addMeta(opr_m_src_0 ,opr_t_0);
@@ -1302,8 +1302,8 @@ void INT_SIM_ALU$M_I$R_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_
     OPR_IMM& opr_i_src_1 = * ((OPR_IMM*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
     OPR_REG& opr_r_des_1 = * ((OPR_REG*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LD$M$T$6();
     uop_uop_ld_0->addMeta(opr_m_src_0 ,opr_t_0);
@@ -1333,9 +1333,9 @@ void INT_SIM_ALU$M_I$R_M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_
     OPR_IMM& opr_i_src_1 = * ((OPR_IMM*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
     OPR_MEM& opr_m_des_1 = * ((OPR_MEM*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
+    OPR_TREG opr_preDes_1 = OPR_TREG(2);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LD$M$T$6();
     uop_uop_ld_0->addMeta(opr_m_src_0 ,opr_t_0);
@@ -1369,8 +1369,8 @@ void INT_SIM_ALU$M_I$R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_in
     OPR_MEM& opr_m_src_0 = * ((OPR_MEM*)srcPool[0]);
     OPR_IMM& opr_i_src_1 = * ((OPR_IMM*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LD$M$T$6();
     uop_uop_ld_0->addMeta(opr_m_src_0 ,opr_t_0);
@@ -1400,9 +1400,9 @@ void INT_SIM_ALU$M_I$M_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_
     OPR_IMM& opr_i_src_1 = * ((OPR_IMM*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
     OPR_REG& opr_r_des_1 = * ((OPR_REG*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes_0;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
+    OPR_TREG opr_preDes_0 = OPR_TREG(2);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LD$M$T$6();
     uop_uop_ld_0->addMeta(opr_m_src_0 ,opr_t_0);
@@ -1437,10 +1437,10 @@ void INT_SIM_ALU$M_I$M_M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_
     OPR_IMM& opr_i_src_1 = * ((OPR_IMM*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
     OPR_MEM& opr_m_des_1 = * ((OPR_MEM*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes_0;
-    OPR_TREG opr_preDes_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
+    OPR_TREG opr_preDes_0 = OPR_TREG(2);
+    OPR_TREG opr_preDes_1 = OPR_TREG(3);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LD$M$T$6();
     uop_uop_ld_0->addMeta(opr_m_src_0 ,opr_t_0);
@@ -1479,9 +1479,9 @@ void INT_SIM_ALU$M_I$M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_in
     OPR_MEM& opr_m_src_0 = * ((OPR_MEM*)srcPool[0]);
     OPR_IMM& opr_i_src_1 = * ((OPR_IMM*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes_0;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
+    OPR_TREG opr_preDes_0 = OPR_TREG(2);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LD$M$T$6();
     uop_uop_ld_0->addMeta(opr_m_src_0 ,opr_t_0);
@@ -1516,8 +1516,8 @@ void INT_SIM_ALU$M_M$R_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_
     OPR_MEM& opr_m_src_1 = * ((OPR_MEM*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
     OPR_REG& opr_r_des_1 = * ((OPR_REG*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LD$M$T$6();
     uop_uop_ld_0->addMeta(opr_m_src_0 ,opr_t_0);
@@ -1547,9 +1547,9 @@ void INT_SIM_ALU$M_M$R_M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_
     OPR_MEM& opr_m_src_1 = * ((OPR_MEM*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
     OPR_MEM& opr_m_des_1 = * ((OPR_MEM*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
+    OPR_TREG opr_preDes_1 = OPR_TREG(2);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LD$M$T$6();
     uop_uop_ld_0->addMeta(opr_m_src_0 ,opr_t_0);
@@ -1583,8 +1583,8 @@ void INT_SIM_ALU$M_M$R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_in
     OPR_MEM& opr_m_src_0 = * ((OPR_MEM*)srcPool[0]);
     OPR_MEM& opr_m_src_1 = * ((OPR_MEM*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LD$M$T$6();
     uop_uop_ld_0->addMeta(opr_m_src_0 ,opr_t_0);
@@ -1614,9 +1614,9 @@ void INT_SIM_ALU$M_M$M_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_
     OPR_MEM& opr_m_src_1 = * ((OPR_MEM*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
     OPR_REG& opr_r_des_1 = * ((OPR_REG*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes_0;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
+    OPR_TREG opr_preDes_0 = OPR_TREG(2);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LD$M$T$6();
     uop_uop_ld_0->addMeta(opr_m_src_0 ,opr_t_0);
@@ -1651,10 +1651,10 @@ void INT_SIM_ALU$M_M$M_M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_
     OPR_MEM& opr_m_src_1 = * ((OPR_MEM*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
     OPR_MEM& opr_m_des_1 = * ((OPR_MEM*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes_0;
-    OPR_TREG opr_preDes_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
+    OPR_TREG opr_preDes_0 = OPR_TREG(2);
+    OPR_TREG opr_preDes_1 = OPR_TREG(3);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LD$M$T$6();
     uop_uop_ld_0->addMeta(opr_m_src_0 ,opr_t_0);
@@ -1693,9 +1693,9 @@ void INT_SIM_ALU$M_M$M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_in
     OPR_MEM& opr_m_src_0 = * ((OPR_MEM*)srcPool[0]);
     OPR_MEM& opr_m_src_1 = * ((OPR_MEM*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes_0;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
+    OPR_TREG opr_preDes_0 = OPR_TREG(2);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LD$M$T$6();
     uop_uop_ld_0->addMeta(opr_m_src_0 ,opr_t_0);
@@ -1749,7 +1749,7 @@ void INT_MUL_DIV_ALU$R_R$R_M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* 
     OPR_REG& opr_r_src_1 = * ((OPR_REG*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
     OPR_MEM& opr_m_des_1 = * ((OPR_MEM*)desPool[1]);
-    OPR_TREG opr_preDes_1;
+    OPR_TREG opr_preDes_1 = OPR_TREG(0);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_comp = new INT_MUL_DIV_ALU$R_R$R_T$2();
     uop_uop_comp->addMeta(opr_r_src_0, opr_r_src_1 ,opr_r_des_0, opr_preDes_1);
@@ -1792,7 +1792,7 @@ void INT_MUL_DIV_ALU$R_R$M_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* 
     OPR_REG& opr_r_src_1 = * ((OPR_REG*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
     OPR_REG& opr_r_des_1 = * ((OPR_REG*)desPool[1]);
-    OPR_TREG opr_preDes_0;
+    OPR_TREG opr_preDes_0 = OPR_TREG(0);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_comp = new INT_MUL_DIV_ALU$R_R$T_R$2();
     uop_uop_comp->addMeta(opr_r_src_0, opr_r_src_1 ,opr_preDes_0, opr_r_des_1);
@@ -1817,8 +1817,8 @@ void INT_MUL_DIV_ALU$R_R$M_M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* 
     OPR_REG& opr_r_src_1 = * ((OPR_REG*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
     OPR_MEM& opr_m_des_1 = * ((OPR_MEM*)desPool[1]);
-    OPR_TREG opr_preDes_0;
-    OPR_TREG opr_preDes_1;
+    OPR_TREG opr_preDes_0 = OPR_TREG(0);
+    OPR_TREG opr_preDes_1 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_comp = new INT_MUL_DIV_ALU$R_R$T_T$2();
     uop_uop_comp->addMeta(opr_r_src_0, opr_r_src_1 ,opr_preDes_0, opr_preDes_1);
@@ -1847,7 +1847,7 @@ void INT_MUL_DIV_ALU$R_R$M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _r
     OPR_REG& opr_r_src_0 = * ((OPR_REG*)srcPool[0]);
     OPR_REG& opr_r_src_1 = * ((OPR_REG*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
-    OPR_TREG opr_preDes_0;
+    OPR_TREG opr_preDes_0 = OPR_TREG(0);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_comp = new INT_MUL_DIV_ALU$R_R$T$2();
     uop_uop_comp->addMeta(opr_r_src_0, opr_r_src_1 ,opr_preDes_0);
@@ -1872,7 +1872,7 @@ void INT_MUL_DIV_ALU$R_I$R_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* 
     OPR_IMM& opr_i_src_1 = * ((OPR_IMM*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
     OPR_REG& opr_r_des_1 = * ((OPR_REG*)desPool[1]);
-    OPR_TREG opr_t_1;
+    OPR_TREG opr_t_1 = OPR_TREG(0);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_1 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ld_1->addMeta(opr_i_src_1 ,opr_t_1);
@@ -1897,8 +1897,8 @@ void INT_MUL_DIV_ALU$R_I$R_M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* 
     OPR_IMM& opr_i_src_1 = * ((OPR_IMM*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
     OPR_MEM& opr_m_des_1 = * ((OPR_MEM*)desPool[1]);
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes_1;
+    OPR_TREG opr_t_1 = OPR_TREG(0);
+    OPR_TREG opr_preDes_1 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_1 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ld_1->addMeta(opr_i_src_1 ,opr_t_1);
@@ -1927,7 +1927,7 @@ void INT_MUL_DIV_ALU$R_I$R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _r
     OPR_REG& opr_r_src_0 = * ((OPR_REG*)srcPool[0]);
     OPR_IMM& opr_i_src_1 = * ((OPR_IMM*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
-    OPR_TREG opr_t_1;
+    OPR_TREG opr_t_1 = OPR_TREG(0);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_1 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ld_1->addMeta(opr_i_src_1 ,opr_t_1);
@@ -1952,8 +1952,8 @@ void INT_MUL_DIV_ALU$R_I$M_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* 
     OPR_IMM& opr_i_src_1 = * ((OPR_IMM*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
     OPR_REG& opr_r_des_1 = * ((OPR_REG*)desPool[1]);
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes_0;
+    OPR_TREG opr_t_1 = OPR_TREG(0);
+    OPR_TREG opr_preDes_0 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_1 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ld_1->addMeta(opr_i_src_1 ,opr_t_1);
@@ -1983,9 +1983,9 @@ void INT_MUL_DIV_ALU$R_I$M_M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* 
     OPR_IMM& opr_i_src_1 = * ((OPR_IMM*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
     OPR_MEM& opr_m_des_1 = * ((OPR_MEM*)desPool[1]);
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes_0;
-    OPR_TREG opr_preDes_1;
+    OPR_TREG opr_t_1 = OPR_TREG(0);
+    OPR_TREG opr_preDes_0 = OPR_TREG(1);
+    OPR_TREG opr_preDes_1 = OPR_TREG(2);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_1 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ld_1->addMeta(opr_i_src_1 ,opr_t_1);
@@ -2019,8 +2019,8 @@ void INT_MUL_DIV_ALU$R_I$M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _r
     OPR_REG& opr_r_src_0 = * ((OPR_REG*)srcPool[0]);
     OPR_IMM& opr_i_src_1 = * ((OPR_IMM*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes_0;
+    OPR_TREG opr_t_1 = OPR_TREG(0);
+    OPR_TREG opr_preDes_0 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_1 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ld_1->addMeta(opr_i_src_1 ,opr_t_1);
@@ -2050,7 +2050,7 @@ void INT_MUL_DIV_ALU$R_M$R_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* 
     OPR_MEM& opr_m_src_1 = * ((OPR_MEM*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
     OPR_REG& opr_r_des_1 = * ((OPR_REG*)desPool[1]);
-    OPR_TREG opr_t_1;
+    OPR_TREG opr_t_1 = OPR_TREG(0);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_1 = new MOV_MEM_LD$M$T$6();
     uop_uop_ld_1->addMeta(opr_m_src_1 ,opr_t_1);
@@ -2075,8 +2075,8 @@ void INT_MUL_DIV_ALU$R_M$R_M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* 
     OPR_MEM& opr_m_src_1 = * ((OPR_MEM*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
     OPR_MEM& opr_m_des_1 = * ((OPR_MEM*)desPool[1]);
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes_1;
+    OPR_TREG opr_t_1 = OPR_TREG(0);
+    OPR_TREG opr_preDes_1 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_1 = new MOV_MEM_LD$M$T$6();
     uop_uop_ld_1->addMeta(opr_m_src_1 ,opr_t_1);
@@ -2105,7 +2105,7 @@ void INT_MUL_DIV_ALU$R_M$R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _r
     OPR_REG& opr_r_src_0 = * ((OPR_REG*)srcPool[0]);
     OPR_MEM& opr_m_src_1 = * ((OPR_MEM*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
-    OPR_TREG opr_t_1;
+    OPR_TREG opr_t_1 = OPR_TREG(0);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_1 = new MOV_MEM_LD$M$T$6();
     uop_uop_ld_1->addMeta(opr_m_src_1 ,opr_t_1);
@@ -2130,8 +2130,8 @@ void INT_MUL_DIV_ALU$R_M$M_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* 
     OPR_MEM& opr_m_src_1 = * ((OPR_MEM*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
     OPR_REG& opr_r_des_1 = * ((OPR_REG*)desPool[1]);
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes_0;
+    OPR_TREG opr_t_1 = OPR_TREG(0);
+    OPR_TREG opr_preDes_0 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_1 = new MOV_MEM_LD$M$T$6();
     uop_uop_ld_1->addMeta(opr_m_src_1 ,opr_t_1);
@@ -2161,9 +2161,9 @@ void INT_MUL_DIV_ALU$R_M$M_M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* 
     OPR_MEM& opr_m_src_1 = * ((OPR_MEM*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
     OPR_MEM& opr_m_des_1 = * ((OPR_MEM*)desPool[1]);
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes_0;
-    OPR_TREG opr_preDes_1;
+    OPR_TREG opr_t_1 = OPR_TREG(0);
+    OPR_TREG opr_preDes_0 = OPR_TREG(1);
+    OPR_TREG opr_preDes_1 = OPR_TREG(2);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_1 = new MOV_MEM_LD$M$T$6();
     uop_uop_ld_1->addMeta(opr_m_src_1 ,opr_t_1);
@@ -2197,8 +2197,8 @@ void INT_MUL_DIV_ALU$R_M$M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _r
     OPR_REG& opr_r_src_0 = * ((OPR_REG*)srcPool[0]);
     OPR_MEM& opr_m_src_1 = * ((OPR_MEM*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes_0;
+    OPR_TREG opr_t_1 = OPR_TREG(0);
+    OPR_TREG opr_preDes_0 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_1 = new MOV_MEM_LD$M$T$6();
     uop_uop_ld_1->addMeta(opr_m_src_1 ,opr_t_1);
@@ -2228,7 +2228,7 @@ void INT_MUL_DIV_ALU$I_R$R_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* 
     OPR_REG& opr_r_src_1 = * ((OPR_REG*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
     OPR_REG& opr_r_des_1 = * ((OPR_REG*)desPool[1]);
-    OPR_TREG opr_t_0;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ld_0->addMeta(opr_i_src_0 ,opr_t_0);
@@ -2253,8 +2253,8 @@ void INT_MUL_DIV_ALU$I_R$R_M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* 
     OPR_REG& opr_r_src_1 = * ((OPR_REG*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
     OPR_MEM& opr_m_des_1 = * ((OPR_MEM*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_preDes_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_preDes_1 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ld_0->addMeta(opr_i_src_0 ,opr_t_0);
@@ -2283,7 +2283,7 @@ void INT_MUL_DIV_ALU$I_R$R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _r
     OPR_IMM& opr_i_src_0 = * ((OPR_IMM*)srcPool[0]);
     OPR_REG& opr_r_src_1 = * ((OPR_REG*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
-    OPR_TREG opr_t_0;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ld_0->addMeta(opr_i_src_0 ,opr_t_0);
@@ -2308,8 +2308,8 @@ void INT_MUL_DIV_ALU$I_R$M_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* 
     OPR_REG& opr_r_src_1 = * ((OPR_REG*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
     OPR_REG& opr_r_des_1 = * ((OPR_REG*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_preDes_0;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_preDes_0 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ld_0->addMeta(opr_i_src_0 ,opr_t_0);
@@ -2339,9 +2339,9 @@ void INT_MUL_DIV_ALU$I_R$M_M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* 
     OPR_REG& opr_r_src_1 = * ((OPR_REG*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
     OPR_MEM& opr_m_des_1 = * ((OPR_MEM*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_preDes_0;
-    OPR_TREG opr_preDes_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_preDes_0 = OPR_TREG(1);
+    OPR_TREG opr_preDes_1 = OPR_TREG(2);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ld_0->addMeta(opr_i_src_0 ,opr_t_0);
@@ -2375,8 +2375,8 @@ void INT_MUL_DIV_ALU$I_R$M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _r
     OPR_IMM& opr_i_src_0 = * ((OPR_IMM*)srcPool[0]);
     OPR_REG& opr_r_src_1 = * ((OPR_REG*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_preDes_0;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_preDes_0 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ld_0->addMeta(opr_i_src_0 ,opr_t_0);
@@ -2406,8 +2406,8 @@ void INT_MUL_DIV_ALU$I_I$R_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* 
     OPR_IMM& opr_i_src_1 = * ((OPR_IMM*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
     OPR_REG& opr_r_des_1 = * ((OPR_REG*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ld_0->addMeta(opr_i_src_0 ,opr_t_0);
@@ -2437,9 +2437,9 @@ void INT_MUL_DIV_ALU$I_I$R_M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* 
     OPR_IMM& opr_i_src_1 = * ((OPR_IMM*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
     OPR_MEM& opr_m_des_1 = * ((OPR_MEM*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
+    OPR_TREG opr_preDes_1 = OPR_TREG(2);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ld_0->addMeta(opr_i_src_0 ,opr_t_0);
@@ -2473,8 +2473,8 @@ void INT_MUL_DIV_ALU$I_I$R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _r
     OPR_IMM& opr_i_src_0 = * ((OPR_IMM*)srcPool[0]);
     OPR_IMM& opr_i_src_1 = * ((OPR_IMM*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ld_0->addMeta(opr_i_src_0 ,opr_t_0);
@@ -2504,9 +2504,9 @@ void INT_MUL_DIV_ALU$I_I$M_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* 
     OPR_IMM& opr_i_src_1 = * ((OPR_IMM*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
     OPR_REG& opr_r_des_1 = * ((OPR_REG*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes_0;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
+    OPR_TREG opr_preDes_0 = OPR_TREG(2);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ld_0->addMeta(opr_i_src_0 ,opr_t_0);
@@ -2541,10 +2541,10 @@ void INT_MUL_DIV_ALU$I_I$M_M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* 
     OPR_IMM& opr_i_src_1 = * ((OPR_IMM*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
     OPR_MEM& opr_m_des_1 = * ((OPR_MEM*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes_0;
-    OPR_TREG opr_preDes_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
+    OPR_TREG opr_preDes_0 = OPR_TREG(2);
+    OPR_TREG opr_preDes_1 = OPR_TREG(3);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ld_0->addMeta(opr_i_src_0 ,opr_t_0);
@@ -2583,9 +2583,9 @@ void INT_MUL_DIV_ALU$I_I$M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _r
     OPR_IMM& opr_i_src_0 = * ((OPR_IMM*)srcPool[0]);
     OPR_IMM& opr_i_src_1 = * ((OPR_IMM*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes_0;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
+    OPR_TREG opr_preDes_0 = OPR_TREG(2);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ld_0->addMeta(opr_i_src_0 ,opr_t_0);
@@ -2620,8 +2620,8 @@ void INT_MUL_DIV_ALU$I_M$R_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* 
     OPR_MEM& opr_m_src_1 = * ((OPR_MEM*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
     OPR_REG& opr_r_des_1 = * ((OPR_REG*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ld_0->addMeta(opr_i_src_0 ,opr_t_0);
@@ -2651,9 +2651,9 @@ void INT_MUL_DIV_ALU$I_M$R_M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* 
     OPR_MEM& opr_m_src_1 = * ((OPR_MEM*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
     OPR_MEM& opr_m_des_1 = * ((OPR_MEM*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
+    OPR_TREG opr_preDes_1 = OPR_TREG(2);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ld_0->addMeta(opr_i_src_0 ,opr_t_0);
@@ -2687,8 +2687,8 @@ void INT_MUL_DIV_ALU$I_M$R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _r
     OPR_IMM& opr_i_src_0 = * ((OPR_IMM*)srcPool[0]);
     OPR_MEM& opr_m_src_1 = * ((OPR_MEM*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ld_0->addMeta(opr_i_src_0 ,opr_t_0);
@@ -2718,9 +2718,9 @@ void INT_MUL_DIV_ALU$I_M$M_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* 
     OPR_MEM& opr_m_src_1 = * ((OPR_MEM*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
     OPR_REG& opr_r_des_1 = * ((OPR_REG*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes_0;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
+    OPR_TREG opr_preDes_0 = OPR_TREG(2);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ld_0->addMeta(opr_i_src_0 ,opr_t_0);
@@ -2755,10 +2755,10 @@ void INT_MUL_DIV_ALU$I_M$M_M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* 
     OPR_MEM& opr_m_src_1 = * ((OPR_MEM*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
     OPR_MEM& opr_m_des_1 = * ((OPR_MEM*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes_0;
-    OPR_TREG opr_preDes_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
+    OPR_TREG opr_preDes_0 = OPR_TREG(2);
+    OPR_TREG opr_preDes_1 = OPR_TREG(3);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ld_0->addMeta(opr_i_src_0 ,opr_t_0);
@@ -2797,9 +2797,9 @@ void INT_MUL_DIV_ALU$I_M$M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _r
     OPR_IMM& opr_i_src_0 = * ((OPR_IMM*)srcPool[0]);
     OPR_MEM& opr_m_src_1 = * ((OPR_MEM*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes_0;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
+    OPR_TREG opr_preDes_0 = OPR_TREG(2);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ld_0->addMeta(opr_i_src_0 ,opr_t_0);
@@ -2834,7 +2834,7 @@ void INT_MUL_DIV_ALU$M_R$R_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* 
     OPR_REG& opr_r_src_1 = * ((OPR_REG*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
     OPR_REG& opr_r_des_1 = * ((OPR_REG*)desPool[1]);
-    OPR_TREG opr_t_0;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LD$M$T$6();
     uop_uop_ld_0->addMeta(opr_m_src_0 ,opr_t_0);
@@ -2859,8 +2859,8 @@ void INT_MUL_DIV_ALU$M_R$R_M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* 
     OPR_REG& opr_r_src_1 = * ((OPR_REG*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
     OPR_MEM& opr_m_des_1 = * ((OPR_MEM*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_preDes_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_preDes_1 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LD$M$T$6();
     uop_uop_ld_0->addMeta(opr_m_src_0 ,opr_t_0);
@@ -2889,7 +2889,7 @@ void INT_MUL_DIV_ALU$M_R$R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _r
     OPR_MEM& opr_m_src_0 = * ((OPR_MEM*)srcPool[0]);
     OPR_REG& opr_r_src_1 = * ((OPR_REG*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
-    OPR_TREG opr_t_0;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LD$M$T$6();
     uop_uop_ld_0->addMeta(opr_m_src_0 ,opr_t_0);
@@ -2914,8 +2914,8 @@ void INT_MUL_DIV_ALU$M_R$M_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* 
     OPR_REG& opr_r_src_1 = * ((OPR_REG*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
     OPR_REG& opr_r_des_1 = * ((OPR_REG*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_preDes_0;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_preDes_0 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LD$M$T$6();
     uop_uop_ld_0->addMeta(opr_m_src_0 ,opr_t_0);
@@ -2945,9 +2945,9 @@ void INT_MUL_DIV_ALU$M_R$M_M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* 
     OPR_REG& opr_r_src_1 = * ((OPR_REG*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
     OPR_MEM& opr_m_des_1 = * ((OPR_MEM*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_preDes_0;
-    OPR_TREG opr_preDes_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_preDes_0 = OPR_TREG(1);
+    OPR_TREG opr_preDes_1 = OPR_TREG(2);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LD$M$T$6();
     uop_uop_ld_0->addMeta(opr_m_src_0 ,opr_t_0);
@@ -2981,8 +2981,8 @@ void INT_MUL_DIV_ALU$M_R$M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _r
     OPR_MEM& opr_m_src_0 = * ((OPR_MEM*)srcPool[0]);
     OPR_REG& opr_r_src_1 = * ((OPR_REG*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_preDes_0;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_preDes_0 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LD$M$T$6();
     uop_uop_ld_0->addMeta(opr_m_src_0 ,opr_t_0);
@@ -3012,8 +3012,8 @@ void INT_MUL_DIV_ALU$M_I$R_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* 
     OPR_IMM& opr_i_src_1 = * ((OPR_IMM*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
     OPR_REG& opr_r_des_1 = * ((OPR_REG*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LD$M$T$6();
     uop_uop_ld_0->addMeta(opr_m_src_0 ,opr_t_0);
@@ -3043,9 +3043,9 @@ void INT_MUL_DIV_ALU$M_I$R_M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* 
     OPR_IMM& opr_i_src_1 = * ((OPR_IMM*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
     OPR_MEM& opr_m_des_1 = * ((OPR_MEM*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
+    OPR_TREG opr_preDes_1 = OPR_TREG(2);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LD$M$T$6();
     uop_uop_ld_0->addMeta(opr_m_src_0 ,opr_t_0);
@@ -3079,8 +3079,8 @@ void INT_MUL_DIV_ALU$M_I$R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _r
     OPR_MEM& opr_m_src_0 = * ((OPR_MEM*)srcPool[0]);
     OPR_IMM& opr_i_src_1 = * ((OPR_IMM*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LD$M$T$6();
     uop_uop_ld_0->addMeta(opr_m_src_0 ,opr_t_0);
@@ -3110,9 +3110,9 @@ void INT_MUL_DIV_ALU$M_I$M_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* 
     OPR_IMM& opr_i_src_1 = * ((OPR_IMM*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
     OPR_REG& opr_r_des_1 = * ((OPR_REG*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes_0;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
+    OPR_TREG opr_preDes_0 = OPR_TREG(2);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LD$M$T$6();
     uop_uop_ld_0->addMeta(opr_m_src_0 ,opr_t_0);
@@ -3147,10 +3147,10 @@ void INT_MUL_DIV_ALU$M_I$M_M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* 
     OPR_IMM& opr_i_src_1 = * ((OPR_IMM*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
     OPR_MEM& opr_m_des_1 = * ((OPR_MEM*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes_0;
-    OPR_TREG opr_preDes_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
+    OPR_TREG opr_preDes_0 = OPR_TREG(2);
+    OPR_TREG opr_preDes_1 = OPR_TREG(3);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LD$M$T$6();
     uop_uop_ld_0->addMeta(opr_m_src_0 ,opr_t_0);
@@ -3189,9 +3189,9 @@ void INT_MUL_DIV_ALU$M_I$M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _r
     OPR_MEM& opr_m_src_0 = * ((OPR_MEM*)srcPool[0]);
     OPR_IMM& opr_i_src_1 = * ((OPR_IMM*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes_0;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
+    OPR_TREG opr_preDes_0 = OPR_TREG(2);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LD$M$T$6();
     uop_uop_ld_0->addMeta(opr_m_src_0 ,opr_t_0);
@@ -3226,8 +3226,8 @@ void INT_MUL_DIV_ALU$M_M$R_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* 
     OPR_MEM& opr_m_src_1 = * ((OPR_MEM*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
     OPR_REG& opr_r_des_1 = * ((OPR_REG*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LD$M$T$6();
     uop_uop_ld_0->addMeta(opr_m_src_0 ,opr_t_0);
@@ -3257,9 +3257,9 @@ void INT_MUL_DIV_ALU$M_M$R_M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* 
     OPR_MEM& opr_m_src_1 = * ((OPR_MEM*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
     OPR_MEM& opr_m_des_1 = * ((OPR_MEM*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
+    OPR_TREG opr_preDes_1 = OPR_TREG(2);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LD$M$T$6();
     uop_uop_ld_0->addMeta(opr_m_src_0 ,opr_t_0);
@@ -3293,8 +3293,8 @@ void INT_MUL_DIV_ALU$M_M$R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _r
     OPR_MEM& opr_m_src_0 = * ((OPR_MEM*)srcPool[0]);
     OPR_MEM& opr_m_src_1 = * ((OPR_MEM*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LD$M$T$6();
     uop_uop_ld_0->addMeta(opr_m_src_0 ,opr_t_0);
@@ -3324,9 +3324,9 @@ void INT_MUL_DIV_ALU$M_M$M_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* 
     OPR_MEM& opr_m_src_1 = * ((OPR_MEM*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
     OPR_REG& opr_r_des_1 = * ((OPR_REG*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes_0;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
+    OPR_TREG opr_preDes_0 = OPR_TREG(2);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LD$M$T$6();
     uop_uop_ld_0->addMeta(opr_m_src_0 ,opr_t_0);
@@ -3361,10 +3361,10 @@ void INT_MUL_DIV_ALU$M_M$M_M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* 
     OPR_MEM& opr_m_src_1 = * ((OPR_MEM*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
     OPR_MEM& opr_m_des_1 = * ((OPR_MEM*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes_0;
-    OPR_TREG opr_preDes_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
+    OPR_TREG opr_preDes_0 = OPR_TREG(2);
+    OPR_TREG opr_preDes_1 = OPR_TREG(3);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LD$M$T$6();
     uop_uop_ld_0->addMeta(opr_m_src_0 ,opr_t_0);
@@ -3403,9 +3403,9 @@ void INT_MUL_DIV_ALU$M_M$M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _r
     OPR_MEM& opr_m_src_0 = * ((OPR_MEM*)srcPool[0]);
     OPR_MEM& opr_m_src_1 = * ((OPR_MEM*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes_0;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
+    OPR_TREG opr_preDes_0 = OPR_TREG(2);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LD$M$T$6();
     uop_uop_ld_0->addMeta(opr_m_src_0 ,opr_t_0);
@@ -3459,7 +3459,7 @@ void SIM64_ALU$R_R$R_M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_in
     OPR_REG& opr_r_src_1 = * ((OPR_REG*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
     OPR_MEM& opr_m_des_1 = * ((OPR_MEM*)desPool[1]);
-    OPR_TREG opr_preDes_1;
+    OPR_TREG opr_preDes_1 = OPR_TREG(0);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_comp = new SIM64_ALU$R_R$R_T$5();
     uop_uop_comp->addMeta(opr_r_src_0, opr_r_src_1 ,opr_r_des_0, opr_preDes_1);
@@ -3502,7 +3502,7 @@ void SIM64_ALU$R_R$M_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_in
     OPR_REG& opr_r_src_1 = * ((OPR_REG*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
     OPR_REG& opr_r_des_1 = * ((OPR_REG*)desPool[1]);
-    OPR_TREG opr_preDes_0;
+    OPR_TREG opr_preDes_0 = OPR_TREG(0);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_comp = new SIM64_ALU$R_R$T_R$5();
     uop_uop_comp->addMeta(opr_r_src_0, opr_r_src_1 ,opr_preDes_0, opr_r_des_1);
@@ -3527,8 +3527,8 @@ void SIM64_ALU$R_R$M_M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_in
     OPR_REG& opr_r_src_1 = * ((OPR_REG*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
     OPR_MEM& opr_m_des_1 = * ((OPR_MEM*)desPool[1]);
-    OPR_TREG opr_preDes_0;
-    OPR_TREG opr_preDes_1;
+    OPR_TREG opr_preDes_0 = OPR_TREG(0);
+    OPR_TREG opr_preDes_1 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_comp = new SIM64_ALU$R_R$T_T$5();
     uop_uop_comp->addMeta(opr_r_src_0, opr_r_src_1 ,opr_preDes_0, opr_preDes_1);
@@ -3557,7 +3557,7 @@ void SIM64_ALU$R_R$M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_inst
     OPR_REG& opr_r_src_0 = * ((OPR_REG*)srcPool[0]);
     OPR_REG& opr_r_src_1 = * ((OPR_REG*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
-    OPR_TREG opr_preDes_0;
+    OPR_TREG opr_preDes_0 = OPR_TREG(0);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_comp = new SIM64_ALU$R_R$T$5();
     uop_uop_comp->addMeta(opr_r_src_0, opr_r_src_1 ,opr_preDes_0);
@@ -3582,7 +3582,7 @@ void SIM64_ALU$R_I$R_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_in
     OPR_IMM& opr_i_src_1 = * ((OPR_IMM*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
     OPR_REG& opr_r_des_1 = * ((OPR_REG*)desPool[1]);
-    OPR_TREG opr_t_1;
+    OPR_TREG opr_t_1 = OPR_TREG(0);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_1 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ld_1->addMeta(opr_i_src_1 ,opr_t_1);
@@ -3607,8 +3607,8 @@ void SIM64_ALU$R_I$R_M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_in
     OPR_IMM& opr_i_src_1 = * ((OPR_IMM*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
     OPR_MEM& opr_m_des_1 = * ((OPR_MEM*)desPool[1]);
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes_1;
+    OPR_TREG opr_t_1 = OPR_TREG(0);
+    OPR_TREG opr_preDes_1 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_1 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ld_1->addMeta(opr_i_src_1 ,opr_t_1);
@@ -3637,7 +3637,7 @@ void SIM64_ALU$R_I$R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_inst
     OPR_REG& opr_r_src_0 = * ((OPR_REG*)srcPool[0]);
     OPR_IMM& opr_i_src_1 = * ((OPR_IMM*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
-    OPR_TREG opr_t_1;
+    OPR_TREG opr_t_1 = OPR_TREG(0);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_1 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ld_1->addMeta(opr_i_src_1 ,opr_t_1);
@@ -3662,8 +3662,8 @@ void SIM64_ALU$R_I$M_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_in
     OPR_IMM& opr_i_src_1 = * ((OPR_IMM*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
     OPR_REG& opr_r_des_1 = * ((OPR_REG*)desPool[1]);
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes_0;
+    OPR_TREG opr_t_1 = OPR_TREG(0);
+    OPR_TREG opr_preDes_0 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_1 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ld_1->addMeta(opr_i_src_1 ,opr_t_1);
@@ -3693,9 +3693,9 @@ void SIM64_ALU$R_I$M_M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_in
     OPR_IMM& opr_i_src_1 = * ((OPR_IMM*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
     OPR_MEM& opr_m_des_1 = * ((OPR_MEM*)desPool[1]);
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes_0;
-    OPR_TREG opr_preDes_1;
+    OPR_TREG opr_t_1 = OPR_TREG(0);
+    OPR_TREG opr_preDes_0 = OPR_TREG(1);
+    OPR_TREG opr_preDes_1 = OPR_TREG(2);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_1 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ld_1->addMeta(opr_i_src_1 ,opr_t_1);
@@ -3729,8 +3729,8 @@ void SIM64_ALU$R_I$M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_inst
     OPR_REG& opr_r_src_0 = * ((OPR_REG*)srcPool[0]);
     OPR_IMM& opr_i_src_1 = * ((OPR_IMM*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes_0;
+    OPR_TREG opr_t_1 = OPR_TREG(0);
+    OPR_TREG opr_preDes_0 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_1 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ld_1->addMeta(opr_i_src_1 ,opr_t_1);
@@ -3760,7 +3760,7 @@ void SIM64_ALU$R_M$R_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_in
     OPR_MEM& opr_m_src_1 = * ((OPR_MEM*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
     OPR_REG& opr_r_des_1 = * ((OPR_REG*)desPool[1]);
-    OPR_TREG opr_t_1;
+    OPR_TREG opr_t_1 = OPR_TREG(0);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_1 = new MOV_MEM_LD$M$T$6();
     uop_uop_ld_1->addMeta(opr_m_src_1 ,opr_t_1);
@@ -3785,8 +3785,8 @@ void SIM64_ALU$R_M$R_M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_in
     OPR_MEM& opr_m_src_1 = * ((OPR_MEM*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
     OPR_MEM& opr_m_des_1 = * ((OPR_MEM*)desPool[1]);
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes_1;
+    OPR_TREG opr_t_1 = OPR_TREG(0);
+    OPR_TREG opr_preDes_1 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_1 = new MOV_MEM_LD$M$T$6();
     uop_uop_ld_1->addMeta(opr_m_src_1 ,opr_t_1);
@@ -3815,7 +3815,7 @@ void SIM64_ALU$R_M$R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_inst
     OPR_REG& opr_r_src_0 = * ((OPR_REG*)srcPool[0]);
     OPR_MEM& opr_m_src_1 = * ((OPR_MEM*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
-    OPR_TREG opr_t_1;
+    OPR_TREG opr_t_1 = OPR_TREG(0);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_1 = new MOV_MEM_LD$M$T$6();
     uop_uop_ld_1->addMeta(opr_m_src_1 ,opr_t_1);
@@ -3840,8 +3840,8 @@ void SIM64_ALU$R_M$M_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_in
     OPR_MEM& opr_m_src_1 = * ((OPR_MEM*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
     OPR_REG& opr_r_des_1 = * ((OPR_REG*)desPool[1]);
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes_0;
+    OPR_TREG opr_t_1 = OPR_TREG(0);
+    OPR_TREG opr_preDes_0 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_1 = new MOV_MEM_LD$M$T$6();
     uop_uop_ld_1->addMeta(opr_m_src_1 ,opr_t_1);
@@ -3871,9 +3871,9 @@ void SIM64_ALU$R_M$M_M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_in
     OPR_MEM& opr_m_src_1 = * ((OPR_MEM*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
     OPR_MEM& opr_m_des_1 = * ((OPR_MEM*)desPool[1]);
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes_0;
-    OPR_TREG opr_preDes_1;
+    OPR_TREG opr_t_1 = OPR_TREG(0);
+    OPR_TREG opr_preDes_0 = OPR_TREG(1);
+    OPR_TREG opr_preDes_1 = OPR_TREG(2);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_1 = new MOV_MEM_LD$M$T$6();
     uop_uop_ld_1->addMeta(opr_m_src_1 ,opr_t_1);
@@ -3907,8 +3907,8 @@ void SIM64_ALU$R_M$M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_inst
     OPR_REG& opr_r_src_0 = * ((OPR_REG*)srcPool[0]);
     OPR_MEM& opr_m_src_1 = * ((OPR_MEM*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes_0;
+    OPR_TREG opr_t_1 = OPR_TREG(0);
+    OPR_TREG opr_preDes_0 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_1 = new MOV_MEM_LD$M$T$6();
     uop_uop_ld_1->addMeta(opr_m_src_1 ,opr_t_1);
@@ -3938,7 +3938,7 @@ void SIM64_ALU$I_R$R_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_in
     OPR_REG& opr_r_src_1 = * ((OPR_REG*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
     OPR_REG& opr_r_des_1 = * ((OPR_REG*)desPool[1]);
-    OPR_TREG opr_t_0;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ld_0->addMeta(opr_i_src_0 ,opr_t_0);
@@ -3963,8 +3963,8 @@ void SIM64_ALU$I_R$R_M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_in
     OPR_REG& opr_r_src_1 = * ((OPR_REG*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
     OPR_MEM& opr_m_des_1 = * ((OPR_MEM*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_preDes_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_preDes_1 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ld_0->addMeta(opr_i_src_0 ,opr_t_0);
@@ -3993,7 +3993,7 @@ void SIM64_ALU$I_R$R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_inst
     OPR_IMM& opr_i_src_0 = * ((OPR_IMM*)srcPool[0]);
     OPR_REG& opr_r_src_1 = * ((OPR_REG*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
-    OPR_TREG opr_t_0;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ld_0->addMeta(opr_i_src_0 ,opr_t_0);
@@ -4018,8 +4018,8 @@ void SIM64_ALU$I_R$M_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_in
     OPR_REG& opr_r_src_1 = * ((OPR_REG*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
     OPR_REG& opr_r_des_1 = * ((OPR_REG*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_preDes_0;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_preDes_0 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ld_0->addMeta(opr_i_src_0 ,opr_t_0);
@@ -4049,9 +4049,9 @@ void SIM64_ALU$I_R$M_M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_in
     OPR_REG& opr_r_src_1 = * ((OPR_REG*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
     OPR_MEM& opr_m_des_1 = * ((OPR_MEM*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_preDes_0;
-    OPR_TREG opr_preDes_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_preDes_0 = OPR_TREG(1);
+    OPR_TREG opr_preDes_1 = OPR_TREG(2);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ld_0->addMeta(opr_i_src_0 ,opr_t_0);
@@ -4085,8 +4085,8 @@ void SIM64_ALU$I_R$M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_inst
     OPR_IMM& opr_i_src_0 = * ((OPR_IMM*)srcPool[0]);
     OPR_REG& opr_r_src_1 = * ((OPR_REG*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_preDes_0;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_preDes_0 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ld_0->addMeta(opr_i_src_0 ,opr_t_0);
@@ -4116,8 +4116,8 @@ void SIM64_ALU$I_I$R_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_in
     OPR_IMM& opr_i_src_1 = * ((OPR_IMM*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
     OPR_REG& opr_r_des_1 = * ((OPR_REG*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ld_0->addMeta(opr_i_src_0 ,opr_t_0);
@@ -4147,9 +4147,9 @@ void SIM64_ALU$I_I$R_M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_in
     OPR_IMM& opr_i_src_1 = * ((OPR_IMM*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
     OPR_MEM& opr_m_des_1 = * ((OPR_MEM*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
+    OPR_TREG opr_preDes_1 = OPR_TREG(2);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ld_0->addMeta(opr_i_src_0 ,opr_t_0);
@@ -4183,8 +4183,8 @@ void SIM64_ALU$I_I$R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_inst
     OPR_IMM& opr_i_src_0 = * ((OPR_IMM*)srcPool[0]);
     OPR_IMM& opr_i_src_1 = * ((OPR_IMM*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ld_0->addMeta(opr_i_src_0 ,opr_t_0);
@@ -4214,9 +4214,9 @@ void SIM64_ALU$I_I$M_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_in
     OPR_IMM& opr_i_src_1 = * ((OPR_IMM*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
     OPR_REG& opr_r_des_1 = * ((OPR_REG*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes_0;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
+    OPR_TREG opr_preDes_0 = OPR_TREG(2);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ld_0->addMeta(opr_i_src_0 ,opr_t_0);
@@ -4251,10 +4251,10 @@ void SIM64_ALU$I_I$M_M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_in
     OPR_IMM& opr_i_src_1 = * ((OPR_IMM*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
     OPR_MEM& opr_m_des_1 = * ((OPR_MEM*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes_0;
-    OPR_TREG opr_preDes_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
+    OPR_TREG opr_preDes_0 = OPR_TREG(2);
+    OPR_TREG opr_preDes_1 = OPR_TREG(3);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ld_0->addMeta(opr_i_src_0 ,opr_t_0);
@@ -4293,9 +4293,9 @@ void SIM64_ALU$I_I$M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_inst
     OPR_IMM& opr_i_src_0 = * ((OPR_IMM*)srcPool[0]);
     OPR_IMM& opr_i_src_1 = * ((OPR_IMM*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes_0;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
+    OPR_TREG opr_preDes_0 = OPR_TREG(2);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ld_0->addMeta(opr_i_src_0 ,opr_t_0);
@@ -4330,8 +4330,8 @@ void SIM64_ALU$I_M$R_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_in
     OPR_MEM& opr_m_src_1 = * ((OPR_MEM*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
     OPR_REG& opr_r_des_1 = * ((OPR_REG*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ld_0->addMeta(opr_i_src_0 ,opr_t_0);
@@ -4361,9 +4361,9 @@ void SIM64_ALU$I_M$R_M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_in
     OPR_MEM& opr_m_src_1 = * ((OPR_MEM*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
     OPR_MEM& opr_m_des_1 = * ((OPR_MEM*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
+    OPR_TREG opr_preDes_1 = OPR_TREG(2);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ld_0->addMeta(opr_i_src_0 ,opr_t_0);
@@ -4397,8 +4397,8 @@ void SIM64_ALU$I_M$R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_inst
     OPR_IMM& opr_i_src_0 = * ((OPR_IMM*)srcPool[0]);
     OPR_MEM& opr_m_src_1 = * ((OPR_MEM*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ld_0->addMeta(opr_i_src_0 ,opr_t_0);
@@ -4428,9 +4428,9 @@ void SIM64_ALU$I_M$M_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_in
     OPR_MEM& opr_m_src_1 = * ((OPR_MEM*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
     OPR_REG& opr_r_des_1 = * ((OPR_REG*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes_0;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
+    OPR_TREG opr_preDes_0 = OPR_TREG(2);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ld_0->addMeta(opr_i_src_0 ,opr_t_0);
@@ -4465,10 +4465,10 @@ void SIM64_ALU$I_M$M_M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_in
     OPR_MEM& opr_m_src_1 = * ((OPR_MEM*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
     OPR_MEM& opr_m_des_1 = * ((OPR_MEM*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes_0;
-    OPR_TREG opr_preDes_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
+    OPR_TREG opr_preDes_0 = OPR_TREG(2);
+    OPR_TREG opr_preDes_1 = OPR_TREG(3);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ld_0->addMeta(opr_i_src_0 ,opr_t_0);
@@ -4507,9 +4507,9 @@ void SIM64_ALU$I_M$M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_inst
     OPR_IMM& opr_i_src_0 = * ((OPR_IMM*)srcPool[0]);
     OPR_MEM& opr_m_src_1 = * ((OPR_MEM*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes_0;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
+    OPR_TREG opr_preDes_0 = OPR_TREG(2);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ld_0->addMeta(opr_i_src_0 ,opr_t_0);
@@ -4544,7 +4544,7 @@ void SIM64_ALU$M_R$R_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_in
     OPR_REG& opr_r_src_1 = * ((OPR_REG*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
     OPR_REG& opr_r_des_1 = * ((OPR_REG*)desPool[1]);
-    OPR_TREG opr_t_0;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LD$M$T$6();
     uop_uop_ld_0->addMeta(opr_m_src_0 ,opr_t_0);
@@ -4569,8 +4569,8 @@ void SIM64_ALU$M_R$R_M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_in
     OPR_REG& opr_r_src_1 = * ((OPR_REG*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
     OPR_MEM& opr_m_des_1 = * ((OPR_MEM*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_preDes_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_preDes_1 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LD$M$T$6();
     uop_uop_ld_0->addMeta(opr_m_src_0 ,opr_t_0);
@@ -4599,7 +4599,7 @@ void SIM64_ALU$M_R$R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_inst
     OPR_MEM& opr_m_src_0 = * ((OPR_MEM*)srcPool[0]);
     OPR_REG& opr_r_src_1 = * ((OPR_REG*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
-    OPR_TREG opr_t_0;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LD$M$T$6();
     uop_uop_ld_0->addMeta(opr_m_src_0 ,opr_t_0);
@@ -4624,8 +4624,8 @@ void SIM64_ALU$M_R$M_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_in
     OPR_REG& opr_r_src_1 = * ((OPR_REG*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
     OPR_REG& opr_r_des_1 = * ((OPR_REG*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_preDes_0;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_preDes_0 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LD$M$T$6();
     uop_uop_ld_0->addMeta(opr_m_src_0 ,opr_t_0);
@@ -4655,9 +4655,9 @@ void SIM64_ALU$M_R$M_M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_in
     OPR_REG& opr_r_src_1 = * ((OPR_REG*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
     OPR_MEM& opr_m_des_1 = * ((OPR_MEM*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_preDes_0;
-    OPR_TREG opr_preDes_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_preDes_0 = OPR_TREG(1);
+    OPR_TREG opr_preDes_1 = OPR_TREG(2);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LD$M$T$6();
     uop_uop_ld_0->addMeta(opr_m_src_0 ,opr_t_0);
@@ -4691,8 +4691,8 @@ void SIM64_ALU$M_R$M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_inst
     OPR_MEM& opr_m_src_0 = * ((OPR_MEM*)srcPool[0]);
     OPR_REG& opr_r_src_1 = * ((OPR_REG*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_preDes_0;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_preDes_0 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LD$M$T$6();
     uop_uop_ld_0->addMeta(opr_m_src_0 ,opr_t_0);
@@ -4722,8 +4722,8 @@ void SIM64_ALU$M_I$R_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_in
     OPR_IMM& opr_i_src_1 = * ((OPR_IMM*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
     OPR_REG& opr_r_des_1 = * ((OPR_REG*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LD$M$T$6();
     uop_uop_ld_0->addMeta(opr_m_src_0 ,opr_t_0);
@@ -4753,9 +4753,9 @@ void SIM64_ALU$M_I$R_M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_in
     OPR_IMM& opr_i_src_1 = * ((OPR_IMM*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
     OPR_MEM& opr_m_des_1 = * ((OPR_MEM*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
+    OPR_TREG opr_preDes_1 = OPR_TREG(2);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LD$M$T$6();
     uop_uop_ld_0->addMeta(opr_m_src_0 ,opr_t_0);
@@ -4789,8 +4789,8 @@ void SIM64_ALU$M_I$R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_inst
     OPR_MEM& opr_m_src_0 = * ((OPR_MEM*)srcPool[0]);
     OPR_IMM& opr_i_src_1 = * ((OPR_IMM*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LD$M$T$6();
     uop_uop_ld_0->addMeta(opr_m_src_0 ,opr_t_0);
@@ -4820,9 +4820,9 @@ void SIM64_ALU$M_I$M_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_in
     OPR_IMM& opr_i_src_1 = * ((OPR_IMM*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
     OPR_REG& opr_r_des_1 = * ((OPR_REG*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes_0;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
+    OPR_TREG opr_preDes_0 = OPR_TREG(2);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LD$M$T$6();
     uop_uop_ld_0->addMeta(opr_m_src_0 ,opr_t_0);
@@ -4857,10 +4857,10 @@ void SIM64_ALU$M_I$M_M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_in
     OPR_IMM& opr_i_src_1 = * ((OPR_IMM*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
     OPR_MEM& opr_m_des_1 = * ((OPR_MEM*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes_0;
-    OPR_TREG opr_preDes_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
+    OPR_TREG opr_preDes_0 = OPR_TREG(2);
+    OPR_TREG opr_preDes_1 = OPR_TREG(3);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LD$M$T$6();
     uop_uop_ld_0->addMeta(opr_m_src_0 ,opr_t_0);
@@ -4899,9 +4899,9 @@ void SIM64_ALU$M_I$M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_inst
     OPR_MEM& opr_m_src_0 = * ((OPR_MEM*)srcPool[0]);
     OPR_IMM& opr_i_src_1 = * ((OPR_IMM*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes_0;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
+    OPR_TREG opr_preDes_0 = OPR_TREG(2);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LD$M$T$6();
     uop_uop_ld_0->addMeta(opr_m_src_0 ,opr_t_0);
@@ -4936,8 +4936,8 @@ void SIM64_ALU$M_M$R_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_in
     OPR_MEM& opr_m_src_1 = * ((OPR_MEM*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
     OPR_REG& opr_r_des_1 = * ((OPR_REG*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LD$M$T$6();
     uop_uop_ld_0->addMeta(opr_m_src_0 ,opr_t_0);
@@ -4967,9 +4967,9 @@ void SIM64_ALU$M_M$R_M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_in
     OPR_MEM& opr_m_src_1 = * ((OPR_MEM*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
     OPR_MEM& opr_m_des_1 = * ((OPR_MEM*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
+    OPR_TREG opr_preDes_1 = OPR_TREG(2);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LD$M$T$6();
     uop_uop_ld_0->addMeta(opr_m_src_0 ,opr_t_0);
@@ -5003,8 +5003,8 @@ void SIM64_ALU$M_M$R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_inst
     OPR_MEM& opr_m_src_0 = * ((OPR_MEM*)srcPool[0]);
     OPR_MEM& opr_m_src_1 = * ((OPR_MEM*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LD$M$T$6();
     uop_uop_ld_0->addMeta(opr_m_src_0 ,opr_t_0);
@@ -5034,9 +5034,9 @@ void SIM64_ALU$M_M$M_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_in
     OPR_MEM& opr_m_src_1 = * ((OPR_MEM*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
     OPR_REG& opr_r_des_1 = * ((OPR_REG*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes_0;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
+    OPR_TREG opr_preDes_0 = OPR_TREG(2);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LD$M$T$6();
     uop_uop_ld_0->addMeta(opr_m_src_0 ,opr_t_0);
@@ -5071,10 +5071,10 @@ void SIM64_ALU$M_M$M_M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_in
     OPR_MEM& opr_m_src_1 = * ((OPR_MEM*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
     OPR_MEM& opr_m_des_1 = * ((OPR_MEM*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes_0;
-    OPR_TREG opr_preDes_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
+    OPR_TREG opr_preDes_0 = OPR_TREG(2);
+    OPR_TREG opr_preDes_1 = OPR_TREG(3);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LD$M$T$6();
     uop_uop_ld_0->addMeta(opr_m_src_0 ,opr_t_0);
@@ -5113,9 +5113,9 @@ void SIM64_ALU$M_M$M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_inst
     OPR_MEM& opr_m_src_0 = * ((OPR_MEM*)srcPool[0]);
     OPR_MEM& opr_m_src_1 = * ((OPR_MEM*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes_0;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
+    OPR_TREG opr_preDes_0 = OPR_TREG(2);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LD$M$T$6();
     uop_uop_ld_0->addMeta(opr_m_src_0 ,opr_t_0);
@@ -5173,7 +5173,7 @@ void SIM128_ALU$R_R$R_M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_i
     OPR_REG& opr_r_src_1 = * ((OPR_REG*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
     OPR_MEM& opr_m_des_1 = * ((OPR_MEM*)desPool[1]);
-    OPR_TREG opr_preDes_1;
+    OPR_TREG opr_preDes_1 = OPR_TREG(0);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_comp_0 = new SIM128_ALU$R_R$R_T$5();
     uop_uop_comp_0->addMeta(opr_r_src_0, opr_r_src_1 ,opr_r_des_0, opr_preDes_1);
@@ -5231,7 +5231,7 @@ void SIM128_ALU$R_R$M_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_i
     OPR_REG& opr_r_src_1 = * ((OPR_REG*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
     OPR_REG& opr_r_des_1 = * ((OPR_REG*)desPool[1]);
-    OPR_TREG opr_preDes;
+    OPR_TREG opr_preDes = OPR_TREG(0);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_comp_0 = new SIM128_ALU$R_R$T_R$5();
     uop_uop_comp_0->addMeta(opr_r_src_0, opr_r_src_1 ,opr_preDes, opr_r_des_1);
@@ -5267,8 +5267,8 @@ void SIM128_ALU$R_R$M_M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_i
     OPR_REG& opr_r_src_1 = * ((OPR_REG*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
     OPR_MEM& opr_m_des_1 = * ((OPR_MEM*)desPool[1]);
-    OPR_TREG opr_preDes;
-    OPR_TREG opr_preDes_1;
+    OPR_TREG opr_preDes = OPR_TREG(0);
+    OPR_TREG opr_preDes_1 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_comp_0 = new SIM128_ALU$R_R$T_T$5();
     uop_uop_comp_0->addMeta(opr_r_src_0, opr_r_src_1 ,opr_preDes, opr_preDes_1);
@@ -5315,7 +5315,7 @@ void SIM128_ALU$R_R$M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_ins
     OPR_REG& opr_r_src_0 = * ((OPR_REG*)srcPool[0]);
     OPR_REG& opr_r_src_1 = * ((OPR_REG*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
-    OPR_TREG opr_preDes;
+    OPR_TREG opr_preDes = OPR_TREG(0);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_comp_0 = new SIM128_ALU$R_R$T$5();
     uop_uop_comp_0->addMeta(opr_r_src_0, opr_r_src_1 ,opr_preDes);
@@ -5351,7 +5351,7 @@ void SIM128_ALU$R_I$R_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_i
     OPR_IMM& opr_i_src_1 = * ((OPR_IMM*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
     OPR_REG& opr_r_des_1 = * ((OPR_REG*)desPool[1]);
-    OPR_TREG opr_t_1;
+    OPR_TREG opr_t_1 = OPR_TREG(0);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ldh_1 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ldh_1->addMeta(opr_i_src_1 ,opr_t_1);
@@ -5387,8 +5387,8 @@ void SIM128_ALU$R_I$R_M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_i
     OPR_IMM& opr_i_src_1 = * ((OPR_IMM*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
     OPR_MEM& opr_m_des_1 = * ((OPR_MEM*)desPool[1]);
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes_1;
+    OPR_TREG opr_t_1 = OPR_TREG(0);
+    OPR_TREG opr_preDes_1 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ldh_1 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ldh_1->addMeta(opr_i_src_1 ,opr_t_1);
@@ -5435,7 +5435,7 @@ void SIM128_ALU$R_I$R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_ins
     OPR_REG& opr_r_src_0 = * ((OPR_REG*)srcPool[0]);
     OPR_IMM& opr_i_src_1 = * ((OPR_IMM*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
-    OPR_TREG opr_t_1;
+    OPR_TREG opr_t_1 = OPR_TREG(0);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ldh_1 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ldh_1->addMeta(opr_i_src_1 ,opr_t_1);
@@ -5471,8 +5471,8 @@ void SIM128_ALU$R_I$M_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_i
     OPR_IMM& opr_i_src_1 = * ((OPR_IMM*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
     OPR_REG& opr_r_des_1 = * ((OPR_REG*)desPool[1]);
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes;
+    OPR_TREG opr_t_1 = OPR_TREG(0);
+    OPR_TREG opr_preDes = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ldh_1 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ldh_1->addMeta(opr_i_src_1 ,opr_t_1);
@@ -5520,9 +5520,9 @@ void SIM128_ALU$R_I$M_M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_i
     OPR_IMM& opr_i_src_1 = * ((OPR_IMM*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
     OPR_MEM& opr_m_des_1 = * ((OPR_MEM*)desPool[1]);
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes;
-    OPR_TREG opr_preDes_1;
+    OPR_TREG opr_t_1 = OPR_TREG(0);
+    OPR_TREG opr_preDes = OPR_TREG(1);
+    OPR_TREG opr_preDes_1 = OPR_TREG(2);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ldh_1 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ldh_1->addMeta(opr_i_src_1 ,opr_t_1);
@@ -5581,8 +5581,8 @@ void SIM128_ALU$R_I$M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_ins
     OPR_REG& opr_r_src_0 = * ((OPR_REG*)srcPool[0]);
     OPR_IMM& opr_i_src_1 = * ((OPR_IMM*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes;
+    OPR_TREG opr_t_1 = OPR_TREG(0);
+    OPR_TREG opr_preDes = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ldh_1 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ldh_1->addMeta(opr_i_src_1 ,opr_t_1);
@@ -5630,7 +5630,7 @@ void SIM128_ALU$R_M$R_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_i
     OPR_MEM& opr_m_src_1 = * ((OPR_MEM*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
     OPR_REG& opr_r_des_1 = * ((OPR_REG*)desPool[1]);
-    OPR_TREG opr_t_1;
+    OPR_TREG opr_t_1 = OPR_TREG(0);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ldh_1 = new MOV_MEM_LD$M$T$6();
     uop_uop_ldh_1->addMeta(opr_m_src_1 ,opr_t_1);
@@ -5666,8 +5666,8 @@ void SIM128_ALU$R_M$R_M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_i
     OPR_MEM& opr_m_src_1 = * ((OPR_MEM*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
     OPR_MEM& opr_m_des_1 = * ((OPR_MEM*)desPool[1]);
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes_1;
+    OPR_TREG opr_t_1 = OPR_TREG(0);
+    OPR_TREG opr_preDes_1 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ldh_1 = new MOV_MEM_LD$M$T$6();
     uop_uop_ldh_1->addMeta(opr_m_src_1 ,opr_t_1);
@@ -5714,7 +5714,7 @@ void SIM128_ALU$R_M$R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_ins
     OPR_REG& opr_r_src_0 = * ((OPR_REG*)srcPool[0]);
     OPR_MEM& opr_m_src_1 = * ((OPR_MEM*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
-    OPR_TREG opr_t_1;
+    OPR_TREG opr_t_1 = OPR_TREG(0);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ldh_1 = new MOV_MEM_LD$M$T$6();
     uop_uop_ldh_1->addMeta(opr_m_src_1 ,opr_t_1);
@@ -5750,8 +5750,8 @@ void SIM128_ALU$R_M$M_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_i
     OPR_MEM& opr_m_src_1 = * ((OPR_MEM*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
     OPR_REG& opr_r_des_1 = * ((OPR_REG*)desPool[1]);
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes;
+    OPR_TREG opr_t_1 = OPR_TREG(0);
+    OPR_TREG opr_preDes = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ldh_1 = new MOV_MEM_LD$M$T$6();
     uop_uop_ldh_1->addMeta(opr_m_src_1 ,opr_t_1);
@@ -5799,9 +5799,9 @@ void SIM128_ALU$R_M$M_M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_i
     OPR_MEM& opr_m_src_1 = * ((OPR_MEM*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
     OPR_MEM& opr_m_des_1 = * ((OPR_MEM*)desPool[1]);
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes;
-    OPR_TREG opr_preDes_1;
+    OPR_TREG opr_t_1 = OPR_TREG(0);
+    OPR_TREG opr_preDes = OPR_TREG(1);
+    OPR_TREG opr_preDes_1 = OPR_TREG(2);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ldh_1 = new MOV_MEM_LD$M$T$6();
     uop_uop_ldh_1->addMeta(opr_m_src_1 ,opr_t_1);
@@ -5860,8 +5860,8 @@ void SIM128_ALU$R_M$M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_ins
     OPR_REG& opr_r_src_0 = * ((OPR_REG*)srcPool[0]);
     OPR_MEM& opr_m_src_1 = * ((OPR_MEM*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes;
+    OPR_TREG opr_t_1 = OPR_TREG(0);
+    OPR_TREG opr_preDes = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ldh_1 = new MOV_MEM_LD$M$T$6();
     uop_uop_ldh_1->addMeta(opr_m_src_1 ,opr_t_1);
@@ -5909,7 +5909,7 @@ void SIM128_ALU$I_R$R_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_i
     OPR_REG& opr_r_src_1 = * ((OPR_REG*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
     OPR_REG& opr_r_des_1 = * ((OPR_REG*)desPool[1]);
-    OPR_TREG opr_t_0;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ldh_0 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ldh_0->addMeta(opr_i_src_0 ,opr_t_0);
@@ -5945,8 +5945,8 @@ void SIM128_ALU$I_R$R_M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_i
     OPR_REG& opr_r_src_1 = * ((OPR_REG*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
     OPR_MEM& opr_m_des_1 = * ((OPR_MEM*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_preDes_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_preDes_1 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ldh_0 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ldh_0->addMeta(opr_i_src_0 ,opr_t_0);
@@ -5993,7 +5993,7 @@ void SIM128_ALU$I_R$R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_ins
     OPR_IMM& opr_i_src_0 = * ((OPR_IMM*)srcPool[0]);
     OPR_REG& opr_r_src_1 = * ((OPR_REG*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
-    OPR_TREG opr_t_0;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ldh_0 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ldh_0->addMeta(opr_i_src_0 ,opr_t_0);
@@ -6029,8 +6029,8 @@ void SIM128_ALU$I_R$M_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_i
     OPR_REG& opr_r_src_1 = * ((OPR_REG*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
     OPR_REG& opr_r_des_1 = * ((OPR_REG*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_preDes;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_preDes = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ldh_0 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ldh_0->addMeta(opr_i_src_0 ,opr_t_0);
@@ -6078,9 +6078,9 @@ void SIM128_ALU$I_R$M_M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_i
     OPR_REG& opr_r_src_1 = * ((OPR_REG*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
     OPR_MEM& opr_m_des_1 = * ((OPR_MEM*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_preDes;
-    OPR_TREG opr_preDes_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_preDes = OPR_TREG(1);
+    OPR_TREG opr_preDes_1 = OPR_TREG(2);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ldh_0 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ldh_0->addMeta(opr_i_src_0 ,opr_t_0);
@@ -6139,8 +6139,8 @@ void SIM128_ALU$I_R$M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_ins
     OPR_IMM& opr_i_src_0 = * ((OPR_IMM*)srcPool[0]);
     OPR_REG& opr_r_src_1 = * ((OPR_REG*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_preDes;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_preDes = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ldh_0 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ldh_0->addMeta(opr_i_src_0 ,opr_t_0);
@@ -6188,8 +6188,8 @@ void SIM128_ALU$I_I$R_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_i
     OPR_IMM& opr_i_src_1 = * ((OPR_IMM*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
     OPR_REG& opr_r_des_1 = * ((OPR_REG*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ldh_0 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ldh_0->addMeta(opr_i_src_0 ,opr_t_0);
@@ -6237,9 +6237,9 @@ void SIM128_ALU$I_I$R_M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_i
     OPR_IMM& opr_i_src_1 = * ((OPR_IMM*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
     OPR_MEM& opr_m_des_1 = * ((OPR_MEM*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
+    OPR_TREG opr_preDes_1 = OPR_TREG(2);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ldh_0 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ldh_0->addMeta(opr_i_src_0 ,opr_t_0);
@@ -6298,8 +6298,8 @@ void SIM128_ALU$I_I$R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_ins
     OPR_IMM& opr_i_src_0 = * ((OPR_IMM*)srcPool[0]);
     OPR_IMM& opr_i_src_1 = * ((OPR_IMM*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ldh_0 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ldh_0->addMeta(opr_i_src_0 ,opr_t_0);
@@ -6347,9 +6347,9 @@ void SIM128_ALU$I_I$M_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_i
     OPR_IMM& opr_i_src_1 = * ((OPR_IMM*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
     OPR_REG& opr_r_des_1 = * ((OPR_REG*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
+    OPR_TREG opr_preDes = OPR_TREG(2);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ldh_0 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ldh_0->addMeta(opr_i_src_0 ,opr_t_0);
@@ -6409,10 +6409,10 @@ void SIM128_ALU$I_I$M_M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_i
     OPR_IMM& opr_i_src_1 = * ((OPR_IMM*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
     OPR_MEM& opr_m_des_1 = * ((OPR_MEM*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes;
-    OPR_TREG opr_preDes_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
+    OPR_TREG opr_preDes = OPR_TREG(2);
+    OPR_TREG opr_preDes_1 = OPR_TREG(3);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ldh_0 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ldh_0->addMeta(opr_i_src_0 ,opr_t_0);
@@ -6483,9 +6483,9 @@ void SIM128_ALU$I_I$M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_ins
     OPR_IMM& opr_i_src_0 = * ((OPR_IMM*)srcPool[0]);
     OPR_IMM& opr_i_src_1 = * ((OPR_IMM*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
+    OPR_TREG opr_preDes = OPR_TREG(2);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ldh_0 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ldh_0->addMeta(opr_i_src_0 ,opr_t_0);
@@ -6545,8 +6545,8 @@ void SIM128_ALU$I_M$R_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_i
     OPR_MEM& opr_m_src_1 = * ((OPR_MEM*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
     OPR_REG& opr_r_des_1 = * ((OPR_REG*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ldh_0 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ldh_0->addMeta(opr_i_src_0 ,opr_t_0);
@@ -6594,9 +6594,9 @@ void SIM128_ALU$I_M$R_M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_i
     OPR_MEM& opr_m_src_1 = * ((OPR_MEM*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
     OPR_MEM& opr_m_des_1 = * ((OPR_MEM*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
+    OPR_TREG opr_preDes_1 = OPR_TREG(2);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ldh_0 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ldh_0->addMeta(opr_i_src_0 ,opr_t_0);
@@ -6655,8 +6655,8 @@ void SIM128_ALU$I_M$R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_ins
     OPR_IMM& opr_i_src_0 = * ((OPR_IMM*)srcPool[0]);
     OPR_MEM& opr_m_src_1 = * ((OPR_MEM*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ldh_0 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ldh_0->addMeta(opr_i_src_0 ,opr_t_0);
@@ -6704,9 +6704,9 @@ void SIM128_ALU$I_M$M_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_i
     OPR_MEM& opr_m_src_1 = * ((OPR_MEM*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
     OPR_REG& opr_r_des_1 = * ((OPR_REG*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
+    OPR_TREG opr_preDes = OPR_TREG(2);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ldh_0 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ldh_0->addMeta(opr_i_src_0 ,opr_t_0);
@@ -6766,10 +6766,10 @@ void SIM128_ALU$I_M$M_M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_i
     OPR_MEM& opr_m_src_1 = * ((OPR_MEM*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
     OPR_MEM& opr_m_des_1 = * ((OPR_MEM*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes;
-    OPR_TREG opr_preDes_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
+    OPR_TREG opr_preDes = OPR_TREG(2);
+    OPR_TREG opr_preDes_1 = OPR_TREG(3);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ldh_0 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ldh_0->addMeta(opr_i_src_0 ,opr_t_0);
@@ -6840,9 +6840,9 @@ void SIM128_ALU$I_M$M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_ins
     OPR_IMM& opr_i_src_0 = * ((OPR_IMM*)srcPool[0]);
     OPR_MEM& opr_m_src_1 = * ((OPR_MEM*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
+    OPR_TREG opr_preDes = OPR_TREG(2);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ldh_0 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ldh_0->addMeta(opr_i_src_0 ,opr_t_0);
@@ -6902,7 +6902,7 @@ void SIM128_ALU$M_R$R_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_i
     OPR_REG& opr_r_src_1 = * ((OPR_REG*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
     OPR_REG& opr_r_des_1 = * ((OPR_REG*)desPool[1]);
-    OPR_TREG opr_t_0;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ldh_0 = new MOV_MEM_LD$M$T$6();
     uop_uop_ldh_0->addMeta(opr_m_src_0 ,opr_t_0);
@@ -6938,8 +6938,8 @@ void SIM128_ALU$M_R$R_M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_i
     OPR_REG& opr_r_src_1 = * ((OPR_REG*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
     OPR_MEM& opr_m_des_1 = * ((OPR_MEM*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_preDes_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_preDes_1 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ldh_0 = new MOV_MEM_LD$M$T$6();
     uop_uop_ldh_0->addMeta(opr_m_src_0 ,opr_t_0);
@@ -6986,7 +6986,7 @@ void SIM128_ALU$M_R$R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_ins
     OPR_MEM& opr_m_src_0 = * ((OPR_MEM*)srcPool[0]);
     OPR_REG& opr_r_src_1 = * ((OPR_REG*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
-    OPR_TREG opr_t_0;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ldh_0 = new MOV_MEM_LD$M$T$6();
     uop_uop_ldh_0->addMeta(opr_m_src_0 ,opr_t_0);
@@ -7022,8 +7022,8 @@ void SIM128_ALU$M_R$M_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_i
     OPR_REG& opr_r_src_1 = * ((OPR_REG*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
     OPR_REG& opr_r_des_1 = * ((OPR_REG*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_preDes;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_preDes = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ldh_0 = new MOV_MEM_LD$M$T$6();
     uop_uop_ldh_0->addMeta(opr_m_src_0 ,opr_t_0);
@@ -7071,9 +7071,9 @@ void SIM128_ALU$M_R$M_M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_i
     OPR_REG& opr_r_src_1 = * ((OPR_REG*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
     OPR_MEM& opr_m_des_1 = * ((OPR_MEM*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_preDes;
-    OPR_TREG opr_preDes_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_preDes = OPR_TREG(1);
+    OPR_TREG opr_preDes_1 = OPR_TREG(2);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ldh_0 = new MOV_MEM_LD$M$T$6();
     uop_uop_ldh_0->addMeta(opr_m_src_0 ,opr_t_0);
@@ -7132,8 +7132,8 @@ void SIM128_ALU$M_R$M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_ins
     OPR_MEM& opr_m_src_0 = * ((OPR_MEM*)srcPool[0]);
     OPR_REG& opr_r_src_1 = * ((OPR_REG*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_preDes;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_preDes = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ldh_0 = new MOV_MEM_LD$M$T$6();
     uop_uop_ldh_0->addMeta(opr_m_src_0 ,opr_t_0);
@@ -7181,8 +7181,8 @@ void SIM128_ALU$M_I$R_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_i
     OPR_IMM& opr_i_src_1 = * ((OPR_IMM*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
     OPR_REG& opr_r_des_1 = * ((OPR_REG*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ldh_0 = new MOV_MEM_LD$M$T$6();
     uop_uop_ldh_0->addMeta(opr_m_src_0 ,opr_t_0);
@@ -7230,9 +7230,9 @@ void SIM128_ALU$M_I$R_M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_i
     OPR_IMM& opr_i_src_1 = * ((OPR_IMM*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
     OPR_MEM& opr_m_des_1 = * ((OPR_MEM*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
+    OPR_TREG opr_preDes_1 = OPR_TREG(2);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ldh_0 = new MOV_MEM_LD$M$T$6();
     uop_uop_ldh_0->addMeta(opr_m_src_0 ,opr_t_0);
@@ -7291,8 +7291,8 @@ void SIM128_ALU$M_I$R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_ins
     OPR_MEM& opr_m_src_0 = * ((OPR_MEM*)srcPool[0]);
     OPR_IMM& opr_i_src_1 = * ((OPR_IMM*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ldh_0 = new MOV_MEM_LD$M$T$6();
     uop_uop_ldh_0->addMeta(opr_m_src_0 ,opr_t_0);
@@ -7340,9 +7340,9 @@ void SIM128_ALU$M_I$M_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_i
     OPR_IMM& opr_i_src_1 = * ((OPR_IMM*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
     OPR_REG& opr_r_des_1 = * ((OPR_REG*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
+    OPR_TREG opr_preDes = OPR_TREG(2);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ldh_0 = new MOV_MEM_LD$M$T$6();
     uop_uop_ldh_0->addMeta(opr_m_src_0 ,opr_t_0);
@@ -7402,10 +7402,10 @@ void SIM128_ALU$M_I$M_M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_i
     OPR_IMM& opr_i_src_1 = * ((OPR_IMM*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
     OPR_MEM& opr_m_des_1 = * ((OPR_MEM*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes;
-    OPR_TREG opr_preDes_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
+    OPR_TREG opr_preDes = OPR_TREG(2);
+    OPR_TREG opr_preDes_1 = OPR_TREG(3);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ldh_0 = new MOV_MEM_LD$M$T$6();
     uop_uop_ldh_0->addMeta(opr_m_src_0 ,opr_t_0);
@@ -7476,9 +7476,9 @@ void SIM128_ALU$M_I$M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_ins
     OPR_MEM& opr_m_src_0 = * ((OPR_MEM*)srcPool[0]);
     OPR_IMM& opr_i_src_1 = * ((OPR_IMM*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
+    OPR_TREG opr_preDes = OPR_TREG(2);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ldh_0 = new MOV_MEM_LD$M$T$6();
     uop_uop_ldh_0->addMeta(opr_m_src_0 ,opr_t_0);
@@ -7538,8 +7538,8 @@ void SIM128_ALU$M_M$R_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_i
     OPR_MEM& opr_m_src_1 = * ((OPR_MEM*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
     OPR_REG& opr_r_des_1 = * ((OPR_REG*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ldh_0 = new MOV_MEM_LD$M$T$6();
     uop_uop_ldh_0->addMeta(opr_m_src_0 ,opr_t_0);
@@ -7587,9 +7587,9 @@ void SIM128_ALU$M_M$R_M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_i
     OPR_MEM& opr_m_src_1 = * ((OPR_MEM*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
     OPR_MEM& opr_m_des_1 = * ((OPR_MEM*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
+    OPR_TREG opr_preDes_1 = OPR_TREG(2);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ldh_0 = new MOV_MEM_LD$M$T$6();
     uop_uop_ldh_0->addMeta(opr_m_src_0 ,opr_t_0);
@@ -7648,8 +7648,8 @@ void SIM128_ALU$M_M$R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_ins
     OPR_MEM& opr_m_src_0 = * ((OPR_MEM*)srcPool[0]);
     OPR_MEM& opr_m_src_1 = * ((OPR_MEM*)srcPool[1]);
     OPR_REG& opr_r_des_0 = * ((OPR_REG*)desPool[0]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ldh_0 = new MOV_MEM_LD$M$T$6();
     uop_uop_ldh_0->addMeta(opr_m_src_0 ,opr_t_0);
@@ -7697,9 +7697,9 @@ void SIM128_ALU$M_M$M_R::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_i
     OPR_MEM& opr_m_src_1 = * ((OPR_MEM*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
     OPR_REG& opr_r_des_1 = * ((OPR_REG*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
+    OPR_TREG opr_preDes = OPR_TREG(2);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ldh_0 = new MOV_MEM_LD$M$T$6();
     uop_uop_ldh_0->addMeta(opr_m_src_0 ,opr_t_0);
@@ -7759,10 +7759,10 @@ void SIM128_ALU$M_M$M_M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_i
     OPR_MEM& opr_m_src_1 = * ((OPR_MEM*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
     OPR_MEM& opr_m_des_1 = * ((OPR_MEM*)desPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes;
-    OPR_TREG opr_preDes_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
+    OPR_TREG opr_preDes = OPR_TREG(2);
+    OPR_TREG opr_preDes_1 = OPR_TREG(3);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ldh_0 = new MOV_MEM_LD$M$T$6();
     uop_uop_ldh_0->addMeta(opr_m_src_0 ,opr_t_0);
@@ -7833,9 +7833,9 @@ void SIM128_ALU$M_M$M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_ins
     OPR_MEM& opr_m_src_0 = * ((OPR_MEM*)srcPool[0]);
     OPR_MEM& opr_m_src_1 = * ((OPR_MEM*)srcPool[1]);
     OPR_MEM& opr_m_des_0 = * ((OPR_MEM*)desPool[0]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
-    OPR_TREG opr_preDes;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
+    OPR_TREG opr_preDes = OPR_TREG(2);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ldh_0 = new MOV_MEM_LD$M$T$6();
     uop_uop_ldh_0->addMeta(opr_m_src_0 ,opr_t_0);
@@ -7944,7 +7944,7 @@ void SIM_MOV$I$M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr){
     auto desPool = _rt_instr->getDesMacroPoolOperands();
     OPR_IMM& opr_i_src_0 = * ((OPR_IMM*)srcPool[0]);
     OPR_MEM& opr_x_des_0 = * ((OPR_MEM*)desPool[0]);
-    OPR_TREG opr_t_0;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ld_0->addMeta(opr_i_src_0 ,opr_t_0);
@@ -7984,7 +7984,7 @@ void SIM_MOV$M$M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr){
     auto desPool = _rt_instr->getDesMacroPoolOperands();
     OPR_MEM& opr_m_src_0 = * ((OPR_MEM*)srcPool[0]);
     OPR_MEM& opr_x_des_0 = * ((OPR_MEM*)desPool[0]);
-    OPR_TREG opr_t_0;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LD$M$T$6();
     uop_uop_ld_0->addMeta(opr_m_src_0 ,opr_t_0);
@@ -8062,7 +8062,7 @@ void SIM_MOV128$I$M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr
     auto desPool = _rt_instr->getDesMacroPoolOperands();
     OPR_IMM& opr_i_src_0 = * ((OPR_IMM*)srcPool[0]);
     OPR_MEM& opr_x_des_0 = * ((OPR_MEM*)desPool[0]);
-    OPR_TREG opr_t_0;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ldh_0 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ldh_0->addMeta(opr_i_src_0 ,opr_t_0);
@@ -8113,7 +8113,7 @@ void SIM_MOV128$M$M::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr
     auto desPool = _rt_instr->getDesMacroPoolOperands();
     OPR_MEM& opr_m_src_0 = * ((OPR_MEM*)srcPool[0]);
     OPR_MEM& opr_x_des_0 = * ((OPR_MEM*)desPool[0]);
-    OPR_TREG opr_t_0;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ldh_0 = new MOV_MEM_LD$M$T$6();
     uop_uop_ldh_0->addMeta(opr_m_src_0 ,opr_t_0);
@@ -8164,7 +8164,7 @@ void CMP_SIM_ALU$R_I$::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_ins
     auto desPool = _rt_instr->getDesMacroPoolOperands();
     OPR_REG& opr_r_src_0 = * ((OPR_REG*)srcPool[0]);
     OPR_IMM& opr_i_src_1 = * ((OPR_IMM*)srcPool[1]);
-    OPR_TREG opr_t_1;
+    OPR_TREG opr_t_1 = OPR_TREG(0);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_1 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ld_1->addMeta(opr_i_src_1 ,opr_t_1);
@@ -8187,7 +8187,7 @@ void CMP_SIM_ALU$R_M$::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_ins
     auto desPool = _rt_instr->getDesMacroPoolOperands();
     OPR_REG& opr_r_src_0 = * ((OPR_REG*)srcPool[0]);
     OPR_MEM& opr_m_src_1 = * ((OPR_MEM*)srcPool[1]);
-    OPR_TREG opr_t_1;
+    OPR_TREG opr_t_1 = OPR_TREG(0);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_1 = new MOV_MEM_LD$M$T$6();
     uop_uop_ld_1->addMeta(opr_m_src_1 ,opr_t_1);
@@ -8210,7 +8210,7 @@ void CMP_SIM_ALU$I_R$::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_ins
     auto desPool = _rt_instr->getDesMacroPoolOperands();
     OPR_IMM& opr_i_src_0 = * ((OPR_IMM*)srcPool[0]);
     OPR_REG& opr_r_src_1 = * ((OPR_REG*)srcPool[1]);
-    OPR_TREG opr_t_0;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ld_0->addMeta(opr_i_src_0 ,opr_t_0);
@@ -8233,8 +8233,8 @@ void CMP_SIM_ALU$I_I$::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_ins
     auto desPool = _rt_instr->getDesMacroPoolOperands();
     OPR_IMM& opr_i_src_0 = * ((OPR_IMM*)srcPool[0]);
     OPR_IMM& opr_i_src_1 = * ((OPR_IMM*)srcPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ld_0->addMeta(opr_i_src_0 ,opr_t_0);
@@ -8262,8 +8262,8 @@ void CMP_SIM_ALU$I_M$::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_ins
     auto desPool = _rt_instr->getDesMacroPoolOperands();
     OPR_IMM& opr_i_src_0 = * ((OPR_IMM*)srcPool[0]);
     OPR_MEM& opr_m_src_1 = * ((OPR_MEM*)srcPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LDI$I$T$1();
     uop_uop_ld_0->addMeta(opr_i_src_0 ,opr_t_0);
@@ -8291,7 +8291,7 @@ void CMP_SIM_ALU$M_R$::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_ins
     auto desPool = _rt_instr->getDesMacroPoolOperands();
     OPR_MEM& opr_m_src_0 = * ((OPR_MEM*)srcPool[0]);
     OPR_REG& opr_r_src_1 = * ((OPR_REG*)srcPool[1]);
-    OPR_TREG opr_t_0;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LD$M$T$6();
     uop_uop_ld_0->addMeta(opr_m_src_0 ,opr_t_0);
@@ -8314,8 +8314,8 @@ void CMP_SIM_ALU$M_I$::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_ins
     auto desPool = _rt_instr->getDesMacroPoolOperands();
     OPR_MEM& opr_m_src_0 = * ((OPR_MEM*)srcPool[0]);
     OPR_IMM& opr_i_src_1 = * ((OPR_IMM*)srcPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LD$M$T$6();
     uop_uop_ld_0->addMeta(opr_m_src_0 ,opr_t_0);
@@ -8343,8 +8343,8 @@ void CMP_SIM_ALU$M_M$::genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_ins
     auto desPool = _rt_instr->getDesMacroPoolOperands();
     OPR_MEM& opr_m_src_0 = * ((OPR_MEM*)srcPool[0]);
     OPR_MEM& opr_m_src_1 = * ((OPR_MEM*)srcPool[1]);
-    OPR_TREG opr_t_0;
-    OPR_TREG opr_t_1;
+    OPR_TREG opr_t_0 = OPR_TREG(0);
+    OPR_TREG opr_t_1 = OPR_TREG(1);
 ///////////////////////////////////////////////////////////////////
     auto uop_uop_ld_0 = new MOV_MEM_LD$M$T$6();
     uop_uop_ld_0->addMeta(opr_m_src_0 ,opr_t_0);

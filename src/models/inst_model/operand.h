@@ -17,6 +17,7 @@ namespace traceBuilder::model {
 
     enum OPR_TYPE {
         O_REG,
+        O_TEMP,
         O_MEM_LD,
         O_MEM_ST,
         O_IMM,
@@ -42,6 +43,8 @@ namespace traceBuilder::model {
         REGNUM regId;
     public:
         OPR_TREG();
+
+        OPR_TREG(int regId);
 
         REGNUM getRegId() const;
 

@@ -34,6 +34,10 @@ class OPR_BASE :
             raise OperandUsageError("can not using this operand")
         return f"{self.cxxType} {self.namePrefix}_{self.name}"
 
+    ##### generate c++ class constructor for operand
+    def genCXX_typeInitializer(self, **kwargs) -> str:
+            raise OperandUsageError("can not initialize variable in this case")
+
     def genCXX_varCall(self) -> str:   ###### also var name
         if len(self.name) == 0:
             raise OperandUsageError("can not call this operand due to unnamed")
