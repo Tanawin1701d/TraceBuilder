@@ -1,0 +1,36 @@
+syntax = "proto2";
+
+
+package ProtoMessage;
+
+message headerRecord {
+  required string obj_id = 1;
+  optional uint32 ver = 2 [default = 0];
+}
+
+message machRecord{
+    enum RecordType{
+      INVALID = 0;
+      LOAD    = 1;
+      STORE   = 2;
+      COMP    = 3;
+    }
+    //// sequence number among the program
+    required uint64 seq_num = 1;
+    required uint64 v_instrAddr = 2; //// virtual instruction address
+    required uint64 v_effAddr = 3; //// virtual effective address only affect when
+                                    //// record type is load or store
+    required uint32 funcUnit = 4;  //// fucntional unit
+    repeated uint32 archRegId = 5; //// array of architectural register id
+    repeated uint32 tempRegId = 6; //// array of temporal register id
+    required RecordType recType = 7 [default =  INVALID]; //// recorrd type
+
+}
+
+
+message InstrRecord{
+  required uint64 instr_num = 1;
+  required uint64 fetch_num = 2;
+  repeated machRecord uops= 3;
+  required uint64 v_instrAddr = 4; //// virtual instruction address
+}

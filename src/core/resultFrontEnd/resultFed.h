@@ -26,14 +26,12 @@ namespace traceBuilder::core {
         ////////// please remind that this UOP_BASE pointer will be deleted later
         ///////////////// (when uop window discard it, uop will be deleted)
         virtual void onGetUopsResult(std::vector<UOP_BASE *> &results,
-                                     RT_INSTR *rt_instr
-        ) {assert(false);};
+                                     RT_INSTR *rt_instr) {assert(false);};
 
     public:
         virtual void setRes(CORE* _core,
                             SHARED_TRACEINFO* _sharedInfo,
-                            SPECIFIC_TRACEINFO* _specificInfo);
-
+                            SPECIFIC_TRACEINFO* _specificInfo) {assert(false);};
 
     };
 
