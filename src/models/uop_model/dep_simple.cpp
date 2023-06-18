@@ -32,16 +32,24 @@ namespace traceBuilder::model {
     bool MEM_DEP::isdependOnMem(const ADAS adas, bool isLoad) {
 
         //// if statement is load after load excluding
-        if ((!isLoad) && scanOverlap(adas, loadAdas))
+        if ((!isLoad) && scanOverlap(adas, _phyLoadAdas))
             return true;
 
-        return scanOverlap(adas, storeAdas);
+        return scanOverlap(adas, _phyStoreAdas);
 
     }
 
-    void MEM_DEP::addMemMeta(ADAS adas, bool isLoad) {
-        std::vector<ADAS> *targetVec = isLoad ? &loadAdas : &storeAdas;
-        targetVec->push_back(adas);
+    void MEM_DEP::addMemMeta_phyArea(ADAS phyAdas, bool isLoad) {
+        std::vector<ADAS>* targetVec = isLoad ? &_phyLoadAdas : &_phyStoreAdas;
+        targetVec->push_back(phyAdas);
+    }
+
+    void MEM_DEP::addMemMeta_virArea(traceBuilder::model::ADAS virAdas, bool isLoad){
+        std::vector<ADAS>* targetVec = isLoad ? &_virLoadAdas : &_virStoreAdas;
+    }
+
+    void MEM_DEP::addMemMeta_Static(traceBuilder::model::MEM_OPR_META meta) {
+        _meta = meta;
     }
 ////////////////////////////////////
 ////// temporary register dependency

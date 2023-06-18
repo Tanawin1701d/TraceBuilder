@@ -110,14 +110,27 @@ class UOP_BASE:
                                             )
         ######## for reg or mem operand lets it call operand and add it to dep group
         for opr in self.io_input.getOprsWoDummy():
-            callAddMetaStr = opr.genCXX_callAddMetaWithDirec(True) if type(opr) == oprSm.OPR_TEMP else \
-                             opr.genCXX_callAddMeta()
-            cppFile  = cppFile + "       " + callAddMetaStr + ";\n"
+            callAddMetaStr = str()
+            if type(opr) == oprSm.OPR_MEM:
+                cppFile = cppFile  + "          " + opr.genCXX_callAddMeta_phyArea() + ";\n"
+                cppFile = cppFile  + "          " + opr.genCXX_callAddMeta_virArea() + ";\n"
+                cppFile = cppFile  + "          " + opr.genCXX_callAddMeta_Static()  + ";\n"
+            elif type(opr) == oprSm.OPR_TEMP:
+                cppFile = cppFile + "          " + opr.genCXX_callAddMetaWithDirec(True) + ";\n"
+            else:
+                cppFile = cppFile + "          " + opr.genCXX_callAddMeta() + ";\n"
 
         for opr in self.io_output.getOprsWoDummy():
-            callAddMetaStr = opr.genCXX_callAddMetaWithDirec(False) if type(opr) == oprSm.OPR_TEMP else \
-                             opr.genCXX_callAddMeta()
-            cppFile = cppFile + "       " + callAddMetaStr + ";\n"
+            callAddMetaStr = str()
+            if type(opr) == oprSm.OPR_MEM:
+                ##### please note that phyArea must be call before virtual because virArea will increase the eff address
+                cppFile = cppFile  + "          " + opr.genCXX_callAddMeta_phyArea() + ";\n"
+                cppFile = cppFile  + "          " + opr.genCXX_callAddMeta_virArea() + ";\n"
+                cppFile = cppFile  + "          " + opr.genCXX_callAddMeta_Static() + ";\n"
+            elif type(opr) == oprSm.OPR_TEMP:
+                cppFile = cppFile + "          " + opr.genCXX_callAddMetaWithDirec(False) + ";\n"
+            else:
+                cppFile = cppFile + "          " + opr.genCXX_callAddMeta() + ";\n"
 
         if self.execUnit < -1 :
             raise(UopUsageError(f"uop cpp generating fail! due to invalid exec_unit or forget to assign exec unit : {str(self.execUnit)}"))

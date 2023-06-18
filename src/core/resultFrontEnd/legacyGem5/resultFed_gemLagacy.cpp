@@ -125,7 +125,7 @@ namespace traceBuilder::core {
                 ///////////// for load instruction
             else if (uop->getUopType() == UOP_LOAD) {
                 dep_pkt.set_type(ProtoMessage::InstDepRecord_RecordType_LOAD);
-                auto &allLdAdas = uop->getAll_LD_ADAS();
+                auto &allLdAdas = uop->get_load_phyAdas();
                 if (!allLdAdas.empty()) {
                     dep_pkt.set_p_addr(allLdAdas[0].addr);
                     dep_pkt.set_size(allLdAdas[0].size);
@@ -133,7 +133,7 @@ namespace traceBuilder::core {
                 ///////////// for store instruction
             } else if (uop->getUopType() == UOP_STORE) {
                 dep_pkt.set_type(ProtoMessage::InstDepRecord_RecordType_STORE);
-                auto &allStAdas = uop->getAll_ST_ADAS();
+                auto &allStAdas = uop->get_store_phyAdas();
                 if (!allStAdas.empty()) {
                     dep_pkt.set_p_addr(allStAdas[0].addr);
                     dep_pkt.set_size(allStAdas[0].size);

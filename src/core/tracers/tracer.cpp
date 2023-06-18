@@ -114,7 +114,7 @@ namespace traceBuilder::core {
         CVT_RT_OBJ cvt_trace_data{};
         cvt_rtobj_tracable(dyndata.rawData, *rt_instr, cvt_trace_data);
         ////// fill data to rt_instr
-        rt_instr->fillDynData(cvt_trace_data); ///// please remind that in the future we need to clear the filled data
+        rt_instr->fillDynData(dyndata.rawData, cvt_trace_data); ///// please remind that in the future we need to clear the filled data
         /////// generate micro-op
         inflight_uops.clear();
         rt_instr->genUOPS(inflight_uops);

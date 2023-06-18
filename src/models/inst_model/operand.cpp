@@ -47,121 +47,62 @@ namespace traceBuilder::model {
 ///////////////////////////////////////////////////////////
 /// memory operand
     OPR_MEM::OPR_MEM(
-            REGNUM _baseRegId,
-            REGNUM _indexRegId,
-            int _scaleFactor,
-            IMM _displacement,
-            ADDR _size,
-            int _memopNum,
+            MEM_OPR_META memMeta,
             OPR_TYPE _setOpr,
             size_t _mcArgSIdx
     ) :
-            baseRegId(_baseRegId),
-            indexRegId(_indexRegId),
-            scaleFactor(_scaleFactor),
-            displacement(_displacement),
-            size(_size),
-            memopNum(_memopNum),
-            current_ruop_count(0),
-            OPERAND(_setOpr, _mcArgSIdx) {
+    _meta(memMeta),
+    current_ruop_count(0),
+    OPERAND(_setOpr, _mcArgSIdx) {
         assert(MAX_BYTE_PER_MICROOP > 0);
         ///// caculate expect uop that should handle this instr
-        expect_ruop_count = (int) ((_size + MAX_BYTE_PER_MICROOP - 1) / MAX_BYTE_PER_MICROOP);
-
+        expect_ruop_count = (int) ((_meta.size + MAX_BYTE_PER_MICROOP - 1) / MAX_BYTE_PER_MICROOP);
     }
 
-    REGNUM
-    OPR_MEM::getBaseRegId() const {
-        return baseRegId;
+    void
+    OPR_MEM::setVirAddr(ADDR virAddr){
+        _virAddr = virAddr;
+        _nextVirAddr = virAddr;
     }
 
-    REGNUM
-    OPR_MEM::getIndexRegId() const {
-        return indexRegId;
-    }
-
-    int
-    OPR_MEM::getScaleFactor() const {
-        return scaleFactor;
-    }
-
-    IMM
-    OPR_MEM::getDisplacement() const {
-        return displacement;
-    }
-
-    ADDR
-    OPR_MEM::getSize() const {
-        return size;
-    }
-
-    void OPR_MEM::setPhyAddr(ADDR _phyAddr) {
-        OPR_MEM::phyAddr = _phyAddr;
-        OPR_MEM::nextPhyAddr = _phyAddr;
-    }
-
-    int OPR_MEM::getMemopNum() const {
-        return memopNum;
-    }
-
-    ADDR OPR_MEM::getPhyAddr() const {
-        return phyAddr;
+    void
+    OPR_MEM::setPhyAddr(ADDR phyAddr) {
+        OPR_MEM::_phyAddr = phyAddr;
     }
 
     ADAS
-    OPR_MEM::getMeta() {
-        if (nextPhyAddr >= (phyAddr + size)) {
+    OPR_MEM::getMeta_phyArea(){
+        ADDR diffVirAddr = _nextVirAddr - _virAddr;
+        return { _phyAddr + diffVirAddr, getCurUopSize()};
+    }
+    //// TODO we might have explicit to iterate rather than auto increment from virArea
+    ADAS
+    OPR_MEM::getMeta_virArea(){
+        if (_nextVirAddr >= getEndVirAddr())
             return {0, MAX_BYTE_PER_MICROOP};
-        }
-        ADDR nextSize = std::min((ADDR) MAX_BYTE_PER_MICROOP, (phyAddr + size) - nextPhyAddr);
-        ADAS preRet = {nextPhyAddr, nextSize};
-        nextPhyAddr += nextSize;
-        return preRet;
+        ADDR nowSize = getCurUopSize();
+        ADAS preret = {_nextVirAddr, nowSize};
+        _nextVirAddr = _nextVirAddr + nowSize;
+        return preret;
     }
 
     void
     OPR_MEM::resetSharedOperandTracker() {
         current_ruop_count = 0;
-        nextPhyAddr = phyAddr;
+        _nextVirAddr = _virAddr;
     }
 
 ///////////////////////////////////////////////////////////
 /// load operand
 
-    OPR_MEM_LD::OPR_MEM_LD(
-            REGNUM _baseRegId,
-            REGNUM _indexRegId,
-            int _scaleFactor,
-            IMM _displacement,
-            ADDR _size,
-            int _memopNum,
-            size_t _mcArgSIdx
-    ) :
-            OPR_MEM(_baseRegId,
-                    _indexRegId,
-                    _scaleFactor,
-                    _displacement,
-                    _size,
-                    _memopNum,
-                    O_MEM_LD,
-                    _mcArgSIdx) {}
+    OPR_MEM_LD::OPR_MEM_LD(MEM_OPR_META memMeta,size_t _mcArgSIdx)
+    : OPR_MEM(memMeta,O_MEM_LD,_mcArgSIdx) {}
 ///////////////////////////////////////////////////////////
 /// store operand
 
-    OPR_MEM_ST::OPR_MEM_ST(REGNUM _baseRegId,
-                           REGNUM _indexRegId,
-                           int _scaleFactor,
-                           IMM _displacement,
-                           ADDR _size,
-                           int _memopNum,
-                           size_t _mcArgSIdx
+    OPR_MEM_ST::OPR_MEM_ST(MEM_OPR_META memMeta,size_t _mcArgSIdx
     ) :
-            OPR_MEM(_baseRegId,
-                    _indexRegId,
-                    _scaleFactor,
-                    _displacement,
-                    _size,
-                    _memopNum,
+            OPR_MEM(memMeta,
                     O_MEM_ST,
                     _mcArgSIdx) {}
 ///////////////////////////////////////////////////////////

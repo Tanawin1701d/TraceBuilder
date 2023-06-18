@@ -87,19 +87,23 @@ namespace traceBuilder::model {
 
 
     void
-    RT_INSTR::fillDynData(CVT_RT_OBJ &cvtDynData) {
+    RT_INSTR::fillDynData(RT_OBJ& rawDynData, CVT_RT_OBJ& cvtDynData) {
         ////////// fill physical address of each load operand
+        assert(cvtDynData.amt_load == rawDynData.amt_load);
         for (int ldIdx = 0; ldIdx < cvtDynData.amt_load; ldIdx++) {
             ////// for backward compatability
             /////// we assume that memop may be reordered arbitrary.
             srcLdOperands[ldIdx].setPhyAddr(cvtDynData.phyLoadAddr[ldIdx]);
+            srcLdOperands[ldIdx].setVirAddr(rawDynData.loadAddr[ldIdx]);////// <--- for virtual address
         }
         //////////////////////////////////////////////////////
         ////////// fill physical address of each store operand
+        assert(cvtDynData.amt_store == rawDynData.amt_store);
         for (int stIdx = 0; stIdx < cvtDynData.amt_store; stIdx++) {
             ////// for backward compatability
             /////// we assume that memop may be reordered arbitrary.
             desStOperands[stIdx].setPhyAddr(cvtDynData.phyStoreAddr[stIdx]);
+            desStOperands[stIdx].setVirAddr(rawDynData.storeAddr[stIdx]);/////// <--- for virtual address
         }
     }
 
@@ -160,18 +164,26 @@ namespace traceBuilder::model {
         /// TODO scale is hard wired to 4 byte
         int scale = 4;
         /// TODO displacement is hard wired to 0
-        int displacement = 0;
-        int size = stoi(tokens[ST_IDX_LOAD_SZ]);
+        ADDR displacement = 0;
+        ADDR opr_eff_size = stoi(tokens[ST_IDX_LOAD_SZ]);
         int memopNum = stoi(tokens[ST_IDX_LOAD_MON]);
         ///build operand
+
+        MEM_OPR_META memMeta = {
+                baseReg,
+                indexReg,
+                scale,
+                displacement,
+                opr_eff_size
+        };
+
         if (isLoad) {
-            srcLdOperands.emplace_back(baseReg, indexReg, scale,
-                                       displacement, size, memopNum, lstSrcMacroIdx++);
+
+            srcLdOperands.emplace_back(memMeta, lstSrcMacroIdx++);
             srcMacroPoolOperands.push_back(&(*srcLdOperands.rbegin()));
             srcDecodeKey.push_back(DEC_LD_OPR);
         } else { // store
-            desStOperands.emplace_back(baseReg, indexReg, scale,
-                                       displacement, size, memopNum, lstDesMacroIdx++);
+            desStOperands.emplace_back(memMeta, lstDesMacroIdx++);
             desMacroPoolOperands.push_back(&(*desStOperands.rbegin()));
             desDecodeKey.push_back(DEC_ST_OPR);
         }

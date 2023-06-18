@@ -17,7 +17,7 @@ namespace traceBuilder::core {
     }
 
     void DEP_HELP_REG::onPushToWd(UOP_BASE *uop, UOP_WINDOW *wd) {
-        for (REGNUM desReg: uop->getdesReg()) {
+        for (REGNUM desReg: uop->getDesRegs()) {
             //// we can ensure that no unused reg(-1) righthere
             lastOwnerReg[desReg] = uop;
         }
@@ -25,7 +25,7 @@ namespace traceBuilder::core {
 
     void DEP_HELP_REG::onPopFromWd(UOP_BASE *uop, UOP_WINDOW *wd) {
         assert(uop != nullptr);
-        for (REGNUM desReg: uop->getdesReg()) {
+        for (REGNUM desReg: uop->getDesRegs()) {
             //// we can ensure that no unused reg(-1) righthere
             if (uop == lastOwnerReg[desReg]) {
                 lastOwnerReg[desReg] = nullptr;
@@ -35,7 +35,7 @@ namespace traceBuilder::core {
 
     void DEP_HELP_REG::assignDepHelp(UOP_BASE *uop, UOP_WINDOW *wd) {
         assert(uop != nullptr);
-        for (auto &regNum: uop->getdesReg()) {
+        for (auto &regNum: uop->getDesRegs()) {
             assert(regNum != UNUSEDREG);
             if (lastOwnerReg[regNum] != nullptr) {
                 uop->addRegDep(lastOwnerReg[regNum], wd);

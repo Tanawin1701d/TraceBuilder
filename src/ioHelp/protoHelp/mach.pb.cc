@@ -92,19 +92,27 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_mach_2eproto::offsets[] PROTOB
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   PROTOBUF_FIELD_OFFSET(::ProtoMessage::machRecord, seq_num_),
-  PROTOBUF_FIELD_OFFSET(::ProtoMessage::machRecord, v_instraddr_),
-  PROTOBUF_FIELD_OFFSET(::ProtoMessage::machRecord, v_effaddr_),
+  PROTOBUF_FIELD_OFFSET(::ProtoMessage::machRecord, v_addr_),
+  PROTOBUF_FIELD_OFFSET(::ProtoMessage::machRecord, v_size_),
+  PROTOBUF_FIELD_OFFSET(::ProtoMessage::machRecord, p_effaddr_),
+  PROTOBUF_FIELD_OFFSET(::ProtoMessage::machRecord, p_effsize_),
   PROTOBUF_FIELD_OFFSET(::ProtoMessage::machRecord, funcunit_),
-  PROTOBUF_FIELD_OFFSET(::ProtoMessage::machRecord, archregid_),
-  PROTOBUF_FIELD_OFFSET(::ProtoMessage::machRecord, tempregid_),
+  PROTOBUF_FIELD_OFFSET(::ProtoMessage::machRecord, srcarchregid_),
+  PROTOBUF_FIELD_OFFSET(::ProtoMessage::machRecord, desarchregid_),
+  PROTOBUF_FIELD_OFFSET(::ProtoMessage::machRecord, srctempregid_),
+  PROTOBUF_FIELD_OFFSET(::ProtoMessage::machRecord, destempregid_),
   PROTOBUF_FIELD_OFFSET(::ProtoMessage::machRecord, rectype_),
   0,
   1,
-  2,
   3,
-  ~0u,
-  ~0u,
+  2,
   4,
+  5,
+  ~0u,
+  ~0u,
+  ~0u,
+  ~0u,
+  6,
   PROTOBUF_FIELD_OFFSET(::ProtoMessage::InstrRecord, _has_bits_),
   PROTOBUF_FIELD_OFFSET(::ProtoMessage::InstrRecord, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -114,15 +122,17 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_mach_2eproto::offsets[] PROTOB
   PROTOBUF_FIELD_OFFSET(::ProtoMessage::InstrRecord, fetch_num_),
   PROTOBUF_FIELD_OFFSET(::ProtoMessage::InstrRecord, uops_),
   PROTOBUF_FIELD_OFFSET(::ProtoMessage::InstrRecord, v_instraddr_),
+  PROTOBUF_FIELD_OFFSET(::ProtoMessage::InstrRecord, v_instrsize_),
   0,
   1,
   ~0u,
   2,
+  3,
 };
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, 7, sizeof(::ProtoMessage::headerRecord)},
-  { 9, 21, sizeof(::ProtoMessage::machRecord)},
-  { 28, 37, sizeof(::ProtoMessage::InstrRecord)},
+  { 9, 25, sizeof(::ProtoMessage::machRecord)},
+  { 36, 46, sizeof(::ProtoMessage::InstrRecord)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -133,16 +143,20 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
 
 const char descriptor_table_protodef_mach_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
   "\n\nmach.proto\022\014ProtoMessage\".\n\014headerReco"
-  "rd\022\016\n\006obj_id\030\001 \002(\t\022\016\n\003ver\030\002 \001(\r:\0010\"\366\001\n\nm"
-  "achRecord\022\017\n\007seq_num\030\001 \002(\004\022\023\n\013v_instrAdd"
-  "r\030\002 \002(\004\022\021\n\tv_effAddr\030\003 \002(\004\022\020\n\010funcUnit\030\004"
-  " \002(\r\022\021\n\tarchRegId\030\005 \003(\r\022\021\n\ttempRegId\030\006 \003"
-  "(\r\022=\n\007recType\030\007 \002(\0162#.ProtoMessage.machR"
-  "ecord.RecordType:\007INVALID\"8\n\nRecordType\022"
-  "\013\n\007INVALID\020\000\022\010\n\004LOAD\020\001\022\t\n\005STORE\020\002\022\010\n\004COM"
-  "P\020\003\"p\n\013InstrRecord\022\021\n\tinstr_num\030\001 \002(\004\022\021\n"
-  "\tfetch_num\030\002 \002(\004\022&\n\004uops\030\003 \003(\0132\030.ProtoMe"
-  "ssage.machRecord\022\023\n\013v_instrAddr\030\004 \002(\004"
+  "rd\022\016\n\006obj_id\030\001 \002(\t\022\016\n\003ver\030\002 \001(\r:\0010\"\343\002\n\nm"
+  "achRecord\022\017\n\007seq_num\030\001 \002(\004\022\016\n\006v_Addr\030\002 \002"
+  "(\004\022\016\n\006v_Size\030\003 \002(\r\022\021\n\tp_effAddr\030\004 \002(\004\022\021\n"
+  "\tp_effSize\030\005 \002(\r\022\020\n\010funcUnit\030\006 \002(\r\022\024\n\014sr"
+  "cArchRegId\030\007 \003(\r\022\024\n\014desArchRegId\030\010 \003(\r\022\024"
+  "\n\014srcTempRegId\030\t \003(\r\022\024\n\014desTempRegId\030\n \003"
+  "(\r\022\?\n\007recType\030\013 \002(\0162#.ProtoMessage.machR"
+  "ecord.RecordType:\tUOP_DUMMY\"S\n\nRecordTyp"
+  "e\022\014\n\010UOP_COMP\020\000\022\014\n\010UOP_LOAD\020\001\022\r\n\tUOP_STO"
+  "RE\020\002\022\013\n\007UOP_IMM\020\003\022\r\n\tUOP_DUMMY\020\004\"\205\001\n\013Ins"
+  "trRecord\022\021\n\tinstr_num\030\001 \002(\004\022\021\n\tfetch_num"
+  "\030\002 \002(\004\022&\n\004uops\030\003 \003(\0132\030.ProtoMessage.mach"
+  "Record\022\023\n\013v_instrAddr\030\004 \002(\004\022\023\n\013v_instrSi"
+  "ze\030\005 \002(\r"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_mach_2eproto_deps[1] = {
 };
@@ -153,7 +167,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_mac
 };
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_mach_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_mach_2eproto = {
-  false, false, descriptor_table_protodef_mach_2eproto, "mach.proto", 437,
+  false, false, descriptor_table_protodef_mach_2eproto, "mach.proto", 568,
   &descriptor_table_mach_2eproto_once, descriptor_table_mach_2eproto_sccs, descriptor_table_mach_2eproto_deps, 3, 0,
   schemas, file_default_instances, TableStruct_mach_2eproto::offsets,
   file_level_metadata_mach_2eproto, 3, file_level_enum_descriptors_mach_2eproto, file_level_service_descriptors_mach_2eproto,
@@ -172,6 +186,7 @@ bool machRecord_RecordType_IsValid(int value) {
     case 1:
     case 2:
     case 3:
+    case 4:
       return true;
     default:
       return false;
@@ -179,10 +194,11 @@ bool machRecord_RecordType_IsValid(int value) {
 }
 
 #if (__cplusplus < 201703) && (!defined(_MSC_VER) || _MSC_VER >= 1900)
-constexpr machRecord_RecordType machRecord::INVALID;
-constexpr machRecord_RecordType machRecord::LOAD;
-constexpr machRecord_RecordType machRecord::STORE;
-constexpr machRecord_RecordType machRecord::COMP;
+constexpr machRecord_RecordType machRecord::UOP_COMP;
+constexpr machRecord_RecordType machRecord::UOP_LOAD;
+constexpr machRecord_RecordType machRecord::UOP_STORE;
+constexpr machRecord_RecordType machRecord::UOP_IMM;
+constexpr machRecord_RecordType machRecord::UOP_DUMMY;
 constexpr machRecord_RecordType machRecord::RecordType_MIN;
 constexpr machRecord_RecordType machRecord::RecordType_MAX;
 constexpr int machRecord::RecordType_ARRAYSIZE;
@@ -461,27 +477,35 @@ class machRecord::_Internal {
   static void set_has_seq_num(HasBits* has_bits) {
     (*has_bits)[0] |= 1u;
   }
-  static void set_has_v_instraddr(HasBits* has_bits) {
+  static void set_has_v_addr(HasBits* has_bits) {
     (*has_bits)[0] |= 2u;
   }
-  static void set_has_v_effaddr(HasBits* has_bits) {
-    (*has_bits)[0] |= 4u;
-  }
-  static void set_has_funcunit(HasBits* has_bits) {
+  static void set_has_v_size(HasBits* has_bits) {
     (*has_bits)[0] |= 8u;
   }
-  static void set_has_rectype(HasBits* has_bits) {
+  static void set_has_p_effaddr(HasBits* has_bits) {
+    (*has_bits)[0] |= 4u;
+  }
+  static void set_has_p_effsize(HasBits* has_bits) {
     (*has_bits)[0] |= 16u;
   }
+  static void set_has_funcunit(HasBits* has_bits) {
+    (*has_bits)[0] |= 32u;
+  }
+  static void set_has_rectype(HasBits* has_bits) {
+    (*has_bits)[0] |= 64u;
+  }
   static bool MissingRequiredFields(const HasBits& has_bits) {
-    return ((has_bits[0] & 0x0000001f) ^ 0x0000001f) != 0;
+    return ((has_bits[0] & 0x0000007f) ^ 0x0000007f) != 0;
   }
 };
 
 machRecord::machRecord(::PROTOBUF_NAMESPACE_ID::Arena* arena)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena),
-  archregid_(arena),
-  tempregid_(arena) {
+  srcarchregid_(arena),
+  desarchregid_(arena),
+  srctempregid_(arena),
+  destempregid_(arena) {
   SharedCtor();
   RegisterArenaDtor(arena);
   // @@protoc_insertion_point(arena_constructor:ProtoMessage.machRecord)
@@ -489,8 +513,10 @@ machRecord::machRecord(::PROTOBUF_NAMESPACE_ID::Arena* arena)
 machRecord::machRecord(const machRecord& from)
   : ::PROTOBUF_NAMESPACE_ID::Message(),
       _has_bits_(from._has_bits_),
-      archregid_(from.archregid_),
-      tempregid_(from.tempregid_) {
+      srcarchregid_(from.srcarchregid_),
+      desarchregid_(from.desarchregid_),
+      srctempregid_(from.srctempregid_),
+      destempregid_(from.destempregid_) {
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   ::memcpy(&seq_num_, &from.seq_num_,
     static_cast<size_t>(reinterpret_cast<char*>(&rectype_) -
@@ -500,8 +526,9 @@ machRecord::machRecord(const machRecord& from)
 
 void machRecord::SharedCtor() {
   ::memset(&seq_num_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&rectype_) -
-      reinterpret_cast<char*>(&seq_num_)) + sizeof(rectype_));
+      reinterpret_cast<char*>(&funcunit_) -
+      reinterpret_cast<char*>(&seq_num_)) + sizeof(funcunit_));
+  rectype_ = 4;
 }
 
 machRecord::~machRecord() {
@@ -535,13 +562,16 @@ void machRecord::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  archregid_.Clear();
-  tempregid_.Clear();
+  srcarchregid_.Clear();
+  desarchregid_.Clear();
+  srctempregid_.Clear();
+  destempregid_.Clear();
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x0000001fu) {
+  if (cached_has_bits & 0x0000007fu) {
     ::memset(&seq_num_, 0, static_cast<size_t>(
-        reinterpret_cast<char*>(&rectype_) -
-        reinterpret_cast<char*>(&seq_num_)) + sizeof(rectype_));
+        reinterpret_cast<char*>(&funcunit_) -
+        reinterpret_cast<char*>(&seq_num_)) + sizeof(funcunit_));
+    rectype_ = 4;
   }
   _has_bits_.Clear();
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
@@ -564,69 +594,115 @@ const char* machRecord::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID:
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // required uint64 v_instrAddr = 2;
+      // required uint64 v_Addr = 2;
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 16)) {
-          _Internal::set_has_v_instraddr(&has_bits);
-          v_instraddr_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          _Internal::set_has_v_addr(&has_bits);
+          v_addr_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // required uint64 v_effAddr = 3;
+      // required uint32 v_Size = 3;
       case 3:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 24)) {
-          _Internal::set_has_v_effaddr(&has_bits);
-          v_effaddr_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          _Internal::set_has_v_size(&has_bits);
+          v_size_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // required uint32 funcUnit = 4;
+      // required uint64 p_effAddr = 4;
       case 4:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 32)) {
+          _Internal::set_has_p_effaddr(&has_bits);
+          p_effaddr_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // required uint32 p_effSize = 5;
+      case 5:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 40)) {
+          _Internal::set_has_p_effsize(&has_bits);
+          p_effsize_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // required uint32 funcUnit = 6;
+      case 6:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 48)) {
           _Internal::set_has_funcunit(&has_bits);
           funcunit_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // repeated uint32 archRegId = 5;
-      case 5:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 40)) {
-          ptr -= 1;
-          do {
-            ptr += 1;
-            _internal_add_archregid(::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr));
-            CHK_(ptr);
-            if (!ctx->DataAvailable(ptr)) break;
-          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<40>(ptr));
-        } else if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 42) {
-          ptr = ::PROTOBUF_NAMESPACE_ID::internal::PackedUInt32Parser(_internal_mutable_archregid(), ptr, ctx);
-          CHK_(ptr);
-        } else goto handle_unusual;
-        continue;
-      // repeated uint32 tempRegId = 6;
-      case 6:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 48)) {
-          ptr -= 1;
-          do {
-            ptr += 1;
-            _internal_add_tempregid(::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr));
-            CHK_(ptr);
-            if (!ctx->DataAvailable(ptr)) break;
-          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<48>(ptr));
-        } else if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 50) {
-          ptr = ::PROTOBUF_NAMESPACE_ID::internal::PackedUInt32Parser(_internal_mutable_tempregid(), ptr, ctx);
-          CHK_(ptr);
-        } else goto handle_unusual;
-        continue;
-      // required .ProtoMessage.machRecord.RecordType recType = 7 [default = INVALID];
+      // repeated uint32 srcArchRegId = 7;
       case 7:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 56)) {
+          ptr -= 1;
+          do {
+            ptr += 1;
+            _internal_add_srcarchregid(::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr));
+            CHK_(ptr);
+            if (!ctx->DataAvailable(ptr)) break;
+          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<56>(ptr));
+        } else if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 58) {
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::PackedUInt32Parser(_internal_mutable_srcarchregid(), ptr, ctx);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // repeated uint32 desArchRegId = 8;
+      case 8:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 64)) {
+          ptr -= 1;
+          do {
+            ptr += 1;
+            _internal_add_desarchregid(::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr));
+            CHK_(ptr);
+            if (!ctx->DataAvailable(ptr)) break;
+          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<64>(ptr));
+        } else if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 66) {
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::PackedUInt32Parser(_internal_mutable_desarchregid(), ptr, ctx);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // repeated uint32 srcTempRegId = 9;
+      case 9:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 72)) {
+          ptr -= 1;
+          do {
+            ptr += 1;
+            _internal_add_srctempregid(::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr));
+            CHK_(ptr);
+            if (!ctx->DataAvailable(ptr)) break;
+          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<72>(ptr));
+        } else if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 74) {
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::PackedUInt32Parser(_internal_mutable_srctempregid(), ptr, ctx);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // repeated uint32 desTempRegId = 10;
+      case 10:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 80)) {
+          ptr -= 1;
+          do {
+            ptr += 1;
+            _internal_add_destempregid(::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr));
+            CHK_(ptr);
+            if (!ctx->DataAvailable(ptr)) break;
+          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<80>(ptr));
+        } else if (static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 82) {
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::PackedUInt32Parser(_internal_mutable_destempregid(), ptr, ctx);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // required .ProtoMessage.machRecord.RecordType recType = 11 [default = UOP_DUMMY];
+      case 11:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 88)) {
           ::PROTOBUF_NAMESPACE_ID::uint64 val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
           if (PROTOBUF_PREDICT_TRUE(::ProtoMessage::machRecord_RecordType_IsValid(val))) {
             _internal_set_rectype(static_cast<::ProtoMessage::machRecord_RecordType>(val));
           } else {
-            ::PROTOBUF_NAMESPACE_ID::internal::WriteVarint(7, val, mutable_unknown_fields());
+            ::PROTOBUF_NAMESPACE_ID::internal::WriteVarint(11, val, mutable_unknown_fields());
           }
         } else goto handle_unusual;
         continue;
@@ -666,41 +742,65 @@ failure:
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(1, this->_internal_seq_num(), target);
   }
 
-  // required uint64 v_instrAddr = 2;
+  // required uint64 v_Addr = 2;
   if (cached_has_bits & 0x00000002u) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(2, this->_internal_v_instraddr(), target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(2, this->_internal_v_addr(), target);
   }
 
-  // required uint64 v_effAddr = 3;
-  if (cached_has_bits & 0x00000004u) {
-    target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(3, this->_internal_v_effaddr(), target);
-  }
-
-  // required uint32 funcUnit = 4;
+  // required uint32 v_Size = 3;
   if (cached_has_bits & 0x00000008u) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(4, this->_internal_funcunit(), target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(3, this->_internal_v_size(), target);
   }
 
-  // repeated uint32 archRegId = 5;
-  for (int i = 0, n = this->_internal_archregid_size(); i < n; i++) {
+  // required uint64 p_effAddr = 4;
+  if (cached_has_bits & 0x00000004u) {
     target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(5, this->_internal_archregid(i), target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(4, this->_internal_p_effaddr(), target);
   }
 
-  // repeated uint32 tempRegId = 6;
-  for (int i = 0, n = this->_internal_tempregid_size(); i < n; i++) {
-    target = stream->EnsureSpace(target);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(6, this->_internal_tempregid(i), target);
-  }
-
-  // required .ProtoMessage.machRecord.RecordType recType = 7 [default = INVALID];
+  // required uint32 p_effSize = 5;
   if (cached_has_bits & 0x00000010u) {
     target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(5, this->_internal_p_effsize(), target);
+  }
+
+  // required uint32 funcUnit = 6;
+  if (cached_has_bits & 0x00000020u) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(6, this->_internal_funcunit(), target);
+  }
+
+  // repeated uint32 srcArchRegId = 7;
+  for (int i = 0, n = this->_internal_srcarchregid_size(); i < n; i++) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(7, this->_internal_srcarchregid(i), target);
+  }
+
+  // repeated uint32 desArchRegId = 8;
+  for (int i = 0, n = this->_internal_desarchregid_size(); i < n; i++) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(8, this->_internal_desarchregid(i), target);
+  }
+
+  // repeated uint32 srcTempRegId = 9;
+  for (int i = 0, n = this->_internal_srctempregid_size(); i < n; i++) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(9, this->_internal_srctempregid(i), target);
+  }
+
+  // repeated uint32 desTempRegId = 10;
+  for (int i = 0, n = this->_internal_destempregid_size(); i < n; i++) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(10, this->_internal_destempregid(i), target);
+  }
+
+  // required .ProtoMessage.machRecord.RecordType recType = 11 [default = UOP_DUMMY];
+  if (cached_has_bits & 0x00000040u) {
+    target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
-      7, this->_internal_rectype(), target);
+      11, this->_internal_rectype(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -722,29 +822,43 @@ size_t machRecord::RequiredFieldsByteSizeFallback() const {
         this->_internal_seq_num());
   }
 
-  if (_internal_has_v_instraddr()) {
-    // required uint64 v_instrAddr = 2;
+  if (_internal_has_v_addr()) {
+    // required uint64 v_Addr = 2;
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
-        this->_internal_v_instraddr());
+        this->_internal_v_addr());
   }
 
-  if (_internal_has_v_effaddr()) {
-    // required uint64 v_effAddr = 3;
+  if (_internal_has_p_effaddr()) {
+    // required uint64 p_effAddr = 4;
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
-        this->_internal_v_effaddr());
+        this->_internal_p_effaddr());
+  }
+
+  if (_internal_has_v_size()) {
+    // required uint32 v_Size = 3;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt32Size(
+        this->_internal_v_size());
+  }
+
+  if (_internal_has_p_effsize()) {
+    // required uint32 p_effSize = 5;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt32Size(
+        this->_internal_p_effsize());
   }
 
   if (_internal_has_funcunit()) {
-    // required uint32 funcUnit = 4;
+    // required uint32 funcUnit = 6;
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt32Size(
         this->_internal_funcunit());
   }
 
   if (_internal_has_rectype()) {
-    // required .ProtoMessage.machRecord.RecordType recType = 7 [default = INVALID];
+    // required .ProtoMessage.machRecord.RecordType recType = 11 [default = UOP_DUMMY];
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_rectype());
   }
@@ -755,28 +869,38 @@ size_t machRecord::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:ProtoMessage.machRecord)
   size_t total_size = 0;
 
-  if (((_has_bits_[0] & 0x0000001f) ^ 0x0000001f) == 0) {  // All required fields are present.
+  if (((_has_bits_[0] & 0x0000007f) ^ 0x0000007f) == 0) {  // All required fields are present.
     // required uint64 seq_num = 1;
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
         this->_internal_seq_num());
 
-    // required uint64 v_instrAddr = 2;
+    // required uint64 v_Addr = 2;
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
-        this->_internal_v_instraddr());
+        this->_internal_v_addr());
 
-    // required uint64 v_effAddr = 3;
+    // required uint64 p_effAddr = 4;
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
-        this->_internal_v_effaddr());
+        this->_internal_p_effaddr());
 
-    // required uint32 funcUnit = 4;
+    // required uint32 v_Size = 3;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt32Size(
+        this->_internal_v_size());
+
+    // required uint32 p_effSize = 5;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt32Size(
+        this->_internal_p_effsize());
+
+    // required uint32 funcUnit = 6;
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt32Size(
         this->_internal_funcunit());
 
-    // required .ProtoMessage.machRecord.RecordType recType = 7 [default = INVALID];
+    // required .ProtoMessage.machRecord.RecordType recType = 11 [default = UOP_DUMMY];
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_rectype());
 
@@ -787,21 +911,39 @@ size_t machRecord::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // repeated uint32 archRegId = 5;
+  // repeated uint32 srcArchRegId = 7;
   {
     size_t data_size = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      UInt32Size(this->archregid_);
+      UInt32Size(this->srcarchregid_);
     total_size += 1 *
-                  ::PROTOBUF_NAMESPACE_ID::internal::FromIntSize(this->_internal_archregid_size());
+                  ::PROTOBUF_NAMESPACE_ID::internal::FromIntSize(this->_internal_srcarchregid_size());
     total_size += data_size;
   }
 
-  // repeated uint32 tempRegId = 6;
+  // repeated uint32 desArchRegId = 8;
   {
     size_t data_size = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      UInt32Size(this->tempregid_);
+      UInt32Size(this->desarchregid_);
     total_size += 1 *
-                  ::PROTOBUF_NAMESPACE_ID::internal::FromIntSize(this->_internal_tempregid_size());
+                  ::PROTOBUF_NAMESPACE_ID::internal::FromIntSize(this->_internal_desarchregid_size());
+    total_size += data_size;
+  }
+
+  // repeated uint32 srcTempRegId = 9;
+  {
+    size_t data_size = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      UInt32Size(this->srctempregid_);
+    total_size += 1 *
+                  ::PROTOBUF_NAMESPACE_ID::internal::FromIntSize(this->_internal_srctempregid_size());
+    total_size += data_size;
+  }
+
+  // repeated uint32 desTempRegId = 10;
+  {
+    size_t data_size = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      UInt32Size(this->destempregid_);
+    total_size += 1 *
+                  ::PROTOBUF_NAMESPACE_ID::internal::FromIntSize(this->_internal_destempregid_size());
     total_size += data_size;
   }
 
@@ -836,23 +978,31 @@ void machRecord::MergeFrom(const machRecord& from) {
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  archregid_.MergeFrom(from.archregid_);
-  tempregid_.MergeFrom(from.tempregid_);
+  srcarchregid_.MergeFrom(from.srcarchregid_);
+  desarchregid_.MergeFrom(from.desarchregid_);
+  srctempregid_.MergeFrom(from.srctempregid_);
+  destempregid_.MergeFrom(from.destempregid_);
   cached_has_bits = from._has_bits_[0];
-  if (cached_has_bits & 0x0000001fu) {
+  if (cached_has_bits & 0x0000007fu) {
     if (cached_has_bits & 0x00000001u) {
       seq_num_ = from.seq_num_;
     }
     if (cached_has_bits & 0x00000002u) {
-      v_instraddr_ = from.v_instraddr_;
+      v_addr_ = from.v_addr_;
     }
     if (cached_has_bits & 0x00000004u) {
-      v_effaddr_ = from.v_effaddr_;
+      p_effaddr_ = from.p_effaddr_;
     }
     if (cached_has_bits & 0x00000008u) {
-      funcunit_ = from.funcunit_;
+      v_size_ = from.v_size_;
     }
     if (cached_has_bits & 0x00000010u) {
+      p_effsize_ = from.p_effsize_;
+    }
+    if (cached_has_bits & 0x00000020u) {
+      funcunit_ = from.funcunit_;
+    }
+    if (cached_has_bits & 0x00000040u) {
       rectype_ = from.rectype_;
     }
     _has_bits_[0] |= cached_has_bits;
@@ -882,14 +1032,17 @@ void machRecord::InternalSwap(machRecord* other) {
   using std::swap;
   _internal_metadata_.Swap<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(&other->_internal_metadata_);
   swap(_has_bits_[0], other->_has_bits_[0]);
-  archregid_.InternalSwap(&other->archregid_);
-  tempregid_.InternalSwap(&other->tempregid_);
+  srcarchregid_.InternalSwap(&other->srcarchregid_);
+  desarchregid_.InternalSwap(&other->desarchregid_);
+  srctempregid_.InternalSwap(&other->srctempregid_);
+  destempregid_.InternalSwap(&other->destempregid_);
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(machRecord, rectype_)
-      + sizeof(machRecord::rectype_)
+      PROTOBUF_FIELD_OFFSET(machRecord, funcunit_)
+      + sizeof(machRecord::funcunit_)
       - PROTOBUF_FIELD_OFFSET(machRecord, seq_num_)>(
           reinterpret_cast<char*>(&seq_num_),
           reinterpret_cast<char*>(&other->seq_num_));
+  swap(rectype_, other->rectype_);
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata machRecord::GetMetadata() const {
@@ -913,8 +1066,11 @@ class InstrRecord::_Internal {
   static void set_has_v_instraddr(HasBits* has_bits) {
     (*has_bits)[0] |= 4u;
   }
+  static void set_has_v_instrsize(HasBits* has_bits) {
+    (*has_bits)[0] |= 8u;
+  }
   static bool MissingRequiredFields(const HasBits& has_bits) {
-    return ((has_bits[0] & 0x00000007) ^ 0x00000007) != 0;
+    return ((has_bits[0] & 0x0000000f) ^ 0x0000000f) != 0;
   }
 };
 
@@ -931,16 +1087,16 @@ InstrRecord::InstrRecord(const InstrRecord& from)
       uops_(from.uops_) {
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   ::memcpy(&instr_num_, &from.instr_num_,
-    static_cast<size_t>(reinterpret_cast<char*>(&v_instraddr_) -
-    reinterpret_cast<char*>(&instr_num_)) + sizeof(v_instraddr_));
+    static_cast<size_t>(reinterpret_cast<char*>(&v_instrsize_) -
+    reinterpret_cast<char*>(&instr_num_)) + sizeof(v_instrsize_));
   // @@protoc_insertion_point(copy_constructor:ProtoMessage.InstrRecord)
 }
 
 void InstrRecord::SharedCtor() {
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_InstrRecord_mach_2eproto.base);
   ::memset(&instr_num_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&v_instraddr_) -
-      reinterpret_cast<char*>(&instr_num_)) + sizeof(v_instraddr_));
+      reinterpret_cast<char*>(&v_instrsize_) -
+      reinterpret_cast<char*>(&instr_num_)) + sizeof(v_instrsize_));
 }
 
 InstrRecord::~InstrRecord() {
@@ -976,10 +1132,10 @@ void InstrRecord::Clear() {
 
   uops_.Clear();
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x00000007u) {
+  if (cached_has_bits & 0x0000000fu) {
     ::memset(&instr_num_, 0, static_cast<size_t>(
-        reinterpret_cast<char*>(&v_instraddr_) -
-        reinterpret_cast<char*>(&instr_num_)) + sizeof(v_instraddr_));
+        reinterpret_cast<char*>(&v_instrsize_) -
+        reinterpret_cast<char*>(&instr_num_)) + sizeof(v_instrsize_));
   }
   _has_bits_.Clear();
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
@@ -1027,6 +1183,14 @@ const char* InstrRecord::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 32)) {
           _Internal::set_has_v_instraddr(&has_bits);
           v_instraddr_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      // required uint32 v_instrSize = 5;
+      case 5:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 40)) {
+          _Internal::set_has_v_instrsize(&has_bits);
+          v_instrsize_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
@@ -1086,6 +1250,12 @@ failure:
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(4, this->_internal_v_instraddr(), target);
   }
 
+  // required uint32 v_instrSize = 5;
+  if (cached_has_bits & 0x00000008u) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(5, this->_internal_v_instrsize(), target);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
@@ -1119,13 +1289,20 @@ size_t InstrRecord::RequiredFieldsByteSizeFallback() const {
         this->_internal_v_instraddr());
   }
 
+  if (_internal_has_v_instrsize()) {
+    // required uint32 v_instrSize = 5;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt32Size(
+        this->_internal_v_instrsize());
+  }
+
   return total_size;
 }
 size_t InstrRecord::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:ProtoMessage.InstrRecord)
   size_t total_size = 0;
 
-  if (((_has_bits_[0] & 0x00000007) ^ 0x00000007) == 0) {  // All required fields are present.
+  if (((_has_bits_[0] & 0x0000000f) ^ 0x0000000f) == 0) {  // All required fields are present.
     // required uint64 instr_num = 1;
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
@@ -1140,6 +1317,11 @@ size_t InstrRecord::ByteSizeLong() const {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
         this->_internal_v_instraddr());
+
+    // required uint32 v_instrSize = 5;
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt32Size(
+        this->_internal_v_instrsize());
 
   } else {
     total_size += RequiredFieldsByteSizeFallback();
@@ -1188,7 +1370,7 @@ void InstrRecord::MergeFrom(const InstrRecord& from) {
 
   uops_.MergeFrom(from.uops_);
   cached_has_bits = from._has_bits_[0];
-  if (cached_has_bits & 0x00000007u) {
+  if (cached_has_bits & 0x0000000fu) {
     if (cached_has_bits & 0x00000001u) {
       instr_num_ = from.instr_num_;
     }
@@ -1197,6 +1379,9 @@ void InstrRecord::MergeFrom(const InstrRecord& from) {
     }
     if (cached_has_bits & 0x00000004u) {
       v_instraddr_ = from.v_instraddr_;
+    }
+    if (cached_has_bits & 0x00000008u) {
+      v_instrsize_ = from.v_instrsize_;
     }
     _has_bits_[0] |= cached_has_bits;
   }
@@ -1228,8 +1413,8 @@ void InstrRecord::InternalSwap(InstrRecord* other) {
   swap(_has_bits_[0], other->_has_bits_[0]);
   uops_.InternalSwap(&other->uops_);
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(InstrRecord, v_instraddr_)
-      + sizeof(InstrRecord::v_instraddr_)
+      PROTOBUF_FIELD_OFFSET(InstrRecord, v_instrsize_)
+      + sizeof(InstrRecord::v_instrsize_)
       - PROTOBUF_FIELD_OFFSET(InstrRecord, instr_num_)>(
           reinterpret_cast<char*>(&instr_num_),
           reinterpret_cast<char*>(&other->instr_num_));

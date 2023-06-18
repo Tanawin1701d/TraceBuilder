@@ -33,11 +33,11 @@ namespace traceBuilder::model {
         ////// TODO we might upgrade for clever method to achieve better performance
         /////////// like line sweep algorithm
         for (auto &uopWindow_itr: *uopWindow_ptr) {
-            for (auto &ldAdas: loadAdas) {
+            for (auto &ldAdas: _phyLoadAdas) {
                 if (uopWindow_itr->isdependOnMem(ldAdas, true))
                     addMemDep(uopWindow_itr, uop_window);
             }
-            for (auto &stAdas: storeAdas) {
+            for (auto &stAdas: _phyStoreAdas) {
                 if (uopWindow_itr->isdependOnMem(stAdas, false))
                     addMemDep(uopWindow_itr, uop_window);
             }

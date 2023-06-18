@@ -47,7 +47,7 @@ namespace traceBuilder::model {
             /////// instruction metadata
             //[[maybe_unused]]
             ADDR addr{};
-            int size{};
+            ADDR size{};
             /////// src operand data and metadata
             std::vector<OPR_REG> srcRegOperands;
             std::vector<OPR_MEM_LD> srcLdOperands;
@@ -94,7 +94,7 @@ namespace traceBuilder::model {
             ///////// entry point to interpret single instruction
             void interpretStaticTracedData(const std::vector<std::string> &st_raw); // interpret from raw static tracer
             ///////// fill dynamic data tracing
-            void fillDynData(CVT_RT_OBJ &cvtDynData);
+            void fillDynData( RT_OBJ& rawDynData, CVT_RT_OBJ &cvtDynData);
 
             ///////// generate uop    /////// HOTSPOT
             void genUOPS(std::vector<UOP_BASE *> &results);

@@ -29,13 +29,13 @@ namespace traceBuilder::model {
         OPR_TYPE OT;
         size_t mcArgSIdx; //// macroop operand idx for each side (src or des side)
     public:
-        OPERAND(OPR_TYPE _OT, size_t _mcArgSIdx);
+        OPERAND(OPR_TYPE OT, size_t _mcArgSIdx);
 
         virtual ~OPERAND() = default;
 
         OPR_TYPE getOPTYPE() { return OT; };
 
-        size_t getMcSideIdx() { return mcArgSIdx; }
+        size_t getMcSideIdx() const { return mcArgSIdx; }
     };
 
     class OPR_TREG : public OPERAND {
@@ -44,7 +44,7 @@ namespace traceBuilder::model {
     public:
         OPR_TREG();
 
-        OPR_TREG(int regId);
+        explicit OPR_TREG(int regId);
 
         REGNUM getRegId() const;
 
@@ -66,50 +66,49 @@ namespace traceBuilder::model {
 
 
 /// memory operand
-    class OPR_MEM : public OPERAND {
-    private:
-        const uint8_t MAX_BYTE_PER_MICROOP = 8;
+    struct MEM_OPR_META{
         REGNUM baseRegId;
         REGNUM indexRegId;
         int scaleFactor;
         IMM displacement;
         ADDR size;
-        int memopNum;
-        ADDR phyAddr;
+    };
+
+    class OPR_MEM : public OPERAND {
+    private:
+        const uint8_t MAX_BYTE_PER_MICROOP = 8;
+
+        MEM_OPR_META _meta;
+        ADDR _phyAddr{};
+        ADDR _virAddr{};
         ////// for some memory operand expect to divided into multiple uop (multiple meta data)
         ///////// so now we call it as "SHARED OPERAND TRACKING"
-        int expect_ruop_count; //// expect related micro-op count
-        int current_ruop_count; //// current expect related used count
-        ADDR nextPhyAddr; ///// next physical addr for microop and size
+        [[maybe_unused]] int expect_ruop_count; //// expect related micro-op count
+        [[maybe_unused]] int current_ruop_count; //// current expect related used count
+        ADDR _nextVirAddr{}; ///// next physical addr for microop and size
         ///////////////////////////////////////////////////////////////////
     public:
-        OPR_MEM(REGNUM _baseRegId,
-                REGNUM _indexRegId,
-                int _scaleFactor,
-                IMM _displacement,
-                ADDR _size,
-                int _memopNum,
+        OPR_MEM(MEM_OPR_META memMeta,
                 OPR_TYPE _setOpr,
                 size_t _mcArgSIdx);
 
-        REGNUM getBaseRegId() const;
-
-        REGNUM getIndexRegId() const;
-
-        int getScaleFactor() const;
-
-        IMM getDisplacement() const;
-
-        ADDR getSize() const;
+        void setVirAddr(ADDR virAddr);
+        ADDR getVirAddr() const {return _virAddr;};
+        ADDR getEndVirAddr() const {return _virAddr + _meta.size;}
 
         void setPhyAddr(ADDR phyAddr);
 
-        int getMemopNum() const;
+        ADDR getPhyAddr() const {return _phyAddr;};
 
-        ADDR getPhyAddr() const;
+        ADDR getCurUopSize() const {return std::min((ADDR) MAX_BYTE_PER_MICROOP,getEndVirAddr() - _nextVirAddr);}
+
 
         /////// get meta data of the operand that is fundamental of uop
-        ADAS getMeta();
+
+        ADAS getMeta_phyArea();
+        ADAS getMeta_virArea();
+
+        MEM_OPR_META getMeta_Static(){return _meta;}
 
         void resetSharedOperandTracker();
 
@@ -119,26 +118,17 @@ namespace traceBuilder::model {
     class OPR_MEM_LD : public OPR_MEM {
     public:
         // load operand
-        OPR_MEM_LD(REGNUM _baseRegId,
-                   REGNUM _indexRegId,
-                   int _scaleFactor,
-                   IMM _displacement,
-                   ADDR _size,
-                   int _memopNum,
-                   size_t _mcArgSIdx);
+        OPR_MEM_LD(MEM_OPR_META memMeta,
+                   size_t _mcArgSIdx
+                   );
     };
 
 /// store operand
     class OPR_MEM_ST : public OPR_MEM {
     public:
         // store operand
-        OPR_MEM_ST(REGNUM _baseRegId,
-                   REGNUM _indexRegId,
-                   int _scaleFactor,
-                   IMM _displacement,
-                   ADDR _size,
-                   int _memopNum,
-                   size_t _mcArgSIdx);
+        OPR_MEM_ST(MEM_OPR_META memMeta,
+                   size_t       _mcArgSIdx);
     };
 
 /// immediate operand

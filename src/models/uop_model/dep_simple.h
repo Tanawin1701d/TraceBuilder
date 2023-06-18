@@ -6,6 +6,7 @@
 #define TRACEBUILDER_DEP_SIMPLE_H
 
 #include "dep_base.h"
+#include "models/inst_model/operand.h"
 
 namespace traceBuilder::model {
 
@@ -30,7 +31,8 @@ namespace traceBuilder::model {
         ///// for adding source/des of the micro-op meta-data
         void addRegMeta(REGNUM regnum, bool isSrc); //// if false it is des
         ///// for get des register
-        std::vector<REGNUM>& getdesReg() { return desReg;};
+        std::vector<REGNUM>& getSrcRegs() {return srcReg;};
+        std::vector<REGNUM>& getDesRegs() { return desReg;};
     };
 ///////////////////////////////////////////////////////////////////////
 
@@ -39,8 +41,11 @@ namespace traceBuilder::model {
 ////// memory addresss dependency
     class MEM_DEP : public DEP_RWD_BASE {
     protected:
-        std::vector <ADAS> loadAdas;
-        std::vector <ADAS> storeAdas;
+        MEM_OPR_META       _meta;
+        std::vector <ADAS> _phyLoadAdas;
+        std::vector <ADAS> _phyStoreAdas;
+        std::vector <ADAS> _virLoadAdas;
+        std::vector <ADAS> _virStoreAdas;
         ///// scan overlaping
         static bool scanOverlap(ADAS adas, std::vector <ADAS> &adasVec);
 
@@ -63,11 +68,15 @@ namespace traceBuilder::model {
         ///// metaMng
         ///////////////
         ///// for adding source/des of the micro-op meta-data
-        virtual void addMemMeta(ADAS adas, bool isLoad);
+        void addMemMeta_phyArea(ADAS phyAdas, bool isLoad);
+        void addMemMeta_virArea(ADAS virAdas, bool isLoad);
+        void addMemMeta_Static(MEM_OPR_META meta);
 
-        std::vector<ADAS>& getAll_LD_ADAS() { return loadAdas; }
-
-        std::vector<ADAS>& getAll_ST_ADAS() { return storeAdas; }
+        std::vector<ADAS>& get_load_phyAdas() { return _phyLoadAdas ; }
+        std::vector<ADAS>& get_store_phyAdas(){ return _phyStoreAdas; }
+        std::vector<ADAS>& get_load_virAdas() {return _virLoadAdas;}
+        std::vector<ADAS>& get_store_virAdas(){return _virStoreAdas;}
+        MEM_OPR_META&      getMemMetaStatic() {return _meta;}
 
     };
 
