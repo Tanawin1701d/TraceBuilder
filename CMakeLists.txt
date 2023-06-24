@@ -6,9 +6,10 @@ set(CMAKE_CXX_STANDARD 17)
 
 #add_definitions(-Ddebug)
 add_definitions(-DX86)
-#set(CMAKE_BUILD_TYPE Debug)
-
+add_definitions(-DMINI_GEN)
+set(CMAKE_BUILD_TYPE Debug)
 add_compile_options(-O3)
+
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-unused-attributes")
 set(CMAKE_INTERPROCEDURAL_OPTIMIZATION TRUE)
 

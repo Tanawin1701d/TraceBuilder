@@ -22,16 +22,18 @@ namespace traceBuilder::core{
 
     void TBD_GEM5_ISA::onGetUopsResult(std::vector<UOP_BASE*>& result, RT_INSTR* rt_instr) {
         /** sanity check*/
-
+        assert(rt_instr != nullptr);
         /** create instr record*/
         ProtoMessage::InstrRecord instrRec;
         instrRec.set_instr_num(curInstrNum++);
         instrRec.set_fetch_num(rt_instr->getRtInstrId());
         /** set vaddress but for now we use physical addr instead*/
         std::vector<ADAS> prePhyAddrsResult;
+        //std::cout << "v address " << rt_instr->getAddr() << std::endl;
         memMng->v2pConvert(rt_instr->getAddr(), rt_instr->getSize(), prePhyAddrsResult);
         instrRec.set_v_instraddr(prePhyAddrsResult[0].addr);
         instrRec.set_v_instrsize(prePhyAddrsResult[0].size);
+        //std::cout << "p address " << prePhyAddrsResult[0].addr << std::endl;
 
         /** create mach record and add to instr rec*/
         for (auto uop_base: result) {
@@ -93,6 +95,7 @@ namespace traceBuilder::core{
                              : &ProtoMessage::machRecord::add_desarchregid;
         /**insert*/
         for (auto regNum : regNums){
+            stat::MAIN_STAT["DEP_REG"][std::to_string(regNum)].asUINT()++;
             (machRec->*inseter)(regNum);
         }
 
@@ -108,6 +111,7 @@ namespace traceBuilder::core{
                              : &ProtoMessage::machRecord::add_destempregid;
         /**insert*/
         for (auto tregNum : TregNums){
+            stat::MAIN_STAT["DEP_TEMP"][std::to_string(tregNum)].asUINT()++;
             (machRec->*inseter)(tregNum);
         }
     }
@@ -117,11 +121,13 @@ namespace traceBuilder::core{
         auto& memMeta = uop_base->getMemMetaStatic();
         ////////// add base reg
         if (memMeta.baseRegId != UNUSEDREG){
+            stat::MAIN_STAT["DEP_TEMP_MEM_bREG"][std::to_string(memMeta.baseRegId)].asUINT()++;
             machRec->add_srcarchregid(memMeta.baseRegId);
         }
         ///////// add index register
         if (memMeta.indexRegId != UNUSEDREG){
-            machRec->add_srcarchregid(memMeta.baseRegId);
+            stat::MAIN_STAT["DEP_TEMP_MEM_iREG"][std::to_string(memMeta.indexRegId)].asUINT()++;
+            machRec->add_srcarchregid(memMeta.indexRegId);
         }
 
 
@@ -141,6 +147,7 @@ namespace traceBuilder::core{
         /** set physical address*/
         machRec->set_p_effaddr(phyAddr[0].addr);
         machRec->set_p_effsize(phyAddr[0].size);
+        stat::MAIN_STAT["DEP_MEM_AREA"].asUINT()++;
     }
 
     void BIND_RESULT_FRONT_END_TBDGEMISA(py::module& m){

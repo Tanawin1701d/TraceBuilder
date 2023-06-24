@@ -83,6 +83,13 @@ namespace traceBuilder::core {
             uint64_t currentBatchObj = std::min(remainObj, MAX_RT_BUFFER_OBJ);
             uint64_t currentBatchByte = currentBatchObj * sizeof(RT_OBJ);
 
+#ifdef MINI_GEN
+            if (readedObj > 300){
+                std::cout << "finish dynamic tracing [mini mode]" << std::endl;
+                break;
+            }
+#endif
+
             if (!remainObj) {
                 std::cout << "finish dynamic tracing" << std::endl;
                 break;

@@ -21,10 +21,10 @@ message machRecord{
     }
     //// sequence number among the program
     required uint64 seq_num = 1;
-    required uint64 v_Addr = 2; //// virtual instruction address
-    required uint32 v_Size = 3;  //// virtual size
-    required uint64 p_effAddr =4; //// virtual effective address only affect when
-    required uint32 p_effSize = 5;  ///// effective to memory size
+    optional uint64 v_Addr = 2; //// virtual instruction address
+    optional uint32 v_Size = 3;  //// virtual size
+    optional uint64 p_effAddr =4; //// virtual effective address only affect when
+    optional uint32 p_effSize = 5;  ///// effective to memory size
     required uint32 funcUnit = 6;  //// fucntional unit
     repeated uint32 srcArchRegId = 7; //// array of architectural register id
     repeated uint32 desArchRegId = 8;

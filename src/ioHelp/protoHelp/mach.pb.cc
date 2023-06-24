@@ -144,9 +144,9 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
 const char descriptor_table_protodef_mach_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
   "\n\nmach.proto\022\014ProtoMessage\".\n\014headerReco"
   "rd\022\016\n\006obj_id\030\001 \002(\t\022\016\n\003ver\030\002 \001(\r:\0010\"\343\002\n\nm"
-  "achRecord\022\017\n\007seq_num\030\001 \002(\004\022\016\n\006v_Addr\030\002 \002"
-  "(\004\022\016\n\006v_Size\030\003 \002(\r\022\021\n\tp_effAddr\030\004 \002(\004\022\021\n"
-  "\tp_effSize\030\005 \002(\r\022\020\n\010funcUnit\030\006 \002(\r\022\024\n\014sr"
+  "achRecord\022\017\n\007seq_num\030\001 \002(\004\022\016\n\006v_Addr\030\002 \001"
+  "(\004\022\016\n\006v_Size\030\003 \001(\r\022\021\n\tp_effAddr\030\004 \001(\004\022\021\n"
+  "\tp_effSize\030\005 \001(\r\022\020\n\010funcUnit\030\006 \002(\r\022\024\n\014sr"
   "cArchRegId\030\007 \003(\r\022\024\n\014desArchRegId\030\010 \003(\r\022\024"
   "\n\014srcTempRegId\030\t \003(\r\022\024\n\014desTempRegId\030\n \003"
   "(\r\022\?\n\007recType\030\013 \002(\0162#.ProtoMessage.machR"
@@ -496,7 +496,7 @@ class machRecord::_Internal {
     (*has_bits)[0] |= 64u;
   }
   static bool MissingRequiredFields(const HasBits& has_bits) {
-    return ((has_bits[0] & 0x0000007f) ^ 0x0000007f) != 0;
+    return ((has_bits[0] & 0x00000061) ^ 0x00000061) != 0;
   }
 };
 
@@ -594,7 +594,7 @@ const char* machRecord::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID:
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // required uint64 v_Addr = 2;
+      // optional uint64 v_Addr = 2;
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 16)) {
           _Internal::set_has_v_addr(&has_bits);
@@ -602,7 +602,7 @@ const char* machRecord::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID:
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // required uint32 v_Size = 3;
+      // optional uint32 v_Size = 3;
       case 3:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 24)) {
           _Internal::set_has_v_size(&has_bits);
@@ -610,7 +610,7 @@ const char* machRecord::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID:
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // required uint64 p_effAddr = 4;
+      // optional uint64 p_effAddr = 4;
       case 4:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 32)) {
           _Internal::set_has_p_effaddr(&has_bits);
@@ -618,7 +618,7 @@ const char* machRecord::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID:
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
-      // required uint32 p_effSize = 5;
+      // optional uint32 p_effSize = 5;
       case 5:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 40)) {
           _Internal::set_has_p_effsize(&has_bits);
@@ -742,25 +742,25 @@ failure:
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(1, this->_internal_seq_num(), target);
   }
 
-  // required uint64 v_Addr = 2;
+  // optional uint64 v_Addr = 2;
   if (cached_has_bits & 0x00000002u) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(2, this->_internal_v_addr(), target);
   }
 
-  // required uint32 v_Size = 3;
+  // optional uint32 v_Size = 3;
   if (cached_has_bits & 0x00000008u) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(3, this->_internal_v_size(), target);
   }
 
-  // required uint64 p_effAddr = 4;
+  // optional uint64 p_effAddr = 4;
   if (cached_has_bits & 0x00000004u) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(4, this->_internal_p_effaddr(), target);
   }
 
-  // required uint32 p_effSize = 5;
+  // optional uint32 p_effSize = 5;
   if (cached_has_bits & 0x00000010u) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(5, this->_internal_p_effsize(), target);
@@ -822,34 +822,6 @@ size_t machRecord::RequiredFieldsByteSizeFallback() const {
         this->_internal_seq_num());
   }
 
-  if (_internal_has_v_addr()) {
-    // required uint64 v_Addr = 2;
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
-        this->_internal_v_addr());
-  }
-
-  if (_internal_has_p_effaddr()) {
-    // required uint64 p_effAddr = 4;
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
-        this->_internal_p_effaddr());
-  }
-
-  if (_internal_has_v_size()) {
-    // required uint32 v_Size = 3;
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt32Size(
-        this->_internal_v_size());
-  }
-
-  if (_internal_has_p_effsize()) {
-    // required uint32 p_effSize = 5;
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt32Size(
-        this->_internal_p_effsize());
-  }
-
   if (_internal_has_funcunit()) {
     // required uint32 funcUnit = 6;
     total_size += 1 +
@@ -869,31 +841,11 @@ size_t machRecord::ByteSizeLong() const {
 // @@protoc_insertion_point(message_byte_size_start:ProtoMessage.machRecord)
   size_t total_size = 0;
 
-  if (((_has_bits_[0] & 0x0000007f) ^ 0x0000007f) == 0) {  // All required fields are present.
+  if (((_has_bits_[0] & 0x00000061) ^ 0x00000061) == 0) {  // All required fields are present.
     // required uint64 seq_num = 1;
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
         this->_internal_seq_num());
-
-    // required uint64 v_Addr = 2;
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
-        this->_internal_v_addr());
-
-    // required uint64 p_effAddr = 4;
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
-        this->_internal_p_effaddr());
-
-    // required uint32 v_Size = 3;
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt32Size(
-        this->_internal_v_size());
-
-    // required uint32 p_effSize = 5;
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt32Size(
-        this->_internal_p_effsize());
 
     // required uint32 funcUnit = 6;
     total_size += 1 +
@@ -947,6 +899,37 @@ size_t machRecord::ByteSizeLong() const {
     total_size += data_size;
   }
 
+  cached_has_bits = _has_bits_[0];
+  if (cached_has_bits & 0x0000001eu) {
+    // optional uint64 v_Addr = 2;
+    if (cached_has_bits & 0x00000002u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
+          this->_internal_v_addr());
+    }
+
+    // optional uint64 p_effAddr = 4;
+    if (cached_has_bits & 0x00000004u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
+          this->_internal_p_effaddr());
+    }
+
+    // optional uint32 v_Size = 3;
+    if (cached_has_bits & 0x00000008u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt32Size(
+          this->_internal_v_size());
+    }
+
+    // optional uint32 p_effSize = 5;
+    if (cached_has_bits & 0x00000010u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt32Size(
+          this->_internal_p_effsize());
+    }
+
+  }
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
         _internal_metadata_, total_size, &_cached_size_);

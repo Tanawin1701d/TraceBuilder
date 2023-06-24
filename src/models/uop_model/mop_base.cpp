@@ -33,7 +33,10 @@ namespace traceBuilder::model {
         std::vector<UOP_BASE *> ldUops;
         for (auto &ldOpr: rt_instr->getSrcLdOperands()) {
             auto ldUop = new UOP_SIMPLE(UOP_LOAD);
-            ldUop->addMemMeta(ldOpr.getMeta(), true);
+            /**meta data checking*/
+            ldUop->addMemMeta_Static(ldOpr.getMeta_Static());
+            ldUop->addMemMeta_phyArea(ldOpr.getMeta_phyArea(), true);///// please remind that phyArea before vir due to iteration
+            ldUop->addMemMeta_virArea(ldOpr.getMeta_virArea(), true);
             ldUops.push_back((UOP_BASE*)ldUop);
             results.push_back((UOP_BASE*)ldUop);
         }
@@ -50,7 +53,10 @@ namespace traceBuilder::model {
         std::vector<UOP_BASE *> stUops;
         for (auto &stOpr: rt_instr->getDesStOperands()) {
             auto stUop = new UOP_SIMPLE(UOP_STORE);
-            stUop->addMemMeta(stOpr.getMeta(), false);
+            /**meta data checking*/
+            stUop->addMemMeta_Static(stOpr.getMeta_Static());
+            stUop->addMemMeta_phyArea(stOpr.getMeta_phyArea(), false);
+            stUop->addMemMeta_virArea(stOpr.getMeta_virArea(), false);
             stUops.push_back((UOP_BASE*)stUop);
             results.push_back((UOP_BASE*)stUop);
         }

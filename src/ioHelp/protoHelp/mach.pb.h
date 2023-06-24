@@ -550,7 +550,7 @@ class machRecord PROTOBUF_FINAL :
   void _internal_set_seq_num(::PROTOBUF_NAMESPACE_ID::uint64 value);
   public:
 
-  // required uint64 v_Addr = 2;
+  // optional uint64 v_Addr = 2;
   bool has_v_addr() const;
   private:
   bool _internal_has_v_addr() const;
@@ -563,7 +563,7 @@ class machRecord PROTOBUF_FINAL :
   void _internal_set_v_addr(::PROTOBUF_NAMESPACE_ID::uint64 value);
   public:
 
-  // required uint64 p_effAddr = 4;
+  // optional uint64 p_effAddr = 4;
   bool has_p_effaddr() const;
   private:
   bool _internal_has_p_effaddr() const;
@@ -576,7 +576,7 @@ class machRecord PROTOBUF_FINAL :
   void _internal_set_p_effaddr(::PROTOBUF_NAMESPACE_ID::uint64 value);
   public:
 
-  // required uint32 v_Size = 3;
+  // optional uint32 v_Size = 3;
   bool has_v_size() const;
   private:
   bool _internal_has_v_size() const;
@@ -589,7 +589,7 @@ class machRecord PROTOBUF_FINAL :
   void _internal_set_v_size(::PROTOBUF_NAMESPACE_ID::uint32 value);
   public:
 
-  // required uint32 p_effSize = 5;
+  // optional uint32 p_effSize = 5;
   bool has_p_effsize() const;
   private:
   bool _internal_has_p_effsize() const;
@@ -1034,7 +1034,7 @@ inline void machRecord::set_seq_num(::PROTOBUF_NAMESPACE_ID::uint64 value) {
   // @@protoc_insertion_point(field_set:ProtoMessage.machRecord.seq_num)
 }
 
-// required uint64 v_Addr = 2;
+// optional uint64 v_Addr = 2;
 inline bool machRecord::_internal_has_v_addr() const {
   bool value = (_has_bits_[0] & 0x00000002u) != 0;
   return value;
@@ -1062,7 +1062,7 @@ inline void machRecord::set_v_addr(::PROTOBUF_NAMESPACE_ID::uint64 value) {
   // @@protoc_insertion_point(field_set:ProtoMessage.machRecord.v_Addr)
 }
 
-// required uint32 v_Size = 3;
+// optional uint32 v_Size = 3;
 inline bool machRecord::_internal_has_v_size() const {
   bool value = (_has_bits_[0] & 0x00000008u) != 0;
   return value;
@@ -1090,7 +1090,7 @@ inline void machRecord::set_v_size(::PROTOBUF_NAMESPACE_ID::uint32 value) {
   // @@protoc_insertion_point(field_set:ProtoMessage.machRecord.v_Size)
 }
 
-// required uint64 p_effAddr = 4;
+// optional uint64 p_effAddr = 4;
 inline bool machRecord::_internal_has_p_effaddr() const {
   bool value = (_has_bits_[0] & 0x00000004u) != 0;
   return value;
@@ -1118,7 +1118,7 @@ inline void machRecord::set_p_effaddr(::PROTOBUF_NAMESPACE_ID::uint64 value) {
   // @@protoc_insertion_point(field_set:ProtoMessage.machRecord.p_effAddr)
 }
 
-// required uint32 p_effSize = 5;
+// optional uint32 p_effSize = 5;
 inline bool machRecord::_internal_has_p_effsize() const {
   bool value = (_has_bits_[0] & 0x00000010u) != 0;
   return value;

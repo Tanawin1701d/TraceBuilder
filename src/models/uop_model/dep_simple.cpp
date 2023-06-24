@@ -46,6 +46,7 @@ namespace traceBuilder::model {
 
     void MEM_DEP::addMemMeta_virArea(traceBuilder::model::ADAS virAdas, bool isLoad){
         std::vector<ADAS>* targetVec = isLoad ? &_virLoadAdas : &_virStoreAdas;
+        targetVec->push_back(virAdas);
     }
 
     void MEM_DEP::addMemMeta_Static(traceBuilder::model::MEM_OPR_META meta) {

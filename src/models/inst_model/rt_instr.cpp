@@ -230,7 +230,8 @@ namespace traceBuilder::model {
         assert(tokens[ST_IDX_DIRO] == ST_VAL_DIRO_SRC);
 
         rt_instr_id = stoull(tokens[ST_IDX_FETCH_ID]);
-        addr = stoull(tokens[ST_IDX_FETCH_VADDR]);
+        addr = util::hexStr2uint(tokens[ST_IDX_FETCH_VADDR]);
+        //std::cout << addr << std::endl;
         size = stoi(tokens[ST_IDX_FETCH_SZ]);
         /// please remind that we must use upper case for mnemonic
         util::convertToUpperStr(tokens[ST_IDX_FETCH_MNEUMIC]);

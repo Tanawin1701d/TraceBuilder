@@ -2,14 +2,24 @@
 // Created by tanawin on 9/6/2566.
 //
 #include<pybind11/pybind11.h>
+
+/** trace front end*/
 #include"core/core.h"
 #include"core/tracerFrontEnd/traceToolFed.h"
 #include"core/tracerFrontEnd/legacyPin/lagacy_pin.h"
+
+/** result front end*/
 #include"core/resultFrontEnd/resultFed.h"
 #include"core/resultFrontEnd/legacyGem5/resultFed_gemLagacy.h"
+#include "core/resultFrontEnd/tbdGem5ISA/tbdGem5ISA.h"
+
+/** model*/
 #include"models/res_model/execUnit/execUnit.h"
 #include"models/res_model/memMng/MemMng.h"
+
+/** statPool*/
 #include"stat/statPool.h"
+
 
 
 namespace py = pybind11;
@@ -25,6 +35,7 @@ PYBIND11_MODULE( traceBuilder, m){
     /////// core result tool
     core::BIND_RESULT_FRONT_END(m);
     core::BIND_RESULT_FRONT_END_GEM_LAGACY(m);
+    core::BIND_RESULT_FRONT_END_TBDGEMISA(m);
     /////// model
     model::BIND_EXEC_UNIT_RES(m);
     model::BIND_MEM_MNG(m);

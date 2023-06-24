@@ -43,7 +43,7 @@ namespace traceBuilder::core {
             sizes = new uint64_t[amt];
             auto &ldOpr = rt_instr.getSrcLdOperands();
             for (size_t idx = 0; idx < amt; idx++) {
-                sizes[idx] = ldOpr[idx].getSize();
+                sizes[idx] = ldOpr[idx].getMeta_Static().size;
             }
         } else { //// store
             vAddrs = rt_obj.storeAddr;
@@ -55,7 +55,7 @@ namespace traceBuilder::core {
             sizes = new uint64_t[amt];
             auto &stOpr = rt_instr.getDesStOperands();
             for (size_t idx = 0; idx < amt; idx++) {
-                sizes[idx] = stOpr[idx].getSize();
+                sizes[idx] = stOpr[idx].getMeta_Static().size;
             }
         }
         /////// fill the physical address
