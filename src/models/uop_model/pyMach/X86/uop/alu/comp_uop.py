@@ -7,7 +7,7 @@ class UOP_COMP(ub.UOP_BASE):
     def __init__(self, _name : str, _cxxType_prefix : str):
         super().__init__(_cxxType_prefix, _name,
                          2, 2,
-                         resMap.cxxTypeToUopType.get(_cxxType_prefix, resMap.default_uopType), resMap.cxxTypeToExecUnit.get(_cxxType_prefix, 0)
+                         resMap.cxxTypeToUopType(_cxxType_prefix), resMap.cxxTypeToExecUnit(_cxxType_prefix)
                          )
 
         ##### TODO exec unit must be intepret from _cxxType_prefix
