@@ -10,6 +10,7 @@ pin/pin.log
 pin/PinOutput/*
 pin/TbOutput/*
 pin/TestProgram/*
+pin/src/*.o
 
 *.pyc
 
