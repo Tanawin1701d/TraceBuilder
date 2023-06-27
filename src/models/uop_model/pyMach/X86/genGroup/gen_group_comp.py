@@ -8,7 +8,7 @@ class MOP_GROUP_COMP(mop_group.MOP_GROUP_BASE):
                       "CMP" , "INC", "RCL" , "RCR",  "JMP", "LEA",
                       "CMPXCHG", "V64_INT_ALU"]
 
-    decKeys_intMul = ["MUL", "IMUL", "MULX", "V64_MUL", "V64_INT_MUL"]
+    decKeys_intMul = ["MUL", "IMUL", "MULX", "V64_INT_MUL"]
 
     decKeys_intDiv = ["DIV", "IDIV", "V64_DIV", "V64_INT_DIV"]
 

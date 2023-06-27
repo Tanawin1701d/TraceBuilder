@@ -1,135 +1,21 @@
-#include "pin.H"
-#include <iostream>
-#include <cstdio>
-#include <string>
-#include <algorithm>
-#include <stdio.h>
-#include <cstdlib>
-#include <unistd.h>
-#include <sys/mman.h>
-#include <fcntl.h>
-#include <fstream>
-#include <sstream>
+#include "analyser/main_instr.h"
 
 
-//// struct of runtime trace file
-
- 
-const uint8_t UNUSED_MEMOP = -1;
-
-const std::string REG64_PREFIX  = "mm";
-const std::string REG128_PREFIX = "xmm";
-const std::string REG256_PREFIX = "ymm";
-const size_t      REG64_PREFIX_SIZE      = 2;
-const size_t      REG128_256_PREFIX_SIZE = 3;
-
-
-///// these pragma is derived from 
-//https://stackoverflow.com/questions/32109646/how-to-write-a-struct-to-file-in-c-and-read-the-file
-
-//FILE* trace;
-static std::ofstream* outputFile_instr;
-static std::ofstream* outputFile_trace;
-static std::ofstream* outputFile_traceDb;
-
-//prewrite for optimize file buffering
-static std::string   preWrite;
-static std::string   preWriteRuntimeDebg;
-struct RT_OBJ*       preWriteRt; /// 400 M times 52 bytes
-UINT32 preWriteRt_idx = 0;
-UINT32 INSTRID        = 0;
-
-VOID tryFlush(bool forceFlush = false){
-    if ((preWrite.size() >= 4000000000) || forceFlush){
-        //std::cout << "flushing static trace" << std::endl;
-        *outputFile_instr << preWrite;
-        preWrite.clear();
-    }
-}
-
-VOID flushDb(std::string dayta){
-    *outputFile_traceDb << dayta;
-}
-
-
-std::string getDebugOutcome(const RT_OBJ& obj) {
-    std::ostringstream ss;
-    ss << "loadAddr: [";
-    for (int i = 0; i < 2; i++) {
-        ss << "0x" << std::hex << obj.loadAddr[i] << ", ";
-    }
-    ss.seekp(-2, ss.cur);
-    ss << "], storeAddr: [";
-    for (int i = 0; i < 2; i++) {
-        ss << "0x" << std::hex << obj.storeAddr[i] << ", ";
-    }
-    ss.seekp(-2, ss.cur);
-    ss << "], fetchId: " << std::dec << obj.fetchId << ", loadMemOpNum: [";
-    // for (int i = 0; i < 2; i++) {
-    //     ss << (int)obj.loadMemOpNum[i] << ", ";
-    // }
-    ss.seekp(-2, ss.cur);
-    ss << "], storeMemOpNum: [";
-    // for (int i = 0; i < 2; i++) {
-    //     ss << (int)obj.storeMemOpNum[i] << ", ";
-    // }
-    ss.seekp(-2, ss.cur);
-    ss << "]";
-    return ss.str();
-}
-
-
-VOID flushRuntimeData(){
-    if (preWriteRt_idx){
-        outputFile_trace->write((char*)preWriteRt, sizeof(RT_OBJ)*preWriteRt_idx);
-        ////// this is used for debug
-    }
-}
-
-VOID bufferInitialize(UINT32 initIdx){
-
-    for (uint32_t i = 0; i < maxMemOpPerLS; i++){
-        preWriteRt[initIdx].amt_load  = 0;
-        preWriteRt[initIdx].amt_store = 0;
-    }
-
-}
-
-VOID L_TRACE(ADDRINT addr, UINT32 lsFieldId){
-    preWriteRt[preWriteRt_idx].loadAddr[ lsFieldId ] = addr;
-    preWriteRt[preWriteRt_idx].amt_load++;
-}
-
-VOID S_TRACE(ADDRINT addr, UINT32 lsFieldId){
-    preWriteRt[preWriteRt_idx].storeAddr[lsFieldId] = addr;     // update address;
-    preWriteRt[preWriteRt_idx].amt_store++;
-}
-
-VOID ButtomEachIntr(UINT32 fetchId){
-    preWriteRt[preWriteRt_idx].fetchId = fetchId;
-    //// we print debug before debug
-    //preWriteRuntimeDebg += getDebugOutcome(preWriteRt[preWriteRt_idx]) + '\n';
-    //flushDb(preWriteRuntimeDebg);
-    //preWriteRuntimeDebg.clear();
-    ////////////////////////////////
-    preWriteRt_idx++;
-    if ( preWriteRt_idx >= maxRtTracing){
-        flushRuntimeData();
-        //reset index of the buffer
-        preWriteRt_idx = 0;
-    }
-    /// initilize for next instruction
-    /// this is crucial due to inconsistent state exist
-    bufferInitialize(preWriteRt_idx);
-}
 
 // The Instruction function is called for every instruction
-VOID Instruction(INS ins, VOID* v)
+VOID MAIN_instrument(INS ins, VOID* v)
 {
+
+    std::string preWrite;
 
     if ( INS_IsNop(ins) ){
         return;
     }
+
+    /** collect simd metadata*/
+    SIMD_INSTR_ARG simdMeta;
+    tryCollectSimdMeta(ins, simdMeta);
+
     
     //instruction
     std::string _instrName   = INS_Disassemble(ins);
@@ -144,11 +30,6 @@ VOID Instruction(INS ins, VOID* v)
     UINT32 memOp = 0;
     UINT32 loaded_amt = 0;
     UINT32 stored_amt = 0;
-
-    //instruction mode
-    BOOL isVec_64  = false; ////// dtect avx and sse instruction
-    BOOL isVec_128 = false; 
-    BOOL isVec_256 = false;
 
     //decode string varible
     std::string srcKey;
@@ -211,29 +92,12 @@ VOID Instruction(INS ins, VOID* v)
                     std::string preRegStr;
 
                     //////// WRITE REG OPERAND
-                    preRegStr += "R "; // source register
-                    preRegStr += "X "; // source register
+                    preRegStr += "R "; // register
+                    preRegStr += "X "; // source/des register
                     preRegStr += reg ? REG_StringShort(static_cast<REG>(reg)) : "-1";
                     preRegStr += "\n";
 
                     std::string regStr = REG_StringShort(static_cast<REG>(reg));
-
-                    /////// check is it is vector extension operand
-                    if (regStr.size() > REG64_PREFIX_SIZE){
-                            ////// check mm
-                            if(regStr.substr(0, REG64_PREFIX_SIZE) == REG64_PREFIX){
-                                isVec_64 = true;
-                            }
-
-                    }
-                    if (regStr.size() > REG128_256_PREFIX_SIZE){
-                            ////// check xmm ymm
-                            if(regStr.substr(0, REG128_256_PREFIX_SIZE) == REG128_PREFIX){
-                                isVec_128 = true;
-                            }else if (regStr.substr(0, REG128_256_PREFIX_SIZE) == REG256_PREFIX){
-                                isVec_256 = true;
-                            }
-                    }
 
                     /////// flag register is ignore
                     if (isSrc && regStr != rflagsStr){
@@ -318,14 +182,14 @@ VOID Instruction(INS ins, VOID* v)
                  srcKey    += 'I';
                  opr_count++;
              }
-    }
+        }
     
     }
     //////// WRITE decode key and debug string
     resKey = "N " + INS_Mnemonic(ins) + "$" + srcKey + "$" + desKey + "  " + _instrName;
     preWrite += resKey + "\n";
 
-    
+    int INSTRID = getAndIncFetchId();
     ////////////////////////// for insert predicated of the end of instruction
     INS_InsertPredicatedCall(ins, IPOINT_BEFORE, 
                             (AFUNPTR)ButtomEachIntr,
@@ -344,87 +208,19 @@ VOID Instruction(INS ins, VOID* v)
     preWrite += " ";
     preWrite += std::to_string(instrSize);
     preWrite += " ";
-
-    ////// for vector instruction we will add prefix before use
-    bool isVec = isVec_256 || isVec_128 || isVec_64;
-    if (isVec){
-        ///////// add prefix for each size
-        if (isVec_256){
-            preWrite += "V256_";
-        }else if (isVec_128){
-            preWrite += "V128_";
-        }else if (isVec_64){
-            preWrite += "V64_";
-        }
-        ///////// add pseudo suffix operand size
-        if (opr_count == 2){
-            preWrite += "MOV";
-        }else{
-            preWrite += "COMP";
-        }
+    if (simdMeta.isSimd){
+        preWrite += simdMeta.mnemonic;
     }else{
         preWrite += INS_Mnemonic(ins);
     }
-
+    
     preWrite += "\n";
+    /** write seperator*/
     preWrite += "---------------------------------\n";
 
-    INSTRID++;
-    tryFlush(true);
+
+    /*** write to file */
+    writeStaticTraceFile(preWrite, true);
 
     
-}
-
-VOID Fini(INT32 code, VOID* v)
-{
-    printf("write remain to disk\n");
-    *outputFile_instr << preWrite;
-    flushRuntimeData();
-    preWrite.clear();
-    outputFile_instr->close();     
-    outputFile_trace->close();
-}
-
-
-
-
-KNOB<std::string> outputinstrFileKnob(KNOB_MODE_WRITEONCE, "pintool",
-    "i", "/tmp/instr.txt", "output for instruction model");
-
-KNOB<std::string> outputdataFileKnob(KNOB_MODE_WRITEONCE, "pintool",
-    "d", "/tmp/runtimeTrace.txt", "output for runtime tracing");
-
-KNOB<std::string> outputdebugtraceKnob(KNOB_MODE_WRITEONCE, "pintool",
-    "db", "/tmp/runtimeTrace.dbg", "output for runtime debugging");
-
-int main(int argc, char* argv[])
-{
-    // Initialize the Pin tool
-
-    PIN_Init(argc, argv);
-    //preWrite.reserve(4000001000);
-
-    ///////////////////////////////////////////////////
-    // prewrite for run time tracing file
-    preWriteRt         = new RT_OBJ[maxRtTracing];
-    bufferInitialize(0);
-    ///////////////////////////////////////////////////
-    outputFile_instr   = new std::ofstream(outputinstrFileKnob .Value()),
-    outputFile_trace   = new std::ofstream(outputdataFileKnob  .Value()),
-    outputFile_traceDb = new std::ofstream(outputdebugtraceKnob.Value());
-    ///////////////////////////////////////////////////
-    // prewrite for static tracing file
-    preWrite.reserve(2000001000);
-    ///////////////////////////////////////////////////
-    // Register the Instruction function to be called for every instruction
-    INS_AddInstrumentFunction(Instruction, nullptr);
-    //// flush static trace
-    //tryFlush(true);
-    //outputFile_instr->close();
-
-    PIN_AddFiniFunction(Fini, 0);
-    // Start the program and never return
-    PIN_StartProgram();
-
-    return 0;
 }

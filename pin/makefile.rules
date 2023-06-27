@@ -110,11 +110,56 @@ SANITY_SUBSET := $(TEST_TOOL_ROOTS) $(TEST_ROOTS)
 
 # This section contains the build rules for all binaries that have special build rules.
 # See makefile.default.rules for the default build rules.
-dddd :
-	@echo "$(OBJDIR)"tracer2"$(PINTOOL_SUFFIX)"
 
-$(OBJDIR)tracer$(OBJ_SUFFIX): tracer.cpp
-	$(CXX) $(TOOL_CXXFLAGS) $(COMP_OBJ)$@ $<
 
-$(OBJDIR)tracer2$(PINTOOL_SUFFIX): $(OBJDIR)tracer$(OBJ_SUFFIX)
+# dddd :
+# 	@echo "$(OBJDIR)"tracer2"$(PINTOOL_SUFFIX)"
+
+# $(OBJDIR)tracer$(OBJ_SUFFIX): tracer.cpp
+# 	@echo "comp obj : $(COMP_OBJ)$@ $<"
+# 	$(CXX) $(TOOL_CXXFLAGS) $(COMP_OBJ)$@ $<
+
+# $(OBJDIR)tracer2$(PINTOOL_SUFFIX): $(OBJDIR)tracer$(OBJ_SUFFIX)
+# 	@echo "linker : $(LINKER)"
+# 	@echo "linkExe: $(LINK_EXE)"
+# 	@echo "src: $(^:%.h=)"
+# 	@echo "tool: $(TOOL_LPATHS) "
+# 	@echo "toollib: $(TOOL_LIBS) "
+# 	@echo "TOOL_LDFLAGS_NOOPT: $(TOOL_LDFLAGS_NOOPT)"
+# 	$(LINKER) $(TOOL_LDFLAGS_NOOPT) $(LINK_EXE)$@ $(^:%.h=) $(TOOL_LPATHS) $(TOOL_LIBS)
+
+
+SRCDIR := src
+
+SRCFILE := $(shell find $(SRCDIR) -name '*.cpp')
+
+OBJS    := $(SRCFILE:%.cpp=%.o)
+$(info(OBJS: $(OBJS)))
+MYINC   := -I $(SRCDIR)
+$(info(MYINC: $(MYINC)))
+######## compile all file
+
+.PHONY: printVar
+
+printVar:
+	@echo "SRCFILE: $(SRCFILE)"
+	@echo "OBJS: $(OBJS)"
+	@echo "MYINC: $(MYINC)"
+
+##### compile c++ file
+$(SRCDIR)/%$(OBJ_SUFFIX): $(SRCDIR)/%.cpp
+	@echo "compiling $< to $@"
+	$(CXX) $(TOOL_CXXFLAGS) $(MYINC)  $(COMP_OBJ) $@ $<
+
+##### include file
+$(OBJDIR)tracer$(PINTOOL_SUFFIX): $(OBJS)
+	@echo "linking $< to $@ with $(^:%.h=)"
+	mkdir obj-intel64
 	$(LINKER) $(TOOL_LDFLAGS_NOOPT) $(LINK_EXE)$@ $(^:%.h=) $(TOOL_LPATHS) $(TOOL_LIBS)
+
+myclean:
+	rm -r obj-intel64
+	find $(SRCDIR) -type f -name "*.o" -delete
+
+
+
