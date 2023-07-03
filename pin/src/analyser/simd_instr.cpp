@@ -2,27 +2,55 @@
 
 
 void tryCollectSimdMeta(INS ins, SIMD_INSTR_ARG& result){
-    xed_category_enum_t category = (xed_category_enum_t)INS_Category(ins);
+    //xed_category_enum_t category = (xed_category_enum_t)INS_Category(ins);
 
     result.isSimd = true;
 
-    if (category == XED_CATEGORY_MMX){
-        result.length = L64;
-        result.mnemonic = "V64";
-    }else if (category == XED_CATEGORY_AVX){
-        result.length = L128;
-        result.mnemonic = "V128";
+    // if (category == XED_CATEGORY_MMX){
+    //     result.length = L64;
+    //     result.mnemonic = "V64";
+    // }else if (category == XED_CATEGORY_AVX){
+    //     result.length = L128;
+    //     result.mnemonic = "V128";
 
-    }else if (category == XED_CATEGORY_AVX2){
-        result.length = L256;
-        result.mnemonic = "V256";
-    }else if (category == XED_CATEGORY_AVX512){
+    // }else if (category == XED_CATEGORY_AVX2){
+    //     result.length = L256;
+    //     result.mnemonic = "V256";
+    // }else if (category == XED_CATEGORY_AVX512){
+    //     result.length = L512;
+    //     result.mnemonic = "V512";
+    // }else{
+    //     result.isSimd = false;
+    //     return;
+    // }
+
+    /** check by using operand instead*/
+    uint32_t maxOprSize = 0;
+    UINT32 numOperands = INS_OperandCount(ins);
+    for (UINT32 opIdx = 0; opIdx < numOperands; opIdx++){
+        if (INS_OperandIsReg(ins, opIdx)){
+            REG  reg   = INS_OperandReg    (ins, opIdx);
+            if (reg != REG_INVALID()){
+                uint32_t operandSize = REG_Size(reg);
+                maxOprSize = std::max(operandSize, maxOprSize);
+            }
+        }
+    }
+    /** check operand type*/
+    if (maxOprSize >= REG_512_SIZE){
         result.length = L512;
-        result.mnemonic = "V512";
+        result.mnemonic = SIMDL_512;
+    }else if (maxOprSize >= REG_256_SIZE){
+        result.length = L256;
+        result.mnemonic = SIMDL_256;
+    }else if (maxOprSize >= REG_128_SIZE){
+        result.length = L128;
+        result.mnemonic = SIMDL_128;
     }else{
         result.isSimd = false;
         return;
     }
+    /******************************************/
 
     /*** check wheather it is floating point*/
     const std::string MOV = "MOV";

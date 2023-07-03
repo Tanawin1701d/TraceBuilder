@@ -12,7 +12,7 @@ class MOP_GROUP_MOV(mop_group.MOP_GROUP_BASE):
 
     def __init__(self):
         super().__init__(4, mop_mov_x86.MOP_MOV_ALL)
-        self.addMopArgExtractComb((self.srcOpr, self.desOpr, ["SIM_MOV"], [self.decKeys0]))
+        self.addMopArgExtractComb((self.srcOpr, self.desOpr, ["MOV_SIM"], [self.decKeys0]))
 
 class MOP_GROUP_MOV128(mop_group.MOP_GROUP_BASE):
     decKeys0 = ["V128_MOV"]
@@ -21,4 +21,4 @@ class MOP_GROUP_MOV128(mop_group.MOP_GROUP_BASE):
 
     def __init__(self):
         super().__init__(4, mop_mov_x86.MOP_MOV256_ALL)
-        self.addMopArgExtractComb((self.srcOpr, self.desOpr, ["SIM_MOV128"], [self.decKeys0]))
+        self.addMopArgExtractComb((self.srcOpr, self.desOpr, ["MOV128_SIM"], [self.decKeys0]))

@@ -1,7 +1,10 @@
 #include "instruFunc.h"
 
+/** first time that this object is built the function is initialized to default value*/
 RT_OBJ preWriteObj;
-int cur_fetchId = 0;
+inline void cleanPrewriteObj();
+
+/** these following functions is used to injected to main program*/
 
 
 VOID L_TRACE(ADDRINT addr, UINT32 lsFieldId){
@@ -15,10 +18,12 @@ VOID S_TRACE(ADDRINT addr, UINT32 lsFieldId){
 }
 
 VOID ButtomEachIntr(UINT32 fetchId){
+    preWriteObj.fetchId = fetchId;
     writeDynamicTraceFile(preWriteObj);
+    cleanPrewriteObj();
 }
+/** for clear preWriteObj*/
 
-int getAndIncFetchId(){
-    cur_fetchId++;
-    return cur_fetchId-1;
+inline void cleanPrewriteObj(){
+    preWriteObj = RT_OBJ();
 }

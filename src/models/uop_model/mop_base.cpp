@@ -37,6 +37,7 @@ namespace traceBuilder::model {
             ldUop->addMemMeta_Static(ldOpr.getMeta_Static());
             ldUop->addMemMeta_phyArea(ldOpr.getMeta_phyArea(), true);///// please remind that phyArea before vir due to iteration
             ldUop->addMemMeta_virArea(ldOpr.getMeta_virArea(), true);
+            ldUop->setExecUnit(47);/* for now load unit is set to */
             ldUops.push_back((UOP_BASE*)ldUop);
             results.push_back((UOP_BASE*)ldUop);
         }
@@ -57,6 +58,7 @@ namespace traceBuilder::model {
             stUop->addMemMeta_Static(stOpr.getMeta_Static());
             stUop->addMemMeta_phyArea(stOpr.getMeta_phyArea(), false);
             stUop->addMemMeta_virArea(stOpr.getMeta_virArea(), false);
+            stUop->setExecUnit(48);/* for now store unit is set to */
             stUops.push_back((UOP_BASE*)stUop);
             results.push_back((UOP_BASE*)stUop);
         }

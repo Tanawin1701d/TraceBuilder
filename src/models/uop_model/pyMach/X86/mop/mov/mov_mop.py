@@ -7,6 +7,7 @@ import X86.uop.resMap as resMap
 
 class MOP_MOV_ALL(mop_cen_x86.MOP_BASE_X86):
     def __init__(self, srcOpr0Type, desOpr0Type, _cxxType_prefix:str, _decKeys: list):
+                                            ### as you see, move will not have suggest comp uop class
         super().__init__()
         #### load the value
         if srcOpr0Type in [opr.OPR_IMM, opr.OPR_MEM]:

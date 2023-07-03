@@ -11,9 +11,9 @@ const int maxMemOpPerLS = 2;
 struct RT_OBJ{
     uint64_t loadAddr     [maxMemOpPerLS];
     uint64_t storeAddr    [maxMemOpPerLS];
-    uint32_t fetchId;
-    uint8_t  amt_load;
-    uint8_t  amt_store;
+    uint32_t fetchId   = 0;
+    uint8_t  amt_load  = 0;
+    uint8_t  amt_store = 0;
 };
 #pragma pack(pop)
 

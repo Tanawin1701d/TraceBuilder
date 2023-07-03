@@ -71,7 +71,7 @@ class OPR_TEMP(opr_base.OPR_BASE):
 
     def genCXX_typeInitializer(self, **kwargs) -> str:
         if (self.kwargeforInitVar in kwargs) and (type(kwargs[self.kwargeforInitVar]) == int):
-            return "{TEMPTYPE}({INITVAL})".format(TEMPTYPE = self.genCXX_varType(),
+            return "{TEMPTYPE}(START_TREGID + {INITVAL})".format(TEMPTYPE = self.genCXX_varType(),
                                                   INITVAL = kwargs[self.kwargeforInitVar])
 
     def genCXX_callAddMeta(self, isSrc) -> str:

@@ -21,7 +21,7 @@ namespace traceBuilder {
  * Brief setVec
  * setVec is light-weight data structure which design for ask the existence data in set
  * with ability to sweep the structure in O(n).
- * but for now remove and sorting is not support yet
+ * but for now removing and sorting is not support yet
  * to support setVec type T must inherit setVecIndexer
  */
 

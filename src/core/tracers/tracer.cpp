@@ -50,6 +50,7 @@ namespace traceBuilder::core {
             amt = rt_obj.amt_store;
             results.amt_store = amt; /////// fill number of stored operand
             pAddrs = results.phyStoreAddr;
+            //std::cout << "amt " << amt << " rt amt " << rt_instr.countDesStOperands() <<std::endl;
             assert((amt) == rt_instr.countDesStOperands());
             /////// fill size that operand need to store
             sizes = new uint64_t[amt];

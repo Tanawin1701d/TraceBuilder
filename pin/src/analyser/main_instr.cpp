@@ -1,6 +1,11 @@
 #include "analyser/main_instr.h"
 
+int cur_fetchId = 0;
 
+int getAndIncFetchId(){
+    cur_fetchId++;
+    return cur_fetchId-1;
+}
 
 // The Instruction function is called for every instruction
 VOID MAIN_instrument(INS ins, VOID* v)
@@ -42,6 +47,7 @@ VOID MAIN_instrument(INS ins, VOID* v)
 
     ///////////////////////// for compute instruction
     UINT32 numOperands = INS_OperandCount(ins);
+    uint32_t maxOprSize = 0;
 
     if (INS_IsLea(ins)){
         //////// this is conrner case that pintool not verbose anything about source of effective address
@@ -88,6 +94,12 @@ VOID MAIN_instrument(INS ins, VOID* v)
                     //if (reg != REG_RFLAGS)
                     assert(!INS_OperandIsMemory(ins, opIdx));
                     assert(isSrc || isDes);
+
+                    /*** collect stat of operand type*/
+                    if (reg != REG_INVALID()){
+                        uint32_t operandSize = REG_Size(reg);
+                        maxOprSize = std::max(operandSize, maxOprSize);
+                    }
 
                     std::string preRegStr;
 
@@ -186,7 +198,7 @@ VOID MAIN_instrument(INS ins, VOID* v)
     
     }
     //////// WRITE decode key and debug string
-    resKey = "N " + INS_Mnemonic(ins) + "$" + srcKey + "$" + desKey + "  " + _instrName;
+    resKey = "N " + INS_Mnemonic(ins) + "$" + srcKey + "$" + desKey + "  " + _instrName + " cate: " + xed_category_enum_t2str((xed_category_enum_t)INS_Category(ins)) + " oprSize: " + std::to_string(maxOprSize);
     preWrite += resKey + "\n";
 
     int INSTRID = getAndIncFetchId();

@@ -21,6 +21,10 @@ const std::string SIMDL_64  = "V64";
 const std::string SIMDL_128 = "V128";
 const std::string SIMDL_256 = "V256";
 const std::string SIMDL_512 = "V512";
+const uint32_t    REG_64_SIZE = 8;
+const uint32_t    REG_128_SIZE = 16;
+const uint32_t    REG_256_SIZE = 32;
+const uint32_t    REG_512_SIZE = 64;
 
 
 enum SIMD_TYPE{

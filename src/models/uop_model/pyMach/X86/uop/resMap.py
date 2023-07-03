@@ -35,6 +35,7 @@ UOPTYPE_IMM      = "UOP_IMM"
 
 
 ##### is op class is related to gem5 opclass to precisely inject microop to specific f unit
+##### for now we use opclass as same as cxx prefix too
 gem5_opclass  = {
 "No_OpClass"       : (0,  UOPTYPE_COMP ),
 "IntAlu"           : (1,  UOPTYPE_COMP ), ## used
@@ -69,10 +70,28 @@ gem5_opclass  = {
 "SimdFloatMult"    : (30, UOPTYPE_COMP ),
 "SimdFloatMultAcc" : (31, UOPTYPE_COMP ),
 "SimdFloatSqrt"    : (32, UOPTYPE_COMP ),
-cxxTypeUOP_LOAD    : (33, UOPTYPE_LOAD ),
-cxxTypeUOP_STORE   : (34, UOPTYPE_IMM  ),
-cxxTypeUOP_IMM     : (0, UOPTYPE_STORE),
-cxxTypeUOP_MOVREG  : (0 , UOPTYPE_COMP ),
+"SimdReduceAdd"     : (33, UOPTYPE_COMP),
+"SimdReduceAlu"     : (34, UOPTYPE_COMP),
+"SimdReduceCmp"     : (35, UOPTYPE_COMP),
+"SimdFloatReduceAdd": (36, UOPTYPE_COMP),
+"SimdFloatReduceCmp": (37, UOPTYPE_COMP),
+"SimdAes"           : (38, UOPTYPE_COMP),
+"SimdAesMix"        : (39, UOPTYPE_COMP),
+"SimdSha1Hash"      : (40, UOPTYPE_COMP),
+"SimdSha1Hash2"     : (41, UOPTYPE_COMP),
+"SimdSha256Hash"    : (42, UOPTYPE_COMP),
+"SimdSha256Hash2"   : (43, UOPTYPE_COMP),
+"SimdShaSigma2"     : (44, UOPTYPE_COMP),
+"SimdShaSigma3"     : (45, UOPTYPE_COMP),
+"SimdPredAlu"       : (46, UOPTYPE_COMP),
+cxxTypeUOP_LOAD     : (47, UOPTYPE_LOAD),
+cxxTypeUOP_STORE    : (48, UOPTYPE_STORE),
+"FloatMemRead"      : (49, UOPTYPE_COMP),
+"FloatMemWrite"     : (50, UOPTYPE_COMP),
+"IprAccess"         : (51, UOPTYPE_COMP),
+"InstPrefetch"      : (52, UOPTYPE_COMP),
+cxxTypeUOP_IMM     : ( 0, UOPTYPE_IMM  ),
+cxxTypeUOP_MOVREG  : ( 0, UOPTYPE_COMP )
 
 }
 

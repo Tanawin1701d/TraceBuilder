@@ -9,8 +9,8 @@ class MOP_GROUP_CMP(mop_group.MOP_GROUP_BASE):
 
     def __init__(self):
         ####### simple compare
-        super().__init__(4, mop_ctrl_flw_x86.MOP_CMP_ALL)
-        self.addMopArgExtractComb((self.srcOpr, self.srcOpr, ["CMP_SIM_ALU"], [self.decKeys0]))
+        super().__init__(5, mop_ctrl_flw_x86.MOP_CMP_ALL)
+        self.addMopArgExtractComb((self.srcOpr, self.srcOpr, ["CMP_ALL"], ["IntAlu"], [self.decKeys0]))
 
 
 class MOP_GROUP_JMP(mop_group.MOP_GROUP_BASE):
@@ -22,6 +22,6 @@ class MOP_GROUP_JMP(mop_group.MOP_GROUP_BASE):
     srcdesOpr = [opr.OPR_REG]
 
     def __init__(self):
-        super().__init__(4, mop_ctrl_flw_x86.MOP_JMP_ALL)
-        self.addMopArgExtractComb((self.srcdesOpr, self.srcdesOpr, ["JMP_SIM_ALU"], [self.decKeys0]))
+        super().__init__(5, mop_ctrl_flw_x86.MOP_JMP_ALL)
+        self.addMopArgExtractComb((self.srcdesOpr, self.srcdesOpr, ["CTRL_ALL"], ["IntAlu"], [self.decKeys0]))
 

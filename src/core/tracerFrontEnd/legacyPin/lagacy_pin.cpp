@@ -77,18 +77,18 @@ namespace traceBuilder::core {
             std::cout << "[legacyPin:73] error alignment is not match" << std::endl;
         }
         ////////////////////////////////////////////////////////////////////////////////////////////
+#ifdef MINI_GEN
+        int miniCount = 0;
+        bool stop_now = false;
+
+#endif
+
         while (true) {
 
             uint64_t remainObj = neededObj - readedObj;
             uint64_t currentBatchObj = std::min(remainObj, MAX_RT_BUFFER_OBJ);
             uint64_t currentBatchByte = currentBatchObj * sizeof(RT_OBJ);
 
-#ifdef MINI_GEN
-            if (readedObj > 300){
-                std::cout << "finish dynamic tracing [mini mode]" << std::endl;
-                break;
-            }
-#endif
 
             if (!remainObj) {
                 std::cout << "finish dynamic tracing" << std::endl;
@@ -102,7 +102,21 @@ namespace traceBuilder::core {
             for (int rtObjIdx = 0; rtObjIdx < currentBatchObj; rtObjIdx++) {
                 dynData.rawData = *(bufferRtObj + rtObjIdx);
                 tracer->onGetDynTraceValue(dynData);
+#ifdef MINI_GEN
+                if (miniCount++ > 1500000){
+                    std::cout << "finish dynamic tracing [mini mode]" << std::endl;
+                    stop_now = true;
+                    break;
+                }
+#endif
             }
+#ifdef MINI_GEN
+            if (stop_now){
+                break;
+            }
+#endif
+
+
             /////// update current state
             readedObj += currentBatchObj;
         }

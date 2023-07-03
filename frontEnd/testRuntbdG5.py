@@ -22,27 +22,14 @@ cmd = "fluidanimate" if cmd == 1 else "blackscholes"
 
 mem_mng = tbd.MEM_MNG(12, 6, 1 << (4 + 30), 0)
 
-exec_res = tbd.EXEC_UNIT_RES(98,99)
-exec_res.setMaxAvailable(1, 6) #///"INT_SIM_ALU"
-exec_res.setMaxAvailable(2, 2) #///"INT_MUL_DIV_ALU"
-exec_res.setMaxAvailable(3, 4) #///"FLOAT_SIM_ALU"
-exec_res.setMaxAvailable(4, 2) #///"FLOAT_MUL_DIV_ALU"
-exec_res.setMaxAvailable(5, 1) #///"SIM128_ALU"
-exec_res.setMaxAvailable(6, 4) #///"MOV_MEM_LD"
-exec_res.setLatencyCycle(1, 1) #///"INT_SIM_ALU"
-exec_res.setLatencyCycle(2, 3) #///"INT_MUL_DIV_ALU"
-exec_res.setLatencyCycle(3, 2) #///"FLOAT_SIM_ALU"
-exec_res.setLatencyCycle(4, 4) #///"FLOAT_MUL_DIV_ALU"
-exec_res.setLatencyCycle(5, 1) #///"SIM128_ALU"
-exec_res.setLatencyCycle(6, 1) #///"MOV_MEM_LD"
+exec_res = tbd.EXEC_UNIT_RES(0, 100)
 
 
-
-PinStaticPath = os.path.join(projectPath, "pin/PinOutput/{workLoad}/static" .format(workLoad = cmd))
-PinDynPath    = os.path.join(projectPath, "pin/PinOutput/{workLoad}/dynamic".format(workLoad = cmd))
+PinStaticPath = os.path.join(projectPath, "pin/PinOutput/{workLoad}/static2" .format(workLoad = cmd))
+PinDynPath    = os.path.join(projectPath, "pin/PinOutput/{workLoad}/dynamic2".format(workLoad = cmd))
 pinFed        = tbd.LAGACY_PIN_TRACER(PinStaticPath, PinDynPath)
 
-gem5dynPath   = os.path.join(projectPath, "pin/TbOutput/{workLoad}/tbdIsaDyn256_mini").format(workLoad = cmd)
+gem5dynPath   = os.path.join(projectPath, "pin/TbOutput/{workLoad}/DynTbdIsa").format(workLoad = cmd)
 gem5Fed       = tbd.TBD_GEM5_ISA(gem5dynPath)
 
 core          = tbd.CORE(mem_mng, exec_res)
@@ -57,6 +44,6 @@ end = time.time()
 print("time use is ", end - start)
 
 tbd.finalizeStat()
-gem5StatPath   = os.path.join(projectPath, "pin/TbOutput/{workLoad}/tbdIsaDyn256Stat_mini").format(workLoad = cmd)
+gem5StatPath   = os.path.join(projectPath, "pin/TbOutput/{workLoad}/DynTbdIsa_stat").format(workLoad = cmd)
 tbd.saveStat(gem5StatPath)
 

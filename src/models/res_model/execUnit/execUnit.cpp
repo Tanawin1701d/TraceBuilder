@@ -17,7 +17,7 @@ namespace traceBuilder::model {
     }
 
     int EXEC_UNIT_RES::getMaxAvailable(EXEC_UNIT_ID resId) {
-        return (resId <= excludeIdFrom && resId >= excludeIdTo)
+        return (resId >= excludeIdFrom && resId < excludeIdTo)
                ? INT32_MAX : maxAvailable[resId];
     }
 

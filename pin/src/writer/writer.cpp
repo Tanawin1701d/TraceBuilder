@@ -12,8 +12,8 @@
 *   F S id virtualaddress size  name
 */
 
-const size_t             staticWriteLim = 1 << 20; 
-std::string           staticWriteBuffer;
+const size_t   staticWriteLim = 1 << 20; 
+std::string    staticWriteBuffer;
 std::ofstream* staticFileStream;
 
 inline void flushStaticTraceFile() {

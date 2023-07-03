@@ -41,15 +41,15 @@ void IntAlu$R_R$R_T$1::doDepenCheck(UOP_WINDOW* uop_window){
 
 
 
-void MOV_MEM_ST$T$M$34::addMeta(OPR_TREG& opr_preDes_1 ,OPR_MEM& opr_m_des_1){
+void MOV_MEM_ST$T$M$48::addMeta(OPR_TREG& opr_preDes_1 ,OPR_MEM& opr_m_des_1){
           addTRegMeta(opr_preDes_1.getMeta(), true);
           addMemMeta_phyArea (opr_m_des_1.getMeta_phyArea(), false);
           addMemMeta_virArea (opr_m_des_1.getMeta_virArea(), false);
           addMemMeta_Static (opr_m_des_1.getMeta_Static());
-       setUopType(UOP_TYPE::UOP_IMM);
-       setExecUnit(34);
+       setUopType(UOP_TYPE::UOP_STORE);
+       setExecUnit(48);
 }
-void MOV_MEM_ST$T$M$34::doDepenCheck(UOP_WINDOW* uop_window){
+void MOV_MEM_ST$T$M$48::doDepenCheck(UOP_WINDOW* uop_window){
    doMemDepenCheck(uop_window);
    doExecDepenCheck(uop_window);
 }
@@ -122,7 +122,7 @@ void IntAlu$R_R$T$1::doDepenCheck(UOP_WINDOW* uop_window){
 void MOV_MEM_LDI$I$T$0::addMeta(OPR_IMM& opr_i_src_1 ,OPR_TREG& opr_t_1){
           /* imm had no meta data*/;
           addTRegMeta(opr_t_1.getMeta(), false);
-       setUopType(UOP_TYPE::UOP_STORE);
+       setUopType(UOP_TYPE::UOP_IMM);
        setExecUnit(0);
 }
 void MOV_MEM_LDI$I$T$0::doDepenCheck(UOP_WINDOW* uop_window){
@@ -226,15 +226,15 @@ void IntAlu$R_T$T$1::doDepenCheck(UOP_WINDOW* uop_window){
 
 
 
-void MOV_MEM_LD$M$T$33::addMeta(OPR_MEM& opr_m_src_1 ,OPR_TREG& opr_t_1){
+void MOV_MEM_LD$M$T$47::addMeta(OPR_MEM& opr_m_src_1 ,OPR_TREG& opr_t_1){
           addMemMeta_phyArea (opr_m_src_1.getMeta_phyArea(), true);
           addMemMeta_virArea (opr_m_src_1.getMeta_virArea(), true);
           addMemMeta_Static (opr_m_src_1.getMeta_Static());
           addTRegMeta(opr_t_1.getMeta(), false);
        setUopType(UOP_TYPE::UOP_LOAD);
-       setExecUnit(33);
+       setExecUnit(47);
 }
-void MOV_MEM_LD$M$T$33::doDepenCheck(UOP_WINDOW* uop_window){
+void MOV_MEM_LD$M$T$47::doDepenCheck(UOP_WINDOW* uop_window){
    doMemDepenCheck(uop_window);
    doExecDepenCheck(uop_window);
 }
@@ -4508,15 +4508,15 @@ void MOV_REG$R$R$0::doDepenCheck(UOP_WINDOW* uop_window){
 
 
 
-void MOV_MEM_ST$R$M$34::addMeta(OPR_REG& opr_r_src_0 ,OPR_MEM& opr_x_des_0){
+void MOV_MEM_ST$R$M$48::addMeta(OPR_REG& opr_r_src_0 ,OPR_MEM& opr_x_des_0){
           addRegMeta (opr_r_src_0.getMeta(), true);
           addMemMeta_phyArea (opr_x_des_0.getMeta_phyArea(), false);
           addMemMeta_virArea (opr_x_des_0.getMeta_virArea(), false);
           addMemMeta_Static (opr_x_des_0.getMeta_Static());
-       setUopType(UOP_TYPE::UOP_IMM);
-       setExecUnit(34);
+       setUopType(UOP_TYPE::UOP_STORE);
+       setExecUnit(48);
 }
-void MOV_MEM_ST$R$M$34::doDepenCheck(UOP_WINDOW* uop_window){
+void MOV_MEM_ST$R$M$48::doDepenCheck(UOP_WINDOW* uop_window){
    doRegDepenCheck(uop_window);
    doMemDepenCheck(uop_window);
    doExecDepenCheck(uop_window);
@@ -4528,7 +4528,7 @@ void MOV_MEM_ST$R$M$34::doDepenCheck(UOP_WINDOW* uop_window){
 void MOV_MEM_LDI$I$R$0::addMeta(OPR_IMM& opr_i_src_0 ,OPR_REG& opr_x_des_0){
           /* imm had no meta data*/;
           addRegMeta (opr_x_des_0.getMeta(), false);
-       setUopType(UOP_TYPE::UOP_STORE);
+       setUopType(UOP_TYPE::UOP_IMM);
        setExecUnit(0);
 }
 void MOV_MEM_LDI$I$R$0::doDepenCheck(UOP_WINDOW* uop_window){
@@ -4538,15 +4538,15 @@ void MOV_MEM_LDI$I$R$0::doDepenCheck(UOP_WINDOW* uop_window){
 
 
 
-void MOV_MEM_LD$M$R$33::addMeta(OPR_MEM& opr_m_src_0 ,OPR_REG& opr_x_des_0){
+void MOV_MEM_LD$M$R$47::addMeta(OPR_MEM& opr_m_src_0 ,OPR_REG& opr_x_des_0){
           addMemMeta_phyArea (opr_m_src_0.getMeta_phyArea(), true);
           addMemMeta_virArea (opr_m_src_0.getMeta_virArea(), true);
           addMemMeta_Static (opr_m_src_0.getMeta_Static());
           addRegMeta (opr_x_des_0.getMeta(), false);
        setUopType(UOP_TYPE::UOP_LOAD);
-       setExecUnit(33);
+       setExecUnit(47);
 }
-void MOV_MEM_LD$M$R$33::doDepenCheck(UOP_WINDOW* uop_window){
+void MOV_MEM_LD$M$R$47::doDepenCheck(UOP_WINDOW* uop_window){
    doMemDepenCheck(uop_window);
    doExecDepenCheck(uop_window);
 }
@@ -4554,13 +4554,13 @@ void MOV_MEM_LD$M$R$33::doDepenCheck(UOP_WINDOW* uop_window){
 
 
 
-void CMP_SIM_ALU$R_R$$0::addMeta(OPR_REG& opr_r_src_0, OPR_REG& opr_r_src_1 ){
+void IntAlu$R_R$$1::addMeta(OPR_REG& opr_r_src_0, OPR_REG& opr_r_src_1 ){
           addRegMeta (opr_r_src_0.getMeta(), true);
           addRegMeta (opr_r_src_1.getMeta(), true);
        setUopType(UOP_TYPE::UOP_COMP);
-       setExecUnit(0);
+       setExecUnit(1);
 }
-void CMP_SIM_ALU$R_R$$0::doDepenCheck(UOP_WINDOW* uop_window){
+void IntAlu$R_R$$1::doDepenCheck(UOP_WINDOW* uop_window){
    doRegDepenCheck(uop_window);
    doExecDepenCheck(uop_window);
 }
@@ -4568,13 +4568,13 @@ void CMP_SIM_ALU$R_R$$0::doDepenCheck(UOP_WINDOW* uop_window){
 
 
 
-void CMP_SIM_ALU$R_T$$0::addMeta(OPR_REG& opr_r_src_0, OPR_TREG& opr_t_1 ){
+void IntAlu$R_T$$1::addMeta(OPR_REG& opr_r_src_0, OPR_TREG& opr_t_1 ){
           addRegMeta (opr_r_src_0.getMeta(), true);
           addTRegMeta(opr_t_1.getMeta(), true);
        setUopType(UOP_TYPE::UOP_COMP);
-       setExecUnit(0);
+       setExecUnit(1);
 }
-void CMP_SIM_ALU$R_T$$0::doDepenCheck(UOP_WINDOW* uop_window){
+void IntAlu$R_T$$1::doDepenCheck(UOP_WINDOW* uop_window){
    doRegDepenCheck(uop_window);
    doExecDepenCheck(uop_window);
 }
@@ -4582,13 +4582,13 @@ void CMP_SIM_ALU$R_T$$0::doDepenCheck(UOP_WINDOW* uop_window){
 
 
 
-void CMP_SIM_ALU$T_R$$0::addMeta(OPR_TREG& opr_t_0, OPR_REG& opr_r_src_1 ){
+void IntAlu$T_R$$1::addMeta(OPR_TREG& opr_t_0, OPR_REG& opr_r_src_1 ){
           addTRegMeta(opr_t_0.getMeta(), true);
           addRegMeta (opr_r_src_1.getMeta(), true);
        setUopType(UOP_TYPE::UOP_COMP);
-       setExecUnit(0);
+       setExecUnit(1);
 }
-void CMP_SIM_ALU$T_R$$0::doDepenCheck(UOP_WINDOW* uop_window){
+void IntAlu$T_R$$1::doDepenCheck(UOP_WINDOW* uop_window){
    doRegDepenCheck(uop_window);
    doExecDepenCheck(uop_window);
 }
@@ -4596,26 +4596,26 @@ void CMP_SIM_ALU$T_R$$0::doDepenCheck(UOP_WINDOW* uop_window){
 
 
 
-void CMP_SIM_ALU$T_T$$0::addMeta(OPR_TREG& opr_t_0, OPR_TREG& opr_t_1 ){
+void IntAlu$T_T$$1::addMeta(OPR_TREG& opr_t_0, OPR_TREG& opr_t_1 ){
           addTRegMeta(opr_t_0.getMeta(), true);
           addTRegMeta(opr_t_1.getMeta(), true);
        setUopType(UOP_TYPE::UOP_COMP);
-       setExecUnit(0);
+       setExecUnit(1);
 }
-void CMP_SIM_ALU$T_T$$0::doDepenCheck(UOP_WINDOW* uop_window){
+void IntAlu$T_T$$1::doDepenCheck(UOP_WINDOW* uop_window){
    doExecDepenCheck(uop_window);
 }
 ///////////////////////////////////////////////////////////////
 
 
 
-void JMP_SIM_ALU$R$R$0::addMeta(OPR_REG& opr_r_src_0 ,OPR_REG& opr_reg_des_1){
+void IntAlu$R$R$1::addMeta(OPR_REG& opr_r_src_0 ,OPR_REG& opr_reg_des_1){
           addRegMeta (opr_r_src_0.getMeta(), true);
           addRegMeta (opr_reg_des_1.getMeta(), false);
        setUopType(UOP_TYPE::UOP_COMP);
-       setExecUnit(0);
+       setExecUnit(1);
 }
-void JMP_SIM_ALU$R$R$0::doDepenCheck(UOP_WINDOW* uop_window){
+void IntAlu$R$R$1::doDepenCheck(UOP_WINDOW* uop_window){
    doRegDepenCheck(uop_window);
    doExecDepenCheck(uop_window);
 }

@@ -4,6 +4,7 @@
 #include "pin.H"
 #include "writer/writer.h"
 
+
 VOID L_TRACE(ADDRINT addr, UINT32 lsFieldId);
 
 VOID S_TRACE(ADDRINT addr, UINT32 lsFieldId);
