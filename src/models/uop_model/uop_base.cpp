@@ -17,52 +17,86 @@ namespace traceBuilder::model {
             seqNum(UINT64_MAX),
             uop_type(UOP_DUMMY),
             exec_unit_id(DUMMY_EXEC_UNIT_ID) {
-        REG_DEP::setDepPool(&dep_rwd_pool_owner);
-        MEM_DEP::setDepPool(&dep_rwd_pool_owner);
-        /// tempDep not need the pool due to it is uniq from uop manner
-        EXEC_UNIT_DEP::setDepPool(&dep_rwd_pool_owner);
+        /** initialize meta data*/
+        metaDatas[META_SRC_REG ] = new META_GRP<REG_META> ;
+        metaDatas[META_SRC_TEMP] = new META_GRP<TREG_META>;
+        metaDatas[META_SRC_MEM ] = new META_GRP<MEM_META> ;
+        metaDatas[META_DES_REG ] = new META_GRP<REG_META> ;
+        metaDatas[META_DES_TEMP] = new META_GRP<TREG_META>;
+        metaDatas[META_DES_MEM ] = new META_GRP<MEM_META> ;
+        /** initialize dep*/
+        deps[DEP_REG]       = new REG_DEP();
+        deps[DEP_MEM]       = new MEM_DEP();
+        deps[DEP_TEMP]      = new TEM_DEP();
+        deps[DEP_EXEC_UNIT] = new EXEC_UNIT_DEP();
+        /** assign dep pool for easily gathering*/
+        deps[DEP_REG]      ->castDown<DEP_RWD_BASE>()->setDepPool(&dep_inter_pool);
+        deps[DEP_MEM]      ->castDown<DEP_RWD_BASE>()->setDepPool(&dep_inter_pool);
+        deps[DEP_EXEC_UNIT]->castDown<DEP_RWD_BASE>()->setDepPool(&dep_inter_pool);
+            ////// please remind that temp is intra dep that base on ULS_DEP which is not
+            ////// compatible with dep pool
+
     }
 
-    void UOP_BASE::doRegDepenCheck(UOP_WINDOW *uop_window) {
-        uop_window->assignRegDep(this);
-    }
-
-    void UOP_BASE::doMemDepenCheck(UOP_WINDOW *uop_window) {
-        assert(uop_window != nullptr);
-        auto uopWindow_ptr = uop_window->getUopwindow();
-        ////// TODO we might upgrade for clever method to achieve better performance
-        /////////// like line sweep algorithm
-        for (auto &uopWindow_itr: *uopWindow_ptr) {
-            for (auto &ldAdas: _phyLoadAdas) {
-                if (uopWindow_itr->isdependOnMem(ldAdas, true))
-                    addMemDep(uopWindow_itr, uop_window);
-            }
-            for (auto &stAdas: _phyStoreAdas) {
-                if (uopWindow_itr->isdependOnMem(stAdas, false))
-                    addMemDep(uopWindow_itr, uop_window);
-            }
+    UOP_BASE::~UOP_BASE() {
+        for (auto& metaData : metaDatas){
+            delete metaData;
         }
+        for (auto& dep: deps){
+            delete dep;
+        }
+
+    }
+    /////////////////////////////////
+    /** operation on meta data*/
+    /////////////////////////////////
+    template<META_CLASS meta_class_enum, typename META_TYPE>
+    void UOP_BASE::addMeta(META_TYPE& metaDayta) {
+        auto metaGrp = getMetaPtr<meta_class_enum, META_TYPE>();
+        metaGrp->addMeta(metaDayta);
     }
 
-    void UOP_BASE::doTemDepenCheck(UOP_WINDOW *uop_window) {}
-
-    void UOP_BASE::doExecDepenCheck(UOP_WINDOW *uop_window) {
-        uop_window->assignExecDep(this);
+    template<META_CLASS meta_class_enum, typename META_TYPE>
+    META_GRP<META_TYPE>*
+    UOP_BASE::getMetaPtr(){
+        return metaDatas[meta_class_enum]->castDown<META_GRP<META_TYPE>>();
     }
+    /////////////////////////////////
+    /** operation on dep*/
+    /////////////////////////////////
+    template<DEP_CLASS dep_class_enum>
+    bool UOP_BASE::addDep(UOP_BASE* uop, UOP_WINDOW* uop_window){
+        auto dep = getDepClassPtr<dep_class_enum>();
+        dep->addDep(this, uop_window);
+    }
+
+    template<DEP_CLASS dep_class_enum>
+    DEP_BASE* UOP_BASE::getDepClassPtr(){
+        return deps[dep_class_enum];
+    }
+
+
+    template<DEP_CLASS dep_class_enum>
+    void UOP_BASE::doDepenCheck(UOP_WINDOW *traceWindow){
+        auto depPtr = getDepClassPtr<dep_class_enum>();
+        depPtr->doDepenCheck(this, traceWindow);
+    }
+    /////////////////////////////////
 
 ////// simple compute reg
 /////////////////////////////////////////////////////////////////////////////
-    void UOP_SIMPLE::doDepenCheck(UOP_WINDOW *uop_window) {
+    void UOP_SIMPLE::doPlannedDepenCheck(UOP_WINDOW *uop_window) {
         //////// we check all possible dependency
-        doRegDepenCheck(uop_window);
-        doMemDepenCheck(uop_window);
-        doTemDepenCheck(uop_window);
-        doExecDepenCheck(uop_window);
+        doDepenCheck<DEP_REG      >(uop_window);
+        doDepenCheck<DEP_MEM      >(uop_window);
+        doDepenCheck<DEP_EXEC_UNIT>(uop_window);
     }
 
     UOP_SIMPLE::UOP_SIMPLE(UOP_TYPE _uop_type) :
             UOP_BASE() {
         uop_type = _uop_type;
     }
+
+
 
 }

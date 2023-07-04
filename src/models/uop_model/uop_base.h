@@ -6,11 +6,12 @@
 #define TRACEBUILDER_UOP_BASE_H
 
 
-#include "dep_base.h"
-#include "dep_simple.h"
+#include "models/uop_model/dep/dep_base.h"
+#include "models/uop_model/dep/dep_simple.h"
 #include "models/inst_model/operand.h"
 #include "models/res_model/execUnit/execUnit.h"
 #include "stat/statPool.h"
+#include "models/uop_model/metaData/metaBase.h"
 
 namespace traceBuilder::core{
     class UOP_WINDOW;
@@ -29,18 +30,25 @@ namespace traceBuilder::model {
         UOP_DUMMY
     };
 
-    class UOP_BASE : public REG_DEP, public MEM_DEP, public TEM_DEP, public EXEC_UNIT_DEP {
+    class UOP_BASE{
 
     protected:
-        uint64_t seqNum;// sequence number of uop in each thread
-        UOP_TYPE uop_type;
+
+        /** this is storage to store meta data for each typeclass*/
+        META_GRP_BASE* metaDatas[META_CLASS::META_NUM]{};
+        /** this is storage to store dependency for each type*/
+        DEP_BASE*      deps     [DEP_CLASS::DEP_NUM]{};
+        /** this is storage to colect all dep that base share between instr*/
+        DEP_RWD_BASE   dep_inter_pool;
+        /** uop meta data*/
+        uint64_t     seqNum;// sequence number of uop in each thread
+        UOP_TYPE     uop_type;
         EXEC_UNIT_ID exec_unit_id;
-        DEP_RWD_BASE dep_rwd_pool_owner;
 
     public:
         UOP_BASE();
 
-        virtual  ~UOP_BASE() = default;
+        virtual  ~UOP_BASE();
 
         void setSeqNum(uint64_t _seqNum) { seqNum = _seqNum; };
 
@@ -54,21 +62,29 @@ namespace traceBuilder::model {
 
         EXEC_UNIT_ID getExecUnit() const { return exec_unit_id; };
 
-        DEP_RWD_BASE& getDep_Rwd_pool(){return dep_rwd_pool_owner;};
+        DEP_RWD_BASE& getDep_inter_instr_pool(){return dep_inter_pool;};
 
+        /** meta class operation*/
+        template<META_CLASS meta_class_enum, typename META_TYPE>
+        void addMeta(META_TYPE& metaDayta);
+
+        template<META_CLASS meta_class_enum, typename META_TYPE>
+        META_GRP<META_TYPE>* getMetaPtr();
+
+
+        /** dep class operation*/
+            /// return that dep is newly added or not
+        template<DEP_CLASS dep_class_enum>
+        bool addDep(UOP_BASE* uop, UOP_WINDOW* uop_window);
+
+        template<DEP_CLASS dep_class_enum>
+        DEP_BASE* getDepClassPtr();
+
+        template<DEP_CLASS dep_class_enum>
+        void doDepenCheck(UOP_WINDOW *traceWindow);
         //// use to ask successor to check dependecy and store ourself dependency
         ////// crucial this is fundamental of the program the program
-        virtual void doDepenCheck(traceBuilder::core::UOP_WINDOW* uop_window) = 0;
-
-        void doRegDepenCheck(UOP_WINDOW* uop_window) override;
-
-        void doMemDepenCheck(UOP_WINDOW* uop_window) override;
-
-        void doTemDepenCheck(UOP_WINDOW* uop_window) override;
-
-        void doExecDepenCheck(UOP_WINDOW* uop_window) override;
-
-
+        virtual void doPlannedDepenCheck(UOP_WINDOW* uop_window) = 0;
     };
 
 //////////// simple compute uop
@@ -80,7 +96,7 @@ namespace traceBuilder::model {
         UOP_SIMPLE(UOP_TYPE _uop_type);
 
         //// for this uop to ask other in instruction window that it depend on
-        void doDepenCheck(UOP_WINDOW *uop_window) override;
+        void doPlannedDepenCheck(UOP_WINDOW *uop_window) override;
 
     };
 }

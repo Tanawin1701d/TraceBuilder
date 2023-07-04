@@ -1,6 +1,6 @@
 #ifndef X86_UOPL_H
 #define X86_UOPL_H
-#include"models/uop_model/dep_simple.h"
+#include"models/uop_model/dep/dep_simple.h"
 #include"models/uop_model/uop_base.h"
 
 

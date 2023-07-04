@@ -18,6 +18,20 @@ namespace traceBuilder::core{
 
 namespace traceBuilder::model {
 
+    /**
+     * dependency  enum
+     * */
+     enum DEP_CLASS{
+         DEP_REG,
+         DEP_MEM,
+         DEP_TEMP,
+         DEP_EXEC_UNIT,
+         /*
+          * ADD MORE DEP CLASS HERE
+          */
+         DEP_NUM
+     };
+
     using namespace traceBuilder::core;
 
     class UOP_BASE;
@@ -28,13 +42,21 @@ namespace traceBuilder::model {
     protected:
 
     public:
-        virtual bool         addDep(UOP_BASE* uop, UOP_WINDOW* traceWindow) = 0;
+        virtual ~DEP_BASE() = default;
+        virtual bool         addDep    (UOP_BASE* uop, UOP_WINDOW* traceWindow) = 0;
         virtual bool         isThereDep(UOP_BASE* uop, UOP_WINDOW* traceWindow) = 0;
         /** DEP_BASE was a iterable object but uop may inherit many dep type
          * this will ensure that derive class will help us get precisely iterator begin() end()*/
         virtual DEP_BASE&    getDep_iter(){return *this;};
-        virtual DEP_ITER begin() = 0;
-        virtual DEP_ITER end() = 0;
+        virtual DEP_ITER     begin() = 0;
+        virtual DEP_ITER     end() = 0;
+        /** dependency build up*/
+        virtual void         doDepenCheck(UOP_BASE* uop, UOP_WINDOW *traceWindow) = 0;
+        /** cast down method*/
+        template<typename TC>
+        TC* castDown(){
+            return reinterpret_cast<TC*>(this);
+        }
     };
 
 /**
@@ -59,6 +81,7 @@ namespace traceBuilder::model {
         void      setDepPool(DEP_RWD_BASE* depPool){ depPool = _depPool;};
         DEP_ITER  begin() override{return depUops.begin();}
         DEP_ITER  end()   override{return depUops.end();}
+        void      doDepenCheck(UOP_BASE* uop, UOP_WINDOW *traceWindow) override {assert(1);};
 
     };
 /**
@@ -76,6 +99,7 @@ namespace traceBuilder::model {
         bool isThereDep(UOP_BASE* uop, UOP_WINDOW* traceWindow) override;
         DEP_ITER  begin() override{return DEP_ITER(0, _depUops      );}
         DEP_ITER  end()   override{return DEP_ITER(_depCnt, _depUops);}
+        void      doDepenCheck(UOP_BASE* uop, UOP_WINDOW *traceWindow) override {assert(1);};
     };
 }
 

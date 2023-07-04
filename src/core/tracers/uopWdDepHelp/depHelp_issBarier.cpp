@@ -41,9 +41,8 @@ namespace traceBuilder::core {
         assert(maxAvailableUnit > 0);
         if (units[execId].size() >= maxAvailableUnit) {
             int targetDepUnitIdx = maxAvailableUnit - 1;
-            uop->addExecDep(units[execId][targetDepUnitIdx], wd);
+            uop->addDep<DEP_CLASS::DEP_EXEC_UNIT>(units[execId][targetDepUnitIdx], wd);
         }
     }
-
 
 }

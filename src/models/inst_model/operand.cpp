@@ -47,60 +47,36 @@ namespace traceBuilder::model {
 ///////////////////////////////////////////////////////////
 /// memory operand
     OPR_MEM::OPR_MEM(
-            MEM_OPR_META memMeta,
+            MEM_META memMeta,
             OPR_TYPE _setOpr,
             size_t _mcArgSIdx
     ) :
     _meta(memMeta),
-    current_ruop_count(0),
     OPERAND(_setOpr, _mcArgSIdx) {
         assert(MAX_BYTE_PER_MICROOP > 0);
         ///// caculate expect uop that should handle this instr
-        expect_ruop_count = (int) ((_meta.size + MAX_BYTE_PER_MICROOP - 1) / MAX_BYTE_PER_MICROOP);
     }
 
-    void
-    OPR_MEM::setVirAddr(ADDR virAddr){
-        _virAddr = virAddr;
-        _nextVirAddr = virAddr;
-    }
-
-    void
-    OPR_MEM::setPhyAddr(ADDR phyAddr) {
-        OPR_MEM::_phyAddr = phyAddr;
-    }
-
-    ADAS
-    OPR_MEM::getMeta_phyArea(){
-        ADDR diffVirAddr = _nextVirAddr - _virAddr;
-        return { _phyAddr + diffVirAddr, getCurUopSize()};
-    }
-    //// TODO we might have explicit to iterate rather than auto increment from virArea
-    ADAS
-    OPR_MEM::getMeta_virArea(){
-        if (_nextVirAddr >= getEndVirAddr())
-            return {0, MAX_BYTE_PER_MICROOP};
-        ADDR nowSize = getCurUopSize();
-        ADAS preret = {_nextVirAddr, nowSize};
-        _nextVirAddr = _nextVirAddr + nowSize;
-        return preret;
-    }
-
-    void
-    OPR_MEM::resetSharedOperandTracker() {
-        current_ruop_count = 0;
-        _nextVirAddr = _virAddr;
+    MEM_META
+    OPR_MEM::getMeta(ADDR startByte, ADDR stopByte) const{
+        assert(startByte >= 0 && ((stopByte - startByte) <= MAX_BYTE_PER_MICROOP));
+        MEM_META temp = _meta;
+        temp.p_area.addr += startByte;
+        temp.v_area.addr += startByte;
+        temp.size = stopByte - startByte;
+        assert((temp.p_area.addr + temp.size) <= (_meta.p_area.addr +  _meta.size));
+        return temp;
     }
 
 ///////////////////////////////////////////////////////////
 /// load operand
 
-    OPR_MEM_LD::OPR_MEM_LD(MEM_OPR_META memMeta,size_t _mcArgSIdx)
+    OPR_MEM_LD::OPR_MEM_LD(MEM_META memMeta,size_t _mcArgSIdx)
     : OPR_MEM(memMeta,O_MEM_LD,_mcArgSIdx) {}
 ///////////////////////////////////////////////////////////
 /// store operand
 
-    OPR_MEM_ST::OPR_MEM_ST(MEM_OPR_META memMeta,size_t _mcArgSIdx
+    OPR_MEM_ST::OPR_MEM_ST(MEM_META memMeta,size_t _mcArgSIdx
     ) :
             OPR_MEM(memMeta,
                     O_MEM_ST,

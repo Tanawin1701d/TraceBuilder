@@ -80,22 +80,26 @@ namespace traceBuilder::core {
             ///////////////////////////////////////////////////////
             ///// you can trust that the uops dependency which get from ONGETUOPSRESULTS is not deleted
             //////// by uop window but it maybe deleted after this function is finised.
-            for (auto regDepUop: uop->getRegDep_iter()) {
+            auto regDepPtr = uop->getDepClassPtr<DEP_CLASS::DEP_REG>();
+            for (auto regDepUop: *regDepPtr) {
                 //std::cout << "reg added" << std::endl;
                 stat::MAIN_STAT["DepGem5"]["reg"].asUINT()++;
 
             }
-            for (auto *tempRegDepUop: uop->getTemDep()) {
+            auto tempDepPtr = uop->getDepClassPtr<DEP_CLASS::DEP_TEMP>();
+            for (auto *tempRegDepUop: *tempDepPtr) {
                 //std::cout << "temp added" << std::endl;
                 stat::MAIN_STAT["DepGem5"]["Treg"].asUINT()++;
 
             }
-            for (auto *execDepUop: uop->getExecDep_iter()) {
+            auto execDepPtr = uop->getDepClassPtr<DEP_CLASS::DEP_EXEC_UNIT>();
+            for (auto *execDepUop: *execDepPtr) {
                 //std::cout << "exec added" << std::endl;
                 stat::MAIN_STAT["DepGem5"]["Exec"].asUINT()++;
 
             }
-            for (auto *memDepUop: uop->getMemDep_iter()) {
+            auto memDepPtr = uop->getDepClassPtr<DEP_CLASS::DEP_MEM>();
+            for (auto *memDepUop: *memDepPtr) {
                 //std::cout << "mem added" << std::endl;
                 stat::MAIN_STAT["DepGem5"]["mem"].asUINT()++;
 
@@ -106,11 +110,12 @@ namespace traceBuilder::core {
             //////////////////
             ////  the tem dep is not associated with RWS because the it is used with out uop window help
             /////// all dep w/o tem dep
-            for (auto depUop: uop->getDep_Rwd_pool().getDep_iter()) {
+            auto& dep_bw_instr_pool = uop->getDep_inter_instr_pool();
+            for (auto depUop: dep_bw_instr_pool) {
                 dep_pkt.add_reg_dep(depUop->getSeqNum());
             }
             /////// tem dep
-            for (auto depUop: uop->getTemDep()) {
+            for (auto depUop: *tempDepPtr) {
                 dep_pkt.add_reg_dep(depUop->getSeqNum());
             }
 
@@ -125,18 +130,18 @@ namespace traceBuilder::core {
                 ///////////// for load instruction
             else if (uop->getUopType() == UOP_LOAD) {
                 dep_pkt.set_type(ProtoMessage::InstDepRecord_RecordType_LOAD);
-                auto &allLdAdas = uop->get_load_phyAdas();
-                if (!allLdAdas.empty()) {
-                    dep_pkt.set_p_addr(allLdAdas[0].addr);
-                    dep_pkt.set_size(allLdAdas[0].size);
+                auto memMetaPtr = uop->getMetaPtr<META_CLASS::META_SRC_MEM, MEM_META>();
+                if (!memMetaPtr->empty()) {
+                    dep_pkt.set_p_addr( (*(memMetaPtr->begin())).area.addr);
+                    dep_pkt.set_size  ( (*(memMetaPtr->begin())).area.size);
                 }
                 ///////////// for store instruction
             } else if (uop->getUopType() == UOP_STORE) {
                 dep_pkt.set_type(ProtoMessage::InstDepRecord_RecordType_STORE);
-                auto &allStAdas = uop->get_store_phyAdas();
-                if (!allStAdas.empty()) {
-                    dep_pkt.set_p_addr(allStAdas[0].addr);
-                    dep_pkt.set_size(allStAdas[0].size);
+                auto memMetaPtr = uop->getMetaPtr<META_CLASS::META_DES_MEM, MEM_META>();
+                if (!memMetaPtr->empty()) {
+                    dep_pkt.set_p_addr( (*(memMetaPtr->begin())).area.addr);
+                    dep_pkt.set_size  ( (*(memMetaPtr->begin())).area.size);
                 }
             } else {
                 std::string errorCode = "can't convert to google protobuffer uopType: "

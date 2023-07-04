@@ -55,13 +55,11 @@ namespace traceBuilder::core{
                     break;
                 case UOP_LOAD:
                     setTempRegHelper (uop_base, machRec, false);
-                    setMemAreaHelper (uop_base, machRec, true);
-                    setMemRegHelper  (uop_base, machRec);
+                    setMemHelper (uop_base, machRec, true);
                     break;
                 case UOP_STORE:
                     setTempRegHelper(uop_base, machRec, true);
-                    setMemAreaHelper(uop_base, machRec, false);
-                    setMemRegHelper  (uop_base, machRec);
+                    setMemHelper    (uop_base, machRec, false);
                     break;
                 case UOP_IMM:
                     setArchRegHelper(uop_base, machRec, false);
@@ -89,12 +87,17 @@ namespace traceBuilder::core{
     void
     TBD_GEM5_ISA::setArchRegHelper(UOP_BASE *uop_base, ProtoMessage::machRecord *machRec, bool isSrc) {
         /** src for get regNum*/
-        auto& regNums = isSrc ? uop_base->getSrcRegs() : uop_base->getDesRegs();
+        META_GRP<REG_META>* regMetaPtr;
+        if (isSrc){
+            regMetaPtr = uop_base->getMetaPtr<META_CLASS::META_SRC_REG, REG_META>();
+        }else{
+            regMetaPtr = uop_base->getMetaPtr<META_CLASS::META_DES_REG, REG_META>();
+        }
         /** destination to insert new regNum*/ //void (ProtoMessage::machRecord::*  inseter)(uint32_t);
         auto inseter = isSrc ? &ProtoMessage::machRecord::add_srcarchregid
                              : &ProtoMessage::machRecord::add_desarchregid;
         /**insert*/
-        for (auto regNum : regNums){
+        for (auto regNum : *regMetaPtr){
             stat::MAIN_STAT["DEP_REG"][std::to_string(regNum)].asUINT()++;
             (machRec->*inseter)(regNum);
         }
@@ -105,49 +108,54 @@ namespace traceBuilder::core{
     void
     TBD_GEM5_ISA::setTempRegHelper(UOP_BASE *uop_base, ProtoMessage::machRecord *machRec, bool isSrc) {
         /** src for get regNum*/
-        auto& TregNums = isSrc ? uop_base->getSrcTRegs() : uop_base->getdesTRegs();
+        META_GRP<TREG_META>* regMetaPtr;
+        if (isSrc){
+            regMetaPtr = uop_base->getMetaPtr<META_CLASS::META_SRC_TEMP, TREG_META>();
+        }else{
+            regMetaPtr = uop_base->getMetaPtr<META_CLASS::META_DES_TEMP, TREG_META>();
+        }
         /** destination to insert new regNum*/ //void (ProtoMessage::machRecord::*  inseter)(uint32_t);
         auto inseter = isSrc ? &ProtoMessage::machRecord::add_srctempregid
                              : &ProtoMessage::machRecord::add_destempregid;
         /**insert*/
-        for (auto tregNum : TregNums){
+        for (auto tregNum : *regMetaPtr){
             stat::MAIN_STAT["DEP_TEMP"][std::to_string(tregNum)].asUINT()++;
             (machRec->*inseter)(tregNum);
         }
     }
 
     void
-    TBD_GEM5_ISA::setMemRegHelper(UOP_BASE *uop_base, ProtoMessage::machRecord *machRec) {
-        auto& memMeta = uop_base->getMemMetaStatic();
+    TBD_GEM5_ISA::setMemHelper(UOP_BASE *uop_base, ProtoMessage::machRecord *machRec, bool isLoad) {
+        META_GRP<MEM_META>* memMetaPtr;
+        if (isLoad){
+            memMetaPtr = uop_base->getMetaPtr<META_CLASS::META_SRC_MEM, MEM_META>();
+        }else{
+            memMetaPtr = uop_base->getMetaPtr<META_CLASS::META_DES_MEM, MEM_META>();
+        }
         ////////// add base reg
-        if (memMeta.baseRegId != UNUSEDREG){
-            stat::MAIN_STAT["DEP_TEMP_MEM_bREG"][std::to_string(memMeta.baseRegId)].asUINT()++;
-            machRec->add_srcarchregid(memMeta.baseRegId);
+        /**for now we assume that for each microop have only one mem ref*/
+        if (!memMetaPtr->empty()) {
+            auto& memMeta = (*memMetaPtr)[0];
+            if (memMeta.baseReg != UNUSEDREG) {
+                stat::MAIN_STAT["DEP_TEMP_MEM_bREG"][std::to_string(memMeta.baseReg)].asUINT()++;
+                machRec->add_srcarchregid(memMeta.baseReg);
+            }
+            ///////// add index register
+            if (memMeta.indexReg != UNUSEDREG) {
+                stat::MAIN_STAT["DEP_TEMP_MEM_iREG"][std::to_string(memMeta.indexReg)].asUINT()++;
+                machRec->add_srcarchregid(memMeta.indexReg);
+            }
+
+            /** virtual address*/
+            machRec->set_v_addr(memMeta.v_area.addr);
+            machRec->set_v_size(memMeta.v_area.size);
+            /** physical address*/
+            machRec->set_p_effaddr(memMeta.p_area.addr);
+            machRec->set_p_effsize(memMeta.p_area.size);
+
         }
-        ///////// add index register
-        if (memMeta.indexRegId != UNUSEDREG){
-            stat::MAIN_STAT["DEP_TEMP_MEM_iREG"][std::to_string(memMeta.indexRegId)].asUINT()++;
-            machRec->add_srcarchregid(memMeta.indexRegId);
-        }
 
 
-    }
-
-    void
-    TBD_GEM5_ISA::setMemAreaHelper(UOP_BASE *uop_base, ProtoMessage::machRecord *machRec, bool isLoad) {
-        std::vector<ADAS>& virAddr = isLoad ? uop_base->get_load_virAdas() : uop_base->get_store_virAdas();
-        std::vector<ADAS>& phyAddr = isLoad ? uop_base->get_load_phyAdas() : uop_base->get_store_phyAdas();
-        /** due to proto buf will only stereo type wheather it is load or not rectype will classify it*/
-        /** and for now, for each uop are not support multi address pointing support we will choose only first element*/
-        assert(!virAddr.empty());
-        assert(!phyAddr.empty());
-        /** set virtual address*/
-        machRec->set_v_addr(virAddr[0].addr);
-        machRec->set_v_size(virAddr[0].size);
-        /** set physical address*/
-        machRec->set_p_effaddr(phyAddr[0].addr);
-        machRec->set_p_effsize(phyAddr[0].size);
-        stat::MAIN_STAT["DEP_MEM_AREA"].asUINT()++;
     }
 
     void BIND_RESULT_FRONT_END_TBDGEMISA(py::module& m){

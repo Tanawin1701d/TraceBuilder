@@ -5,6 +5,8 @@
 
 #include"depHelp_reg.h"
 #include"core/tracers/uop_wd.h"
+#include"models/uop_model/metaData/metaBase.h"
+#include"models/uop_model/metaData/metaType.h"
 
 namespace traceBuilder::core {
 
@@ -17,7 +19,9 @@ namespace traceBuilder::core {
     }
 
     void DEP_HELP_REG::onPushToWd(UOP_BASE *uop, UOP_WINDOW *wd) {
-        for (REGNUM desReg: uop->getDesRegs()) {
+        using namespace model;
+        auto desRegMetaPtr = uop->getMetaPtr<META_CLASS::META_DES_REG, REG_META>();
+        for (REGNUM desReg: *desRegMetaPtr) {
             //// we can ensure that no unused reg(-1) righthere
             lastOwnerReg[desReg] = uop;
         }
@@ -25,7 +29,8 @@ namespace traceBuilder::core {
 
     void DEP_HELP_REG::onPopFromWd(UOP_BASE *uop, UOP_WINDOW *wd) {
         assert(uop != nullptr);
-        for (REGNUM desReg: uop->getDesRegs()) {
+        auto desRegMetaPtr = uop->getMetaPtr<META_CLASS::META_DES_REG, REG_META>();
+        for (REGNUM desReg: *desRegMetaPtr) {
             //// we can ensure that no unused reg(-1) righthere
             if (uop == lastOwnerReg[desReg]) {
                 lastOwnerReg[desReg] = nullptr;
@@ -35,10 +40,11 @@ namespace traceBuilder::core {
 
     void DEP_HELP_REG::assignDepHelp(UOP_BASE *uop, UOP_WINDOW *wd) {
         assert(uop != nullptr);
-        for (auto &regNum: uop->getDesRegs()) {
+        auto srcRegPtr = uop->getMetaPtr<META_CLASS::META_SRC_REG, REG_META>();
+        for (REGNUM regNum: *srcRegPtr) {
             assert(regNum != UNUSEDREG);
             if (lastOwnerReg[regNum] != nullptr) {
-                uop->addRegDep(lastOwnerReg[regNum], wd);
+                uop->addDep<DEP_CLASS::DEP_REG>(lastOwnerReg[regNum], wd);
             }
         }
     }

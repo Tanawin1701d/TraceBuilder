@@ -40,7 +40,7 @@ namespace traceBuilder::core {
 
         void addUop(UOP_BASE *newUop);
 
-        std::deque<UOP_BASE *> *getUopwindow() { return &uop_window; }
+        std::deque<UOP_BASE*>* getUopwindow() { return &uop_window; }
 
         uint64_t getLastPushSeqNum() const {return last_push_seq;}
 
