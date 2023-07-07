@@ -1,3 +1,4 @@
+import base.dep.dep as dep
 import base.operand.listOpr as oprLs
 import base.operand.opr_simple as opr_simple
 
@@ -118,11 +119,12 @@ class MOP_BASE:
                 "    {UOP_NAME}->addMeta({PARAM});\n"\
                     .format(UOP_NAME = currentUop.genCXXVarName(),
                             UOP_TYPE = currentUop.genCXXType(),
-                            PARAM    = currentUop.genCXX_callIoParamList()
+                            PARAM    = currentUop.genCXX_callAddMetaUopFromMop()
                             )
             for depMop in self.uopInterDep[idx]:
                 cppFile = cppFile + \
-                    "    {UOP_NAME}->addTemDep({DEP_UOP_NAME});\n".format(UOP_NAME = currentUop.genCXXVarName(),
+                    "    {UOP_NAME}->addDep<{DEP_TYPE}>({DEP_UOP_NAME}, nullptr);\n".format(UOP_NAME = currentUop.genCXXVarName(),
+                                                                       DEP_TYPE  =  dep.DEPCLASS_DEP_TEMP,
                                                                        DEP_UOP_NAME = depMop.genCXXVarName()
                                                                        )
             cppFile = cppFile + \

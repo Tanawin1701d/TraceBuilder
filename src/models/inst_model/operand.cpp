@@ -29,7 +29,7 @@ namespace traceBuilder::model {
     }
 
     REGNUM
-    OPR_TREG::getMeta() const { return regId; }
+    OPR_TREG::getMeta(bool direc) const { return regId; }
 
 ///////////////////////////////////////////////////////////
 /// reg operand

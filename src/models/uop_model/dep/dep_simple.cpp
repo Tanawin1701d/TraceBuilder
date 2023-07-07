@@ -18,7 +18,7 @@ namespace traceBuilder::model {
 
     bool MEM_DEP::scanOverlap(ADAS adas, META_GRP<MEM_META>* myMetas) {
         for (auto desMeta: *myMetas) {
-            if (isADASoverlap(desMeta.area, adas)) {
+            if (isADASoverlap(desMeta.p_area, adas)) {
                 return true;
             }
         }
@@ -49,14 +49,14 @@ namespace traceBuilder::model {
             for (auto my_ldMeta: *my_ldMetaGrpPtr){
                 /** predessor des Dep*/
                 auto preMemDepPtr = (MEM_DEP*)preDesUopPtr->getDepClassPtr<DEP_MEM>();
-                if (preMemDepPtr->isdependOnMem(preDesUopPtr, my_ldMeta.area, true))
+                if (preMemDepPtr->isdependOnMem(preDesUopPtr, my_ldMeta.p_area, true))
                     preDesUopPtr->addDep<DEP_MEM>(my_uop, traceWindow);
             }
             /** store depend check1*/
             for (auto my_stMeta: *my_stMetaGrpPtr){
                 /** predessosr des dep*/
                 auto preMemDepPtr = (MEM_DEP*)preDesUopPtr->getDepClassPtr<DEP_MEM>();
-                if (preMemDepPtr->isdependOnMem(preDesUopPtr, my_stMeta.area, false))
+                if (preMemDepPtr->isdependOnMem(preDesUopPtr, my_stMeta.p_area, false))
                     preDesUopPtr->addDep<DEP_MEM>(my_uop, traceWindow);
             }
         }

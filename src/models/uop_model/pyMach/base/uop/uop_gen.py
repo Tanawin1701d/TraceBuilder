@@ -34,10 +34,12 @@ def writeAllHppUop():
     headerStr = "#ifndef {ARCH}_UOPL_H\n" \
                 "#define {ARCH}_UOPL_H\n" \
                 "#include\"{INC_DEP}\"\n" \
+                "#include\"{INC_META}\"\n" \
                 "#include\"{INC_UOP}\"\n" \
                 "\n\n\n\n".format(
                     ARCH = hd.ARCH,
-                    INC_DEP = hd.INC_DEP_BASE,
+                    INC_DEP = hd.INC_DEP_SIM,
+                    INC_META = hd.INC_META_BASE,
                     INC_UOP = hd.INC_UOP_BASE
                 )
     ####### add namespace

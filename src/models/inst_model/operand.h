@@ -62,7 +62,7 @@ namespace traceBuilder::model {
 
         REGNUM getRegId() const;
 
-        REGNUM getMeta() const;
+        REGNUM getMeta(bool direc) const;
     };
 
 
@@ -81,6 +81,10 @@ namespace traceBuilder::model {
                 size_t _mcArgSIdx);
 
         MEM_META getMeta(ADDR startByte, ADDR stopByte) const;
+        MEM_META getMeta() const {return _meta;}
+
+        void setPhyAddr(ADDR phyAddr){_meta.p_area.addr = phyAddr;}
+        void setVirAddr(ADDR virAddr){_meta.v_area.addr = virAddr;}
 
     };
 

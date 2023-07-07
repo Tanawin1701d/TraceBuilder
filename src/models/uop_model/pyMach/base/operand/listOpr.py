@@ -124,10 +124,20 @@ class LISTOPR_BASE :
     ##############################################################################################
     ####### gen cxx method
     def genCXX_refVarDeclaration(self) -> str:
-        return ", ".join([oprRef.genCXX_refVarDeclaration() for oprRef in self.opr_ele[:self.getDummyStartIdx()]])
+        preWriteList = [oprRef.genCXX_refVarDeclaration() for oprRef in self.opr_ele[:self.getDummyStartIdx()]]
+        preWriteList = list(filter(lambda x: len(x) > 0, preWriteList))
+        return ", ".join(preWriteList)
+
+    def genCXX_addMetaArgsDeclaration(self)-> str:
+        preWriteList = [opr.genCXX_getMetaVarArgsDeclaration() for opr in self.opr_ele[:self.getDummyStartIdx()]]
+        preWriteList = list(filter(lambda x : len(x) > 0, preWriteList))
+        return ", ".join(preWriteList)
 
     def genCXX_call(self) -> str:
         return ", ".join([opr.genCXX_varCall() for opr in self.opr_ele[:self.getDummyStartIdx()]])
+
+    def genCXX_addMetaArgsCall(self) -> str:
+        return  ", ".join([opr.genCXX_getMetaCallArgs() for opr in self.opr_ele[:self.getDummyStartIdx()]])
 
     def genCXX_decodeKey(self) -> str:
         return "_".join([opr.getUniqDecodeName() for opr in self.getOprsWoDummy()])

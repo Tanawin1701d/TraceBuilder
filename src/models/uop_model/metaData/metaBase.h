@@ -22,6 +22,7 @@ namespace traceBuilder::model {
         META_SRC_REG,
         META_SRC_TEMP,
         META_SRC_MEM,
+        META_SRC_IMM,
         /** des class*/
         META_DES_REG,
         META_DES_TEMP,

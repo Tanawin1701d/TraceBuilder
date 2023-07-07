@@ -18,7 +18,8 @@ NSP_UTIL  = "util"
 NSP_STAT  = "stat"
 
 ######### model include path
-INC_DEP_BASE  = "models/uop_model/dep_simple.h"
+INC_DEP_SIM   = "models/uop_model/dep/dep_simple.h"
+INC_META_BASE = "models/uop_model/metaData/metaBase.h"
 INC_UOP_BASE  = "models/uop_model/uop_base.h"
 INC_MOP_BASE  = "models/uop_model/mop_base.h"
 INC_DEC_BASE  = "models/uop_model/decoder.h"
@@ -35,6 +36,11 @@ MOP_CFILE_NAME = "{ARCH}_mop.cpp".format(ARCH = ARCH)
 ### dec
 DEC_HFILE_NAME = "{ARCH}_dec.h"  .format(ARCH = ARCH)
 DEC_CFILE_NAME = "{ARCH}_dec.cpp".format(ARCH = ARCH)
+
+#### variable that used in C++
+CVAR_ADDR       = "ADDR"
+
+
 
 def initializeDir():
     if not os.path.exists(ARCH_HOME_DIR):

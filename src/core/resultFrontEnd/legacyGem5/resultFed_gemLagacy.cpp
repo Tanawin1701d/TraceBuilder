@@ -132,16 +132,16 @@ namespace traceBuilder::core {
                 dep_pkt.set_type(ProtoMessage::InstDepRecord_RecordType_LOAD);
                 auto memMetaPtr = uop->getMetaPtr<META_CLASS::META_SRC_MEM, MEM_META>();
                 if (!memMetaPtr->empty()) {
-                    dep_pkt.set_p_addr( (*(memMetaPtr->begin())).area.addr);
-                    dep_pkt.set_size  ( (*(memMetaPtr->begin())).area.size);
+                    dep_pkt.set_p_addr( (*(memMetaPtr->begin())).p_area.addr);
+                    dep_pkt.set_size  ( (*(memMetaPtr->begin())).size);
                 }
                 ///////////// for store instruction
             } else if (uop->getUopType() == UOP_STORE) {
                 dep_pkt.set_type(ProtoMessage::InstDepRecord_RecordType_STORE);
                 auto memMetaPtr = uop->getMetaPtr<META_CLASS::META_DES_MEM, MEM_META>();
                 if (!memMetaPtr->empty()) {
-                    dep_pkt.set_p_addr( (*(memMetaPtr->begin())).area.addr);
-                    dep_pkt.set_size  ( (*(memMetaPtr->begin())).area.size);
+                    dep_pkt.set_p_addr( (*(memMetaPtr->begin())).p_area.addr);
+                    dep_pkt.set_size  ( (*(memMetaPtr->begin())).p_area.size);
                 }
             } else {
                 std::string errorCode = "can't convert to google protobuffer uopType: "

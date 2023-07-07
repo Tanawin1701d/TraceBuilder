@@ -13,6 +13,8 @@ namespace traceBuilder::model {
 
     typedef unsigned long long IMM;
 
+    typedef IMM    IMM_META;
+
     typedef REGNUM REG_META;
 
     typedef TREGNUM TREG_META;
@@ -25,6 +27,8 @@ namespace traceBuilder::model {
         REGNUM indexReg;
         int    scaleFactor;
         IMM    displacement;
+        bool   is_v_area_set = false;
+        bool   is_p_area_set = false;
 
     };
 

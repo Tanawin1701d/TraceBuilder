@@ -1,27 +1,31 @@
-import itertools
-
 ###### temporary
 import base.operand.listOpr as oprLs
 import base.operand.opr_simple as oprSm
-
+import base.metaData.meta as meta
+import base.dep.dep as dep
 
 class UopUsageError(Exception):
     def __init__(self, message):
         super().__init__(message)
 
 
+
+
+
 class UOP_BASE:
-    io_output        : oprLs.LISTOPR_BASE
-    io_input         : oprLs.LISTOPR_BASE
-    name             : str
-    namePrefix       = "uop"
-    uopTypePrefix    = "UOP_TYPE"
-    cxxType_prefix   = "UOP_CHILD" #### please remind that cxxType is not finally
-    cxxTypeParent    = "UOP_BASE"
-    isAutodepenCheck = True
+    io_input          : oprLs.LISTOPR_BASE
+    io_input_metaArgs : list ##### list of args list to build config when uop need to get meta data
+    io_output         : oprLs.LISTOPR_BASE
+    io_output_metaArgs: list ##### list of args list to build config when uop need to get meta data
+    name              : str
+    namePrefix        = "uop"
+    uopTypePrefix     = "UOP_TYPE"
+    cxxType_prefix    = "UOP_CHILD" #### please remind that cxxType is not finally
+    cxxTypeParent     = "UOP_BASE"
+    isAutodepenCheck  = True
     ############ for uop infomation
-    uopType          = "UOP_DUMMY" #### for now, it can be one of [UOP_COMP,UOP_LOAD,UOP_STORE,UOP_IMM,UOP_DUMMY]
-    execUnit         = -1 #### exec unit in int type
+    uopType           = "UOP_DUMMY" #### for now, it can be one of [UOP_COMP,UOP_LOAD,UOP_STORE,UOP_IMM,UOP_DUMMY]
+    execUnit          = -1 #### exec unit in int type
 
     def __init__(self, _cxxType_prefix : str, _name       : str,
                        _inputSize      : int, _outputSize : int,
@@ -43,24 +47,50 @@ class UOP_BASE:
                     return True
         return False
 
-    ########## genCXX_allPossible will use it to check
-    # def isSyntasizable(self, input_oprs: tuple, output_oprs: tuple) -> bool:   ##### list of operand type
-    #     ####### check sizing
-    #     if (len(input_oprs) != self.io_input.getSize()) or (len(output_oprs) != self.io_output.getSize()):
-    #         return False
-    #
-    #     for idx, input_opr in enumerate(input_oprs):
-    #         if type(input_opr) not in self.io_input.getAcceptableTypeOpr(idx):
-    #             return False
-    #     for idx, output_opr in enumerate(output_oprs):
-    #         if type(output_opr) not in self.io_output.getAcceptableTypeOpr(idx):
-    #             return False
-    #     return True
+    def checkMetaArgs(self, oprList: oprLs.LISTOPR_BASE, argsList: list):
+        if oprList.size != len(argsList):
+            raise UopUsageError("amount of args for generate not match")
+        for idx, opr in enumerate(oprList.getOprsWoDummy()):
+            if not opr.checkAddMetaArgsValid(argsList[idx]):
+                raise UopUsageError("check args error with {OPR} with {ARG}".format(OPR = opr,ARG =  argsList[idx]))
+
 
     def addIo(self, _inputs: list, _outputs: list):
         ####### in this version we assume _input and _output is fully use
+        ######### metaDataArgs is list of args list which correspond with uop
         self.io_input .setOprs(_inputs )
         self.io_output.setOprs(_outputs)
+        ###### set argument for get meta data
+
+    def addMetaArgs(self, _io_input_metaArgs: list, _io_output_metaArgs: list):
+        self.io_input_metaArgs = _io_input_metaArgs
+        self.io_output_metaArgs = _io_output_metaArgs
+        self.checkMetaArgs(self.io_input, self.io_input_metaArgs)
+        self.checkMetaArgs(self.io_output, self.io_output_metaArgs)
+
+
+    #### get value to fill this should be used from mop NOT in UOP generating
+    def genCXX_addMetaArgFill(self, isSrc: bool):
+        preWrite = ""
+        isFirst = True
+        for metaParam in self.io_input_metaArgs if isSrc else self.io_output_metaArgs:
+            eachEle = ", ".join(metaParam)
+            if isFirst:
+                isFirst = False
+            else :
+                if len(eachEle) > 0:
+                    eachEle = ", " + eachEle
+            preWrite = preWrite + eachEle
+        return preWrite
+
+    def genCXX_callAddMetaUopFromMop(self):
+        preWriteList = [ self.io_input.genCXX_call()     , self.io_output.genCXX_call(),
+                         self.genCXX_addMetaArgFill(True), self.genCXX_addMetaArgFill(False) ]
+        preWriteList = list(filter(lambda x: len(x) > 0, preWriteList))
+        return ", ".join(preWriteList)
+
+
+
     def genCXXType(self) -> str:
         return "{PREFIX}${INPUT_KEY}${OUTPUT_KEY}${EXEC_UNIT}".format(
             PREFIX     = self.cxxType_prefix,
@@ -73,64 +103,64 @@ class UOP_BASE:
         return self.namePrefix + "_" +self.name
 
     ####### paramlist for c++ that have variable type for example    "OPR_REG& r1, OPR_REG& r2, OPR_MEM& r3"
-    def genCXX_refIoParamListDeclaration(self):
-        preRet : str
-        BothSide = (self.io_input.getSizeWoDummy() > 0) and (self.io_output.getSizeWoDummy() > 0)
-        preRet = self.io_input.genCXX_refVarDeclaration() + \
-                 (" ," if BothSide else " ") + \
-                 self.io_output.genCXX_refVarDeclaration()
-        return preRet
+    def genCXX_declareAddMetaParamList(self):
+        decAddMetaParamPool = [self.io_input.genCXX_refVarDeclaration(), self.io_output.genCXX_refVarDeclaration(),
+                               self.io_input.genCXX_addMetaArgsDeclaration(), self.io_output.genCXX_addMetaArgsDeclaration()
+                               ]
+        print(decAddMetaParamPool)
+        decAddMetaParamPool = list(filter(lambda x: len(x) > 0, decAddMetaParamPool))
+        print(decAddMetaParamPool)
+        return ", ".join(decAddMetaParamPool)
 
-    def genCXX_callIoParamList(self):
-        preRet : str
-        BothSide = (self.io_input.getSizeWoDummy() > 0) and (self.io_output.getSizeWoDummy() > 0)
-        preRet = self.io_input.genCXX_call() + \
-                 (" ," if BothSide else " ") + \
-                 self.io_output.genCXX_call()
-        return preRet
+    ###### this is used by mop to config and init by operand
+    # def genCXX_callAddMetaParamList(self):
+    #
+    #     ##### add operand to initialize method
+    #     addMetaParamPool = [self.io_input.genCXX_call()           , self.io_output.genCXX_call(),
+    #                         self.io_input.genCXX_addMetaArgsCall(), self.io_output.genCXX_addMetaArgsCall()]
+    #     addMetaParamPool = list(filter(lambda x: len(x) > 0, addMetaParamPool))
+    #     return ", ".join(addMetaParamPool)
+
 
     def genCXX_header(self):
 
         headerFile = "class {UOP_TYPE} : public {UOP_BASE_TYPE}{{\n" \
                      "public:\n" \
                      "  {UOP_TYPE}():UOP_BASE(){{}};\n" \
-                     "  void doDepenCheck(UOP_WINDOW* uop_window) override;\n" \
+                     "  void doPlannedDepenCheck(UOP_WINDOW* uop_window) override;\n" \
                      "  void addMeta({PARAMLIST});\n" \
                      "}};".format(UOP_TYPE      = self.genCXXType(),
                                   UOP_BASE_TYPE = self.cxxTypeParent,
-                                  PARAMLIST     = self.genCXX_refIoParamListDeclaration()
+                                  PARAMLIST     = self.genCXX_declareAddMetaParamList()
                                   )
         return headerFile
 
     def genCXX_cpp(self):
-        ##### add operand to initialize method
+
+
         cppFile = "void {UOP_TYPE}::addMeta({PARAMLIST}){{\n".format(
                                             UOP_TYPE=self.genCXXType(),
-                                            PARAMLIST=self.genCXX_refIoParamListDeclaration()
+                                            PARAMLIST=self.genCXX_declareAddMetaParamList()
                                             )
         ######## for reg or mem operand lets it call operand and add it to dep group
-        for opr in self.io_input.getOprsWoDummy():
-            callAddMetaStr = str()
-            if type(opr) == oprSm.OPR_MEM:
-                cppFile = cppFile  + "          " + opr.genCXX_callAddMeta_phyArea() + ";\n"
-                cppFile = cppFile  + "          " + opr.genCXX_callAddMeta_virArea() + ";\n"
-                cppFile = cppFile  + "          " + opr.genCXX_callAddMeta_Static()  + ";\n"
-            elif type(opr) == oprSm.OPR_TEMP:
-                cppFile = cppFile + "          " + opr.genCXX_callAddMetaWithDirec(True) + ";\n"
-            else:
-                cppFile = cppFile + "          " + opr.genCXX_callAddMeta() + ";\n"
+        cppFile = cppFile + "///////////////// add meta data\n"
+        for idx, opr in enumerate(self.io_input.getOprsWoDummy()):
 
-        for opr in self.io_output.getOprsWoDummy():
-            callAddMetaStr = str()
-            if type(opr) == oprSm.OPR_MEM:
-                ##### please note that phyArea must be call before virtual because virArea will increase the eff address
-                cppFile = cppFile  + "          " + opr.genCXX_callAddMeta_phyArea() + ";\n"
-                cppFile = cppFile  + "          " + opr.genCXX_callAddMeta_virArea() + ";\n"
-                cppFile = cppFile  + "          " + opr.genCXX_callAddMeta_Static() + ";\n"
-            elif type(opr) == oprSm.OPR_TEMP:
-                cppFile = cppFile + "          " + opr.genCXX_callAddMetaWithDirec(False) + ";\n"
-            else:
-                cppFile = cppFile + "          " + opr.genCXX_callAddMeta() + ";\n"
+            cppFile = cppFile + "       " + "getMetaPtr<{METACLASS},{METATYPE}>()->addMeta({GETMETA});\n"\
+                .format(
+                    METACLASS = meta.getMetaEnum(opr, True),
+                    METATYPE  = meta.getMetaType(opr),
+                    GETMETA   = opr.genCXX_callAddMeta()
+                )
+
+        for idx, opr in enumerate(self.io_output.getOprsWoDummy()):
+            cppFile = cppFile + "       " + "getMetaPtr<{METACLASS},{METATYPE}>()->addMeta({GETMETA});\n" \
+                .format(
+                METACLASS=meta.getMetaEnum(opr, False),
+                METATYPE=meta.getMetaType(opr),
+                GETMETA=opr.genCXX_callAddMeta()
+            )
+        cppFile = cppFile + "///////////////// finish meta data\n"
 
         if self.execUnit < -1 :
             raise(UopUsageError(f"uop cpp generating fail! due to invalid exec_unit or forget to assign exec unit : {str(self.execUnit)}"))
@@ -146,14 +176,14 @@ class UOP_BASE:
         ############################################################################
         ##### add do depend check function #### this is core of program
         cppFile = cppFile + \
-            "void {UOP_TYPE}::doDepenCheck(UOP_WINDOW* uop_window){{\n".format(UOP_TYPE=self.genCXXType())
+            "void {UOP_TYPE}::doPlannedDepenCheck(UOP_WINDOW* uop_window){{\n".format(UOP_TYPE=self.genCXXType())
 
         if self.isAutodepenCheck:
             if oprSm.OPR_REG in self.io_input.getOprTypesWoDummy():
-                cppFile = cppFile + "   doRegDepenCheck(uop_window);\n"
+                cppFile = cppFile + "   doDepenCheck<{DEPCLASS}>(uop_window);\n".format(DEPCLASS = dep.oprTypeToDepClassMap[oprSm.OPR_REG])
             if (oprSm.OPR_MEM in self.io_input.getOprTypesWoDummy()) or (oprSm.OPR_MEM in self.io_output.getOprTypesWoDummy()):
-                cppFile = cppFile + "   doMemDepenCheck(uop_window);\n"
-            cppFile = cppFile + "   doExecDepenCheck(uop_window);\n"
+                cppFile = cppFile + "   doDepenCheck<{DEPCLASS}>(uop_window);\n".format(DEPCLASS = dep.oprTypeToDepClassMap[oprSm.OPR_MEM])
+            cppFile = cppFile + "   doDepenCheck<{DEPCLASS}>(uop_window);\n".format(DEPCLASS = dep.DEPCLASS_DEP_EXEC_UNIT)
         else:
             UopUsageError("manual depencheck is not available for this version")
         cppFile = cppFile + "}\n"

@@ -8,6 +8,8 @@
 
 #include "models/uop_model/dep/dep_base.h"
 #include "models/uop_model/dep/dep_simple.h"
+#include "models/uop_model/metaData/metaBase.h"
+#include "models/uop_model/metaData/metaType.h"
 #include "models/inst_model/operand.h"
 #include "models/res_model/execUnit/execUnit.h"
 #include "stat/statPool.h"
@@ -66,7 +68,7 @@ namespace traceBuilder::model {
 
         /** meta class operation*/
         template<META_CLASS meta_class_enum, typename META_TYPE>
-        void addMeta(META_TYPE& metaDayta);
+        void addMeta(META_TYPE metaDayta);
 
         template<META_CLASS meta_class_enum, typename META_TYPE>
         META_GRP<META_TYPE>* getMetaPtr();

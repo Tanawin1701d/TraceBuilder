@@ -34,20 +34,18 @@ namespace traceBuilder::model {
         for (auto &ldOpr: rt_instr->getSrcLdOperands()) {
             auto ldUop = new UOP_SIMPLE(UOP_LOAD);
             /**meta data checking*/
-            ldUop->addMemMeta_Static(ldOpr.getMeta_Static());
-            ldUop->addMemMeta_phyArea(ldOpr.getMeta_phyArea(), true);///// please remind that phyArea before vir due to iteration
-            ldUop->addMemMeta_virArea(ldOpr.getMeta_virArea(), true);
+            ldUop->addMeta<META_SRC_MEM, MEM_META>( ldOpr.getMeta() );
             ldUop->setExecUnit(47);/* for now load unit is set to */
             ldUops.push_back((UOP_BASE*)ldUop);
             results.push_back((UOP_BASE*)ldUop);
         }
         //////////// give only one uop for all reg compute node
         auto compUop = new UOP_SIMPLE(UOP_COMP);
-        for (auto srcRegOpr: rt_instr->getSrcRegOperands()) {
-            compUop->addRegMeta(srcRegOpr.getMeta(), true);
+        for (const auto& srcRegOpr: rt_instr->getSrcRegOperands()) {
+            compUop->addMeta<META_SRC_REG, REG_META>(srcRegOpr.getMeta());
         }
-        for (auto desRegOpr: rt_instr->getDesRegOperands()) {
-            compUop->addRegMeta(desRegOpr.getMeta(), false);
+        for (const auto& desRegOpr: rt_instr->getDesRegOperands()) {
+            compUop->addMeta<META_DES_REG, REG_META>(desRegOpr.getMeta());
         }
         results.push_back((UOP_BASE*)compUop);
         /////////// give one micro-op for one store operand
@@ -55,9 +53,7 @@ namespace traceBuilder::model {
         for (auto &stOpr: rt_instr->getDesStOperands()) {
             auto stUop = new UOP_SIMPLE(UOP_STORE);
             /**meta data checking*/
-            stUop->addMemMeta_Static(stOpr.getMeta_Static());
-            stUop->addMemMeta_phyArea(stOpr.getMeta_phyArea(), false);
-            stUop->addMemMeta_virArea(stOpr.getMeta_virArea(), false);
+            stUop->addMeta<META_DES_MEM, MEM_META>(stOpr.getMeta());
             stUop->setExecUnit(48);/* for now store unit is set to */
             stUops.push_back((UOP_BASE*)stUop);
             results.push_back((UOP_BASE*)stUop);
@@ -71,14 +67,14 @@ namespace traceBuilder::model {
         /////////// dependency connection
         ////////////// connect comp uop to imm uop and ld uop
         for (auto ldUop: ldUops) {
-            compUop->addTemDep(ldUop);
+            compUop->addDep<DEP_TEMP>(ldUop, nullptr);
         }
         for (auto immUop: immUops) {
-            compUop->addTemDep(immUop);
+            compUop->addDep<DEP_TEMP>(immUop, nullptr);
         }
         ////////////// connect store uop to comp uop
         for (auto stUop: stUops) {
-            stUop->addTemDep(compUop);
+            stUop->addDep<DEP_TEMP>(compUop, nullptr);
         }
         /////////////return the pooled uop
     }

@@ -57,6 +57,7 @@ namespace traceBuilder::util {
         } catch (const std::invalid_argument& e){
             std::cout << "[warning:instr.cpp:~58] error to convert " << raw << "  hex to unsigned long convert long ignore\n";
         }
+        return 0;
 
     }
 

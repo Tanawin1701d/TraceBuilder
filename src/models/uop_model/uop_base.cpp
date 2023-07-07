@@ -51,7 +51,7 @@ namespace traceBuilder::model {
     /** operation on meta data*/
     /////////////////////////////////
     template<META_CLASS meta_class_enum, typename META_TYPE>
-    void UOP_BASE::addMeta(META_TYPE& metaDayta) {
+    void UOP_BASE::addMeta(META_TYPE metaDayta) {
         auto metaGrp = getMetaPtr<meta_class_enum, META_TYPE>();
         metaGrp->addMeta(metaDayta);
     }
@@ -67,7 +67,7 @@ namespace traceBuilder::model {
     template<DEP_CLASS dep_class_enum>
     bool UOP_BASE::addDep(UOP_BASE* uop, UOP_WINDOW* uop_window){
         auto dep = getDepClassPtr<dep_class_enum>();
-        dep->addDep(this, uop_window);
+        return dep->addDep(this, uop_window);
     }
 
     template<DEP_CLASS dep_class_enum>

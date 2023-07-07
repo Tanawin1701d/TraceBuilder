@@ -110,14 +110,6 @@ namespace traceBuilder::model {
     void
     RT_INSTR::genUOPS(std::vector<UOP_BASE *> &results) {
         assert(macroop != nullptr);
-        ////// one micro-op may share the same operand due to huge load or store
-        //////////in each uop generating, we must reset the shared tracker
-        for (auto &ldOpr: srcLdOperands) {
-            ldOpr.resetSharedOperandTracker();
-        }
-        for (auto &stOpr: desStOperands) {
-            stOpr.resetSharedOperandTracker();
-        }
         macroop->genUop(results, this);
     }
 
@@ -169,12 +161,16 @@ namespace traceBuilder::model {
         int memopNum = stoi(tokens[ST_IDX_LOAD_MON]);
         ///build operand
 
-        MEM_OPR_META memMeta = {
+        MEM_META memMeta = {
+                {0, opr_eff_size},
+                {0, opr_eff_size},
+                opr_eff_size,
                 baseReg,
                 indexReg,
                 scale,
-                displacement,
-                opr_eff_size
+                0,
+                false,
+                false,
         };
 
         if (isLoad) {

@@ -39,7 +39,7 @@ def writeAllHppMop():
                 "#include\"{INC_MYUOP}\"\n" \
                 "\n\n\n\n".format(
                     ARCH = hd.ARCH,
-                    INC_DEP = hd.INC_DEP_BASE,
+                    INC_DEP = hd.INC_DEP_SIM,
                     INC_MOP = hd.INC_MOP_BASE,
                     INC_MYUOP = hd.UOP_HFILE_NAME
                 )

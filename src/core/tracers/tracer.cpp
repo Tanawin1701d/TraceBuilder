@@ -43,7 +43,7 @@ namespace traceBuilder::core {
             sizes = new uint64_t[amt];
             auto &ldOpr = rt_instr.getSrcLdOperands();
             for (size_t idx = 0; idx < amt; idx++) {
-                sizes[idx] = ldOpr[idx].getMeta_Static().size;
+                sizes[idx] = ldOpr[idx].getMeta().size;
             }
         } else { //// store
             vAddrs = rt_obj.storeAddr;
@@ -56,7 +56,7 @@ namespace traceBuilder::core {
             sizes = new uint64_t[amt];
             auto &stOpr = rt_instr.getDesStOperands();
             for (size_t idx = 0; idx < amt; idx++) {
-                sizes[idx] = stOpr[idx].getMeta_Static().size;
+                sizes[idx] = stOpr[idx].getMeta().size;
             }
         }
         /////// fill the physical address
@@ -126,7 +126,7 @@ namespace traceBuilder::core {
             auto uop = inflight_uops[idx];
             ///// fullfil uop meta data before doDepenCHeck
             uop->setSeqNum(genSeqNum_fromIdx(idx));
-            uop->doDepenCheck(specificSimEle->uopWindow);
+            uop->doPlannedDepenCheck(specificSimEle->uopWindow);
         }
         /////// send to result front-end
         specificSimEle->resultFed->onGetUopsResult(inflight_uops, rt_instr);
