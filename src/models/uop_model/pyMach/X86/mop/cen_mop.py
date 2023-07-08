@@ -1,8 +1,119 @@
 import base.mop.mop_base as mb
-import base.operand.opr_simple as opr
+import base.operand.opr_simple as oprs
 import X86.uop.alu.comp_uop as  uop_comp_x86
 import X86.uop.mov.dataMov_uop as uop_mov_x86
 import X86.uop.resMap as resMap
+
+
+class MOP_BASE_X86(mb.MOP_BASE):
+
+    PREBUILT_inputOprList : list
+    PREBUILT_outputOprList: list
+    PREBUILT_temOprList   : list
+    PREBUILT_uopList      : list
+    PREBUILT_decKeys      : list
+
+    regRelatedOprTypes = [oprs.OPR_REG, oprs.OPR_TEMP]
+    oprBeSrcDesAble       = [oprs.OPR_REG, oprs.OPR_TEMP]
+    oprBeTempAble         = [oprs.OPR_TEMP]
+
+
+
+    def __init__(self):
+        self.PREBUILT_inputOprList  = list()
+        self.PREBUILT_outputOprList = list()
+        self.PREBUILT_temOprList    = list()
+        self.PREBUILT_uopList       = list()
+        self.decKeys                = list()
+
+    def addToPreBuitList(self, oprSrc, uop, oprDes):
+        if oprSrc in self.oprBeSrcDesAble:
+            self.PREBUILT_inputOprList.append(oprSrc)
+        elif oprSrc in self.oprBeTempAble:
+            self.PREBUILT_temOprList.append(oprSrc)
+
+        self.PREBUILT_uopList
+        ######################
+        ############## REDUCE REDUNDANT MUEST BE FIXED
+        ##############
+
+    def initLdMemOp(self, desOprType, srcName: str, desName : str, uopName : str):
+        ##### return (opr0,uopForMem, opr1) opr0 -> uopForMem -> opr1
+        if desOprType not in self.regRelatedOprTypes:
+            mb.MopUsageError(f"initLdMemOp can't store to operand {str(desOprType)}")
+
+        memSrcOpr   = oprs.OPR_MEM(srcName, True)
+        temDesOpr = oprs.OPR_REG(desName, False) if desOprType == oprs.OPR_REG else \
+                      oprs.OPR_TEMP(desName)
+        ######################################################################################################
+        ldUop       = uop_mov_x86.UOP_MOV(uopName, resMap.cxxTypeUOP_LOAD)
+        ldUop.addIo([memSrcOpr], [temDesOpr])
+        ldUop.addMetaArgs([  [] ],[[]])
+                    #        ^------------- list of list of argument that want this uop fill when it's generated
+        #####################################################################################################
+        return (memSrcOpr, ldUop, temDesOpr)
+
+    def initStMemOp(self, srcOprType, srcName: str, desName : str, uopName : str):
+        if srcOprType not in self.regRelatedOprTypes:
+            mb.MopUsageError(f"initStMemOp can't get from operand {str(srcOprType)}")
+
+        temSrcOpr = oprs.OPR_REG(srcName, True) if srcOprType == oprs.OPR_REG else \
+                    oprs.OPR_TEMP(srcName)
+        memDesOpr = oprs.OPR_MEM(desName, False)
+        #####################################################################################################
+        stUop       = uop_mov_x86.UOP_MOV(uopName, resMap.cxxTypeUOP_STORE)
+        stUop.addIo([temSrcOpr], [memDesOpr])
+        stUop.addMetaArgs([[]],[[]])
+        #####################################################################################################
+        return (temSrcOpr, stUop, memDesOpr)
+
+    """
+    initIoUopNOpr is used to initialize uop and opr that relate to load/store from memory
+    for intuition, 
+    """
+    def initMemOp(self, srcType, desType, srcName: str, desName: str, uopName: str):
+
+        if srcType == oprs.OPR_MEM and (desType in self.regRelatedOprTypes):
+            return self.initLdMemOp(desType, srcName, desName, uopName)
+        elif desType == oprs.OPR_MEM and (srcType in self.regRelatedOprTypes):
+            return self.initStMemOp(srcType, srcName, desName, uopName)
+
+    """
+    initReduceRedundant
+    for some case that io for load/st uop is not neccessary like reg to temp or temp to reg operation
+    we return (srcOpr, None, None) for compatible with mem op
+    """
+    def initReduceRedundantOp(self, srcType, desType, srcName: str, desName: str):
+        #####  sanitize operand type
+        if srcType == desType:
+            mb.MopUsageError("initReduceRedundantOp got something neccessary initialization")
+        if srcType not in self.regRelatedOprTypes:
+            mb.MopUsageError(f"initReduceRedundantOp got unacceptable src type {str(srcType)}")
+        if desType not in self.regRelatedOprTypes:
+            mb.MopUsageError(f"initReduceRedundantOp got unacceptable des type {str(desType)}")
+
+        if srcType == oprs.OPR_REG and desType == oprs.OPR_TEMP:
+            return (oprs.OPR_REG(srcName, True), None, None)
+        elif srcType == oprs.OPR_TEMP and desType == oprs.OPR_REG:
+            return (oprs.OPR_REG(desName, True), None, None)
+        else:
+            mb.MopUsageError(f"initReduceRedundantOp got conversion error src: {str(srcType)} des: {str(desType)}")
+
+    """
+    for macrops predictly desire the needed of mem operation but if it op that conversion reg to temp or temp to reg
+    we use initReduceRedundantOp instead and not declare new uop
+    """
+    def initIoOp(self,srcType, desType, srcName: str, desName: str, uopName: str, autoAddToPreBuiltList: bool):
+        ##### return (oprFrom , relateduop, oprTo)
+
+        #### check that we are mem op
+        if oprs.OPR_MEM in (srcType, desType):
+            return self.initMemOp(srcType, desType, srcName, desName, uopName)
+        else:
+            return self.initReduceRedundantOp(srcType, desType, srcName, desName)
+
+
+
 
 
 
