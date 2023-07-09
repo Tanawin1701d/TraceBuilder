@@ -37,6 +37,11 @@ class UOP_BASE:
         self.cxxType_prefix = _cxxType_prefix
         self.uopType        = _uopType
         self.execUnit       = _execUnit
+
+        self.addMetaArgs([[] for i in range(self.io_input.size)],
+                         [[] for i in range(self.io_output.size)]
+                        )
+
         #UOP_COMP,UOP_LOAD,UOP_STORE,UOP_IMM,
         ###### check that current uop depend on other successor uop
     def isPreInternalDepend(self,preUop):

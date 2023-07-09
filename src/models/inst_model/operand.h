@@ -50,6 +50,10 @@ namespace traceBuilder::model {
 
         /////// get meta data of the operand that is fundamental of uop
         REGNUM getMeta() const;
+
+        ///// sub reg idx
+        //////////// for precise support vector instruction micro-model
+        REGNUM getMeta(int subRegIdx)
     };
 
     class OPR_TREG : public OPERAND {

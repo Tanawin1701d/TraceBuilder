@@ -23,10 +23,21 @@ ExecUnit_dummy = 99
 # }
 # default_uopType = "UOP_COMP"
 #
-cxxTypeUOP_LOAD   = "MOV_MEM_LD"
-cxxTypeUOP_STORE  = "MOV_MEM_ST"
-cxxTypeUOP_IMM    = "MOV_MEM_LDI"
-cxxTypeUOP_MOVREG = "MOV_REG"
+
+class ResUsageError(Exception):
+    def __init__(self, message):
+        super().__init__(self, message)
+
+
+cxxTypeUOP_LOAD_INT  = "MOV_MEM_LD_INT"
+cxxTypeUOP_LOAD_FLT  = "MOV_MEM_LD_FLT"
+cxxTypeUOP_STORE_INT = "MOV_MEM_ST_INT"
+cxxTypeUOP_STORE_FLT = "MOV_MEM_ST_FLT"
+cxxTypeUOP_IMM       = "MOV_MEM_LDI"
+cxxTypeUOP_MOVREG    = "MOV_REG"
+
+cxxTypeIO_suggest_FLT = "FLT"
+cxxTypeIO_suggest_INT = "INT"
 
 UOPTYPE_COMP     = "UOP_COMP"
 UOPTYPE_LOAD     = "UOP_LOAD"
@@ -84,14 +95,14 @@ gem5_opclass  = {
 "SimdShaSigma2"     : (44, UOPTYPE_COMP),
 "SimdShaSigma3"     : (45, UOPTYPE_COMP),
 "SimdPredAlu"       : (46, UOPTYPE_COMP),
-cxxTypeUOP_LOAD     : (47, UOPTYPE_LOAD),
-cxxTypeUOP_STORE    : (48, UOPTYPE_STORE),
+cxxTypeUOP_LOAD_INT : (47, UOPTYPE_LOAD),
+cxxTypeUOP_STORE_INT: (48, UOPTYPE_STORE),
 "FloatMemRead"      : (49, UOPTYPE_COMP),
 "FloatMemWrite"     : (50, UOPTYPE_COMP),
 "IprAccess"         : (51, UOPTYPE_COMP),
 "InstPrefetch"      : (52, UOPTYPE_COMP),
-cxxTypeUOP_IMM     : ( 0, UOPTYPE_IMM  ),
-cxxTypeUOP_MOVREG  : ( 0, UOPTYPE_COMP )
+cxxTypeUOP_IMM     : ( 1, UOPTYPE_IMM  ),
+cxxTypeUOP_MOVREG  : ( 1, UOPTYPE_COMP )
 
 }
 
@@ -100,3 +111,14 @@ def cxxTypeToExecUnit(cxxPrefix : str):
 
 def cxxTypeToUopType(cxxPrefix: str):
     return gem5_opclass.get(cxxPrefix, (0, "UOP_COMP"))[1]
+
+def ioSuggest_to_cxxType(cxxSugest : str, isLoad: bool = True):
+
+    if cxxSugest not in [cxxTypeIO_suggest_FLT, cxxTypeIO_suggest_INT]:
+        raise ResUsageError(f"can't convert io suggest: {cxxSugest} to cxx typePrefix")
+    elif cxxSugest == cxxTypeIO_suggest_FLT:
+        return cxxTypeUOP_LOAD_FLT if isLoad else cxxTypeUOP_STORE_FLT
+    elif cxxSugest == cxxTypeIO_suggest_INT:
+        return cxxTypeUOP_LOAD_INT if isLoad else cxxTypeUOP_STORE_INT
+
+
