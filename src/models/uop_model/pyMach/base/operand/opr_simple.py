@@ -14,6 +14,9 @@ class OPR_REG(opr_base.OPR_BASE):
         ##### overide cxx type
         self.isSrc = _isSrc
 
+    def genCXX_getFillMetaHelper_forVec(self, idxInGrp: int, uopOprSize: int, archOprSize: int) -> list:
+        return [str(idxInGrp)]
+
 
 class OPR_MEM(opr_base.OPR_BASE):
 
@@ -26,6 +29,9 @@ class OPR_MEM(opr_base.OPR_BASE):
                                                        ["b_byte_"+_name, "e_byte_"+_name])
                                                         #### for uniq situation
         self.isSrc = _isSrc
+
+    def genCXX_getFillMetaHelper_forVec(self, idxInGrp: int, uopOprSize: int, archOprSize: int) -> list:
+        return [str(idxInGrp*uopOprSize), str((idxInGrp+1)*uopOprSize)]
 
 class OPR_TEMP(opr_base.OPR_BASE):
     kwargeforInitVar = "tregId" #### to initialize this class you must provide this kw type(int)

@@ -63,6 +63,9 @@ class OPR_BASE :
     def genCXX_getMetaCallArgs(self):
         return ", ".join("{vn}".format(vn = vn) for vn in self.addMetaArgsVarName)
 
+    #### uop use this fucntion to get value that should be added to meta get method
+    def genCXX_getFillMetaHelper_forVec(self, idxInGrp: int, uopOprSize: int, archOprSize: int) -> list:
+        return list()
 
 
 

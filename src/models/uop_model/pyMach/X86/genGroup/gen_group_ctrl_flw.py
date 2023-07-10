@@ -24,4 +24,3 @@ class MOP_GROUP_JMP(mop_group.MOP_GROUP_BASE):
     def __init__(self):
         super().__init__(5, mop_ctrl_flw_x86.MOP_JMP_ALL)
         self.addMopArgExtractComb((self.srcdesOpr, self.srcdesOpr, ["CTRL_ALL"], ["IntAlu"], [self.decKeys0]))
-
