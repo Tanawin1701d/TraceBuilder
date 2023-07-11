@@ -22,7 +22,7 @@ namespace traceBuilder::model {
      * dependency  enum
      * */
      enum DEP_CLASS{
-         DEP_REG,
+         DEP_MREG,
          DEP_MEM,
          DEP_TEMP,
          DEP_EXEC_UNIT,

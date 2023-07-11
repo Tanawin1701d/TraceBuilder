@@ -80,7 +80,7 @@ namespace traceBuilder::core {
             ///////////////////////////////////////////////////////
             ///// you can trust that the uops dependency which get from ONGETUOPSRESULTS is not deleted
             //////// by uop window but it maybe deleted after this function is finised.
-            auto regDepPtr = uop->getDepClassPtr<DEP_CLASS::DEP_REG>();
+            auto regDepPtr = uop->getDepClassPtr<DEP_CLASS::DEP_MREG>();
             for (auto regDepUop: *regDepPtr) {
                 //std::cout << "reg added" << std::endl;
                 stat::MAIN_STAT["DepGem5"]["reg"].asUINT()++;

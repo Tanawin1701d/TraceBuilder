@@ -42,10 +42,10 @@ namespace traceBuilder::model {
         //////////// give only one uop for all reg compute node
         auto compUop = new UOP_SIMPLE(UOP_COMP);
         for (const auto& srcRegOpr: rt_instr->getSrcRegOperands()) {
-            compUop->addMeta<META_SRC_REG, REG_META>(srcRegOpr.getMeta());
+            compUop->addMeta<META_SRC_MREG, MREG_META>(srcRegOpr.getMeta());
         }
         for (const auto& desRegOpr: rt_instr->getDesRegOperands()) {
-            compUop->addMeta<META_DES_REG, REG_META>(desRegOpr.getMeta());
+            compUop->addMeta<META_DES_MREG, MREG_META>(desRegOpr.getMeta());
         }
         results.push_back((UOP_BASE*)compUop);
         /////////// give one micro-op for one store operand

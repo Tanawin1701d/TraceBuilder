@@ -10,7 +10,7 @@ class MOP_GROUP_CMP(mop_group.MOP_GROUP_BASE):
     def __init__(self):
         ####### simple compare
         super().__init__(5, mop_ctrl_flw_x86.MOP_CMP_ALL)
-        self.addMopArgExtractComb((self.srcOpr, self.srcOpr, ["CMP_ALL"], ["IntAlu"], [self.decKeys0]))
+        self.addMopArgExtractComb((["CMP_ALL"],self.srcOpr, self.srcOpr, ["IntAlu"], [self.decKeys0]))
 
 
 class MOP_GROUP_JMP(mop_group.MOP_GROUP_BASE):
@@ -19,8 +19,9 @@ class MOP_GROUP_JMP(mop_group.MOP_GROUP_BASE):
                 "JAE", "JNL", "JNE", "JNZ","JNB",
                 "JNBE", "JNLE"]
 
-    srcdesOpr = [opr.OPR_REG]
+    srcOpr   = [opr.OPR_REG, opr.OPR_IMM, opr.OPR_MEM]
+    desOpr   = [opr.OPR_REG]
 
     def __init__(self):
-        super().__init__(5, mop_ctrl_flw_x86.MOP_JMP_ALL)
-        self.addMopArgExtractComb((self.srcdesOpr, self.srcdesOpr, ["CTRL_ALL"], ["IntAlu"], [self.decKeys0]))
+        super().__init__(6, mop_ctrl_flw_x86.MOP_JMP_ALL)
+        self.addMopArgExtractComb(( ["CTRL_ALL"], self.srcOpr, self.srcOpr, self.desOpr, ["IntAlu"], [self.decKeys0]))

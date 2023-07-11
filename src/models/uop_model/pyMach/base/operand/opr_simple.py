@@ -10,7 +10,7 @@ class OPR_REG(opr_base.OPR_BASE):
         return OPR_REG
 
     def __init__(self, _name: str, _isSrc : bool):
-        super().__init__(_name, "OPR_REG", False, "R", [], [])
+        super().__init__(_name, "OPR_REG", False, "R", [hdr.CVAR_REGIDX], [_name + "subRegIdx"])
         ##### overide cxx type
         self.isSrc = _isSrc
 
@@ -26,7 +26,7 @@ class OPR_MEM(opr_base.OPR_BASE):
 
     def __init__(self, _name: str, _isSrc : bool):
         super().__init__(_name, "OPR_MEM", False, "M", [hdr.CVAR_ADDR  , hdr.CVAR_ADDR],
-                                                       ["b_byte_"+_name, "e_byte_"+_name])
+                                                       [_name + "b_byte_", _name + "e_byte_"])
                                                         #### for uniq situation
         self.isSrc = _isSrc
 
@@ -40,7 +40,7 @@ class OPR_TEMP(opr_base.OPR_BASE):
         return OPR_TEMP
 
     def __init__(self, _name: str):
-        super().__init__(_name, "OPR_TREG", True, "T", ["bool"], ["direct" + _name])
+        super().__init__(_name, "OPR_TREG", True, "T", [], [])
 
     def genCXX_typeInitializer(self, **kwargs) -> str:
         if (self.kwargeforInitVar in kwargs) and (type(kwargs[self.kwargeforInitVar]) == int):
@@ -52,7 +52,7 @@ class OPR_IMM(opr_base.OPR_BASE):
     def getVarType(self):
         return OPR_IMM
 
-    def __init__(self, _name: str):
+    def __init__(self, _name: str, _isSrc: bool = True):
         super().__init__(_name, "OPR_IMM", False, "I", [], [])
 
 class OPR_DUMMY(opr_base.OPR_BASE):

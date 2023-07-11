@@ -87,11 +87,11 @@ namespace traceBuilder::core{
     void
     TBD_GEM5_ISA::setArchRegHelper(UOP_BASE *uop_base, ProtoMessage::machRecord *machRec, bool isSrc) {
         /** src for get regNum*/
-        META_GRP<REG_META>* regMetaPtr;
+        META_GRP<MREG_META>* regMetaPtr;
         if (isSrc){
-            regMetaPtr = uop_base->getMetaPtr<META_CLASS::META_SRC_REG, REG_META>();
+            regMetaPtr = uop_base->getMetaPtr<META_CLASS::META_SRC_MREG, MREG_META>();
         }else{
-            regMetaPtr = uop_base->getMetaPtr<META_CLASS::META_DES_REG, REG_META>();
+            regMetaPtr = uop_base->getMetaPtr<META_CLASS::META_DES_MREG, MREG_META>();
         }
         /** destination to insert new regNum*/ //void (ProtoMessage::machRecord::*  inseter)(uint32_t);
         auto inseter = isSrc ? &ProtoMessage::machRecord::add_srcarchregid

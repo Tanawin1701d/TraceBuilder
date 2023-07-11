@@ -97,8 +97,8 @@ gem5_opclass  = {
 "SimdPredAlu"       : (46, UOPTYPE_COMP),
 cxxTypeUOP_LOAD_INT : (47, UOPTYPE_LOAD),
 cxxTypeUOP_STORE_INT: (48, UOPTYPE_STORE),
-"FloatMemRead"      : (49, UOPTYPE_COMP),
-"FloatMemWrite"     : (50, UOPTYPE_COMP),
+cxxTypeUOP_LOAD_FLT : (49, UOPTYPE_LOAD),
+cxxTypeUOP_STORE_FLT: (50, UOPTYPE_STORE),
 "IprAccess"         : (51, UOPTYPE_COMP),
 "InstPrefetch"      : (52, UOPTYPE_COMP),
 cxxTypeUOP_IMM     : ( 1, UOPTYPE_IMM  ),
@@ -120,5 +120,3 @@ def ioSuggest_to_cxxType(cxxSugest : str, isLoad: bool = True):
         return cxxTypeUOP_LOAD_FLT if isLoad else cxxTypeUOP_STORE_FLT
     elif cxxSugest == cxxTypeIO_suggest_INT:
         return cxxTypeUOP_LOAD_INT if isLoad else cxxTypeUOP_STORE_INT
-
-

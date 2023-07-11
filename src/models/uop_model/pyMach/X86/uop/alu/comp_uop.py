@@ -46,7 +46,6 @@ class UOP_COMP(ub.UOP_BASE):
         for idx in range(len(_inputs)):
             self.io_input_metaArgs[idx] = _inputs[idx].genCXX_getFillMetaHelper_forVec \
                 (self.in_idxInGrp, self.in_uopOprSize, self.in_archOprSize)
-
         for idx in range(len(_outputs)):
             self.io_output_metaArgs[idx] = _outputs[idx].genCXX_getFillMetaHelper_forVec \
                 (self.out_idxInGrp, self.out_uopOprSize, self.out_archOprSize)

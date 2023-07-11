@@ -17,11 +17,11 @@ class UOP_MOV(ub.UOP_BASE):
                          resMap.cxxTypeToUopType(_cxxType_prefix), resMap.cxxTypeToExecUnit(_cxxType_prefix)
                          )
         self.io_input .addAcceptType(0, {opr.OPR_REG, opr.OPR_MEM, opr.OPR_TEMP, opr.OPR_IMM})
-        self.io_output.addAcceptType(0, {opr.OPR_REG, opr.OPR_MEM, opr.OPR_TEMP, opr.OPR_IMM})
+        self.io_output.addAcceptType(0, {opr.OPR_REG, opr.OPR_MEM, opr.OPR_TEMP})
 
-        idxInGrp    =  _idxInGrp
-        uopOprSize  = _uopOprSize
-        archOprSize = _archOprSize
+        self.idxInGrp    =  _idxInGrp
+        self.uopOprSize  = _uopOprSize
+        self.archOprSize = _archOprSize
 
     def addIo(self, _inputs: list, _outputs: list):
         super().addIo(_inputs, _outputs)

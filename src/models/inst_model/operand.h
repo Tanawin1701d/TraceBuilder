@@ -53,7 +53,7 @@ namespace traceBuilder::model {
 
         ///// sub reg idx
         //////////// for precise support vector instruction micro-model
-        REGNUM getMeta(int subRegIdx)
+        REGNUM getMeta(int subRegIdx);
     };
 
     class OPR_TREG : public OPERAND {
@@ -66,7 +66,7 @@ namespace traceBuilder::model {
 
         REGNUM getRegId() const;
 
-        REGNUM getMeta(bool direc) const;
+        REGNUM getMeta() const;
     };
 
 
@@ -120,6 +120,8 @@ namespace traceBuilder::model {
         IMM getImm() const;
 
         IMM getValue() const;
+
+        IMM getMeta() const {return imm;};
     };
 
 }

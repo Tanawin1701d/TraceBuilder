@@ -39,6 +39,7 @@ DEC_CFILE_NAME = "{ARCH}_dec.cpp".format(ARCH = ARCH)
 
 #### variable that used in C++
 CVAR_ADDR       = "ADDR"
+CVAR_REGIDX     = "int"
 
 
 

@@ -15,7 +15,7 @@ namespace traceBuilder::model {
 
     typedef IMM    IMM_META;
 
-    typedef REGNUM REG_META;
+    typedef MREGNUM MREG_META;
 
     typedef TREGNUM TREG_META;
 

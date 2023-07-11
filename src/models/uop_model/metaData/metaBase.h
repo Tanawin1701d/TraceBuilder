@@ -19,12 +19,12 @@ namespace traceBuilder::model {
 
     enum META_CLASS{
         /** src class*/
-        META_SRC_REG,
+        META_SRC_MREG,
         META_SRC_TEMP,
         META_SRC_MEM,
         META_SRC_IMM,
         /** des class*/
-        META_DES_REG,
+        META_DES_MREG,
         META_DES_TEMP,
         META_DES_MEM,
         /*

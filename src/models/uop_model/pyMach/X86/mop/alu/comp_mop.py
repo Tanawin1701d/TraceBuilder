@@ -13,23 +13,25 @@ class MOP_COMP_BASE_X86(mop_cen_x86.MOP_BASE_X86):
         super().__init__()
 
         ##### init load io
-        ld0Data = oprLdFrom0, uopLd0, oprLdTo0 = self.initIoOp(srcOpr0Type, oprs.OPR_TEMP, cxxTypeIO_suggest,
+        ld0Data = self.initIoOp(srcOpr0Type, oprs.OPR_TEMP, cxxTypeIO_suggest,
                                                                "oprLdFrom0", "uopLd0", "oprLdTo0", uopOprSize, archOprSize)
-        ld1Data = oprLdFrom1, uopLd1, oprLdTo1 = self.initIoOp(srcOpr1Type, oprs.OPR_TEMP, cxxTypeIO_suggest,
+        ld1Data = self.initIoOp(srcOpr1Type, oprs.OPR_TEMP, cxxTypeIO_suggest,
                                                                "oprLdFrom1", "uopLd1", "oprLdTo1", uopOprSize, archOprSize)
 
         ##### init store io
-        st0Data = oprStFrom0, uopSt0, oprStTo0 = self.initIoOp(oprs.OPR_TEMP, desOpr0Type, cxxTypeIO_suggest,
+        st0Data = self.initIoOp(oprs.OPR_TEMP, desOpr0Type, cxxTypeIO_suggest,
                                                                "oprStFrom0", "uopSt0", "oprStTo0", uopOprSize, archOprSize)
-        st1Data = oprStFrom1, uopSt1, oprStTo1 = self.initIoOp(oprs.OPR_TEMP, desOpr1Type, cxxTypeIO_suggest,
+        st1Data = self.initIoOp(oprs.OPR_TEMP, desOpr1Type, cxxTypeIO_suggest,
                                                                "oprStFrom1", "uopSt1", "oprStTo1", uopOprSize, archOprSize)
-
-        if len(oprLdTo0) != len(oprLdTo1) or len(oprStFrom0) != len(oprStFrom1) or len(oprLdTo0) != len(oprStFrom0):
-            mb.MopUsageError("error simd opr count error")
 
         neededComp = list()
         ##### init comp
-        for idx, inOpr0, inOpr1, resOpr0, resOpr1 in enumerate(zip(oprLdTo0, oprLdTo1, oprStFrom0, oprStFrom1)):
+        for idx in range(self.getAmtUopForEachIo(uopOprSize, archOprSize)):
+            inOpr0 = self.getIoForCompFromInitIo(*ld0Data, idx,  True)
+            inOpr1 = self.getIoForCompFromInitIo(*ld1Data, idx,  True)
+            resOpr0 = self.getIoForCompFromInitIo(*st0Data, idx,  False)
+            resOpr1 = self.getIoForCompFromInitIo(*st1Data, idx,  False)
+
             compUop = self.initCompOp(inOpr0, inOpr1, resOpr0, resOpr1,
                                       f"compUop_{idx}", cxxTypeCompUop_prefix,
                                       idx, uopOprSize, archOprSize,
@@ -40,14 +42,14 @@ class MOP_COMP_BASE_X86(mop_cen_x86.MOP_BASE_X86):
 
 
         ###### add to preBuilt List
-        self.addIoToPreBuiltList(*ld0Data, True)
-        self.addIoToPreBuiltList(*ld1Data, True)
+        self.addIoToPreBuiltList(*ld0Data)
+        self.addIoToPreBuiltList(*ld1Data)
 
         for compUop in neededComp:
             self.addUopToPreBuiltList(compUop)
 
-        self.addIoToPreBuiltList(*st0Data, False)
-        self.addIoToPreBuiltList(*st1Data, False)
+        self.addIoToPreBuiltList(*st0Data)
+        self.addIoToPreBuiltList(*st1Data)
 
         ####### finalize mop
         self.finalizeMop(cxxTypeMop_prefix, _decKeys)

@@ -13,7 +13,7 @@ class MOP_BASE_X86(mb.MOP_BASE):
     PREBUILT_uopList      : list
 
     regRelatedOprTypes = [oprs.OPR_REG, oprs.OPR_TEMP]
-    oprBeSrcDesAble       = [oprs.OPR_REG, oprs.OPR_MEM]
+    oprBeSrcDesAble       = [oprs.OPR_REG, oprs.OPR_MEM, oprs.OPR_IMM]
     oprBeTempAble         = [oprs.OPR_TEMP]
 
 
@@ -29,44 +29,26 @@ class MOP_BASE_X86(mb.MOP_BASE):
         self.PREBUILT_uopList       = list()
         self.decKeys                = list()
 
-    def addIoToPreBuiltList(self, oprSrcs, uops, oprDeses, isInput : bool = True):
+    def addIoToPreBuiltList(self, oprSrcs: list, uops: list, oprDeses:list):
 
-        for oprSrc, uop, oprDes in zip(oprSrcs, uops, oprDeses):
-
-            if type(oprSrc) == oprs.OPR_MEM and (type(oprDes) == oprs.OPR_TEMP or type(oprDes) == oprs.OPR_REG):
-                #### case load
-                self.PREBUILT_inputOprList.append(oprSrc)
-                if type(oprDes) == oprs.OPR_TEMP:
-                    self.PREBUILT_temOprList.append(oprDes)
-                else:##### suppose type reg
-                    self.PREBUILT_outputOprList.append(oprDes)
-                self.PREBUILT_uopList.append(uop)
-            elif (type(oprSrc) == oprs.OPR_TEMP or type(oprSrc) == oprs.OPR_REG) and type(oprDes) == oprs.OPR_MEM:
-                #### case store
-                if type(oprSrc) == oprs.OPR_TEMP:
-                    self.PREBUILT_temOprList.append(oprSrc)
-                else:#### suppose type reg
-                    self.PREBUILT_inputOprList.append(oprSrc)
-                self.PREBUILT_outputOprList.append(oprDes)
-                self.PREBUILT_uopList.append(uop)
-            elif type(oprSrc) == oprs.OPR_IMM and (type(oprDes) == oprs.OPR_TEMP or type(oprDes) == oprs.OPR_REG ):
-                self.PREBUILT_inputOprList.append(oprSrc)
-                if type(oprDes) == oprs.OPR_TEMP:
-                    self.PREBUILT_temOprList.append(oprDes)
-                else: #### reg
-                    self.PREBUILT_outputOprList.append(oprDes)
-                self.PREBUILT_uopList.append(uop)
-            elif oprSrc == oprDes and uop == None:
-                if isInput:
-                    self.PREBUILT_inputOprList.append(oprSrc)
-                else:
-                    self.PREBUILT_outputOprList.append(oprDes)
-            elif oprSrc != oprDes and uop != None:
-                self.PREBUILT_inputOprList.append(oprSrc)
-                self.PREBUILT_uopList.append(uop)
-                self.PREBUILT_outputOprList.append(oprDes)
+        for op in oprSrcs:
+            if type(op) in self.oprBeSrcDesAble:
+                self.PREBUILT_inputOprList.append(op)
+            elif type(op) == oprs.OPR_TEMP:
+                self.PREBUILT_temOprList.append(op)
             else:
-                mb.MopUsageError("can't add opr to prebuilt list")
+                mb.MopUsageError(f"add opr type {op} to src opr prebuilt list error")
+        for op in oprDeses:
+            if type(op) in self.oprBeSrcDesAble:
+                self.PREBUILT_outputOprList.append(op)
+            elif type(op) == oprs.OPR_TEMP:
+                self.PREBUILT_temOprList.append(op)
+            else:
+                mb.MopUsageError(f"add opr type {op} to des prebuilt list error")
+        for uop in uops:
+            self.PREBUILT_uopList.append(uop)
+
+
 
     def addUopToPreBuiltList(self, uop):
         self.PREBUILT_uopList.append(uop)
@@ -145,10 +127,10 @@ class MOP_BASE_X86(mb.MOP_BASE):
         preRetDesOpr = list()
 
         for idx_inLdGrp in range(self.getAmtUopForEachIo(uopOprSize, archOprSize)):
-            desOpr = oprs.OPR_REG(desName, False) if desType == oprs.OPR_REG else \
-                     oprs.OPR_TEMP(desName)
+            desOpr = oprs.OPR_REG(f"{desName}_{idx_inLdGrp}", False) if desType == oprs.OPR_REG else \
+                     oprs.OPR_TEMP(f"{desName}_{idx_inLdGrp}")
             ############################## comp uop
-            ldUop = uop_mov_x86.UOP_MOV(uopName, resMap.cxxTypeUOP_IMM, 0, 8, 8)
+            ldUop = uop_mov_x86.UOP_MOV(f"{uopName}_{idx_inLdGrp}", resMap.cxxTypeUOP_IMM, 0, 8, 8)
             ldUop.addIo([srcOpr], [desOpr])
 
             preRetUops.append(ldUop)
@@ -174,16 +156,16 @@ class MOP_BASE_X86(mb.MOP_BASE):
 
         if srcType == oprs.OPR_REG and desType == oprs.OPR_TEMP:
             preRetOpr = oprs.OPR_REG(srcName, True)
-            return ([preRetOpr], [None], [preRetOpr])
+            return ([preRetOpr], [], [])
         elif srcType == oprs.OPR_TEMP and desType == oprs.OPR_REG:
-            preRetOpr = oprs.OPR_REG(desName, True)
-            return ([preRetOpr], [None], [preRetOpr])
+            preRetOpr = oprs.OPR_REG(desName, False)
+            return ([], [], [preRetOpr])
         elif srcType == oprs.OPR_DUMMY or desType == oprs.OPR_TEMP:
             preRetOpr = oprs.OPR_DUMMY(srcName)
-            return ([preRetOpr], [None], [preRetOpr])
+            return ([preRetOpr], [], [])
         elif srcType == oprs.OPR_TEMP or desType == oprs.OPR_DUMMY:
             preRetOpr = oprs.OPR_DUMMY(desName)
-            return ([preRetOpr], [None], [preRetOpr])
+            return ([], [], [preRetOpr])
         else:
             mb.MopUsageError(f"initReduceRedundantOp got conversion error src: {str(srcType)} des: {str(desType)}")
 
@@ -191,7 +173,7 @@ class MOP_BASE_X86(mb.MOP_BASE):
     for macrops predictly desire the needed of mem operation but if it op that conversion reg to temp or temp to reg
     we use initReduceRedundantOp instead and not declare new uop
     """
-    def initIoOp(self,srcType, desType, cxxTypeIO_suggest: str, srcName: str, desName: str, uopName: str, uopOpSize: int = 8, archOprSize: int = 8):
+    def initIoOp(self,srcType, desType, cxxTypeIO_suggest: str, srcName: str, uopName: str,desName: str, uopOpSize: int = 8, archOprSize: int = 8):
         ##### return (oprFrom , relateduop, oprTo)
         result = (None, None, None)
         #### check that we are mem op
@@ -219,6 +201,16 @@ class MOP_BASE_X86(mb.MOP_BASE):
         uopComp.addIo([srcOpr0, srcOpr1], [desOpr0, desOpr1])
 
         return uopComp
+
+    """
+    after init io from function initIO we must clean data that return to give to add io to comp uop
+    some input is from operand from ld/st uop or some from register operand
+    """
+    def getIoForCompFromInitIo(self, oprLdFroms, uopLds, oprLdTos, idx, isLoad):
+        if isLoad:
+            return oprLdTos[idx] if len(oprLdTos) > 0 else oprLdFroms[0]
+        else: ### store
+            return oprLdFroms[idx] if len(oprLdFroms) > 0 else oprLdTos[0]
 
 
     def finalizeMop(self, cxxTypeMop_prefix: str, decKeys: list):

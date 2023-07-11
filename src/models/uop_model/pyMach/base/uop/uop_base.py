@@ -70,28 +70,27 @@ class UOP_BASE:
     def addMetaArgs(self, _io_input_metaArgs: list, _io_output_metaArgs: list):
         self.io_input_metaArgs = _io_input_metaArgs
         self.io_output_metaArgs = _io_output_metaArgs
-        self.checkMetaArgs(self.io_input, self.io_input_metaArgs)
-        self.checkMetaArgs(self.io_output, self.io_output_metaArgs)
+        #self.checkMetaArgs(self.io_input, self.io_input_metaArgs)
+        #self.checkMetaArgs(self.io_output, self.io_output_metaArgs)
 
 
     #### get value to fill this should be used from mop NOT in UOP generating
     def genCXX_addMetaArgFill(self, isSrc: bool):
-        preWrite = ""
         isFirst = True
+        flatAllEle = []
         for metaParam in self.io_input_metaArgs if isSrc else self.io_output_metaArgs:
             eachEle = ", ".join(metaParam)
-            if isFirst:
-                isFirst = False
-            else :
-                if len(eachEle) > 0:
-                    eachEle = ", " + eachEle
-            preWrite = preWrite + eachEle
-        return preWrite
+            if len(eachEle) > 0:
+                flatAllEle.append(eachEle)
+
+
+        return ", ".join(flatAllEle)
 
     def genCXX_callAddMetaUopFromMop(self):
-        preWriteList = [ self.io_input.genCXX_call()     , self.io_output.genCXX_call(),
-                         self.genCXX_addMetaArgFill(True), self.genCXX_addMetaArgFill(False) ]
-        preWriteList = list(filter(lambda x: len(x) > 0, preWriteList))
+        preWriteList = [ self.io_input.genCXX_call() + "\n"     , self.io_output.genCXX_call() + "\n",
+                         self.genCXX_addMetaArgFill(True) + "\n", self.genCXX_addMetaArgFill(False) ]
+        preWriteList = list(filter(lambda x: len(x) > 0 and x != "\n", preWriteList))
+
         return ", ".join(preWriteList)
 
 
@@ -112,9 +111,9 @@ class UOP_BASE:
         decAddMetaParamPool = [self.io_input.genCXX_refVarDeclaration(), self.io_output.genCXX_refVarDeclaration(),
                                self.io_input.genCXX_addMetaArgsDeclaration(), self.io_output.genCXX_addMetaArgsDeclaration()
                                ]
-        print(decAddMetaParamPool)
+        #print(decAddMetaParamPool)
         decAddMetaParamPool = list(filter(lambda x: len(x) > 0, decAddMetaParamPool))
-        print(decAddMetaParamPool)
+        #print(decAddMetaParamPool)
         return ", ".join(decAddMetaParamPool)
 
     ###### this is used by mop to config and init by operand
