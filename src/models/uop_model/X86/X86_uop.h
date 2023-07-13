@@ -2648,38 +2648,38 @@ public:
 
 
 
-class MOV_REG$R$R$1 : public UOP_BASE{
+class MOV_MEM_ST_INT$R$R$48 : public UOP_BASE{
 public:
-  MOV_REG$R$R$1():UOP_BASE(){};
+  MOV_MEM_ST_INT$R$R$48():UOP_BASE(){};
   void doPlannedDepenCheck(UOP_WINDOW* uop_window) override;
   void addMeta(OPR_REG& opr_srcOpr, OPR_REG& opr_desOpr, int srcOprsubRegIdx, int desOprsubRegIdx);
 };///////////////////////////////////////////////////////////////
 
 
 
-class MOV_MEM_ST_INT$R$M$48 : public UOP_BASE{
+class MOV_MEM_ST_INT$R$T$48 : public UOP_BASE{
 public:
-  MOV_MEM_ST_INT$R$M$48():UOP_BASE(){};
+  MOV_MEM_ST_INT$R$T$48():UOP_BASE(){};
   void doPlannedDepenCheck(UOP_WINDOW* uop_window) override;
-  void addMeta(OPR_REG& opr_srcOpr, OPR_MEM& opr_desOpr, int srcOprsubRegIdx, ADDR desOprb_byte_, ADDR desOpre_byte_);
+  void addMeta(OPR_REG& opr_srcOpr, OPR_TREG& opr_ld_to_0, int srcOprsubRegIdx);
 };///////////////////////////////////////////////////////////////
 
 
 
-class MOV_MEM_LDI$I$R$1 : public UOP_BASE{
+class MOV_MEM_ST_INT$I$R$48 : public UOP_BASE{
 public:
-  MOV_MEM_LDI$I$R$1():UOP_BASE(){};
+  MOV_MEM_ST_INT$I$R$48():UOP_BASE(){};
   void doPlannedDepenCheck(UOP_WINDOW* uop_window) override;
   void addMeta(OPR_IMM& opr_srcOpr, OPR_REG& opr_desOpr, int desOprsubRegIdx);
 };///////////////////////////////////////////////////////////////
 
 
 
-class MOV_MEM_ST_INT$I$M$48 : public UOP_BASE{
+class MOV_MEM_ST_INT$I$T$48 : public UOP_BASE{
 public:
-  MOV_MEM_ST_INT$I$M$48():UOP_BASE(){};
+  MOV_MEM_ST_INT$I$T$48():UOP_BASE(){};
   void doPlannedDepenCheck(UOP_WINDOW* uop_window) override;
-  void addMeta(OPR_IMM& opr_srcOpr, OPR_MEM& opr_desOpr, ADDR desOprb_byte_, ADDR desOpre_byte_);
+  void addMeta(OPR_IMM& opr_srcOpr, OPR_TREG& opr_ld_to_0);
 };///////////////////////////////////////////////////////////////
 
 
@@ -2693,11 +2693,47 @@ public:
 
 
 
-class MOV_MEM_ST_INT$M$M$48 : public UOP_BASE{
+class MOV_MEM_ST_FLT$R$R$50 : public UOP_BASE{
 public:
-  MOV_MEM_ST_INT$M$M$48():UOP_BASE(){};
+  MOV_MEM_ST_FLT$R$R$50():UOP_BASE(){};
   void doPlannedDepenCheck(UOP_WINDOW* uop_window) override;
-  void addMeta(OPR_MEM& opr_srcOpr, OPR_MEM& opr_desOpr, ADDR srcOprb_byte_, ADDR srcOpre_byte_, ADDR desOprb_byte_, ADDR desOpre_byte_);
+  void addMeta(OPR_REG& opr_srcOpr, OPR_REG& opr_desOpr, int srcOprsubRegIdx, int desOprsubRegIdx);
+};///////////////////////////////////////////////////////////////
+
+
+
+class MOV_MEM_ST_FLT$R$T$50 : public UOP_BASE{
+public:
+  MOV_MEM_ST_FLT$R$T$50():UOP_BASE(){};
+  void doPlannedDepenCheck(UOP_WINDOW* uop_window) override;
+  void addMeta(OPR_REG& opr_srcOpr, OPR_TREG& opr_ld_to_0, int srcOprsubRegIdx);
+};///////////////////////////////////////////////////////////////
+
+
+
+class MOV_MEM_ST_FLT$I$R$50 : public UOP_BASE{
+public:
+  MOV_MEM_ST_FLT$I$R$50():UOP_BASE(){};
+  void doPlannedDepenCheck(UOP_WINDOW* uop_window) override;
+  void addMeta(OPR_IMM& opr_srcOpr, OPR_REG& opr_desOpr, int desOprsubRegIdx);
+};///////////////////////////////////////////////////////////////
+
+
+
+class MOV_MEM_ST_FLT$I$T$50 : public UOP_BASE{
+public:
+  MOV_MEM_ST_FLT$I$T$50():UOP_BASE(){};
+  void doPlannedDepenCheck(UOP_WINDOW* uop_window) override;
+  void addMeta(OPR_IMM& opr_srcOpr, OPR_TREG& opr_ld_to_0);
+};///////////////////////////////////////////////////////////////
+
+
+
+class MOV_MEM_LD_FLT$M$R$49 : public UOP_BASE{
+public:
+  MOV_MEM_LD_FLT$M$R$49():UOP_BASE(){};
+  void doPlannedDepenCheck(UOP_WINDOW* uop_window) override;
+  void addMeta(OPR_MEM& opr_srcOpr, OPR_REG& opr_desOpr, ADDR srcOprb_byte_, ADDR srcOpre_byte_, int desOprsubRegIdx);
 };///////////////////////////////////////////////////////////////
 
 

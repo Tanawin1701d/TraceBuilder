@@ -136,14 +136,16 @@ namespace traceBuilder::core{
         /**for now we assume that for each microop have only one mem ref*/
         if (!memMetaPtr->empty()) {
             auto& memMeta = (*memMetaPtr)[0];
-            if (memMeta.baseReg != UNUSEDREG) {
-                stat::MAIN_STAT["DEP_TEMP_MEM_bREG"][std::to_string(memMeta.baseReg)].asUINT()++;
-                machRec->add_srcarchregid(memMeta.baseReg);
+            if (memMeta.baseReg != UNUSED_AREG) {
+                MREGNUM baseRegMid = archRegToMReg(memMeta.baseReg, 0);
+                stat::MAIN_STAT["DEP_TEMP_MEM_bREG"][std::to_string(baseRegMid)].asUINT()++;
+                machRec->add_srcarchregid(baseRegMid);
             }
             ///////// add index register
-            if (memMeta.indexReg != UNUSEDREG) {
-                stat::MAIN_STAT["DEP_TEMP_MEM_iREG"][std::to_string(memMeta.indexReg)].asUINT()++;
-                machRec->add_srcarchregid(memMeta.indexReg);
+            if (memMeta.indexReg != UNUSED_AREG) {
+                MREGNUM indexRegMid = archRegToMReg(memMeta.indexReg, 0);
+                stat::MAIN_STAT["DEP_TEMP_MEM_iREG"][std::to_string(indexRegMid)].asUINT()++;
+                machRec->add_srcarchregid(indexRegMid);
             }
 
             /** virtual address*/

@@ -12,6 +12,8 @@ class MOP_BASE_X86(mb.MOP_BASE):
     PREBUILT_temOprList   : list
     PREBUILT_uopList      : list
 
+    MAX_LEGACY_OPR_SIZE = 8 ### size in byte
+
     regRelatedOprTypes = [oprs.OPR_REG, oprs.OPR_TEMP]
     oprBeSrcDesAble       = [oprs.OPR_REG, oprs.OPR_MEM, oprs.OPR_IMM]
     oprBeTempAble         = [oprs.OPR_TEMP]
@@ -206,11 +208,11 @@ class MOP_BASE_X86(mb.MOP_BASE):
     after init io from function initIO we must clean data that return to give to add io to comp uop
     some input is from operand from ld/st uop or some from register operand
     """
-    def getIoForCompFromInitIo(self, oprLdFroms, uopLds, oprLdTos, idx, isLoad):
+    def getIoForCompFromInitIo(self, oprFroms, uops, oprTos, idx, isLoad):
         if isLoad:
-            return oprLdTos[idx] if len(oprLdTos) > 0 else oprLdFroms[0]
+            return oprTos[idx] if len(oprTos) > 0 else oprFroms[0]
         else: ### store
-            return oprLdFroms[idx] if len(oprLdFroms) > 0 else oprLdTos[0]
+            return oprFroms[idx] if len(oprFroms) > 0 else oprTos[0]
 
 
     def finalizeMop(self, cxxTypeMop_prefix: str, decKeys: list):

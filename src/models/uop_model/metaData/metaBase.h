@@ -41,8 +41,10 @@ namespace traceBuilder::model {
      * */
     class META_GRP_BASE{
     public:
-        template<typename TC>
+        virtual ~META_GRP_BASE() = default;
+
         /** to convert down*/
+        template<typename TC>
         TC* castDown(){
             return reinterpret_cast<TC*>(this);
         }
@@ -57,11 +59,11 @@ namespace traceBuilder::model {
     public:
         typedef ARRAY_FWD_ITERATOR<T> META_ITER;
         explicit META_GRP(size_t maxSize = MAX_SIZE_METADATA):
-        _metaEle(_metaEle),
+        _metaEle(new T[maxSize]),
         _maxSize(maxSize),
         _size(0){}
 
-        ~META_GRP(){delete _metaEle;}
+        ~META_GRP(){delete[] _metaEle;}
 
         /** model assistor*/
         void addMeta(T newDayta) {
@@ -72,9 +74,10 @@ namespace traceBuilder::model {
         /** iteration*/
         META_ITER begin() { return META_ITER(0, _metaEle); }
         META_ITER end() { return META_ITER(_size, _metaEle); }
-        T&        operator[] (size_t idx) const {
+        T& operator[] (size_t idx) const {
             assert(idx < _size);
-            return _metaEle[idx]; }
+            return _metaEle[idx];
+        }
         bool      empty(){return !_size;}
 
 

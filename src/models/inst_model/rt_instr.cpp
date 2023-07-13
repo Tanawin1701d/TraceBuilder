@@ -40,6 +40,9 @@ namespace traceBuilder::model {
         for (auto &oprPtr: srcLdOperands) {
             srcMacroPoolOperands[oprPtr.getMcSideIdx()] = &oprPtr;
         }
+        for (auto &oprPtr: srcImmOperands) {
+            srcMacroPoolOperands[oprPtr.getMcSideIdx()] = &oprPtr;
+        }
         /// build des macrPool operand
         desMacroPoolOperands.resize(host.desMacroPoolOperands.size());
         for (auto &oprPtr: desRegOperands) {
@@ -122,7 +125,11 @@ namespace traceBuilder::model {
         //// check direction of the operand whether it is store or
         bool isSrc = tokens[ST_IDX_DIRO] == ST_VAL_DIRO_SRC;
         bool isDes = tokens[ST_IDX_DIRO] == ST_VAL_DIRO_DES;
-        REGNUM newRegName = regMapAutoAdd(tokens[ST_IDX_REG_R]);
+        AREGNUM newRegName = regMapAutoAdd(tokens[ST_IDX_REG_R]);
+
+        if (newRegName == UNUSED_AREG){
+            return;
+        }
 
         if (isSrc) {
             srcRegOperands.emplace_back(newRegName, lstSrcMacroIdx++);
@@ -149,10 +156,10 @@ namespace traceBuilder::model {
         /// for now load store indexing use the same id
         ///please reminde that register for load and store instruction may be unused which mean it will return as -1
         //// index base register
-        REGNUM baseReg = (tokens[ST_IDX_LOAD_RB] != ST_VAL_LD_UNSED_REG) ? regMapAutoAdd(tokens[ST_IDX_LOAD_RB])
-                                                                         : UNUSEDREG;
-        REGNUM indexReg = (tokens[ST_IDX_LOAD_RI] != ST_VAL_LD_UNSED_REG) ? regMapAutoAdd(tokens[ST_IDX_LOAD_RI])
-                                                                          : UNUSEDREG;
+        AREGNUM baseReg = (tokens[ST_IDX_LOAD_RB] != ST_VAL_LD_UNSED_REG) ? regMapAutoAdd(tokens[ST_IDX_LOAD_RB])
+                                                                         : UNUSED_AREG;
+        AREGNUM indexReg = (tokens[ST_IDX_LOAD_RI] != ST_VAL_LD_UNSED_REG) ? regMapAutoAdd(tokens[ST_IDX_LOAD_RI])
+                                                                          : UNUSED_AREG;
         /// TODO scale is hard wired to 4 byte
         int scale = 4;
         /// TODO displacement is hard wired to 0

@@ -50,14 +50,14 @@ namespace traceBuilder::model {
                 /** predessor des Dep*/
                 auto preMemDepPtr = (MEM_DEP*)preDesUopPtr->getDepClassPtr<DEP_MEM>();
                 if (preMemDepPtr->isdependOnMem(preDesUopPtr, my_ldMeta.p_area, true))
-                    preDesUopPtr->addDep<DEP_MEM>(my_uop, traceWindow);
+                    my_uop->addDep<DEP_MEM>(preDesUopPtr, traceWindow);
             }
             /** store depend check1*/
             for (auto my_stMeta: *my_stMetaGrpPtr){
                 /** predessosr des dep*/
                 auto preMemDepPtr = (MEM_DEP*)preDesUopPtr->getDepClassPtr<DEP_MEM>();
                 if (preMemDepPtr->isdependOnMem(preDesUopPtr, my_stMeta.p_area, false))
-                    preDesUopPtr->addDep<DEP_MEM>(my_uop, traceWindow);
+                    my_uop->addDep<DEP_MEM>(preDesUopPtr, traceWindow);
             }
         }
     }

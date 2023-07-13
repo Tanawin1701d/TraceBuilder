@@ -42,31 +42,31 @@ namespace traceBuilder::model {
     /// register operand it is used at src and des operand
     class OPR_REG : public OPERAND {
     private:
-        REGNUM regId;
+        AREGNUM reg;
     public:
-        OPR_REG(REGNUM _regId, size_t _mcArgSIdx);
+        OPR_REG(AREGNUM _reg, size_t _mcArgSIdx);
 
-        REGNUM getRegId() const;
+        AREGNUM getRegId() const;
 
         /////// get meta data of the operand that is fundamental of uop
-        REGNUM getMeta() const;
+        MREGNUM getMeta() const;
 
         ///// sub reg idx
         //////////// for precise support vector instruction micro-model
-        REGNUM getMeta(int subRegIdx);
+        MREGNUM getMeta(int subRegIdx) const;
     };
 
     class OPR_TREG : public OPERAND {
     private:
-        REGNUM regId;
+        TREGNUM regId;
     public:
         OPR_TREG();
 
         explicit OPR_TREG(int regId);
 
-        REGNUM getRegId() const;
+        TREGNUM getRegId() const;
 
-        REGNUM getMeta() const;
+        TREGNUM getMeta() const;
     };
 
 

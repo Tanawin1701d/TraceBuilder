@@ -5104,15 +5104,15 @@ void SimdFloatDiv$T_T$T$28::doPlannedDepenCheck(UOP_WINDOW* uop_window){
 
 
 
-void MOV_REG$R$R$1::addMeta(OPR_REG& opr_srcOpr, OPR_REG& opr_desOpr, int srcOprsubRegIdx, int desOprsubRegIdx){
+void MOV_MEM_ST_INT$R$R$48::addMeta(OPR_REG& opr_srcOpr, OPR_REG& opr_desOpr, int srcOprsubRegIdx, int desOprsubRegIdx){
 ///////////////// add meta data
        getMetaPtr<META_SRC_MREG,MREG_META>()->addMeta(opr_srcOpr.getMeta(srcOprsubRegIdx));
        getMetaPtr<META_DES_MREG,MREG_META>()->addMeta(opr_desOpr.getMeta(desOprsubRegIdx));
 ///////////////// finish meta data
-       setUopType(UOP_TYPE::UOP_COMP);
-       setExecUnit(1);
+       setUopType(UOP_TYPE::UOP_STORE);
+       setExecUnit(48);
 }
-void MOV_REG$R$R$1::doPlannedDepenCheck(UOP_WINDOW* uop_window){
+void MOV_MEM_ST_INT$R$R$48::doPlannedDepenCheck(UOP_WINDOW* uop_window){
    doDepenCheck<DEP_MREG>(uop_window);
    doDepenCheck<DEP_EXEC_UNIT>(uop_window);
 }
@@ -5120,48 +5120,46 @@ void MOV_REG$R$R$1::doPlannedDepenCheck(UOP_WINDOW* uop_window){
 
 
 
-void MOV_MEM_ST_INT$R$M$48::addMeta(OPR_REG& opr_srcOpr, OPR_MEM& opr_desOpr, int srcOprsubRegIdx, ADDR desOprb_byte_, ADDR desOpre_byte_){
+void MOV_MEM_ST_INT$R$T$48::addMeta(OPR_REG& opr_srcOpr, OPR_TREG& opr_ld_to_0, int srcOprsubRegIdx){
 ///////////////// add meta data
        getMetaPtr<META_SRC_MREG,MREG_META>()->addMeta(opr_srcOpr.getMeta(srcOprsubRegIdx));
-       getMetaPtr<META_DES_MEM,MEM_META>()->addMeta(opr_desOpr.getMeta(desOprb_byte_, desOpre_byte_));
+       getMetaPtr<META_DES_TEMP,TREG_META>()->addMeta(opr_ld_to_0.getMeta());
 ///////////////// finish meta data
        setUopType(UOP_TYPE::UOP_STORE);
        setExecUnit(48);
 }
-void MOV_MEM_ST_INT$R$M$48::doPlannedDepenCheck(UOP_WINDOW* uop_window){
+void MOV_MEM_ST_INT$R$T$48::doPlannedDepenCheck(UOP_WINDOW* uop_window){
    doDepenCheck<DEP_MREG>(uop_window);
-   doDepenCheck<DEP_MEM>(uop_window);
    doDepenCheck<DEP_EXEC_UNIT>(uop_window);
 }
 ///////////////////////////////////////////////////////////////
 
 
 
-void MOV_MEM_LDI$I$R$1::addMeta(OPR_IMM& opr_srcOpr, OPR_REG& opr_desOpr, int desOprsubRegIdx){
+void MOV_MEM_ST_INT$I$R$48::addMeta(OPR_IMM& opr_srcOpr, OPR_REG& opr_desOpr, int desOprsubRegIdx){
 ///////////////// add meta data
        getMetaPtr<META_SRC_IMM,IMM_META>()->addMeta(opr_srcOpr.getMeta());
        getMetaPtr<META_DES_MREG,MREG_META>()->addMeta(opr_desOpr.getMeta(desOprsubRegIdx));
 ///////////////// finish meta data
-       setUopType(UOP_TYPE::UOP_IMM);
-       setExecUnit(1);
+       setUopType(UOP_TYPE::UOP_STORE);
+       setExecUnit(48);
 }
-void MOV_MEM_LDI$I$R$1::doPlannedDepenCheck(UOP_WINDOW* uop_window){
+void MOV_MEM_ST_INT$I$R$48::doPlannedDepenCheck(UOP_WINDOW* uop_window){
    doDepenCheck<DEP_EXEC_UNIT>(uop_window);
 }
 ///////////////////////////////////////////////////////////////
 
 
 
-void MOV_MEM_ST_INT$I$M$48::addMeta(OPR_IMM& opr_srcOpr, OPR_MEM& opr_desOpr, ADDR desOprb_byte_, ADDR desOpre_byte_){
+void MOV_MEM_ST_INT$I$T$48::addMeta(OPR_IMM& opr_srcOpr, OPR_TREG& opr_ld_to_0){
 ///////////////// add meta data
        getMetaPtr<META_SRC_IMM,IMM_META>()->addMeta(opr_srcOpr.getMeta());
-       getMetaPtr<META_DES_MEM,MEM_META>()->addMeta(opr_desOpr.getMeta(desOprb_byte_, desOpre_byte_));
+       getMetaPtr<META_DES_TEMP,TREG_META>()->addMeta(opr_ld_to_0.getMeta());
 ///////////////// finish meta data
        setUopType(UOP_TYPE::UOP_STORE);
        setExecUnit(48);
 }
-void MOV_MEM_ST_INT$I$M$48::doPlannedDepenCheck(UOP_WINDOW* uop_window){
-   doDepenCheck<DEP_MEM>(uop_window);
+void MOV_MEM_ST_INT$I$T$48::doPlannedDepenCheck(UOP_WINDOW* uop_window){
    doDepenCheck<DEP_EXEC_UNIT>(uop_window);
 }
 ///////////////////////////////////////////////////////////////
@@ -5184,15 +5182,77 @@ void MOV_MEM_LD_INT$M$R$47::doPlannedDepenCheck(UOP_WINDOW* uop_window){
 
 
 
-void MOV_MEM_ST_INT$M$M$48::addMeta(OPR_MEM& opr_srcOpr, OPR_MEM& opr_desOpr, ADDR srcOprb_byte_, ADDR srcOpre_byte_, ADDR desOprb_byte_, ADDR desOpre_byte_){
+void MOV_MEM_ST_FLT$R$R$50::addMeta(OPR_REG& opr_srcOpr, OPR_REG& opr_desOpr, int srcOprsubRegIdx, int desOprsubRegIdx){
 ///////////////// add meta data
-       getMetaPtr<META_SRC_MEM,MEM_META>()->addMeta(opr_srcOpr.getMeta(srcOprb_byte_, srcOpre_byte_));
-       getMetaPtr<META_DES_MEM,MEM_META>()->addMeta(opr_desOpr.getMeta(desOprb_byte_, desOpre_byte_));
+       getMetaPtr<META_SRC_MREG,MREG_META>()->addMeta(opr_srcOpr.getMeta(srcOprsubRegIdx));
+       getMetaPtr<META_DES_MREG,MREG_META>()->addMeta(opr_desOpr.getMeta(desOprsubRegIdx));
 ///////////////// finish meta data
        setUopType(UOP_TYPE::UOP_STORE);
-       setExecUnit(48);
+       setExecUnit(50);
 }
-void MOV_MEM_ST_INT$M$M$48::doPlannedDepenCheck(UOP_WINDOW* uop_window){
+void MOV_MEM_ST_FLT$R$R$50::doPlannedDepenCheck(UOP_WINDOW* uop_window){
+   doDepenCheck<DEP_MREG>(uop_window);
+   doDepenCheck<DEP_EXEC_UNIT>(uop_window);
+}
+///////////////////////////////////////////////////////////////
+
+
+
+void MOV_MEM_ST_FLT$R$T$50::addMeta(OPR_REG& opr_srcOpr, OPR_TREG& opr_ld_to_0, int srcOprsubRegIdx){
+///////////////// add meta data
+       getMetaPtr<META_SRC_MREG,MREG_META>()->addMeta(opr_srcOpr.getMeta(srcOprsubRegIdx));
+       getMetaPtr<META_DES_TEMP,TREG_META>()->addMeta(opr_ld_to_0.getMeta());
+///////////////// finish meta data
+       setUopType(UOP_TYPE::UOP_STORE);
+       setExecUnit(50);
+}
+void MOV_MEM_ST_FLT$R$T$50::doPlannedDepenCheck(UOP_WINDOW* uop_window){
+   doDepenCheck<DEP_MREG>(uop_window);
+   doDepenCheck<DEP_EXEC_UNIT>(uop_window);
+}
+///////////////////////////////////////////////////////////////
+
+
+
+void MOV_MEM_ST_FLT$I$R$50::addMeta(OPR_IMM& opr_srcOpr, OPR_REG& opr_desOpr, int desOprsubRegIdx){
+///////////////// add meta data
+       getMetaPtr<META_SRC_IMM,IMM_META>()->addMeta(opr_srcOpr.getMeta());
+       getMetaPtr<META_DES_MREG,MREG_META>()->addMeta(opr_desOpr.getMeta(desOprsubRegIdx));
+///////////////// finish meta data
+       setUopType(UOP_TYPE::UOP_STORE);
+       setExecUnit(50);
+}
+void MOV_MEM_ST_FLT$I$R$50::doPlannedDepenCheck(UOP_WINDOW* uop_window){
+   doDepenCheck<DEP_EXEC_UNIT>(uop_window);
+}
+///////////////////////////////////////////////////////////////
+
+
+
+void MOV_MEM_ST_FLT$I$T$50::addMeta(OPR_IMM& opr_srcOpr, OPR_TREG& opr_ld_to_0){
+///////////////// add meta data
+       getMetaPtr<META_SRC_IMM,IMM_META>()->addMeta(opr_srcOpr.getMeta());
+       getMetaPtr<META_DES_TEMP,TREG_META>()->addMeta(opr_ld_to_0.getMeta());
+///////////////// finish meta data
+       setUopType(UOP_TYPE::UOP_STORE);
+       setExecUnit(50);
+}
+void MOV_MEM_ST_FLT$I$T$50::doPlannedDepenCheck(UOP_WINDOW* uop_window){
+   doDepenCheck<DEP_EXEC_UNIT>(uop_window);
+}
+///////////////////////////////////////////////////////////////
+
+
+
+void MOV_MEM_LD_FLT$M$R$49::addMeta(OPR_MEM& opr_srcOpr, OPR_REG& opr_desOpr, ADDR srcOprb_byte_, ADDR srcOpre_byte_, int desOprsubRegIdx){
+///////////////// add meta data
+       getMetaPtr<META_SRC_MEM,MEM_META>()->addMeta(opr_srcOpr.getMeta(srcOprb_byte_, srcOpre_byte_));
+       getMetaPtr<META_DES_MREG,MREG_META>()->addMeta(opr_desOpr.getMeta(desOprsubRegIdx));
+///////////////// finish meta data
+       setUopType(UOP_TYPE::UOP_LOAD);
+       setExecUnit(49);
+}
+void MOV_MEM_LD_FLT$M$R$49::doPlannedDepenCheck(UOP_WINDOW* uop_window){
    doDepenCheck<DEP_MEM>(uop_window);
    doDepenCheck<DEP_EXEC_UNIT>(uop_window);
 }

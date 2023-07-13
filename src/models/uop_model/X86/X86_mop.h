@@ -5198,6 +5198,7782 @@ public:
 
 
 
+class COMP128X_INT$R_R$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_INT$R_R$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_INT$R_R$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_INT$R_R$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_INT$R_R$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_INT$R_R$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_INT$R_I$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_INT$R_I$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_INT$R_I$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_INT$R_I$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_INT$R_I$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_INT$R_I$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_INT$R_M$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_INT$R_M$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_INT$R_M$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_INT$R_M$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_INT$R_M$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_INT$R_M$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_INT$I_R$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_INT$I_R$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_INT$I_R$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_INT$I_R$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_INT$I_R$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_INT$I_R$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_INT$I_I$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_INT$I_I$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_INT$I_I$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_INT$I_I$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_INT$I_I$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_INT$I_I$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_INT$I_M$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_INT$I_M$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_INT$I_M$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_INT$I_M$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_INT$I_M$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_INT$I_M$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_INT$M_R$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_INT$M_R$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_INT$M_R$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_INT$M_R$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_INT$M_R$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_INT$M_R$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_INT$M_I$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_INT$M_I$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_INT$M_I$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_INT$M_I$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_INT$M_I$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_INT$M_I$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_INT$M_M$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_INT$M_M$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_INT$M_M$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_INT$M_M$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_INT$M_M$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_INT$M_M$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_MUL$R_R$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_MUL$R_R$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_MUL$R_R$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_MUL$R_R$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_MUL$R_R$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_MUL$R_R$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_MUL$R_I$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_MUL$R_I$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_MUL$R_I$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_MUL$R_I$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_MUL$R_I$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_MUL$R_I$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_MUL$R_M$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_MUL$R_M$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_MUL$R_M$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_MUL$R_M$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_MUL$R_M$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_MUL$R_M$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_MUL$I_R$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_MUL$I_R$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_MUL$I_R$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_MUL$I_R$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_MUL$I_R$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_MUL$I_R$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_MUL$I_I$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_MUL$I_I$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_MUL$I_I$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_MUL$I_I$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_MUL$I_I$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_MUL$I_I$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_MUL$I_M$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_MUL$I_M$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_MUL$I_M$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_MUL$I_M$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_MUL$I_M$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_MUL$I_M$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_MUL$M_R$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_MUL$M_R$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_MUL$M_R$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_MUL$M_R$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_MUL$M_R$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_MUL$M_R$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_MUL$M_I$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_MUL$M_I$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_MUL$M_I$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_MUL$M_I$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_MUL$M_I$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_MUL$M_I$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_MUL$M_M$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_MUL$M_M$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_MUL$M_M$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_MUL$M_M$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_MUL$M_M$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_MUL$M_M$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_DIV$R_R$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_DIV$R_R$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_DIV$R_R$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_DIV$R_R$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_DIV$R_R$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_DIV$R_R$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_DIV$R_I$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_DIV$R_I$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_DIV$R_I$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_DIV$R_I$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_DIV$R_I$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_DIV$R_I$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_DIV$R_M$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_DIV$R_M$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_DIV$R_M$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_DIV$R_M$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_DIV$R_M$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_DIV$R_M$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_DIV$I_R$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_DIV$I_R$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_DIV$I_R$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_DIV$I_R$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_DIV$I_R$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_DIV$I_R$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_DIV$I_I$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_DIV$I_I$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_DIV$I_I$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_DIV$I_I$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_DIV$I_I$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_DIV$I_I$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_DIV$I_M$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_DIV$I_M$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_DIV$I_M$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_DIV$I_M$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_DIV$I_M$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_DIV$I_M$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_DIV$M_R$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_DIV$M_R$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_DIV$M_R$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_DIV$M_R$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_DIV$M_R$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_DIV$M_R$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_DIV$M_I$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_DIV$M_I$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_DIV$M_I$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_DIV$M_I$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_DIV$M_I$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_DIV$M_I$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_DIV$M_M$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_DIV$M_M$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_DIV$M_M$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_DIV$M_M$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_DIV$M_M$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_DIV$M_M$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT$R_R$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT$R_R$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT$R_R$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT$R_R$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT$R_R$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT$R_R$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT$R_I$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT$R_I$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT$R_I$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT$R_I$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT$R_I$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT$R_I$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT$R_M$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT$R_M$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT$R_M$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT$R_M$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT$R_M$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT$R_M$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT$I_R$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT$I_R$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT$I_R$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT$I_R$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT$I_R$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT$I_R$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT$I_I$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT$I_I$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT$I_I$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT$I_I$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT$I_I$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT$I_I$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT$I_M$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT$I_M$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT$I_M$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT$I_M$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT$I_M$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT$I_M$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT$M_R$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT$M_R$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT$M_R$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT$M_R$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT$M_R$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT$M_R$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT$M_I$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT$M_I$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT$M_I$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT$M_I$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT$M_I$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT$M_I$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT$M_M$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT$M_M$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT$M_M$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT$M_M$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT$M_M$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT$M_M$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_MUL$R_R$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_MUL$R_R$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_MUL$R_R$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_MUL$R_R$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_MUL$R_R$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_MUL$R_R$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_MUL$R_I$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_MUL$R_I$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_MUL$R_I$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_MUL$R_I$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_MUL$R_I$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_MUL$R_I$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_MUL$R_M$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_MUL$R_M$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_MUL$R_M$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_MUL$R_M$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_MUL$R_M$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_MUL$R_M$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_MUL$I_R$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_MUL$I_R$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_MUL$I_R$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_MUL$I_R$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_MUL$I_R$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_MUL$I_R$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_MUL$I_I$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_MUL$I_I$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_MUL$I_I$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_MUL$I_I$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_MUL$I_I$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_MUL$I_I$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_MUL$I_M$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_MUL$I_M$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_MUL$I_M$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_MUL$I_M$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_MUL$I_M$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_MUL$I_M$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_MUL$M_R$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_MUL$M_R$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_MUL$M_R$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_MUL$M_R$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_MUL$M_R$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_MUL$M_R$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_MUL$M_I$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_MUL$M_I$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_MUL$M_I$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_MUL$M_I$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_MUL$M_I$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_MUL$M_I$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_MUL$M_M$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_MUL$M_M$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_MUL$M_M$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_MUL$M_M$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_MUL$M_M$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_MUL$M_M$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_DIV$R_R$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_DIV$R_R$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_DIV$R_R$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_DIV$R_R$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_DIV$R_R$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_DIV$R_R$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_DIV$R_I$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_DIV$R_I$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_DIV$R_I$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_DIV$R_I$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_DIV$R_I$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_DIV$R_I$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_DIV$R_M$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_DIV$R_M$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_DIV$R_M$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_DIV$R_M$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_DIV$R_M$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_DIV$R_M$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_DIV$I_R$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_DIV$I_R$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_DIV$I_R$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_DIV$I_R$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_DIV$I_R$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_DIV$I_R$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_DIV$I_I$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_DIV$I_I$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_DIV$I_I$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_DIV$I_I$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_DIV$I_I$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_DIV$I_I$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_DIV$I_M$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_DIV$I_M$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_DIV$I_M$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_DIV$I_M$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_DIV$I_M$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_DIV$I_M$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_DIV$M_R$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_DIV$M_R$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_DIV$M_R$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_DIV$M_R$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_DIV$M_R$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_DIV$M_R$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_DIV$M_I$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_DIV$M_I$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_DIV$M_I$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_DIV$M_I$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_DIV$M_I$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_DIV$M_I$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_DIV$M_M$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_DIV$M_M$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_DIV$M_M$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_DIV$M_M$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_DIV$M_M$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP128X_FLT_DIV$M_M$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_INT$R_R$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_INT$R_R$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_INT$R_R$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_INT$R_R$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_INT$R_R$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_INT$R_R$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_INT$R_I$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_INT$R_I$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_INT$R_I$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_INT$R_I$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_INT$R_I$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_INT$R_I$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_INT$R_M$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_INT$R_M$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_INT$R_M$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_INT$R_M$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_INT$R_M$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_INT$R_M$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_INT$I_R$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_INT$I_R$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_INT$I_R$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_INT$I_R$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_INT$I_R$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_INT$I_R$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_INT$I_I$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_INT$I_I$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_INT$I_I$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_INT$I_I$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_INT$I_I$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_INT$I_I$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_INT$I_M$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_INT$I_M$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_INT$I_M$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_INT$I_M$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_INT$I_M$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_INT$I_M$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_INT$M_R$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_INT$M_R$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_INT$M_R$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_INT$M_R$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_INT$M_R$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_INT$M_R$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_INT$M_I$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_INT$M_I$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_INT$M_I$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_INT$M_I$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_INT$M_I$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_INT$M_I$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_INT$M_M$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_INT$M_M$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_INT$M_M$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_INT$M_M$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_INT$M_M$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_INT$M_M$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_MUL$R_R$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_MUL$R_R$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_MUL$R_R$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_MUL$R_R$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_MUL$R_R$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_MUL$R_R$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_MUL$R_I$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_MUL$R_I$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_MUL$R_I$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_MUL$R_I$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_MUL$R_I$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_MUL$R_I$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_MUL$R_M$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_MUL$R_M$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_MUL$R_M$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_MUL$R_M$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_MUL$R_M$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_MUL$R_M$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_MUL$I_R$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_MUL$I_R$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_MUL$I_R$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_MUL$I_R$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_MUL$I_R$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_MUL$I_R$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_MUL$I_I$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_MUL$I_I$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_MUL$I_I$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_MUL$I_I$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_MUL$I_I$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_MUL$I_I$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_MUL$I_M$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_MUL$I_M$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_MUL$I_M$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_MUL$I_M$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_MUL$I_M$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_MUL$I_M$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_MUL$M_R$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_MUL$M_R$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_MUL$M_R$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_MUL$M_R$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_MUL$M_R$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_MUL$M_R$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_MUL$M_I$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_MUL$M_I$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_MUL$M_I$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_MUL$M_I$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_MUL$M_I$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_MUL$M_I$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_MUL$M_M$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_MUL$M_M$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_MUL$M_M$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_MUL$M_M$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_MUL$M_M$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_MUL$M_M$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_DIV$R_R$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_DIV$R_R$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_DIV$R_R$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_DIV$R_R$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_DIV$R_R$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_DIV$R_R$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_DIV$R_I$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_DIV$R_I$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_DIV$R_I$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_DIV$R_I$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_DIV$R_I$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_DIV$R_I$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_DIV$R_M$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_DIV$R_M$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_DIV$R_M$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_DIV$R_M$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_DIV$R_M$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_DIV$R_M$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_DIV$I_R$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_DIV$I_R$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_DIV$I_R$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_DIV$I_R$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_DIV$I_R$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_DIV$I_R$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_DIV$I_I$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_DIV$I_I$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_DIV$I_I$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_DIV$I_I$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_DIV$I_I$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_DIV$I_I$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_DIV$I_M$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_DIV$I_M$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_DIV$I_M$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_DIV$I_M$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_DIV$I_M$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_DIV$I_M$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_DIV$M_R$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_DIV$M_R$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_DIV$M_R$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_DIV$M_R$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_DIV$M_R$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_DIV$M_R$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_DIV$M_I$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_DIV$M_I$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_DIV$M_I$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_DIV$M_I$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_DIV$M_I$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_DIV$M_I$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_DIV$M_M$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_DIV$M_M$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_DIV$M_M$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_DIV$M_M$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_DIV$M_M$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_DIV$M_M$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT$R_R$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT$R_R$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT$R_R$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT$R_R$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT$R_R$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT$R_R$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT$R_I$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT$R_I$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT$R_I$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT$R_I$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT$R_I$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT$R_I$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT$R_M$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT$R_M$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT$R_M$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT$R_M$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT$R_M$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT$R_M$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT$I_R$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT$I_R$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT$I_R$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT$I_R$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT$I_R$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT$I_R$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT$I_I$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT$I_I$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT$I_I$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT$I_I$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT$I_I$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT$I_I$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT$I_M$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT$I_M$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT$I_M$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT$I_M$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT$I_M$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT$I_M$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT$M_R$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT$M_R$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT$M_R$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT$M_R$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT$M_R$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT$M_R$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT$M_I$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT$M_I$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT$M_I$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT$M_I$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT$M_I$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT$M_I$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT$M_M$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT$M_M$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT$M_M$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT$M_M$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT$M_M$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT$M_M$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_MUL$R_R$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_MUL$R_R$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_MUL$R_R$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_MUL$R_R$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_MUL$R_R$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_MUL$R_R$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_MUL$R_I$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_MUL$R_I$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_MUL$R_I$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_MUL$R_I$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_MUL$R_I$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_MUL$R_I$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_MUL$R_M$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_MUL$R_M$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_MUL$R_M$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_MUL$R_M$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_MUL$R_M$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_MUL$R_M$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_MUL$I_R$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_MUL$I_R$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_MUL$I_R$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_MUL$I_R$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_MUL$I_R$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_MUL$I_R$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_MUL$I_I$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_MUL$I_I$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_MUL$I_I$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_MUL$I_I$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_MUL$I_I$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_MUL$I_I$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_MUL$I_M$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_MUL$I_M$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_MUL$I_M$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_MUL$I_M$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_MUL$I_M$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_MUL$I_M$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_MUL$M_R$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_MUL$M_R$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_MUL$M_R$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_MUL$M_R$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_MUL$M_R$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_MUL$M_R$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_MUL$M_I$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_MUL$M_I$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_MUL$M_I$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_MUL$M_I$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_MUL$M_I$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_MUL$M_I$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_MUL$M_M$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_MUL$M_M$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_MUL$M_M$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_MUL$M_M$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_MUL$M_M$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_MUL$M_M$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_DIV$R_R$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_DIV$R_R$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_DIV$R_R$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_DIV$R_R$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_DIV$R_R$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_DIV$R_R$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_DIV$R_I$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_DIV$R_I$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_DIV$R_I$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_DIV$R_I$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_DIV$R_I$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_DIV$R_I$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_DIV$R_M$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_DIV$R_M$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_DIV$R_M$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_DIV$R_M$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_DIV$R_M$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_DIV$R_M$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_DIV$I_R$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_DIV$I_R$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_DIV$I_R$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_DIV$I_R$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_DIV$I_R$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_DIV$I_R$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_DIV$I_I$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_DIV$I_I$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_DIV$I_I$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_DIV$I_I$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_DIV$I_I$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_DIV$I_I$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_DIV$I_M$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_DIV$I_M$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_DIV$I_M$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_DIV$I_M$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_DIV$I_M$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_DIV$I_M$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_DIV$M_R$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_DIV$M_R$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_DIV$M_R$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_DIV$M_R$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_DIV$M_R$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_DIV$M_R$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_DIV$M_I$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_DIV$M_I$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_DIV$M_I$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_DIV$M_I$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_DIV$M_I$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_DIV$M_I$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_DIV$M_M$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_DIV$M_M$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_DIV$M_M$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_DIV$M_M$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_DIV$M_M$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256_FLT_DIV$M_M$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_INT$R_R$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_INT$R_R$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_INT$R_R$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_INT$R_R$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_INT$R_R$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_INT$R_R$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_INT$R_I$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_INT$R_I$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_INT$R_I$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_INT$R_I$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_INT$R_I$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_INT$R_I$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_INT$R_M$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_INT$R_M$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_INT$R_M$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_INT$R_M$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_INT$R_M$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_INT$R_M$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_INT$I_R$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_INT$I_R$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_INT$I_R$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_INT$I_R$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_INT$I_R$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_INT$I_R$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_INT$I_I$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_INT$I_I$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_INT$I_I$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_INT$I_I$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_INT$I_I$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_INT$I_I$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_INT$I_M$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_INT$I_M$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_INT$I_M$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_INT$I_M$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_INT$I_M$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_INT$I_M$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_INT$M_R$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_INT$M_R$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_INT$M_R$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_INT$M_R$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_INT$M_R$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_INT$M_R$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_INT$M_I$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_INT$M_I$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_INT$M_I$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_INT$M_I$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_INT$M_I$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_INT$M_I$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_INT$M_M$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_INT$M_M$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_INT$M_M$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_INT$M_M$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_INT$M_M$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_INT$M_M$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_MUL$R_R$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_MUL$R_R$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_MUL$R_R$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_MUL$R_R$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_MUL$R_R$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_MUL$R_R$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_MUL$R_I$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_MUL$R_I$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_MUL$R_I$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_MUL$R_I$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_MUL$R_I$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_MUL$R_I$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_MUL$R_M$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_MUL$R_M$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_MUL$R_M$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_MUL$R_M$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_MUL$R_M$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_MUL$R_M$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_MUL$I_R$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_MUL$I_R$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_MUL$I_R$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_MUL$I_R$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_MUL$I_R$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_MUL$I_R$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_MUL$I_I$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_MUL$I_I$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_MUL$I_I$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_MUL$I_I$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_MUL$I_I$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_MUL$I_I$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_MUL$I_M$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_MUL$I_M$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_MUL$I_M$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_MUL$I_M$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_MUL$I_M$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_MUL$I_M$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_MUL$M_R$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_MUL$M_R$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_MUL$M_R$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_MUL$M_R$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_MUL$M_R$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_MUL$M_R$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_MUL$M_I$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_MUL$M_I$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_MUL$M_I$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_MUL$M_I$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_MUL$M_I$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_MUL$M_I$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_MUL$M_M$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_MUL$M_M$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_MUL$M_M$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_MUL$M_M$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_MUL$M_M$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_MUL$M_M$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_DIV$R_R$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_DIV$R_R$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_DIV$R_R$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_DIV$R_R$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_DIV$R_R$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_DIV$R_R$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_DIV$R_I$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_DIV$R_I$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_DIV$R_I$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_DIV$R_I$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_DIV$R_I$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_DIV$R_I$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_DIV$R_M$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_DIV$R_M$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_DIV$R_M$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_DIV$R_M$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_DIV$R_M$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_DIV$R_M$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_DIV$I_R$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_DIV$I_R$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_DIV$I_R$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_DIV$I_R$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_DIV$I_R$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_DIV$I_R$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_DIV$I_I$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_DIV$I_I$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_DIV$I_I$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_DIV$I_I$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_DIV$I_I$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_DIV$I_I$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_DIV$I_M$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_DIV$I_M$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_DIV$I_M$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_DIV$I_M$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_DIV$I_M$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_DIV$I_M$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_DIV$M_R$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_DIV$M_R$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_DIV$M_R$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_DIV$M_R$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_DIV$M_R$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_DIV$M_R$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_DIV$M_I$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_DIV$M_I$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_DIV$M_I$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_DIV$M_I$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_DIV$M_I$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_DIV$M_I$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_DIV$M_M$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_DIV$M_M$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_DIV$M_M$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_DIV$M_M$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_DIV$M_M$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_DIV$M_M$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT$R_R$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT$R_R$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT$R_R$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT$R_R$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT$R_R$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT$R_R$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT$R_I$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT$R_I$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT$R_I$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT$R_I$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT$R_I$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT$R_I$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT$R_M$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT$R_M$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT$R_M$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT$R_M$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT$R_M$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT$R_M$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT$I_R$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT$I_R$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT$I_R$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT$I_R$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT$I_R$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT$I_R$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT$I_I$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT$I_I$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT$I_I$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT$I_I$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT$I_I$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT$I_I$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT$I_M$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT$I_M$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT$I_M$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT$I_M$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT$I_M$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT$I_M$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT$M_R$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT$M_R$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT$M_R$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT$M_R$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT$M_R$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT$M_R$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT$M_I$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT$M_I$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT$M_I$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT$M_I$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT$M_I$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT$M_I$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT$M_M$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT$M_M$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT$M_M$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT$M_M$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT$M_M$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT$M_M$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_MUL$R_R$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_MUL$R_R$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_MUL$R_R$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_MUL$R_R$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_MUL$R_R$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_MUL$R_R$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_MUL$R_I$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_MUL$R_I$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_MUL$R_I$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_MUL$R_I$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_MUL$R_I$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_MUL$R_I$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_MUL$R_M$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_MUL$R_M$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_MUL$R_M$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_MUL$R_M$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_MUL$R_M$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_MUL$R_M$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_MUL$I_R$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_MUL$I_R$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_MUL$I_R$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_MUL$I_R$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_MUL$I_R$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_MUL$I_R$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_MUL$I_I$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_MUL$I_I$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_MUL$I_I$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_MUL$I_I$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_MUL$I_I$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_MUL$I_I$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_MUL$I_M$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_MUL$I_M$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_MUL$I_M$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_MUL$I_M$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_MUL$I_M$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_MUL$I_M$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_MUL$M_R$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_MUL$M_R$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_MUL$M_R$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_MUL$M_R$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_MUL$M_R$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_MUL$M_R$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_MUL$M_I$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_MUL$M_I$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_MUL$M_I$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_MUL$M_I$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_MUL$M_I$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_MUL$M_I$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_MUL$M_M$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_MUL$M_M$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_MUL$M_M$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_MUL$M_M$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_MUL$M_M$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_MUL$M_M$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_DIV$R_R$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_DIV$R_R$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_DIV$R_R$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_DIV$R_R$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_DIV$R_R$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_DIV$R_R$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_DIV$R_I$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_DIV$R_I$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_DIV$R_I$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_DIV$R_I$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_DIV$R_I$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_DIV$R_I$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_DIV$R_M$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_DIV$R_M$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_DIV$R_M$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_DIV$R_M$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_DIV$R_M$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_DIV$R_M$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_DIV$I_R$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_DIV$I_R$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_DIV$I_R$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_DIV$I_R$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_DIV$I_R$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_DIV$I_R$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_DIV$I_I$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_DIV$I_I$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_DIV$I_I$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_DIV$I_I$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_DIV$I_I$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_DIV$I_I$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_DIV$I_M$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_DIV$I_M$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_DIV$I_M$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_DIV$I_M$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_DIV$I_M$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_DIV$I_M$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_DIV$M_R$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_DIV$M_R$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_DIV$M_R$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_DIV$M_R$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_DIV$M_R$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_DIV$M_R$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_DIV$M_I$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_DIV$M_I$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_DIV$M_I$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_DIV$M_I$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_DIV$M_I$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_DIV$M_I$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_DIV$M_M$R_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_DIV$M_M$R_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_DIV$M_M$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_DIV$M_M$M_R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_DIV$M_M$M_M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class COMP256X_FLT_DIV$M_M$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
 class COMP64_INT$R_R$R_R : public MOP_BASE{
 public:
 
@@ -7790,7 +15566,7 @@ public:
 
 
 
-class MOV_SIM$R$R : public MOP_BASE{
+class MOV_INT$R$R : public MOP_BASE{
 public:
 
    void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
@@ -7798,7 +15574,7 @@ public:
 
 
 
-class MOV_SIM$R$M : public MOP_BASE{
+class MOV_INT$R$M : public MOP_BASE{
 public:
 
    void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
@@ -7806,7 +15582,7 @@ public:
 
 
 
-class MOV_SIM$I$R : public MOP_BASE{
+class MOV_INT$I$R : public MOP_BASE{
 public:
 
    void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
@@ -7814,7 +15590,7 @@ public:
 
 
 
-class MOV_SIM$I$M : public MOP_BASE{
+class MOV_INT$I$M : public MOP_BASE{
 public:
 
    void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
@@ -7822,7 +15598,7 @@ public:
 
 
 
-class MOV_SIM$M$R : public MOP_BASE{
+class MOV_INT$M$R : public MOP_BASE{
 public:
 
    void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
@@ -7830,7 +15606,439 @@ public:
 
 
 
-class MOV_SIM$M$M : public MOP_BASE{
+class MOV_INT$M$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class MOV_FLT$R$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class MOV_FLT$R$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class MOV_FLT$I$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class MOV_FLT$I$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class MOV_FLT$M$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class MOV_FLT$M$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class MOV128_INT$R$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class MOV128_INT$R$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class MOV128_INT$I$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class MOV128_INT$I$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class MOV128_INT$M$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class MOV128_INT$M$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class MOV128_FLT$R$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class MOV128_FLT$R$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class MOV128_FLT$I$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class MOV128_FLT$I$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class MOV128_FLT$M$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class MOV128_FLT$M$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class MOV128X_INT$R$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class MOV128X_INT$R$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class MOV128X_INT$I$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class MOV128X_INT$I$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class MOV128X_INT$M$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class MOV128X_INT$M$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class MOV128X_FLT$R$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class MOV128X_FLT$R$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class MOV128X_FLT$I$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class MOV128X_FLT$I$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class MOV128X_FLT$M$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class MOV128X_FLT$M$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class MOV256_INT$R$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class MOV256_INT$R$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class MOV256_INT$I$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class MOV256_INT$I$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class MOV256_INT$M$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class MOV256_INT$M$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class MOV256_FLT$R$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class MOV256_FLT$R$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class MOV256_FLT$I$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class MOV256_FLT$I$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class MOV256_FLT$M$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class MOV256_FLT$M$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class MOV256X_INT$R$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class MOV256X_INT$R$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class MOV256X_INT$I$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class MOV256X_INT$I$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class MOV256X_INT$M$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class MOV256X_INT$M$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class MOV256X_FLT$R$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class MOV256X_FLT$R$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class MOV256X_FLT$I$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class MOV256X_FLT$I$M : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class MOV256X_FLT$M$R : public MOP_BASE{
+public:
+
+   void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;
+};///////////////////////////////////////////////////////////////
+
+
+
+class MOV256X_FLT$M$M : public MOP_BASE{
 public:
 
    void genUop(std::vector<UOP_BASE*>& results, RT_INSTR* _rt_instr) override;

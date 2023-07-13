@@ -11,7 +11,7 @@ add_definitions(-DX86)
 add_compile_options(-O3)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-unused-attributes")
-set(CMAKE_INTERPROCEDURAL_OPTIMIZATION TRUE)
+#set(CMAKE_INTERPROCEDURAL_OPTIMIZATION TRUE)
 
 include(FindProtobuf)
 FIND_PACKAGE(Protobuf REQUIRED)

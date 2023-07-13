@@ -1,6 +1,7 @@
 import base.mop.mop_group_base as mop_group
 import base.operand.opr_simple as opr
 import X86.mop.alu.comp_mop    as mop_alu_x86
+import X86.mop.alu.compSemiVec as mop_alu_semi_x86
 import X86.uop.resMap          as resMap
 class MOP_GROUP_COMP(mop_group.MOP_GROUP_BASE):
     decKeys_intAlu = ["ADC" , "ADD", "AND" , "OR" , "ROL",
@@ -83,3 +84,73 @@ class MOP_GROUP_COMP128(mop_group.MOP_GROUP_BASE):
         self.addMopArgExtractComb((["COMP128_FLT"    ] ,self.srcOpr, self.srcOpr, self.desOpr, self.desOprWDummy, ["SimdFloatAlu" ], [resMap.cxxTypeIO_suggest_FLT],[self.decKeys_fAlu]))
         self.addMopArgExtractComb((["COMP128_FLT_MUL"] ,self.srcOpr, self.srcOpr, self.desOpr, self.desOprWDummy, ["SimdFloatMult"], [resMap.cxxTypeIO_suggest_FLT],[self.decKeys_fMul]))
         self.addMopArgExtractComb((["COMP128_FLT_DIV"] ,self.srcOpr, self.srcOpr, self.desOpr, self.desOprWDummy, ["SimdFloatDiv" ], [resMap.cxxTypeIO_suggest_FLT],[self.decKeys_fDiv]))
+
+
+class MOP_GROUP_COMP256(mop_group.MOP_GROUP_BASE):
+    decKeys_intAlu = ["V256_INT_ALU"]
+    decKeys_intMul = ["V256_INT_MUL"]
+    decKeys_intDiv = ["V256_INT_DIV"]
+    decKeys_fAlu   = ["V256_FLT_ALU"]
+    decKeys_fMul   = ["V256_FLT_MUL"]
+    decKeys_fDiv   = ["V256_FLT_DIV"]
+
+    srcOpr = [opr.OPR_REG, opr.OPR_IMM, opr.OPR_MEM]
+    desOpr = [opr.OPR_REG, opr.OPR_MEM]
+    desOprWDummy = [opr.OPR_REG, opr.OPR_MEM, opr.OPR_DUMMY]
+
+    def __init__(self):
+        super().__init__(8, mop_alu_x86.MOP_COMP_128_BASE_X86)
+                                                                                            #### please remind that mop name "COMP*** should not colid with other"
+        self.addMopArgExtractComb((["COMP256_INT"    ] ,self.srcOpr, self.srcOpr, self.desOpr, self.desOprWDummy, ["SimdAlu"      ], [resMap.cxxTypeIO_suggest_INT],[self.decKeys_intAlu]))
+        self.addMopArgExtractComb((["COMP256_MUL"    ] ,self.srcOpr, self.srcOpr, self.desOpr, self.desOprWDummy, ["SimdMult"     ], [resMap.cxxTypeIO_suggest_INT],[self.decKeys_intMul]))
+        self.addMopArgExtractComb((["COMP256_DIV"    ] ,self.srcOpr, self.srcOpr, self.desOpr, self.desOprWDummy, ["SimdDiv"      ], [resMap.cxxTypeIO_suggest_INT],[self.decKeys_intDiv]))
+        self.addMopArgExtractComb((["COMP256_FLT"    ] ,self.srcOpr, self.srcOpr, self.desOpr, self.desOprWDummy, ["SimdFloatAlu" ], [resMap.cxxTypeIO_suggest_FLT],[self.decKeys_fAlu]))
+        self.addMopArgExtractComb((["COMP256_FLT_MUL"] ,self.srcOpr, self.srcOpr, self.desOpr, self.desOprWDummy, ["SimdFloatMult"], [resMap.cxxTypeIO_suggest_FLT],[self.decKeys_fMul]))
+        self.addMopArgExtractComb((["COMP256_FLT_DIV"] ,self.srcOpr, self.srcOpr, self.desOpr, self.desOprWDummy, ["SimdFloatDiv" ], [resMap.cxxTypeIO_suggest_FLT],[self.decKeys_fDiv]))
+
+
+class MOP_GROUP_COMP128X(mop_group.MOP_GROUP_BASE):
+    decKeys_intAlu = ["V128X_INT_ALU"]
+    decKeys_intMul = ["V128X_INT_MUL"]
+    decKeys_intDiv = ["V128X_INT_DIV"]
+    decKeys_fAlu   = ["V128X_FLT_ALU"]
+    decKeys_fMul   = ["V128X_FLT_MUL"]
+    decKeys_fDiv   = ["V128X_FLT_DIV"]
+
+    srcOpr = [opr.OPR_REG, opr.OPR_IMM, opr.OPR_MEM]
+    desOpr = [opr.OPR_REG, opr.OPR_MEM]
+    desOprWDummy = [opr.OPR_REG, opr.OPR_MEM, opr.OPR_DUMMY]
+
+    def __init__(self):
+        super().__init__(8, mop_alu_semi_x86.MOP_COMP_SEMI128_BASE_X86)
+                                                                                            #### please remind that mop name "COMP*** should not colid with other"
+        self.addMopArgExtractComb((["COMP128X_INT"    ] ,self.srcOpr, self.srcOpr, self.desOpr, self.desOprWDummy, ["SimdAlu"      ], [resMap.cxxTypeIO_suggest_INT],[self.decKeys_intAlu]))
+        self.addMopArgExtractComb((["COMP128X_MUL"    ] ,self.srcOpr, self.srcOpr, self.desOpr, self.desOprWDummy, ["SimdMult"     ], [resMap.cxxTypeIO_suggest_INT],[self.decKeys_intMul]))
+        self.addMopArgExtractComb((["COMP128X_DIV"    ] ,self.srcOpr, self.srcOpr, self.desOpr, self.desOprWDummy, ["SimdDiv"      ], [resMap.cxxTypeIO_suggest_INT],[self.decKeys_intDiv]))
+        self.addMopArgExtractComb((["COMP128X_FLT"    ] ,self.srcOpr, self.srcOpr, self.desOpr, self.desOprWDummy, ["SimdFloatAlu" ], [resMap.cxxTypeIO_suggest_FLT],[self.decKeys_fAlu]))
+        self.addMopArgExtractComb((["COMP128X_FLT_MUL"] ,self.srcOpr, self.srcOpr, self.desOpr, self.desOprWDummy, ["SimdFloatMult"], [resMap.cxxTypeIO_suggest_FLT],[self.decKeys_fMul]))
+        self.addMopArgExtractComb((["COMP128X_FLT_DIV"] ,self.srcOpr, self.srcOpr, self.desOpr, self.desOprWDummy, ["SimdFloatDiv" ], [resMap.cxxTypeIO_suggest_FLT],[self.decKeys_fDiv]))
+
+
+
+class MOP_GROUP_COMP256X(mop_group.MOP_GROUP_BASE):
+    decKeys_intAlu = ["V256X_INT_ALU"]
+    decKeys_intMul = ["V256X_INT_MUL"]
+    decKeys_intDiv = ["V256X_INT_DIV"]
+    decKeys_fAlu   = ["V256X_FLT_ALU"]
+    decKeys_fMul   = ["V256X_FLT_MUL"]
+    decKeys_fDiv   = ["V256X_FLT_DIV"]
+
+    srcOpr = [opr.OPR_REG, opr.OPR_IMM, opr.OPR_MEM]
+    desOpr = [opr.OPR_REG, opr.OPR_MEM]
+    desOprWDummy = [opr.OPR_REG, opr.OPR_MEM, opr.OPR_DUMMY]
+
+    def __init__(self):
+        super().__init__(8, mop_alu_semi_x86.MOP_COMP_SEMI128_BASE_X86)
+                                                                                            #### please remind that mop name "COMP*** should not colid with other"
+        self.addMopArgExtractComb((["COMP256X_INT"    ] ,self.srcOpr, self.srcOpr, self.desOpr, self.desOprWDummy, ["SimdAlu"      ], [resMap.cxxTypeIO_suggest_INT],[self.decKeys_intAlu]))
+        self.addMopArgExtractComb((["COMP256X_MUL"    ] ,self.srcOpr, self.srcOpr, self.desOpr, self.desOprWDummy, ["SimdMult"     ], [resMap.cxxTypeIO_suggest_INT],[self.decKeys_intMul]))
+        self.addMopArgExtractComb((["COMP256X_DIV"    ] ,self.srcOpr, self.srcOpr, self.desOpr, self.desOprWDummy, ["SimdDiv"      ], [resMap.cxxTypeIO_suggest_INT],[self.decKeys_intDiv]))
+        self.addMopArgExtractComb((["COMP256X_FLT"    ] ,self.srcOpr, self.srcOpr, self.desOpr, self.desOprWDummy, ["SimdFloatAlu" ], [resMap.cxxTypeIO_suggest_FLT],[self.decKeys_fAlu]))
+        self.addMopArgExtractComb((["COMP256X_FLT_MUL"] ,self.srcOpr, self.srcOpr, self.desOpr, self.desOprWDummy, ["SimdFloatMult"], [resMap.cxxTypeIO_suggest_FLT],[self.decKeys_fMul]))
+        self.addMopArgExtractComb((["COMP256X_FLT_DIV"] ,self.srcOpr, self.srcOpr, self.desOpr, self.desOprWDummy, ["SimdFloatDiv" ], [resMap.cxxTypeIO_suggest_FLT],[self.decKeys_fDiv]))

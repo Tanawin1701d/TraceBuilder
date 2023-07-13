@@ -32,7 +32,7 @@ namespace traceBuilder::model {
     bool DEP_RWD_BASE::isThereDep(UOP_BASE* uop, UOP_WINDOW* traceWindow){
         assert(uop != nullptr);
         assert(traceWindow != nullptr);
-        size_t idxInWd = traceWindow->getLastPushSeqNum() - uop->getSeqNum();
+        size_t idxInWd =  traceWindow->getLastPushSeqNum() - uop->getSeqNum();
         return depUops.isThereIdx(idxInWd);
     }
 

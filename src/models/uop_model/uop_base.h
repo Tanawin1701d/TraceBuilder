@@ -68,22 +68,35 @@ namespace traceBuilder::model {
 
         /** meta class operation*/
         template<META_CLASS meta_class_enum, typename META_TYPE>
-        void addMeta(META_TYPE metaDayta);
+        void addMeta(META_TYPE metaDayta){
+            auto metaGrp = getMetaPtr<meta_class_enum, META_TYPE>();
+            metaGrp->addMeta(metaDayta);
+        }
 
         template<META_CLASS meta_class_enum, typename META_TYPE>
-        META_GRP<META_TYPE>* getMetaPtr();
+        META_GRP<META_TYPE>* getMetaPtr(){
+            return metaDatas[meta_class_enum]->castDown<META_GRP<META_TYPE>>();
+        }
 
 
         /** dep class operation*/
             /// return that dep is newly added or not
         template<DEP_CLASS dep_class_enum>
-        bool addDep(UOP_BASE* uop, UOP_WINDOW* uop_window);
+        bool addDep(UOP_BASE* uop, UOP_WINDOW* uop_window){
+                auto dep = getDepClassPtr<dep_class_enum>();
+                return dep->addDep(uop, uop_window);
+        }
 
         template<DEP_CLASS dep_class_enum>
-        DEP_BASE* getDepClassPtr();
+        DEP_BASE* getDepClassPtr(){
+            return deps[dep_class_enum];
+        }
 
         template<DEP_CLASS dep_class_enum>
-        void doDepenCheck(UOP_WINDOW *traceWindow);
+        void doDepenCheck(UOP_WINDOW *traceWindow){
+            auto depPtr = getDepClassPtr<dep_class_enum>();
+            depPtr->doDepenCheck(this, traceWindow);
+        }
         //// use to ask successor to check dependecy and store ourself dependency
         ////// crucial this is fundamental of the program the program
         virtual void doPlannedDepenCheck(UOP_WINDOW* uop_window) = 0;

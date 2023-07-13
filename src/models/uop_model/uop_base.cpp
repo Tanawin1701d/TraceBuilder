@@ -18,10 +18,11 @@ namespace traceBuilder::model {
             uop_type(UOP_DUMMY),
             exec_unit_id(DUMMY_EXEC_UNIT_ID) {
         /** initialize meta data*/
-        metaDatas[META_SRC_MREG ] = new META_GRP<MREG_META> ;
+        metaDatas[META_SRC_MREG] = new META_GRP<MREG_META> ;
         metaDatas[META_SRC_TEMP] = new META_GRP<TREG_META>;
         metaDatas[META_SRC_MEM ] = new META_GRP<MEM_META> ;
-        metaDatas[META_DES_MREG ] = new META_GRP<MREG_META> ;
+        metaDatas[META_SRC_IMM ] = new META_GRP<IMM_META>;
+        metaDatas[META_DES_MREG] = new META_GRP<MREG_META> ;
         metaDatas[META_DES_TEMP] = new META_GRP<TREG_META>;
         metaDatas[META_DES_MEM ] = new META_GRP<MEM_META> ;
         /** initialize dep*/
@@ -40,48 +41,18 @@ namespace traceBuilder::model {
 
     UOP_BASE::~UOP_BASE() {
         for (auto& metaData : metaDatas){
+            //std::cout << "deleting metaDatas" << std::endl;
             delete metaData;
         }
         for (auto& dep: deps){
+            //std::cout << "deleting dep" << std::endl;
             delete dep;
         }
-
-    }
-    /////////////////////////////////
-    /** operation on meta data*/
-    /////////////////////////////////
-    template<META_CLASS meta_class_enum, typename META_TYPE>
-    void UOP_BASE::addMeta(META_TYPE metaDayta) {
-        auto metaGrp = getMetaPtr<meta_class_enum, META_TYPE>();
-        metaGrp->addMeta(metaDayta);
-    }
-
-    template<META_CLASS meta_class_enum, typename META_TYPE>
-    META_GRP<META_TYPE>*
-    UOP_BASE::getMetaPtr(){
-        return metaDatas[meta_class_enum]->castDown<META_GRP<META_TYPE>>();
-    }
-    /////////////////////////////////
-    /** operation on dep*/
-    /////////////////////////////////
-    template<DEP_CLASS dep_class_enum>
-    bool UOP_BASE::addDep(UOP_BASE* uop, UOP_WINDOW* uop_window){
-        auto dep = getDepClassPtr<dep_class_enum>();
-        return dep->addDep(this, uop_window);
-    }
-
-    template<DEP_CLASS dep_class_enum>
-    DEP_BASE* UOP_BASE::getDepClassPtr(){
-        return deps[dep_class_enum];
-    }
+        //std::cout << "----------------------------------" << std::endl;
 
 
-    template<DEP_CLASS dep_class_enum>
-    void UOP_BASE::doDepenCheck(UOP_WINDOW *traceWindow){
-        auto depPtr = getDepClassPtr<dep_class_enum>();
-        depPtr->doDepenCheck(this, traceWindow);
     }
-    /////////////////////////////////
+
 
 ////// simple compute reg
 /////////////////////////////////////////////////////////////////////////////

@@ -63,7 +63,7 @@ namespace traceBuilder::core {
     static const std::string ST_VAL_COMPO_DEC = "N"; ///pintool also generates decoder key but we do not use it
     static const std::string ST_VAL_COMPO_SPT = "---------------------------------"; ///pintool also generates seperator for static trace but we not use it
 //// markunused for load store operand
-    static const std::string ST_VAL_LD_UNSED_REG = "UNUSED";
+    static const std::string ST_VAL_LD_UNSED_REG = "-1";
 
 /////////////////////////////////////////////////////////////////////////////////////
 //// this is used for call static tracer

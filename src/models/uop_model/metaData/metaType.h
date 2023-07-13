@@ -23,8 +23,8 @@ namespace traceBuilder::model {
         ADAS v_area;
         ADAS p_area;
         ADDR size;
-        REGNUM baseReg;
-        REGNUM indexReg;
+        AREGNUM baseReg;
+        AREGNUM indexReg;
         int    scaleFactor;
         IMM    displacement;
         bool   is_v_area_set = false;

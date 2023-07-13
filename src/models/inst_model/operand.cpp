@@ -21,28 +21,35 @@ namespace traceBuilder::model {
             regId(regId),
             OPERAND(O_TEMP, 0)
     {
-        assert(regId != UNUSEDREG);
+        assert(regId != UNUSED_TREG);
     }
 
-    REGNUM OPR_TREG::getRegId() const {
+    TREGNUM OPR_TREG::getRegId() const {
         return regId;
     }
 
-    REGNUM
+    TREGNUM
     OPR_TREG::getMeta() const { return regId; }
 
 ///////////////////////////////////////////////////////////
 /// reg operand
-    OPR_REG::OPR_REG(REGNUM _regId, size_t _mcArgSIdx) :
-            regId(_regId),
+    OPR_REG::OPR_REG(AREGNUM _reg, size_t _mcArgSIdx) :
+            reg(_reg),
             OPERAND(O_REG, _mcArgSIdx) {}
 
-    REGNUM OPR_REG::getRegId() const {
-        return regId;
+    AREGNUM OPR_REG::getRegId() const {
+        return reg;
     }
 
-    REGNUM
-    OPR_REG::getMeta() const { return regId; }
+    MREGNUM OPR_REG::getMeta() const {return archRegToMReg(reg, 0);}
+
+    MREGNUM
+    OPR_REG::getMeta(int subRegIdx) const { return archRegToMReg(reg, subRegIdx); }
+
+
+
+
+
 
 ///////////////////////////////////////////////////////////
 /// memory operand
@@ -61,10 +68,16 @@ namespace traceBuilder::model {
     OPR_MEM::getMeta(ADDR startByte, ADDR stopByte) const{
         assert(startByte >= 0 && ((stopByte - startByte) <= MAX_BYTE_PER_MICROOP));
         MEM_META temp = _meta;
-        temp.p_area.addr += startByte;
-        temp.v_area.addr += startByte;
-        temp.size = stopByte - startByte;
-        assert((temp.p_area.addr + temp.size) <= (_meta.p_area.addr +  _meta.size));
+        ADDR actualStartByte =  startByte % temp.size;
+        ADDR actualStopByte  = (actualStartByte + stopByte - startByte) % temp.size;
+
+        temp.p_area.addr += actualStartByte;
+        temp.v_area.addr += actualStartByte;
+        temp.size = actualStopByte - actualStartByte;
+        temp.p_area.size = temp.size;
+        temp.v_area.size = temp.size;
+
+
         return temp;
     }
 
