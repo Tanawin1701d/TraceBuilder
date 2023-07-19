@@ -14,11 +14,29 @@
 #include "core/tracerFrontEnd/dynTraceVar.h"
 #include "models/res_model/memMng/MemMng.h"
 #include "ioHelp/strHelp.h"
-#include "models/uop_model/mop_base.h"
+#include "models/uop_model/uop_base.h"
 #include "models/inst_model/operand.h"
+#include "models/uop_model/agent/mop_agent.h"
 
 
 namespace traceBuilder::model {
+
+        /** pybind  function*/
+#define GET_RT_INSTR_SRC_REG_OPR_FN  getSrcRegOperands
+#define GET_RT_INSTR_SRC_MEM_OPR_FN  getSrcLdOperands
+#define GET_RT_INSTR_SRC_IMM_OPR_FN  getSrcImmOperands
+#define GET_RT_INSTR_SRC_POOL_OPR_FN getSrcMacroPoolOperands
+#define GET_RT_INSTR_DES_REG_OPR_FN  getDesRegOperands
+#define GET_RT_INSTR_DES_MEM_OPR_FN  getDesStOperands
+#define GET_RT_INSTR_DES_POOL_OPR_FN getDesMacroPoolOperands
+
+#define GET_RT_INSTR_SRC_REG_OPR_FN_STR  "getSrcRegOperands"
+#define GET_RT_INSTR_SRC_MEM_OPR_FN_STR  "getSrcLdOperands"
+#define GET_RT_INSTR_SRC_IMM_OPR_FN_STR  "getSrcImmOperands"
+#define GET_RT_INSTR_SRC_POOL_OPR_FN_STR "getSrcMacroPoolOperands"
+#define GET_RT_INSTR_DES_REG_OPR_FN_STR  "getDesRegOperands"
+#define GET_RT_INSTR_DES_MEM_OPR_FN_STR  "getDesStOperands"
+#define GET_RT_INSTR_DES_POOL_OPR_FN_STR "getDesMacroPoolOperands"
 
         typedef uint64_t RT_INSTR_ID;
 
@@ -50,18 +68,19 @@ namespace traceBuilder::model {
             ADDR size{};
             /////// src operand data and metadata
             std::vector<OPR_REG> srcRegOperands;
-            std::vector<OPR_MEM_LD> srcLdOperands;
+            std::vector<OPR_MEM> srcLdOperands;
             std::vector<OPR_IMM> srcImmOperands;
             /////// pool operand to allow macro-op access in correct order
             std::vector<OPERAND *> srcMacroPoolOperands; /// pool the  src operand for macroop will get it and fill into micro-op
             /////// des operand data and metadata
             /// for now we assume that order is matter to classify instruction and micro-op
             std::vector<OPR_REG> desRegOperands;
-            std::vector<OPR_MEM_ST> desStOperands;
+            std::vector<OPR_MEM> desStOperands;
             /////// pool operand to allow macro-op access in correct order
-            std::vector<OPERAND *> desMacroPoolOperands;/// pool the  des operand for macroop will get it and fill into micro-op
-            /////// macro-op
-            MOP_BASE *macroop{};
+            std::vector<OPERAND*> desMacroPoolOperands;/// pool the  des operand for macroop will get it and fill into micro-op
+            /** mop agent for generate microop*/
+            model::MOP_AGENT* _mopAgentPtr;
+
 
 
         protected:
@@ -94,10 +113,15 @@ namespace traceBuilder::model {
             ///////// entry point to interpret single instruction
             void interpretStaticTracedData(const std::vector<std::string> &st_raw); // interpret from raw static tracer
             ///////// fill dynamic data tracing
-            void fillDynData( RT_OBJ& rawDynData, CVT_RT_OBJ &cvtDynData);
+            void fillDynData( core::RT_OBJ& rawDynData, core::CVT_RT_OBJ &cvtDynData);
 
             ///////// generate uop    /////// HOTSPOT
-            void genUOPS(std::vector<UOP_BASE *> &results);
+            void genUOPS(std::vector<UOP_BASE*> &results);
+
+            void setMopAgent(MOP_AGENT* mopAgentPtr){
+                assert(mopAgentPtr != nullptr);
+                _mopAgentPtr = mopAgentPtr;
+            }
 
             uint64_t getRtInstrId() const { return rt_instr_id; };
 
@@ -114,38 +138,29 @@ namespace traceBuilder::model {
             std::string getDecodeKey();
 
             ////// get method
-            std::vector<OPR_REG> &getSrcRegOperands() { return srcRegOperands; };
+            std::vector<OPR_REG>&   GET_RT_INSTR_SRC_REG_OPR_FN() { return srcRegOperands; };
+            std::vector<OPR_MEM>&   GET_RT_INSTR_SRC_MEM_OPR_FN() { return srcLdOperands; };
+            std::vector<OPR_IMM>&   GET_RT_INSTR_SRC_IMM_OPR_FN() { return srcImmOperands; };
+            std::vector<OPERAND *>& GET_RT_INSTR_SRC_POOL_OPR_FN() { return srcMacroPoolOperands; };
+            std::vector<OPR_REG>&   GET_RT_INSTR_DES_REG_OPR_FN() { return desRegOperands; };
+            std::vector<OPR_MEM>&   GET_RT_INSTR_DES_MEM_OPR_FN() { return desStOperands; };
+            std::vector<OPERAND *>& GET_RT_INSTR_DES_POOL_OPR_FN() { return desMacroPoolOperands; };
 
-            std::vector<OPR_MEM_LD> &getSrcLdOperands() { return srcLdOperands; };
-
-            std::vector<OPR_IMM> &getSrcImmOperands() { return srcImmOperands; };
-
-            std::vector<OPERAND *> &getSrcMacroPoolOperands() { return srcMacroPoolOperands; };
-
-            std::vector<OPR_REG> &getDesRegOperands() { return desRegOperands; };
-
-            std::vector<OPR_MEM_ST> &getDesStOperands() { return desStOperands; };
-
-            std::vector<OPERAND *> &getDesMacroPoolOperands() { return desMacroPoolOperands; };
-
-            MOP_BASE *getMacroop() { return macroop; };
 
 
             ////// count method
             int countSrcRegOperands() const { return (int) srcRegOperands.size(); };
-
-            int countSrcLdOpeands() const { return (int) srcLdOperands.size(); };
-
+            int countSrcLdOpeands()   const { return (int) srcLdOperands.size(); };
             int countSrcImmOperands() const { return (int) srcImmOperands.size(); };
-
             int countDesRegOperands() const { return (int) desRegOperands.size(); };
-
-            int countDesStOperands() const { return (int) desStOperands.size(); };
-
-            /// set method
-            void setMacroop(MOP_BASE *_macroop) { macroop = _macroop; }
+            int countDesStOperands()  const { return (int) desStOperands.size(); };
 
         };
+
+    ////////////////////////////////////////////////////////////////////////////////////////
+    ///////// pybind declaration
+    namespace py = pybind11;
+    void BIND_RT_INSTR(py::module& m);
 
 }
 

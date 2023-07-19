@@ -13,12 +13,14 @@ class MOP_GROUP_BASE:
     args         : list ### list of tuple. the tuple is argument to initialize class
     argCount     : int
     MOP_TEMPLATE = None ## macro-op template class
+    groupName    : str
 
 
-    def __init__(self, _argCount,_mop_template):
+    def __init__(self, _groupName,_argCount,_mop_template):
         self.args = []
         self.argCount = _argCount
         self.MOP_TEMPLATE = _mop_template
+        self.groupName = _groupName
 
 
     def addMopArg(self, arg):
@@ -41,5 +43,7 @@ class MOP_GROUP_BASE:
             mop = self.MOP_TEMPLATE(*arg)
             mop_gen.addToMopGenGroup(mop)
             dec_gen.addToDecGenGroup(mop)
+            dec_gen.addIncludeFile(self.groupName)
             for uop in mop.getUops():
                 uop_gen.addToUopGenGroup(uop)
+        mop_gen.writeFile(self.groupName)

@@ -53,21 +53,4 @@ namespace traceBuilder::model {
 
     }
 
-
-////// simple compute reg
-/////////////////////////////////////////////////////////////////////////////
-    void UOP_SIMPLE::doPlannedDepenCheck(UOP_WINDOW *uop_window) {
-        //////// we check all possible dependency
-        doDepenCheck<DEP_MREG      >(uop_window);
-        doDepenCheck<DEP_MEM      >(uop_window);
-        doDepenCheck<DEP_EXEC_UNIT>(uop_window);
-    }
-
-    UOP_SIMPLE::UOP_SIMPLE(UOP_TYPE _uop_type) :
-            UOP_BASE() {
-        uop_type = _uop_type;
-    }
-
-
-
 }

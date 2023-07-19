@@ -28,7 +28,9 @@ namespace traceBuilder::core {
 
         virtual ~TRACE_TOOL_FRONT_END();
 
-        virtual void start() { assert(false);};
+        virtual void startStaticTrace();
+
+        virtual void startDynTrace();
 
         virtual void setRes(CORE* _core,
                             SHARED_TRACEINFO* _sharedInfo,

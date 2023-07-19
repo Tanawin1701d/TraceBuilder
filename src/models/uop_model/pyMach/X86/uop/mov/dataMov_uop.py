@@ -1,5 +1,6 @@
 import base.uop.uop_base as ub
 import base.operand.opr_simple as opr
+import X86.operand.opr as x86_opr
 import X86.uop.resMap as resMap
 
 
@@ -13,11 +14,12 @@ class UOP_MOV(ub.UOP_BASE):
                  _idxInGrp: int, _uopOprSize: int, _archOprSize: int):
         ##TODO uopdate idxInGrp to get
         super().__init__(_cxxType_prefix, _name,
-                         1, 1,
+                         2, 1,
                          resMap.cxxTypeToUopType(_cxxType_prefix), resMap.cxxTypeToExecUnit(_cxxType_prefix)
                          )
-        self.io_input .addAcceptType(0, {opr.OPR_REG, opr.OPR_MEM, opr.OPR_TEMP, opr.OPR_IMM})
-        self.io_output.addAcceptType(0, {opr.OPR_REG, opr.OPR_MEM, opr.OPR_TEMP})
+        self.io_input .addAcceptType(0, {opr.OPR_REG, opr.OPR_MEM, x86_opr.OPR_MEM_W_IPR, opr.OPR_TEMP, opr.OPR_IMM, x86_opr.OPR_REG_W_RD_IPTR})
+        self.io_input .addAcceptType(1, {opr.OPR_TEMP, opr.OPR_DUMMY})
+        self.io_output.addAcceptType(0, {opr.OPR_REG, opr.OPR_MEM, x86_opr.OPR_MEM_W_IPR, opr.OPR_TEMP})
 
         self.idxInGrp    =  _idxInGrp
         self.uopOprSize  = _uopOprSize
@@ -32,6 +34,3 @@ class UOP_MOV(ub.UOP_BASE):
         for idx in range(len(_outputs)):
             self.io_output_metaArgs[idx] = _outputs[idx].genCXX_getFillMetaHelper_forVec\
                                           (self.idxInGrp,self.uopOprSize,self.archOprSize)
-
-
-

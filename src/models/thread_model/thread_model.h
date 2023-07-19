@@ -22,7 +22,7 @@ namespace traceBuilder::model {
 
     private:
 
-        std::unordered_map<uint64_t, RT_INSTR *> instr_pool; /// map runtime instruction id to runtime instruction
+        std::vector<RT_INSTR*> instrPool;
 
 
     public:
@@ -32,12 +32,19 @@ namespace traceBuilder::model {
 
         /////// get runtime instruction that not decoded to generate micro-op or added with
         ////////////// runtime data
-        RT_INSTR *getInstrTemplate(uint64_t instr_id);
+        RT_INSTR* getRtInstr(uint64_t instr_id);
+
+        uint64_t getAmountInstr(){return instrPool.size();}
+
+        void decodeInstr(uint64_t instrId, MOP_AGENT* mopAgent);
 
         //////// when tracer collect raw static instruction token which we will decoded it
-        void onGetStTraceValue(staticTraceData stData); // for only per instruction
+        void onGetStTraceValue(const staticTraceData& stData); // for only per instruction
 
     };
+
+    namespace py = pybind11;
+    void BIND_THREAD_MODEL(py::module& m);
 
 }
 

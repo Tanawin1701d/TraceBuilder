@@ -6,107 +6,97 @@
 
 namespace traceBuilder::model {
 
-
-    OPERAND::OPERAND(OPR_TYPE OT, size_t _mcArgSIdx) :
-            OT(OT),
-            mcArgSIdx(_mcArgSIdx) {}
-
-///////////////////////////////////////////////////////////
-/// Treg operand
-    OPR_TREG::OPR_TREG() :
-            regId(0),
-            OPERAND(O_REG, 0) {}
-
-    OPR_TREG::OPR_TREG(int regId) :
-            regId(regId),
-            OPERAND(O_TEMP, 0)
-    {
-        assert(regId != UNUSED_TREG);
+    MREG_META OPR_REG::GET_META_FUNCNAME(int subRegIdx) const {
+        return archRegToMReg(reg, subRegIdx);
     }
 
-    TREGNUM OPR_TREG::getRegId() const {
+    TREG_META OPR_TREG::GET_META_FUNCNAME() const {
         return regId;
     }
 
-    TREGNUM
-    OPR_TREG::getMeta() const { return regId; }
-
-///////////////////////////////////////////////////////////
-/// reg operand
-    OPR_REG::OPR_REG(AREGNUM _reg, size_t _mcArgSIdx) :
-            reg(_reg),
-            OPERAND(O_REG, _mcArgSIdx) {}
-
-    AREGNUM OPR_REG::getRegId() const {
-        return reg;
-    }
-
-    MREGNUM OPR_REG::getMeta() const {return archRegToMReg(reg, 0);}
-
-    MREGNUM
-    OPR_REG::getMeta(int subRegIdx) const { return archRegToMReg(reg, subRegIdx); }
-
-
-
-
-
-
-///////////////////////////////////////////////////////////
-/// memory operand
-    OPR_MEM::OPR_MEM(
-            MEM_META memMeta,
-            OPR_TYPE _setOpr,
-            size_t _mcArgSIdx
-    ) :
-    _meta(memMeta),
-    OPERAND(_setOpr, _mcArgSIdx) {
-        assert(MAX_BYTE_PER_MICROOP > 0);
-        ///// caculate expect uop that should handle this instr
-    }
-
-    MEM_META
-    OPR_MEM::getMeta(ADDR startByte, ADDR stopByte) const{
+    MEM_META OPR_MEM::GET_META_FUNCNAME(ADDR startByte, ADDR stopByte) const {
         assert(startByte >= 0 && ((stopByte - startByte) <= MAX_BYTE_PER_MICROOP));
+        assert(stopByte >= startByte);
         MEM_META temp = _meta;
-        ADDR actualStartByte =  startByte % temp.size;
-        ADDR actualStopByte  = (actualStartByte + stopByte - startByte) % temp.size;
 
-        temp.p_area.addr += actualStartByte;
-        temp.v_area.addr += actualStartByte;
-        temp.size = actualStopByte - actualStartByte;
-        temp.p_area.size = temp.size;
-        temp.v_area.size = temp.size;
+        ADDR neededSize = stopByte - startByte;
+        ADDR neededStart = temp.v_area.addr + startByte;
+        ADDR neededStop  = neededStart      + neededSize;
+
+        ADDR oprStart    = temp.v_area.addr;
+        ADDR oprStop     = temp.v_area.addr + temp.size;
+
+        bool isOverlap = (neededStart >= oprStart && neededStart < oprStop) || (oprStart >= neededStart && oprStart < neededStop);
+
+        if (temp.suppressed || !isOverlap || (neededSize == 0)){
+            temp.suppressed = true;
+            return temp;
+        }
+
+        ADDR actualStart = std::max(neededStart, oprStart);
+        ADDR actualStop  = std::min(neededStop, oprStop);
+        ADDR actualSize  = actualStop - actualStart;
+        ADDR offset      = actualStart - oprStart; /// alway actual start > opStart
+
+        temp.v_area.addr += offset;
+        temp.p_area.addr += offset;
+        temp.size         = actualSize;
+        temp.p_area.size  = actualSize;
+        temp.v_area.size  = actualSize;
 
 
         return temp;
     }
 
-///////////////////////////////////////////////////////////
-/// load operand
 
-    OPR_MEM_LD::OPR_MEM_LD(MEM_META memMeta,size_t _mcArgSIdx)
-    : OPR_MEM(memMeta,O_MEM_LD,_mcArgSIdx) {}
-///////////////////////////////////////////////////////////
-/// store operand
-
-    OPR_MEM_ST::OPR_MEM_ST(MEM_META memMeta,size_t _mcArgSIdx
-    ) :
-            OPR_MEM(memMeta,
-                    O_MEM_ST,
-                    _mcArgSIdx) {}
-///////////////////////////////////////////////////////////
-/// imm operand
-
-    OPR_IMM::OPR_IMM(IMM _imm, size_t _mcArgSIdx) :
-            imm(_imm),
-            OPERAND(O_IMM, _mcArgSIdx) {}
-
-    IMM
-    OPR_IMM::getImm() const {
+    IMM_META OPR_IMM::GET_META_FUNCNAME() const {
         return imm;
-    };
+    }
 
-    IMM
-    OPR_IMM::getValue() const { return imm; }
+
+    void BIND_OPERAND(py::module& m){
+        /** bind operand base*/
+        py::class_<OPERAND>(m, "OPERAND")
+                .def(py::init<OPR_TYPE, size_t>(),
+                        py::arg("oprType"),
+                        py::arg("idxInPool"),
+                        "initialize opr")
+                .def("getOPR_TYPE", &OPERAND::getOPTYPE)
+                .def("getMcSideIdx", &OPERAND::getMcSideIdx);
+        /** bind operand reg*/
+        py::class_<OPR_REG, OPERAND>(m, "OPR_REG")
+                .def(py::init<AREGNUM, size_t>(),
+                        py::arg("oprType"),
+                        py::arg("idxInPool"),
+                        "reg Opr initializer")
+                .def(GET_DATA_FUNCNAME_STR, &OPR_REG::GET_DATA_FUNCNAME);
+        /** bind operand treg*/
+        py::class_<OPR_TREG, OPERAND>(m, "OPR_TREG")
+                .def(py::init<TREGNUM>(),
+                     py::arg("tregId"),
+                     "treg id initializer"
+                     )
+                 .def(GET_DATA_FUNCNAME_STR, &OPR_TREG::GET_DATA_FUNCNAME);
+        /** bind operand mem*/
+        py::class_<OPR_MEM, OPERAND>(m, "OPR_MEM")
+                .def(py::init<MEM_META, OPR_TYPE, size_t>(),
+                        py::arg("memMeta"),
+                        py::arg("oprType"),
+                        py::arg("idxInPool"),
+                        "mem Opr initializer"
+                     )
+                 .def(GET_DATA_FUNCNAME_STR, &OPR_MEM::GET_DATA_FUNCNAME);
+        /** bind operand imm*/
+        py::class_<OPR_IMM, OPERAND>(m, "OPR_IMM")
+                .def(py::init<IMM, size_t>(),
+                        py::arg("immValue"),
+                        py::arg("idxInPool"),
+                        "imm Opr initializer"
+                        )
+                .def(GET_DATA_FUNCNAME_STR, &OPR_IMM::GET_DATA_FUNCNAME);
+
+    }
+
+
 
 }

@@ -4,6 +4,7 @@ from termcolor import colored
 import base.generator.header as hd
 
 decStorage = []    ##### list of tuple which contain trace decode at first index and mop class type at second
+mopSuffixFileNames =[]
 
 class DecGenUsageError(Exception):
     def __init__(self, message):
@@ -19,12 +20,13 @@ def writeAllHppDec():
     headerStr = "#ifndef {ARCH}_DECL_H\n" \
                 "#define {ARCH}_DECL_H\n" \
                 "#include\"{INC_DEC}\"\n" \
-                "#include\"{INC_MYMOP}\"\n" \
                 "\n\n\n\n".format(
                     ARCH = hd.ARCH,
                     INC_DEC   = hd.INC_DEC_BASE,
-                    INC_MYMOP = hd.MOP_HFILE_NAME
                 )
+
+    headerStr = headerStr + "\n".join(f"#include\"{hd.getMopHeaderFileName(suffix)}\"" for suffix in mopSuffixFileNames)
+    headerStr = headerStr + "\n\n\n\n\n\n\n"
 
     ###### add namespace
     headerStr = headerStr + "namespace {NSP_MODEL} {{\n\n\n\n".format(NSP_MODEL = hd.NSP_MODEL)
@@ -85,4 +87,6 @@ def writeAll():
     writeAllHppDec()
     writeAllCppDec()
 
-
+def addIncludeFile(suffix: str):
+    if suffix not in mopSuffixFileNames:
+        mopSuffixFileNames.append(suffix)

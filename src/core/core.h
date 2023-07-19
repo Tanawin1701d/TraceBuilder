@@ -11,11 +11,7 @@
 #include "core/tracerFrontEnd/traceToolFed.h"
 #include "core/tracers/tracer.h"
 #include "models/res_model/execUnit/execUnit.h"
-#include "models/uop_model/decoder.h"
 
-#ifdef X86
-    #include "models/uop_model/X86/X86_dec.h"
-#endif
 
 namespace traceBuilder::core {
 
@@ -23,7 +19,6 @@ namespace traceBuilder::core {
 
     struct SHARED_TRACEINFO{
         MEM_MNG*       memMng; //// shared all thread
-        DECODER_BASE*  decoder;
         EXEC_UNIT_RES* execUnit_info;
     };
 
@@ -41,7 +36,7 @@ namespace traceBuilder::core {
         std::unordered_map<THREAD_ID, SPECIFIC_TRACEINFO*> traceWorkers;
         THREAD_ID amountThread{};
         //////// shared model
-        SHARED_TRACEINFO sharedInfo;
+        SHARED_TRACEINFO sharedInfo{};
         ////////////////////////////////////////////////
 
     public:
@@ -54,7 +49,13 @@ namespace traceBuilder::core {
                        int _obsSize
         );
 
-        void start(bool parallel);
+        THREAD_MODEL* getThreadModel(THREAD_ID tid);
+
+        int getAmtThread();
+
+        void startStaticTrace();
+
+        void startDynTrace();
 
     };
 

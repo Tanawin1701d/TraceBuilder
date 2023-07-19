@@ -43,7 +43,7 @@ namespace traceBuilder::core {
             sizes = new uint64_t[amt];
             auto &ldOpr = rt_instr.getSrcLdOperands();
             for (size_t idx = 0; idx < amt; idx++) {
-                sizes[idx] = ldOpr[idx].getMeta().size;
+                sizes[idx] = ldOpr[idx].getData().size;
             }
         } else { //// store
             vAddrs = rt_obj.storeAddr;
@@ -56,7 +56,7 @@ namespace traceBuilder::core {
             sizes = new uint64_t[amt];
             auto &stOpr = rt_instr.getDesStOperands();
             for (size_t idx = 0; idx < amt; idx++) {
-                sizes[idx] = stOpr[idx].getMeta().size;
+                sizes[idx] = stOpr[idx].getData().size;
             }
         }
         /////// fill the physical address
@@ -90,20 +90,13 @@ namespace traceBuilder::core {
     TRACER_BASE::onGetDynTraceValue(dynTraceData dyndata) {
 
         /////// convert virtual memory address to simulated address
-        assert(dyndata.rawData.fetchId < rt_instrs.size());
-        auto *rt_instr = rt_instrs[dyndata.rawData.fetchId];
+        assert(dyndata.rawData.fetchId < specificSimEle->threadModel->getAmountInstr());
+        auto *rt_instr = specificSimEle->threadModel->getRtInstr(dyndata.rawData.fetchId);
         //////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////// stat /////////
         //////////////////////////////////////////////////////////////////////////
         stat::MAIN_STAT["dynTrace"]["MNEMONIC"][rt_instr->getMnemonic()].asUINT()++;
-        stat::MAIN_STAT["dynTrace"]["MNEMONIC"][rt_instr->getMnemonic()][rt_instr->getMacroop()->getIsAutoGen() ? "miss"
-                                                                                                          : "hit"].asUINT()++;
         stat::MAIN_STAT["dynTrace"]["MOP_COUNT"].asUINT()++;
-
-        if (rt_instr->getMacroop()->getIsAutoGen()) {
-            stat::MAIN_STAT["dynTrace"]["needUpgrade"][rt_instr->getDebugDecodeKey() + "----" +
-                                                 rt_instr->getDebugName()].asUINT()++;
-        }
 
         if ((stat::MAIN_STAT["dynTrace"]["MOP_COUNT"].asUINT() % 1000000) == 0) {
             std::cout << util::getProgPf(__FILE__, __LINE__) << " pass : " << stat::MAIN_STAT["dynTrace"]["MOP_COUNT"].asUINT()
@@ -126,7 +119,7 @@ namespace traceBuilder::core {
             auto uop = inflight_uops[idx];
             ///// fullfil uop meta data before doDepenCHeck
             uop->setSeqNum(genSeqNum_fromIdx(idx));
-            uop->doPlannedDepenCheck(specificSimEle->uopWindow);
+            uop->doAllDepenCheck(specificSimEle->uopWindow);
         }
         /////// send to result front-end
         specificSimEle->resultFed->onGetUopsResult(inflight_uops, rt_instr);
@@ -134,24 +127,6 @@ namespace traceBuilder::core {
         for (auto *uop: inflight_uops) {
             specificSimEle->uopWindow->addUop(uop);
         }
-
-    }
-
-
-    void
-    TRACER_BASE::onInitialize(uint64_t lastRTinstr) {
-
-        //// for fetch (build new) the runtime instruction for this worker
-        //// and decode it to get macrop and push it to our runtime instruction.
-        for (uint64_t rtInstrId = 0; rtInstrId < lastRTinstr; rtInstrId++) {
-            auto *rt_instr = specificSimEle->threadModel->getInstrTemplate(rtInstrId);
-            assert(rt_instr != nullptr);
-            auto *mop = sharedSimEle->decoder->decodeMOP(*rt_instr);
-            assert(mop != nullptr);
-            rt_instr->setMacroop(mop);
-            rt_instrs.push_back(rt_instr);
-        }
-        ////////////////////////////////////////////////////////////////////////
 
     }
 

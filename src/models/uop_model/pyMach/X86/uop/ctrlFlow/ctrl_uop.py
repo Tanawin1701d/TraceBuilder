@@ -9,8 +9,8 @@ class UOP_CMP(ub.UOP_BASE):
                          2, 0,
                          resMap.cxxTypeToUopType(_cxxType_prefix), resMap.cxxTypeToExecUnit(_cxxType_prefix)
                          )
-        self.io_input.addAcceptType(0, {opr.OPR_REG, opr.OPR_MEM, opr.OPR_TEMP, opr.OPR_IMM})
-        self.io_input.addAcceptType(1, {opr.OPR_REG, opr.OPR_MEM, opr.OPR_TEMP, opr.OPR_IMM})
+        self.io_input.addAcceptType(0, {opr.OPR_REG, opr.OPR_TEMP, opr.OPR_IMM})
+        self.io_input.addAcceptType(1, {opr.OPR_REG, opr.OPR_TEMP, opr.OPR_IMM})
 
     def addIo(self, _inputs: list, _outputs: list):
         super().addIo(_inputs, _outputs)

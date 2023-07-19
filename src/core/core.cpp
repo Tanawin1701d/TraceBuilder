@@ -11,24 +11,14 @@ namespace traceBuilder::core {
         assert(_memMng != nullptr);
         assert(_execUnit_info != nullptr);
 
-        /////////// set decoder according to architecture
-        #ifdef X86
-              sharedInfo.decoder = new X86_DECODER();
-        #else
-              decoder = new DECODER_BASE();
-        #endif
-        /////////////////////////////////////////////////////
         sharedInfo.memMng = _memMng;
         sharedInfo.execUnit_info = _execUnit_info;
 
     }
 
     CORE::~CORE(){
-        delete sharedInfo.decoder;
         delete sharedInfo.memMng;
         delete sharedInfo.execUnit_info;
-
-
     }
 
 
@@ -64,24 +54,43 @@ namespace traceBuilder::core {
         amountThread++;
     }
 
+    THREAD_MODEL *CORE::getThreadModel(THREAD_ID tid) {
+        assert(tid >= 0 && tid < getAmtThread());
+        return traceWorkers[tid]->threadModel;
+    }
+
+    int
+    CORE::getAmtThread() {
+        return amountThread;
+    }
 
     void
-    CORE::start(bool parallel) {
-        if (parallel) {
-            //////TODO make it run in parallel
-            assert(false);
-        } else {
-            for (auto&[tid, specInfo]: traceWorkers) {
-                specInfo->traceToolFed->start();
-            }
+    CORE::startStaticTrace() {
+        for (auto&[tid, specInfo]: traceWorkers) {
+            specInfo->traceToolFed->startStaticTrace();
+        }
+
+    }
+
+    void
+    CORE::startDynTrace() {
+        for (auto&[tid, specInfo]: traceWorkers){
+            specInfo->traceToolFed->startDynTrace();
         }
     }
+
+
 
     void BIND_CORE(py::module& m){
         py::class_<CORE>(m, "CORE")
                 .def(py::init<MEM_MNG*, EXEC_UNIT_RES*>())
                 .def("addWorker", &CORE::addWorker)
-                .def("start", &CORE::start);
+                .def("getThreadModel", &CORE::getThreadModel)
+                .def("getAmtThread", &CORE::getAmtThread)
+                .def("startStaticTrace", &CORE::startStaticTrace)
+                .def("startDynTrace", &CORE::startDynTrace);
+
+
     }
 
 

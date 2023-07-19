@@ -4,6 +4,7 @@
 
 #include "tbdGem5ISA.h"
 #include "core/core.h"
+#include "stat/statPool.h"
 
 
 namespace traceBuilder::core{
@@ -37,12 +38,23 @@ namespace traceBuilder::core{
 
         /** create mach record and add to instr rec*/
         for (auto uop_base: result) {
+
+            bool skip = shouldSkipUop(uop_base);
+
             ProtoMessage::machRecord* machRec = instrRec.add_uops();
+
             /** set shared data*/
             machRec->set_seq_num(uop_base->getSeqNum());
-            machRec->set_funcunit(uop_base->getExecUnit());
+            EXEC_UNIT_ID execUnit = skip ? 0: uop_base->getExecUnit();
+            assert(execUnit != 99);
+            machRec->set_funcunit(execUnit);
+            stat::MAIN_STAT["EXEC_UNIT"][std::to_string(execUnit)].asUINT()++;
+            if (skip) {
+                stat::MAIN_STAT["EXEC_UNIT"]["skip"].asUINT()++;
+            }
             auto uopType = uop_base->getUopType();
-            machRec->set_rectype(static_cast<ProtoMessage::machRecord_RecordType>(uopType));
+            machRec->set_rectype(skip ? ProtoMessage::machRecord_RecordType::machRecord_RecordType_UOP_COMP :
+                                        static_cast<ProtoMessage::machRecord_RecordType>(uopType));
 
             /** set the data for specific uop type*/
             switch (uopType){
@@ -54,10 +66,12 @@ namespace traceBuilder::core{
                     setTempRegHelper(uop_base, machRec, false);
                     break;
                 case UOP_LOAD:
+                    setArchRegHelper (uop_base, machRec, false);
                     setTempRegHelper (uop_base, machRec, false);
-                    setMemHelper (uop_base, machRec, true);
+                    setMemHelper     (uop_base, machRec, true);
                     break;
                 case UOP_STORE:
+                    setArchRegHelper(uop_base, machRec, true);
                     setTempRegHelper(uop_base, machRec, true);
                     setMemHelper    (uop_base, machRec, false);
                     break;
@@ -159,6 +173,26 @@ namespace traceBuilder::core{
 
 
     }
+
+    bool TBD_GEM5_ISA::shouldSkipUop(UOP_BASE *uop_base) {
+        /** check that the uop should be sukppressed*/
+        auto uopType = uop_base->getUopType();
+
+        if (uopType == UOP_LOAD){
+            auto ldMetaPtr = uop_base->getMetaPtr<META_CLASS::META_SRC_MEM, MEM_META>();
+            if (ldMetaPtr->empty()){return true;}
+            auto& memMeta = (*ldMetaPtr)[0];
+            return memMeta.suppressed;
+        }else if (uopType == UOP_STORE){
+            auto stMetaPtr = uop_base->getMetaPtr<META_CLASS::META_DES_MEM, MEM_META>();
+            if (stMetaPtr->empty()){return true;}
+            auto& memMeta = (*stMetaPtr)[0];
+            return memMeta.suppressed;
+        }
+        return false;
+
+    }
+
 
     void BIND_RESULT_FRONT_END_TBDGEMISA(py::module& m){
         py::class_<TBD_GEM5_ISA, RESULT_FRONT_END>(m, "TBD_GEM5_ISA")

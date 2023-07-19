@@ -59,6 +59,10 @@ class LISTOPR_BASE :
 
         for idx, opr in enumerate(newAddOpr):
             self.setOpr(idx, opr, True)
+        #### fill dummy operand to none added operand type
+        for idx in range(self.size):
+            if self.opr_ele[idx] == None:
+                self.setOpr(idx, opr_simple.OPR_DUMMY(f"dummy_idx{idx}"), True)
 
     def setOpr(self, idx: int, opr, force : bool):
         if idx > self.size:

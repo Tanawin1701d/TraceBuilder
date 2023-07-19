@@ -17,6 +17,12 @@ class OPR_REG(opr_base.OPR_BASE):
     def genCXX_getFillMetaHelper_forVec(self, idxInGrp: int, uopOprSize: int, archOprSize: int) -> list:
         return [str(idxInGrp)]
 
+    def genCXX_getMetaEnumToPush(self, **kwargs):
+        return f"META_{'SRC' if self.isSrc else 'DES'}_MREG"
+
+    def genCXX_getMetaTypeToPush(self, **kwargs):
+        return "MREG_META"
+
 
 class OPR_MEM(opr_base.OPR_BASE):
 
@@ -33,8 +39,15 @@ class OPR_MEM(opr_base.OPR_BASE):
     def genCXX_getFillMetaHelper_forVec(self, idxInGrp: int, uopOprSize: int, archOprSize: int) -> list:
         return [str(idxInGrp*uopOprSize), str((idxInGrp+1)*uopOprSize)]
 
+    def genCXX_getMetaEnumToPush(self, **kwargs):
+        return f"META_{'SRC' if self.isSrc else 'DES'}_MEM"
+
+    def genCXX_getMetaTypeToPush(self, **kwargs):
+        return "MEM_META"
+
 class OPR_TEMP(opr_base.OPR_BASE):
     kwargeforInitVar = "tregId" #### to initialize this class you must provide this kw type(int)
+    kwargeForGetMetaEnumSide = "isSrc"
 
     def getVarType(self):
         return OPR_TEMP
@@ -47,6 +60,13 @@ class OPR_TEMP(opr_base.OPR_BASE):
             return "{TEMPTYPE}(START_TREGID + {INITVAL})".format(TEMPTYPE = self.genCXX_varType(),
                                                   INITVAL = kwargs[self.kwargeforInitVar])
 
+    def genCXX_getMetaEnumToPush(self, **kwargs):
+        isSrc = kwargs[self.kwargeForGetMetaEnumSide]
+        return f"META_{'SRC' if isSrc else 'DES'}_TEMP"
+
+    def genCXX_getMetaTypeToPush(self, **kwargs):
+        return "TREG_META"
+
 class OPR_IMM(opr_base.OPR_BASE):
 
     def getVarType(self):
@@ -54,6 +74,12 @@ class OPR_IMM(opr_base.OPR_BASE):
 
     def __init__(self, _name: str, _isSrc: bool = True):
         super().__init__(_name, "OPR_IMM", False, "I", [], [])
+
+    def genCXX_getMetaEnumToPush(self, **kwargs):
+        return f"META_SRC_IMM"
+
+    def genCXX_getMetaTypeToPush(self, **kwargs):
+        return "IMM_META"
 
 class OPR_DUMMY(opr_base.OPR_BASE):
     def getVarType(self):

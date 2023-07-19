@@ -8,6 +8,7 @@ import base.generator.header as hd
 
 hppList = [] #### list of generated string
 cppList = [] #### list of generated string
+
 genAlready = set()
 
 class UopGenUsageError(Exception):

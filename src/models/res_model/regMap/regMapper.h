@@ -40,6 +40,8 @@ namespace traceBuilder::model {
     static const int   MAXSUBREG_MMX = 1;
     static const int   MAXSUBREG_R    =1;
 
+    static const AREGNUM ARCH_RIP = {16, MAXSUBREG_R};
+
     static const AREGNUM UNUSED_AREG = {-1,-1};
     static const MREGNUM UNUSED_MREG = -1;
     static const TREGNUM UNUSED_TREG = -1;

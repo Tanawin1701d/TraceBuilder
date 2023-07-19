@@ -70,8 +70,10 @@ void tryCollectSimdMeta(INS ins, SIMD_INSTR_ARG& result){
 
     /*** check wheather it is floating point*/
     const std::vector<string> FLT_SUFFIX  = {"PS$", "PD$", "SS$", "SD$"};
+    const std::vector<string> FLT_SCALA   = {"SS$", "SD$"};
     std::string raw_mnemonic = INS_Mnemonic(ins) + "$";
     bool foundFlt = false;
+    std::string fltScalaSuffix = "";
 
     /** find suffix*/
     for (const std::string& fltSuffix: FLT_SUFFIX){
@@ -79,11 +81,19 @@ void tryCollectSimdMeta(INS ins, SIMD_INSTR_ARG& result){
             foundFlt = true;
         }
     }
+    if (foundFlt){
+        for (const std::string& fltScala: FLT_SCALA){
+            if (raw_mnemonic.find(fltScala) != std::string::npos){
+                fltScalaSuffix = "S"; 
+                break;
+            }
+        }
+    }
 
     /*** check type*/
     if (foundFlt){
         result.type = SIMD_TYPE::FLT;
-        result.mnemonic += "_" + SIMDT_FLT;
+        result.mnemonic += "_" + SIMDT_FLT + fltScalaSuffix;
     }else{
         result.type = SIMD_TYPE::INTE;
         result.mnemonic += "_" + SIMDT_INT;

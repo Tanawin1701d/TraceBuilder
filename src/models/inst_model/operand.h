@@ -12,7 +12,10 @@
 namespace traceBuilder::model {
 
 
-
+#define GET_DATA_FUNCNAME getData
+#define GET_DATA_FUNCNAME_STR "getData"
+#define GET_META_FUNCNAME getMeta
+#define GET_META_FUNCNAME_STR "getMeta"
 
 /// architecture instruction's operand
 
@@ -30,13 +33,17 @@ namespace traceBuilder::model {
         OPR_TYPE OT;
         size_t mcArgSIdx; //// macroop operand idx for each side (src or des side)
     public:
-        OPERAND(OPR_TYPE OT, size_t _mcArgSIdx);
+        OPERAND(OPR_TYPE OT, size_t _mcArgSIdx) :
+                OT(OT),
+                mcArgSIdx(_mcArgSIdx) {};
 
         virtual ~OPERAND() = default;
 
         OPR_TYPE getOPTYPE() { return OT; };
 
-        size_t getMcSideIdx() const { return mcArgSIdx; }
+        [[nodiscard]] size_t getMcSideIdx() const { return mcArgSIdx; }
+
+
     };
 
     /// register operand it is used at src and des operand
@@ -44,33 +51,34 @@ namespace traceBuilder::model {
     private:
         AREGNUM reg;
     public:
-        OPR_REG(AREGNUM _reg, size_t _mcArgSIdx);
 
-        AREGNUM getRegId() const;
+        OPR_REG(AREGNUM _reg, size_t _mcArgSIdx) :
+                OPERAND(O_REG, _mcArgSIdx),
+                reg(_reg){};
 
         /////// get meta data of the operand that is fundamental of uop
-        MREGNUM getMeta() const;
+        AREGNUM GET_DATA_FUNCNAME() const {return reg;};
+        MREG_META GET_META_FUNCNAME(int subRegIdx) const;
 
-        ///// sub reg idx
-        //////////// for precise support vector instruction micro-model
-        MREGNUM getMeta(int subRegIdx) const;
+
     };
 
     class OPR_TREG : public OPERAND {
     private:
         TREGNUM regId;
     public:
-        OPR_TREG();
 
-        explicit OPR_TREG(int regId);
+        explicit OPR_TREG(TREGNUM regId) :
+                OPERAND(O_TEMP, 0),
+                regId(regId)
 
-        TREGNUM getRegId() const;
+        {
+            assert(regId != UNUSED_TREG);
+        };
 
-        TREGNUM getMeta() const;
+        TREGNUM GET_DATA_FUNCNAME() const {return regId;};
+        TREG_META GET_META_FUNCNAME() const;
     };
-
-
-
 
 /// memory operand
 
@@ -80,33 +88,20 @@ namespace traceBuilder::model {
         MEM_META _meta;
 
     public:
+
         OPR_MEM(MEM_META memMeta,
                 OPR_TYPE _setOpr,
-                size_t _mcArgSIdx);
+                size_t _mcArgSIdx) :
+                OPERAND(_setOpr, _mcArgSIdx),
+                _meta(memMeta){
+            assert(MAX_BYTE_PER_MICROOP > 0);
+            ///// caculate expect uop that should handle this instr
+        };
 
-        MEM_META getMeta(ADDR startByte, ADDR stopByte) const;
-        MEM_META getMeta() const {return _meta;}
-
+        MEM_META GET_DATA_FUNCNAME() const {return _meta;}
+        MEM_META GET_META_FUNCNAME(ADDR startByte, ADDR stopByte) const;
         void setPhyAddr(ADDR phyAddr){_meta.p_area.addr = phyAddr;}
         void setVirAddr(ADDR virAddr){_meta.v_area.addr = virAddr;}
-
-    };
-
-/// load operand
-    class OPR_MEM_LD : public OPR_MEM {
-    public:
-        // load operand
-        OPR_MEM_LD(MEM_META memMeta,
-                   size_t _mcArgSIdx
-                   );
-    };
-
-/// store operand
-    class OPR_MEM_ST : public OPR_MEM {
-    public:
-        // store operand
-        OPR_MEM_ST(MEM_META memMeta,
-                   size_t       _mcArgSIdx);
     };
 
 /// immediate operand
@@ -115,14 +110,19 @@ namespace traceBuilder::model {
     private:
         IMM imm;
     public:
-        OPR_IMM(IMM _imm, size_t _mcArgSIdx);
+        OPR_IMM(IMM _imm, size_t _mcArgSIdx) :
+                OPERAND(O_IMM, _mcArgSIdx),
+                imm(_imm)
+             {};
 
-        IMM getImm() const;
-
-        IMM getValue() const;
-
-        IMM getMeta() const {return imm;};
+        IMM GET_DATA_FUNCNAME() const {return imm;};
+        IMM_META GET_META_FUNCNAME() const;
     };
+
+    ////////////////////////////////////////////////////////////////////////////////////////
+    ///////// pybind declaration
+    namespace py = pybind11;
+    void BIND_OPERAND(py::module& m);
 
 }
 #endif //TRACEBUILDER_OPERAND_H

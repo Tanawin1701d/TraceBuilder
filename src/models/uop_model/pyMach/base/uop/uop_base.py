@@ -1,7 +1,6 @@
 ###### temporary
 import base.operand.listOpr as oprLs
 import base.operand.opr_simple as oprSm
-import base.metaData.meta as meta
 import base.dep.dep as dep
 
 class UopUsageError(Exception):
@@ -152,16 +151,16 @@ class UOP_BASE:
 
             cppFile = cppFile + "       " + "getMetaPtr<{METACLASS},{METATYPE}>()->addMeta({GETMETA});\n"\
                 .format(
-                    METACLASS = meta.getMetaEnum(opr, True),
-                    METATYPE  = meta.getMetaType(opr),
+                    METACLASS = opr.genCXX_getMetaEnumToPush(isSrc = True),
+                    METATYPE  = opr.genCXX_getMetaTypeToPush(),
                     GETMETA   = opr.genCXX_callAddMeta()
                 )
 
         for idx, opr in enumerate(self.io_output.getOprsWoDummy()):
             cppFile = cppFile + "       " + "getMetaPtr<{METACLASS},{METATYPE}>()->addMeta({GETMETA});\n" \
                 .format(
-                METACLASS=meta.getMetaEnum(opr, False),
-                METATYPE=meta.getMetaType(opr),
+                METACLASS=opr.genCXX_getMetaEnumToPush(isSrc = True),
+                METATYPE=opr.genCXX_getMetaTypeToPush(),
                 GETMETA=opr.genCXX_callAddMeta()
             )
         cppFile = cppFile + "///////////////// finish meta data\n"

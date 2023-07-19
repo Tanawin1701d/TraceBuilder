@@ -13,10 +13,8 @@
 //////    models include   ////
 ///////////////////////////////
 #include "models/res_model/memMng/MemMng.h"
-#include "models/uop_model/decoder.h"
 #include "models/thread_model/thread_model.h"
 #include "models/inst_model/rt_instr.h"
-#include "models/uop_model/mop_base.h"
 #include "models/uop_model/uop_base.h"
 
 #include "stat/statPool.h"
@@ -30,7 +28,6 @@ namespace traceBuilder::core {
         SHARED_TRACEINFO* sharedSimEle;
         SPECIFIC_TRACEINFO* specificSimEle;
         ///////// run time instruction cache map
-        std::vector<RT_INSTR *> rt_instrs; //// idex is rt_id
         ///////// current uop that being generated from uops
         std::vector<UOP_BASE *> inflight_uops;
 
@@ -53,10 +50,6 @@ namespace traceBuilder::core {
 
         /// when trace frontend get runtime tracing value
         void onGetDynTraceValue(dynTraceData dyndata);
-
-        /// when trace frontend need to initialize trace worker
-        void onInitialize(uint64_t lastRTinstr); /// it is used when tracefront end was initialized
-
     };
 
 }

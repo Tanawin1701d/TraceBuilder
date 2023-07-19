@@ -10,10 +10,17 @@ class MOP_CMP_ALL(mop_cen_x86.MOP_BASE_X86):
 
         super().__init__()
 
-        ld0Data  = self.initIoOp(srcOpr0Type, oprs.OPR_TEMP, resMap.cxxTypeIO_suggest_INT,
+        oprForGetRip = [oprs.OPR_DUMMY("dummyRipOpr")]
+        if self.areThereMipNeed([srcOpr0Type, srcOpr1Type]):
+            ldRipOpr, ldUop, oprForGetRip = self.initRdInstrPtr("ldRip", "ripLoader", "desRip")
+            self.PREBUILT_uopList.append(ldUop[0])
+            self.PREBUILT_temOprList.append(ldRipOpr[0])
+            self.PREBUILT_temOprList.append(oprForGetRip[0])
+
+        ld0Data  = self.initIoOp(srcOpr0Type, oprs.OPR_TEMP, oprForGetRip[0], resMap.cxxTypeIO_suggest_INT,
                                                                "oprLdFrom0", "uopLd0", "oprLdTo0", 8, 8
                                                                )
-        ld1Data  = self.initIoOp(srcOpr1Type, oprs.OPR_TEMP, resMap.cxxTypeIO_suggest_INT,
+        ld1Data  = self.initIoOp(srcOpr1Type, oprs.OPR_TEMP, oprForGetRip[0], resMap.cxxTypeIO_suggest_INT,
                                                                "oprLdFrom1", "uopLd1", "oprLdTo1", 8, 8
                                                                )
 
@@ -37,14 +44,22 @@ class MOP_JMP_ALL(mop_cen_x86.MOP_BASE_X86):
                         cxxTypeCompUop_prefix:str, _decKeys: list):
         super().__init__()
 
-        ld0Data  = self.initIoOp(srcOpr0Type, oprs.OPR_TEMP, resMap.cxxTypeIO_suggest_INT,
+
+        oprForGetRip = [oprs.OPR_DUMMY("dummyRipOpr")]
+        if self.areThereMipNeed([srcOpr0Type, srcOpr1Type]):
+            ldRipOpr, ldUop, oprForGetRip = self.initRdInstrPtr("ldRip", "ripLoader", "desRip")
+            self.PREBUILT_uopList.append(ldUop[0])
+            self.PREBUILT_temOprList.append(ldRipOpr[0])
+            self.PREBUILT_temOprList.append(oprForGetRip[0])
+
+        ld0Data  = self.initIoOp(srcOpr0Type, oprs.OPR_TEMP, oprForGetRip[0], resMap.cxxTypeIO_suggest_INT,
                                                                "oprLdFrom0", "uopLd0", "oprLdTo0", 8, 8
                                                                )
-        ld1Data  = self.initIoOp(srcOpr1Type, oprs.OPR_TEMP, resMap.cxxTypeIO_suggest_INT,
+        ld1Data  = self.initIoOp(srcOpr1Type, oprs.OPR_TEMP, oprForGetRip[0], resMap.cxxTypeIO_suggest_INT,
                                                                "oprLdFrom1", "uopLd1", "oprLdTo1", 8, 8
                                                                )
 
-        st1Data  = self.initIoOp(desOpr0Type, oprs.OPR_TEMP, resMap.cxxTypeIO_suggest_INT,
+        st1Data  = self.initIoOp(oprs.OPR_TEMP, desOpr0Type,  oprForGetRip[0], resMap.cxxTypeIO_suggest_INT,
                                                                "oprStFrom1", "uopSt1", "oprStTo1", 8, 8
                                                                )
 

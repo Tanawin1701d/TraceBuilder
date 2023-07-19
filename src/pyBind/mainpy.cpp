@@ -16,6 +16,11 @@
 /** model*/
 #include"models/res_model/execUnit/execUnit.h"
 #include"models/res_model/memMng/MemMng.h"
+#include"models/uop_model/agent/mop_agent.h"
+#include"models/uop_model/agent/uop_agent.h"
+#include"models/inst_model/operand.h"
+#include"models/inst_model/rt_instr.h"
+#include"models/thread_model/thread_model.h"
 
 /** statPool*/
 #include"stat/statPool.h"
@@ -39,6 +44,20 @@ PYBIND11_MODULE( traceBuilder, m){
     /////// model
     model::BIND_EXEC_UNIT_RES(m);
     model::BIND_MEM_MNG(m);
+
+    model::BIND_MOP_AGENT(m);
+    model::BIND_UOP_AGENT(m);
+
+    model::BIND_OPERAND(m);
+    model::BIND_RT_INSTR(m);
+
+    model::BIND_THREAD_MODEL(m);
+
+
+
+
+
+
     ////// stat;
     mystat::BIND_STAT(m);
 }

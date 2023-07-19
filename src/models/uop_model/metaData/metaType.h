@@ -23,12 +23,12 @@ namespace traceBuilder::model {
         ADAS v_area;
         ADAS p_area;
         ADDR size;
+        AREGNUM segReg;
         AREGNUM baseReg;
         AREGNUM indexReg;
         int    scaleFactor;
         IMM    displacement;
-        bool   is_v_area_set = false;
-        bool   is_p_area_set = false;
+        bool   suppressed = false; /// case suppressed to not use this meta data
 
     };
 

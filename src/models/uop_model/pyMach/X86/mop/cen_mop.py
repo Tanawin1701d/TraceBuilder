@@ -1,5 +1,6 @@
 import base.mop.mop_base as mb
 import base.operand.opr_simple as oprs
+import X86.operand.opr as x86_opr
 import X86.uop.alu.comp_uop as  uop_comp_x86
 import X86.uop.mov.dataMov_uop as uop_mov_x86
 import X86.uop.resMap as resMap
@@ -15,8 +16,9 @@ class MOP_BASE_X86(mb.MOP_BASE):
     MAX_LEGACY_OPR_SIZE = 8 ### size in byte
 
     regRelatedOprTypes = [oprs.OPR_REG, oprs.OPR_TEMP]
-    oprBeSrcDesAble       = [oprs.OPR_REG, oprs.OPR_MEM, oprs.OPR_IMM]
+    oprBeSrcDesAble       = [oprs.OPR_REG, oprs.OPR_MEM, x86_opr.OPR_MEM_W_IPR, oprs.OPR_IMM]
     oprBeTempAble         = [oprs.OPR_TEMP]
+    memOprAble            = [oprs.OPR_MEM, x86_opr.OPR_MEM_W_IPR]
 
 
 
@@ -30,6 +32,12 @@ class MOP_BASE_X86(mb.MOP_BASE):
         self.PREBUILT_temOprList    = list()
         self.PREBUILT_uopList       = list()
         self.decKeys                = list()
+
+
+    def areThereMipNeed(self, oprands: list):
+        if x86_opr.OPR_MEM_W_IPR in oprands:
+            return True
+        return False
 
     def addIoToPreBuiltList(self, oprSrcs: list, uops: list, oprDeses:list):
 
@@ -60,12 +68,17 @@ class MOP_BASE_X86(mb.MOP_BASE):
             mb.MopUsageError(f"getAmt uop for io error got uopAmt:{uopOpSize} arch:{archOprSize} ")
         return (archOprSize + uopOpSize - 1) // uopOpSize
 
-    def initLdMemOp(self, desOprType, cxxTypeIO_suggest: str, srcName: str, desName : str, uopName : str, uopOprSize: int, archOprSize: int):
+    def initLdMemOp(self, srcOprType, desOprType, oprTempRip, cxxTypeIO_suggest: str, srcName: str, desName : str, uopName : str, uopOprSize: int, archOprSize: int):
         ##### return (opr0,uopForMem, opr1) opr0 -> uopForMem -> opr1
         if desOprType not in self.regRelatedOprTypes:
             mb.MopUsageError(f"initLdMemOp can't store to operand {str(desOprType)}")
+        if srcOprType not in self.memOprAble:
+            mb.MopUsageError(f"initLdMemOp can't load from operand {str(srcOprType)}")
+        #### if the mem operand not Rip make it dummy
+        if srcOprType != x86_opr.OPR_MEM_W_IPR:
+            oprTempRip = oprs.OPR_DUMMY("ldMemRipDummy")
 
-        memSrcOpr = oprs.OPR_MEM(srcName, True)
+        memSrcOpr = srcOprType(srcName, True)
         preRetSrcOprs = [memSrcOpr]
         preRetUops   = []
         preRetDesOprs = []
@@ -75,9 +88,9 @@ class MOP_BASE_X86(mb.MOP_BASE):
             temDesOpr = oprs.OPR_REG (f"{desName}_{idx_inldGrp}", False) if desOprType == oprs.OPR_REG else \
                         oprs.OPR_TEMP(f"{desName}_{idx_inldGrp}")
             ###### uop for loader
-            ldUop       = uop_mov_x86.UOP_MOV(f"{uopName}_{idx_inldGrp}", resMap.ioSuggest_to_cxxType(cxxTypeIO_suggest),
+            ldUop       = uop_mov_x86.UOP_MOV(f"{uopName}_{idx_inldGrp}", resMap.ioSuggest_to_cxxType(cxxTypeIO_suggest, oprs.OPR_MEM, type(temDesOpr)),
                                               idx_inldGrp, uopOprSize, archOprSize)
-            ldUop.addIo([memSrcOpr], [temDesOpr])
+            ldUop.addIo([memSrcOpr, oprTempRip], [temDesOpr])
             ###### add for pre return
             preRetUops.append(ldUop)
             preRetDesOprs.append(temDesOpr)
@@ -85,11 +98,16 @@ class MOP_BASE_X86(mb.MOP_BASE):
         return (preRetSrcOprs, preRetUops, preRetDesOprs)
 
 
-    def initStMemOp(self, srcOprType, cxxTypeIO_suggest: str, srcName: str, desName : str, uopName : str, uopOprSize: int, archOprSize: int):
+    def initStMemOp(self, srcOprType, desOprType, oprTempRip,  cxxTypeIO_suggest: str, srcName: str, desName : str, uopName : str, uopOprSize: int, archOprSize: int):
         if srcOprType not in self.regRelatedOprTypes:
             mb.MopUsageError(f"initStMemOp can't get from operand {str(srcOprType)}")
+        if desOprType not in self.memOprAble:
+                mb.MopUsageError(f"initStMemOp can't store to operand {str(srcOprType)}")
+        #### if the mem operand not Rip make it dummy
+        if desOprType != x86_opr.OPR_MEM_W_IPR:
+            oprTempRip = oprs.OPR_DUMMY("ldMemRipDummy")
 
-        memDesOpr = oprs.OPR_MEM(desName, False)
+        memDesOpr = desOprType(desName, False)
         preRetSrcOprs = []
         preRetUops    = []
         preRetDesOprs = [memDesOpr]
@@ -99,8 +117,8 @@ class MOP_BASE_X86(mb.MOP_BASE):
             temSrcOpr = oprs.OPR_REG(f"{srcName}_{idx_inStGrp}", True) if srcOprType == oprs.OPR_REG else \
                         oprs.OPR_TEMP(f"{srcName}_{idx_inStGrp}")
             ##### uop for storer
-            stUop = uop_mov_x86.UOP_MOV(f"{uopName}_{idx_inStGrp}", resMap.ioSuggest_to_cxxType(cxxTypeIO_suggest), idx_inStGrp, uopOprSize, archOprSize)
-            stUop.addIo([temSrcOpr], [memDesOpr])
+            stUop = uop_mov_x86.UOP_MOV(f"{uopName}_{idx_inStGrp}", resMap.ioSuggest_to_cxxType(cxxTypeIO_suggest, type(temSrcOpr), oprs.OPR_MEM), idx_inStGrp, uopOprSize, archOprSize)
+            stUop.addIo([temSrcOpr, oprTempRip], [memDesOpr])
             ##### add for pre return
             preRetSrcOprs.append(temSrcOpr)
             preRetUops.append(stUop)
@@ -108,20 +126,30 @@ class MOP_BASE_X86(mb.MOP_BASE):
         return (preRetSrcOprs, preRetUops, preRetDesOprs)
 
     """
+    init Uop for read instr pointer to temporal register
+    """
+    def initRdInstrPtr(self, srcName: str, UopName: str, desName: str):
+        srcOpr = x86_opr.OPR_REG_W_RD_IPTR(srcName, True)
+        desOpr = oprs.OPR_TEMP(desName)
+        uop    = uop_mov_x86.UOP_MOV(UopName, resMap.ioSuggest_to_cxxType(resMap.cxxTypeIO_suggest_INT, oprs.OPR_REG, oprs.OPR_REG), 0, 8, 8)
+        uop.addIo([srcOpr], [desOpr])
+        return ([srcOpr], [uop], [desOpr])
+
+    """
     initIoUopNOpr is used to initialize uop and opr that relate to load/store from memory
     for intuition, 
     """
-    def initMemOp(self, srcType, desType, cxxTypeIO_suggest: str, srcName: str, desName: str, uopName: str, uopOpSize: int = 8, archOprSize: int = 8):
+    def initMemOp(self, srcType, desType, oprTempRip, cxxTypeIO_suggest: str, srcName: str, desName: str, uopName: str, uopOpSize: int = 8, archOprSize: int = 8):
 
-        if srcType == oprs.OPR_MEM and (desType in self.regRelatedOprTypes):
-            return self.initLdMemOp(desType, cxxTypeIO_suggest, srcName, desName, uopName, uopOpSize, archOprSize)
-        elif desType == oprs.OPR_MEM and (srcType in self.regRelatedOprTypes):
-            return self.initStMemOp(srcType, cxxTypeIO_suggest, srcName, desName, uopName, uopOpSize, archOprSize)
+        if srcType in self.memOprAble and (desType in self.regRelatedOprTypes):
+            return self.initLdMemOp(srcType, desType, oprTempRip, cxxTypeIO_suggest, srcName, desName, uopName, uopOpSize, archOprSize)
+        elif desType in self.memOprAble and (srcType in self.regRelatedOprTypes):
+            return self.initStMemOp(srcType, desType, oprTempRip, cxxTypeIO_suggest, srcName, desName, uopName, uopOpSize, archOprSize)
 
     """
     initImmOp is used to initialze uop and opr that relate to load from imm(instr)
     """
-    def initImmOp(self, desType, srcName: str, desName: str, uopName: str, uopOprSize: int, archOprSize: int):
+    def initImmOp(self, desType, cxxTypeIO_suggest: str, srcName: str, desName: str, uopName: str, uopOprSize: int, archOprSize: int):
 
         srcOpr = oprs.OPR_IMM(srcName)
         preRetSrcOpr = [srcOpr]
@@ -132,8 +160,8 @@ class MOP_BASE_X86(mb.MOP_BASE):
             desOpr = oprs.OPR_REG(f"{desName}_{idx_inLdGrp}", False) if desType == oprs.OPR_REG else \
                      oprs.OPR_TEMP(f"{desName}_{idx_inLdGrp}")
             ############################## comp uop
-            ldUop = uop_mov_x86.UOP_MOV(f"{uopName}_{idx_inLdGrp}", resMap.cxxTypeUOP_IMM, 0, 8, 8)
-            ldUop.addIo([srcOpr], [desOpr])
+            ldUop = uop_mov_x86.UOP_MOV(f"{uopName}_{idx_inLdGrp}", resMap.ioSuggest_to_cxxType(cxxTypeIO_suggest, oprs.OPR_IMM, desType), 0, 8, 8)
+            ldUop.addIo([srcOpr, oprs.OPR_DUMMY("iptrLoader")], [desOpr])
 
             preRetUops.append(ldUop)
             preRetDesOpr.append(desOpr)
@@ -175,14 +203,14 @@ class MOP_BASE_X86(mb.MOP_BASE):
     for macrops predictly desire the needed of mem operation but if it op that conversion reg to temp or temp to reg
     we use initReduceRedundantOp instead and not declare new uop
     """
-    def initIoOp(self,srcType, desType, cxxTypeIO_suggest: str, srcName: str, uopName: str,desName: str, uopOpSize: int = 8, archOprSize: int = 8):
+    def initIoOp(self,srcType, desType, oprTempRip, cxxTypeIO_suggest: str, srcName: str, uopName: str,desName: str, uopOpSize: int = 8, archOprSize: int = 8):
         ##### return (oprFrom , relateduop, oprTo)
         result = (None, None, None)
         #### check that we are mem op
-        if oprs.OPR_MEM in (srcType, desType):
-            result = self.initMemOp(srcType, desType, cxxTypeIO_suggest, srcName, desName, uopName, uopOpSize, archOprSize)
+        if set(self.memOprAble).intersection({srcType, desType}):
+            result = self.initMemOp(srcType, desType, oprTempRip, cxxTypeIO_suggest, srcName, desName, uopName, uopOpSize, archOprSize)
         elif oprs.OPR_IMM == srcType:
-            result = self.initImmOp(desType, srcName, desName, uopName, uopOpSize, archOprSize)
+            result = self.initImmOp(desType, cxxTypeIO_suggest, srcName, desName, uopName, uopOpSize, archOprSize)
         else:
             result = self.initReduceRedundantOp(srcType, desType, srcName, desName)
         return result

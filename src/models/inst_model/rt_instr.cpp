@@ -27,8 +27,9 @@ namespace traceBuilder::model {
             //// des operand
             desRegOperands(host.desRegOperands),
             desStOperands(host.desStOperands),
-
-            macroop(host.macroop) {
+            //// mopAgent
+            _mopAgentPtr(nullptr)
+            {
 
         //////// macro pool operand need index from self operand class
         /// build src macroPool Operands
@@ -112,8 +113,8 @@ namespace traceBuilder::model {
 
     void
     RT_INSTR::genUOPS(std::vector<UOP_BASE *> &results) {
-        assert(macroop != nullptr);
-        macroop->genUop(results, this);
+        assert(_mopAgentPtr != nullptr);
+        results = std::move(_mopAgentPtr->genUops());
     }
 
 //////////////// internal method
@@ -156,6 +157,9 @@ namespace traceBuilder::model {
         /// for now load store indexing use the same id
         ///please reminde that register for load and store instruction may be unused which mean it will return as -1
         //// index base register
+        AREGNUM segReg  = (tokens[ST_IDX_LOAD_RS] != ST_VAL_LD_UNSED_REG) ? regMapAutoAdd(tokens[ST_IDX_LOAD_RB]):
+                                                                           UNUSED_AREG;
+
         AREGNUM baseReg = (tokens[ST_IDX_LOAD_RB] != ST_VAL_LD_UNSED_REG) ? regMapAutoAdd(tokens[ST_IDX_LOAD_RB])
                                                                          : UNUSED_AREG;
         AREGNUM indexReg = (tokens[ST_IDX_LOAD_RI] != ST_VAL_LD_UNSED_REG) ? regMapAutoAdd(tokens[ST_IDX_LOAD_RI])
@@ -172,21 +176,22 @@ namespace traceBuilder::model {
                 {0, opr_eff_size},
                 {0, opr_eff_size},
                 opr_eff_size,
+                segReg,
                 baseReg,
                 indexReg,
                 scale,
                 0,
-                false,
-                false,
+                false
         };
 
         if (isLoad) {
 
-            srcLdOperands.emplace_back(memMeta, lstSrcMacroIdx++);
+            srcLdOperands.emplace_back(memMeta, O_MEM_LD, lstSrcMacroIdx++);
             srcMacroPoolOperands.push_back(&(*srcLdOperands.rbegin()));
             srcDecodeKey.push_back(DEC_LD_OPR);
+
         } else { // store
-            desStOperands.emplace_back(memMeta, lstDesMacroIdx++);
+            desStOperands.emplace_back(memMeta, O_MEM_ST, lstDesMacroIdx++);
             desMacroPoolOperands.push_back(&(*desStOperands.rbegin()));
             desDecodeKey.push_back(DEC_ST_OPR);
         }
@@ -259,6 +264,18 @@ namespace traceBuilder::model {
         return mnemonic + DEC_DILEM +
                util::concatVec(srcDecodeKey, DEC_DILEM_OPR) + DEC_DILEM +
                util::concatVec(desDecodeKey, DEC_DILEM_OPR);
+    }
+
+    void BIND_RT_INSTR(py::module& m){
+        py::class_<RT_INSTR>(m, "INSTR")
+                .def(py::init<>())
+                .def(GET_RT_INSTR_SRC_REG_OPR_FN_STR , &RT_INSTR::GET_RT_INSTR_SRC_REG_OPR_FN  )
+                .def(GET_RT_INSTR_SRC_MEM_OPR_FN_STR , &RT_INSTR::GET_RT_INSTR_SRC_MEM_OPR_FN  )
+                .def(GET_RT_INSTR_SRC_IMM_OPR_FN_STR , &RT_INSTR::GET_RT_INSTR_SRC_IMM_OPR_FN  )
+                .def(GET_RT_INSTR_SRC_POOL_OPR_FN_STR, &RT_INSTR::GET_RT_INSTR_SRC_POOL_OPR_FN )
+                .def(GET_RT_INSTR_DES_REG_OPR_FN_STR , &RT_INSTR::GET_RT_INSTR_DES_REG_OPR_FN  )
+                .def(GET_RT_INSTR_DES_MEM_OPR_FN_STR , &RT_INSTR::GET_RT_INSTR_DES_MEM_OPR_FN  )
+                .def(GET_RT_INSTR_DES_POOL_OPR_FN_STR, &RT_INSTR::GET_RT_INSTR_DES_POOL_OPR_FN );
     }
 
 }

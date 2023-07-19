@@ -14,31 +14,42 @@ namespace traceBuilder::model {
     THREAD_MODEL::THREAD_MODEL() {}
 
     THREAD_MODEL::~THREAD_MODEL() {
-        for (auto &e: instr_pool) {
-            delete e.second;
+        for (auto &e: instrPool) {
+            delete e;
         }
     }
 
     RT_INSTR *
-    THREAD_MODEL::getInstrTemplate(uint64_t instr_id) {
-        auto finder = instr_pool.find(instr_id);
-        assert(finder != instr_pool.end());
-        auto *ret_rt = new RT_INSTR(*(finder->second));
-        return ret_rt;
+    THREAD_MODEL::getRtInstr(uint64_t instr_id) {
+        assert(instr_id < instrPool.size());
+        return instrPool[instr_id];
+    }
+
+    void THREAD_MODEL::decodeInstr(uint64_t instrId, MOP_AGENT *mopAgent) {
+        assert(instrId < instrPool.size());
+        instrPool[instrId]->setMopAgent(mopAgent);
 
     }
 
-
     void
-    THREAD_MODEL::onGetStTraceValue(staticTraceData stData) {
+    THREAD_MODEL::onGetStTraceValue(const staticTraceData& stData) {
 
         auto *newInstr = new RT_INSTR();
         /// interpret instruction
         newInstr->interpretStaticTracedData(stData.rawData);
         /// insert new instruction to instruction pool
-        instr_pool.insert({newInstr->getRtInstrId(), newInstr});
+        instrPool.push_back(newInstr);
+        assert((instrPool.size()-1) == newInstr->getRtInstrId());
         ////////////////////////////////////////////////////////
 
+    }
+
+    void BIND_THREAD_MODEL(py::module& m){
+        py::class_<THREAD_MODEL>(m, "THREAD_MODEL")
+                .def(py::init<>())
+                .def("getRtInstr", &THREAD_MODEL::getRtInstr)
+                .def("getAmountInstr", &THREAD_MODEL::getAmountInstr)
+                .def("decodeInstr", &THREAD_MODEL::decodeInstr);
     }
 
 }

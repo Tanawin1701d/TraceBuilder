@@ -30,6 +30,7 @@ namespace traceBuilder::core {
         static void setArchRegHelper(UOP_BASE* uop_base, ProtoMessage::machRecord* machRec, bool isSrc);
         static void setTempRegHelper(UOP_BASE* uop_base, ProtoMessage::machRecord* machRec, bool isSrc);
         static void setMemHelper (UOP_BASE* uop_base, ProtoMessage::machRecord* machRec, bool isLoad);
+        static bool shouldSkipUop(UOP_BASE* uop_base);
 
     public:
         explicit TBD_GEM5_ISA(const std::string& machProtoFilePath);

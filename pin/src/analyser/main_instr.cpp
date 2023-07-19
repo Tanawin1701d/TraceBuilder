@@ -115,14 +115,14 @@ VOID MAIN_instrument(INS ins, VOID* v)
                     if (isSrc && regStr != rflagsStr){
                         preRegStr[2]  = 'S';
                         preWrite     += preRegStr;
-                        srcKey       += 'R';
+                        srcKey       += "_R";
                         opr_count++; //// this is used to help predict operand type x86
                     }
                     /////// flag register is ignore
                     if (isDes && regStr != rflagsStr){
                         preRegStr[2]  = 'D';
                         preWrite     += preRegStr;
-                        desKey       += 'R';
+                        desKey       += "_R";
                         opr_count++; //// this is used to help predict operand type x86
                     }
                 ////////////////////////////////////////////////////////
@@ -130,33 +130,37 @@ VOID MAIN_instrument(INS ins, VOID* v)
             }else if (INS_OperandIsMemory(ins, opIdx)){
 
                 ///////// for memory operand
+                REG    segReg     = INS_OperandMemorySegmentReg(ins, opIdx); 
+                REG    baseReg    = INS_OperandMemoryBaseReg   (ins, opIdx);
+                REG    indexReg   = INS_OperandMemoryIndexReg  (ins, opIdx);
+                bool   isLoad     = INS_MemoryOperandIsRead    (ins, memOp);
+                bool   isStore    = INS_MemoryOperandIsWritten (ins, memOp);
+                UINT32 memRefSize = INS_MemoryOperandSize      (ins, memOp);
 
-                REG    baseReg    = INS_OperandMemoryBaseReg  (ins, opIdx);
-                REG    indexReg   = INS_OperandMemoryIndexReg (ins, opIdx);
-                bool   isLoad     = INS_MemoryOperandIsRead   (ins, memOp);
-                bool   isStore    = INS_MemoryOperandIsWritten(ins, memOp);
-                UINT32 memRefSize = INS_MemoryOperandSize     (ins, memOp);
 
-
-                std::string preMemStr;
+                std::string preMemMetaStr;
+                std::string lsSuffix = (REG_StringShort(static_cast<REG>(baseReg)) == "rip") ? "IP" : "";
                 //////// WRITE LOAD STORE
                 assert(isLoad || isStore);
-                preMemStr += "X ";
-                preMemStr += "Y ";
-                preMemStr += baseReg  ? REG_StringShort(static_cast<REG>(baseReg)) : "-1";
-                preMemStr += " ";
-                preMemStr += indexReg ? REG_StringShort(static_cast<REG>(indexReg)) : "-1";
-                preMemStr += " ";
-                preMemStr += std::to_string(memRefSize);
-                preMemStr += " ";
-                preMemStr += std::to_string(memOp);
-                preMemStr += "\n";
-
+                preMemMetaStr += " ";
+                preMemMetaStr += segReg   ? REG_StringShort(static_cast<REG>(segReg)) : "-1";
+                preMemMetaStr += " ";
+                preMemMetaStr += baseReg  ? REG_StringShort(static_cast<REG>(baseReg)) : "-1";
+                preMemMetaStr += " ";
+                preMemMetaStr += indexReg ? REG_StringShort(static_cast<REG>(indexReg)) : "-1";
+                preMemMetaStr += " ";
+                preMemMetaStr += std::to_string(memRefSize);
+                preMemMetaStr += " ";
+                preMemMetaStr += std::to_string(memOp);
+                preMemMetaStr += "\n";
+                
                 if (isLoad){
-                    preMemStr[0] =  'L';
-                    preMemStr[2] =  'S';
-                    preWrite += preMemStr;
-                    srcKey   += 'L';
+                    std::string preMemStr;
+                    preMemStr  += "L";// +  lsSuffix;
+                    preMemStr  += " S";
+                    preMemStr  += preMemMetaStr;
+                    preWrite   += preMemStr;
+                    srcKey     += "_L" + lsSuffix;
                     assert(loaded_amt < maxMemOpPerLS);
                     INS_InsertPredicatedCall(ins, IPOINT_BEFORE, 
                                     (AFUNPTR)L_TRACE,
@@ -167,10 +171,12 @@ VOID MAIN_instrument(INS ins, VOID* v)
                     loaded_amt++;
                 }
                 if (isStore){
-                    preMemStr[0] = 'S';
-                    preMemStr[2] = 'D';
-                    preWrite += preMemStr;
-                    desKey   += 'S';
+                    std::string preMemStr;
+                    preMemStr += "S"; // + lsSuffix;
+                    preMemStr += " D";
+                    preMemStr += preMemMetaStr;
+                    preWrite  += preMemStr;
+                    desKey    += "_S" + lsSuffix;
                     assert(stored_amt < maxMemOpPerLS);
                     INS_InsertPredicatedCall(ins, IPOINT_BEFORE, 
                                     (AFUNPTR)S_TRACE,
@@ -181,6 +187,10 @@ VOID MAIN_instrument(INS ins, VOID* v)
                                     );
                     stored_amt++;
                 }
+                //////////// add operand
+                
+
+
                 memOp++;
                 opr_count++; //// this is used to help predict operand type x86
                 ////////////////////////////////////////////////////////
@@ -191,7 +201,7 @@ VOID MAIN_instrument(INS ins, VOID* v)
                  preImmStr += std::to_string(INS_OperandImmediate(ins, opIdx));
                  preImmStr += '\n';
                  preWrite  += preImmStr;
-                 srcKey    += 'I';
+                 srcKey    += "_I";
                  opr_count++;
              }
         }

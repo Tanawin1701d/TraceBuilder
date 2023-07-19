@@ -20,18 +20,20 @@ namespace traceBuilder::core {
     static const int ST_IDX_REG_R = 2; // static trace register name
     static const int ST_IDX_REG_AMT = 3; // static trace amount of token for interpret reg operand
 //// load operand
-    static const int ST_IDX_LOAD_RB = 2; // static trace base register name
-    static const int ST_IDX_LOAD_RI = 3; // static trace index register name
-    static const int ST_IDX_LOAD_SZ = 4; // staticc trace load operand type
-    static const int ST_IDX_LOAD_MON = 5; // static trace memory op number
-    static const int ST_IDX_LOAD_AMT = 6; // static trace amount of token for interpret load operand
+    static const int ST_IDX_LOAD_RS  = 2; // static trace segment register name
+    static const int ST_IDX_LOAD_RB  = 3; // static trace base register name
+    static const int ST_IDX_LOAD_RI  = 4; // static trace index register name
+    static const int ST_IDX_LOAD_SZ  = 5; // staticc trace load operand type
+    static const int ST_IDX_LOAD_MON = 6; // static trace memory op number
+    static const int ST_IDX_LOAD_AMT = 7; // static trace amount of token for interpret load operand
 
 //// store operand
-    static const int ST_IDX_STORE_RB = 2; // static trace base register name
-    static const int ST_IDX_STORE_RI = 3; // static trace index register name
-    static const int ST_IDX_STORE_SZ = 4; // staticc trace store operand type
-    static const int ST_IDX_STORE_MON = 5; // static trace memory op number // when pool load and memory together
-    static const int ST_IDX_STORE_AMT = 6; // static trace amount of token for interpret store operand
+    static const int ST_IDX_STORE_RS  = 2; // static trace segment register name
+    static const int ST_IDX_STORE_RB  = 3; // static trace base register name
+    static const int ST_IDX_STORE_RI  = 4; // static trace index register name
+    static const int ST_IDX_STORE_SZ  = 5; // staticc trace store operand type
+    static const int ST_IDX_STORE_MON = 6; // static trace memory op number // when pool load and memory together
+    static const int ST_IDX_STORE_AMT = 7; // static trace amount of token for interpret store operand
 //// imm operand
     static const int ST_IDX_IMM_IMM = 2; // static trace index of immediate value
     static const int ST_IDX_IMM_AMT = 3; // static trace amount of index for immediate operand

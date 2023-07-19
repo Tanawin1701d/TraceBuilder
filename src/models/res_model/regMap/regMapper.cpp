@@ -25,7 +25,7 @@ namespace traceBuilder::model {
             {"r13",    {13, MAXSUBREG_R}},{"r13d",  { 13, MAXSUBREG_R}},{"r13w",  {13, MAXSUBREG_R}},{"r13b",   {13, MAXSUBREG_R}},
             {"r14",    {14, MAXSUBREG_R}},{"r14d",  { 14, MAXSUBREG_R}},{"r14w",  {14, MAXSUBREG_R}},{"r14b",   {14, MAXSUBREG_R}},
             {"r15",    {15, MAXSUBREG_R}},{"r15d",  { 15, MAXSUBREG_R}},{"r15w",  {15, MAXSUBREG_R}},{"r15b",   {15, MAXSUBREG_R}},
-            {"rip",    {16, MAXSUBREG_R}},
+            {"rip",    ARCH_RIP},
             /** floating point register it is 64 bit register*/
             {"st0",   {100, MAXSUBREG_MMX}},{"mmx0",   {100, MAXSUBREG_MMX}},
             {"st1",   {101, MAXSUBREG_MMX}},{"mmx1",   {101, MAXSUBREG_MMX}},

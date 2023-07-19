@@ -26,9 +26,7 @@ namespace traceBuilder::core {
         RT_OBJ *bufferRtObj;
         uint64_t maxInstrNumber = 0;
 
-        void startStaticTrace();
 
-        void startDynTrace();
 
     public:
         LAGACY_PIN_TRACER(
@@ -38,7 +36,9 @@ namespace traceBuilder::core {
 
         ~LAGACY_PIN_TRACER() override;
 
-        void start();
+        void startStaticTrace() override;
+
+        void startDynTrace() override;
 
         void setRes(CORE* _core,
                     SHARED_TRACEINFO* _sharedInfo,

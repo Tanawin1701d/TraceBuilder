@@ -59,9 +59,7 @@ namespace traceBuilder::core {
 
         dynTraceData dynData{};
 
-        //// ask tracer to initialize their runtime instruction
-        tracer->onInitialize(maxInstrNumber);
-        //// ask tracer to trace each runtime instruction
+        /// //// ask tracer to trace each runtime instruction
         dynFile->seekg(0, std::ios_base::end);
         uint64_t fileSize = dynFile->tellg();
         uint64_t readedObj = 0;
@@ -122,18 +120,7 @@ namespace traceBuilder::core {
         }
     }
 
-    void
-    LAGACY_PIN_TRACER::start() {
-        //// verify before running
-        assert(tmd != nullptr);
-        assert(tracer != nullptr);
-        assert(staticFile != nullptr);
-        assert(dynFile != nullptr);
 
-        startStaticTrace();
-        startDynTrace();
-
-    }
 
     void LAGACY_PIN_TRACER::setRes(CORE *_core,
                                    SHARED_TRACEINFO* _sharedInfo,

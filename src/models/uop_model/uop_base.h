@@ -43,7 +43,7 @@ namespace traceBuilder::model {
         /** this is storage to colect all dep that base share between instr*/
         DEP_RWD_BASE   dep_inter_pool;
         /** uop meta data*/
-        uint64_t     seqNum;// sequence number of uop in each thread
+        uint64_t     seqNum;// sequence number is set from tracer not uop agent
         UOP_TYPE     uop_type;
         EXEC_UNIT_ID exec_unit_id;
 
@@ -93,27 +93,20 @@ namespace traceBuilder::model {
         }
 
         template<DEP_CLASS dep_class_enum>
-        void doDepenCheck(UOP_WINDOW *traceWindow){
+        void doDepenCheck(UOP_WINDOW* traceWindow){
             auto depPtr = getDepClassPtr<dep_class_enum>();
             depPtr->doDepenCheck(this, traceWindow);
         }
-        //// use to ask successor to check dependecy and store ourself dependency
-        ////// crucial this is fundamental of the program the program
-        virtual void doPlannedDepenCheck(UOP_WINDOW* uop_window) = 0;
+
+        void doAllDepenCheck(UOP_WINDOW* traceWindow){
+            doDepenCheck<DEP_MREG>(traceWindow);
+            doDepenCheck<DEP_MEM>(traceWindow);
+            doDepenCheck<DEP_TEMP>(traceWindow);
+            doDepenCheck<DEP_EXEC_UNIT>(traceWindow);
+
+        }
     };
 
-//////////// simple compute uop
-
-    class UOP_SIMPLE : public UOP_BASE {
-
-    public:
-        //// for construction uop
-        UOP_SIMPLE(UOP_TYPE _uop_type);
-
-        //// for this uop to ask other in instruction window that it depend on
-        void doPlannedDepenCheck(UOP_WINDOW *uop_window) override;
-
-    };
 }
 
 #endif //TRACEBUILDER_UOP_BASE_H

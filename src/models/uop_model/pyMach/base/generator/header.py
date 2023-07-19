@@ -31,8 +31,8 @@ INC_UOP_WD    = "core/tracers/uop_wd.h"
 UOP_HFILE_NAME = "{ARCH}_uop.h".format(ARCH = ARCH)
 UOP_CFILE_NAME = "{ARCH}_uop.cpp".format(ARCH = ARCH)
 ### mop
-MOP_HFILE_NAME = "{ARCH}_mop.h"  .format(ARCH = ARCH)
-MOP_CFILE_NAME = "{ARCH}_mop.cpp".format(ARCH = ARCH)
+MOP_HFILE_NAME = "{ARCH}_mop_{SUFFIX}.h"
+MOP_CFILE_NAME = "{ARCH}_mop_{SUFFIX}.cpp"
 ### dec
 DEC_HFILE_NAME = "{ARCH}_dec.h"  .format(ARCH = ARCH)
 DEC_CFILE_NAME = "{ARCH}_dec.cpp".format(ARCH = ARCH)
@@ -41,6 +41,12 @@ DEC_CFILE_NAME = "{ARCH}_dec.cpp".format(ARCH = ARCH)
 CVAR_ADDR       = "ADDR"
 CVAR_REGIDX     = "int"
 
+
+def getMopHeaderFileName(name: str):
+    return MOP_HFILE_NAME.format(ARCH = ARCH, SUFFIX = name)
+
+def getMopCxxFileName(name: str):
+    return MOP_CFILE_NAME.format(ARCH = ARCH, SUFFIX = name)
 
 
 def initializeDir():
@@ -55,5 +61,5 @@ def writeFile(desPath, dayta):
 
 def flush():
     uop_gen.writeAll()
-    mop_gen.writeAll()
+    #mop_gen.writeAll()
     dec_gen.writeAll()

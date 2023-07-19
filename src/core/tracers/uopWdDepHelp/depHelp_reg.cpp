@@ -47,6 +47,8 @@ namespace traceBuilder::core {
                 uop->addDep<DEP_CLASS::DEP_MREG>(lastOwnerReg[regNum], wd);
             }
         }
+
+        ///// TODO dep for ld/st operand meta data
     }
 
 

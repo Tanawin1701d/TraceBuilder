@@ -63,6 +63,11 @@ class OPR_BASE :
     def genCXX_getMetaCallArgs(self):
         return ", ".join("{vn}".format(vn = vn) for vn in self.addMetaArgsVarName)
 
+    def genCXX_getMetaEnumToPush(self, **kwargs):
+        return "INVLID_ENUM"
+    def genCXX_getMetaTypeToPush(self, **kwargs):
+        return "INVALID_STRUCT"
+
     #### uop use this fucntion to get value that should be added to meta get method
     def genCXX_getFillMetaHelper_forVec(self, idxInGrp: int, uopOprSize: int, archOprSize: int) -> list:
         return list()

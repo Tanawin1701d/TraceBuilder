@@ -26,11 +26,11 @@ INCLUDE_DIRECTORIES(${Python_INCLUDE_DIRS})
 INCLUDE_DIRECTORIES( ./src )
 
 # generate x86 uop model
-add_custom_target(
-        x86UopsModel ALL
-        COMMAND python3 ${CMAKE_SOURCE_DIR}/src/models/uop_model/pyMach/gen_main.py
-        COMMENT "generating the x86 model"
-)
+#add_custom_target(
+#        x86UopsModel ALL
+#        COMMAND python3 ${CMAKE_SOURCE_DIR}/src/models/uop_model/pyMach/gen_main.py
+#        COMMENT "generating the x86 model"
+#)
 
 # generate proto buffer file for result front end support
 add_custom_target(
@@ -48,7 +48,7 @@ FILE(GLOB_RECURSE SRC_STAT     RELATIVE ${CMAKE_SOURCE_DIR} "src/stat/*.cpp")
 FILE(GLOB_RECURSE SRC_IOH      RELATIVE ${CMAKE_SOURCE_DIR} "src/ioHelp/*.cpp")  # stand for io helper
 FILE(GLOB_RECURSE SRC_IOHCC    RELATIVE ${CMAKE_SOURCE_DIR} "src/ioHelp/*.cc")
 FILE(GLOB_RECURSE SRC_ARCH_X86 RELATIVE ${CMAKE_SOURCE_DIR} "src/models/uop_model/X86/*.cpp")
-FILE(GLOB_RECURSE SRC_EXAMPLE  RELATIVE ${CMAKE_SOURCE_DIR} "src/example/*.cpp")
+#FILE(GLOB_RECURSE SRC_EXAMPLE  RELATIVE ${CMAKE_SOURCE_DIR} "src/example/*.cpp")
 
 pybind11_add_module(traceBuilder
                     src/main.cpp
@@ -60,11 +60,11 @@ pybind11_add_module(traceBuilder
                     ${SRC_IOH}
                     ${SRC_IOHCC}
                     ${SRC_ARCH_X86}
-                    ${SRC_EXAMPLE}
+                    #${SRC_EXAMPLE}
 
         )
 
 TARGET_LINK_LIBRARIES( traceBuilder PRIVATE ${Boost_LIBRARIES} Threads::Threads ${PROTOBUF_LIBRARY} )
 
-ADD_DEPENDENCIES(traceBuilder x86UopsModel)
+#ADD_DEPENDENCIES(traceBuilder x86UopsModel)
 ADD_DEPENDENCIES(traceBuilder protoGen)
