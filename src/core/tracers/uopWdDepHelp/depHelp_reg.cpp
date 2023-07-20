@@ -18,7 +18,7 @@ namespace traceBuilder::core {
         }
     }
 
-    void DEP_HELP_REG::onPushToWd(UOP_BASE *uop, UOP_WINDOW *wd) {
+    void DEP_HELP_REG::onPushToWd(UOP_BASE *uop, UOP_WINDOW*  wd) {
         using namespace model;
         auto desRegMetaPtr = uop->getMetaPtr<META_CLASS::META_DES_MREG, MREG_META>();
         for (auto desReg: *desRegMetaPtr) {
@@ -27,7 +27,7 @@ namespace traceBuilder::core {
         }
     }
 
-    void DEP_HELP_REG::onPopFromWd(UOP_BASE *uop, UOP_WINDOW *wd) {
+    void DEP_HELP_REG::onPopFromWd(UOP_BASE *uop, UOP_WINDOW*  wd) {
         assert(uop != nullptr);
         auto desRegMetaPtr = uop->getMetaPtr<META_CLASS::META_DES_MREG, MREG_META>();
         for (auto desReg: *desRegMetaPtr) {
@@ -38,7 +38,7 @@ namespace traceBuilder::core {
         }
     }
 
-    void DEP_HELP_REG::assignDepHelp(UOP_BASE *uop, UOP_WINDOW *wd) {
+    void DEP_HELP_REG::assignDepHelp(UOP_BASE *uop, UOP_WINDOW*  wd) {
         assert(uop != nullptr);
         auto srcRegPtr = uop->getMetaPtr<META_CLASS::META_SRC_MREG, MREG_META>();
         for (auto regNum: *srcRegPtr) {

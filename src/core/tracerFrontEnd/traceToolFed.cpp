@@ -29,7 +29,7 @@ namespace traceBuilder::core {
     }
 
     void BIND_TRACE_TOOL_FRONT_END(py::module& m){
-        py::class_<TRACE_TOOL_FRONT_END>(m, "TRACE_TOOL_FRONT_END")
+        py::class_<TRACE_TOOL_FRONT_END, std::shared_ptr<TRACE_TOOL_FRONT_END>>(m, "TRACE_TOOL_FRONT_END")
                 .def(py::init<>());
     }
 

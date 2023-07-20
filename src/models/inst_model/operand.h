@@ -28,6 +28,8 @@ namespace traceBuilder::model {
         O_DUMMY
     };
 
+    class OPERAND;
+    typedef std::shared_ptr<OPERAND> OPERAND_PTR;
     class OPERAND {
     private:
         OPR_TYPE OT;

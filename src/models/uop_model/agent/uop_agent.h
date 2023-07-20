@@ -31,6 +31,8 @@ namespace traceBuilder::model {
      * the class is not actual uop, the actual uop is uopBase
      * uop Agent might be stored in mop agent
      * */
+    class UOP_AGENT;
+    typedef std::shared_ptr<UOP_AGENT> UOP_AGENT_PTR;
     class UOP_AGENT {
         /** store link argument template for generate meta data*/
         struct OPR_REG_ARGS{
@@ -59,7 +61,10 @@ namespace traceBuilder::model {
 
         /** dep hub*/
         static const DEP_CLASS tempClass = DEP_TEMP;
-        std::vector<UOP_AGENT*> tempDep; /** the vector must link to uop agent not uop base*/
+        std::vector<UOP_AGENT_PTR> tempDeps; /** the vector must link to uop agent not uop base*/
+        /** clone uop agent*/
+        UOP_AGENT_PTR newCloneAgent; /**last uop agent that copy this agent*/
+
 
         /** in processing uop*/
         UOP_BASE* procUop;
@@ -74,22 +79,30 @@ namespace traceBuilder::model {
     public:
 
         UOP_AGENT(UOP_TYPE uopType, EXEC_UNIT_ID execUnit);
+        UOP_AGENT_PTR UOP_AGENT_CLONE();
+
+
 
         void ADD_LINK_OPR_REG_FUNC_NAME(OPR_REG* opr, int subRegIdx, bool isSrc);
         void ADD_LINK_OPR_TREG_FUNC_NAME(OPR_TREG* opr, bool isSrc);
         void ADD_LINK_OPR_MEMREG_FUNC_NAME(OPR_MEM* opr, int startByte, int stopByte, bool isSrc);
         void ADD_LINK_OPR_IMM_FUNC_NAME(OPR_IMM* opr);
-        void ADD_LINK_UOP_TEMP_FUNC_NAME(UOP_AGENT* uopAgent);
+        void ADD_LINK_UOP_TEMP_FUNC_NAME(UOP_AGENT_PTR uopAgent);
 
-
+        /** uop base management*/
         UOP_BASE* genUop();
 
         UOP_BASE* getInProcessUop();
 
         void cleanAgent();
+        /** clone agent*/
+        UOP_AGENT_PTR getClonedUopAgent(){return newCloneAgent;}
+        void       setNewCloneAgent(UOP_AGENT_PTR uopAgentPtr){newCloneAgent = uopAgentPtr;}
 
 
     };
+
+    typedef std::shared_ptr<UOP_AGENT> UOP_AGENT_PTR;
     ////////////////////////////////////////////////////////////////////////////////////////
     ///////// pybind declaration
     namespace py = pybind11;

@@ -12,11 +12,30 @@ namespace traceBuilder::model{
     UOP_AGENT::UOP_AGENT(UOP_TYPE uopType, EXEC_UNIT_ID execUnit):
     _uopType(uopType),
     _execUnit(execUnit),
+    newCloneAgent(nullptr),
     procUop(nullptr)
     {}
 
-    /**add meta data for each type to new inproc uop*/
+    UOP_AGENT_PTR
+    UOP_AGENT::UOP_AGENT_CLONE(){
+        auto cloned_uop_agent = std::make_shared<UOP_AGENT>(_uopType, _execUnit);
+        setNewCloneAgent(cloned_uop_agent);
+        /** clone linker*/
+        cloned_uop_agent->oprRegLinker =  oprRegLinker;
+        cloned_uop_agent->oprTRegLinker=  oprTRegLinker;
+        cloned_uop_agent->oprMemLinker =  oprMemLinker;
+        cloned_uop_agent->oprImmLinker =  oprImmLinker;
+        /**temp deps*/
+        for (const auto& tempAgentPtr: tempDeps){
+            /** copy new pointer with new succesor*/
+            cloned_uop_agent->tempDeps.push_back(tempAgentPtr->getClonedUopAgent());
+        }
+        cloned_uop_agent->newCloneAgent = cloned_uop_agent;
+        procUop = nullptr;
+        return cloned_uop_agent;
+    }
 
+    /**add meta data for each type to new inproc uop*/
     void UOP_AGENT::addMetaToNewUop() {
         /** regmeta from regOpr*/
         for (auto args : oprRegLinker){
@@ -52,7 +71,7 @@ namespace traceBuilder::model{
 
     /**add dep to New Uop*/
     void UOP_AGENT::addDepToNewUop() {
-        for (auto agentUop: tempDep) {
+        for (auto agentUop: tempDeps) {
             auto uopBasePtr = agentUop->getInProcessUop();
             assert(uopBasePtr != nullptr);
             procUop->addDep<tempClass>(uopBasePtr, nullptr);
@@ -83,9 +102,9 @@ namespace traceBuilder::model{
         oprImmLinker.push_back({opr});
     }
 
-    void UOP_AGENT::ADD_LINK_UOP_TEMP_FUNC_NAME(UOP_AGENT *uopAgent) {
+    void UOP_AGENT::ADD_LINK_UOP_TEMP_FUNC_NAME(UOP_AGENT_PTR uopAgent) {
         assert(uopAgent != nullptr);
-        tempDep.push_back(uopAgent);
+        tempDeps.push_back(uopAgent);
     }
 
 
@@ -116,7 +135,7 @@ namespace traceBuilder::model{
     ///////// pybind declaration
 
     void BIND_UOP_AGENT(py::module& m){
-        py::class_<UOP_AGENT>(m, "UOP")
+        py::class_<UOP_AGENT, std::shared_ptr<UOP_AGENT>>(m, "UOP")
                 .def(py::init<UOP_TYPE, EXEC_UNIT_ID>())
                 .def(ADD_LINK_OPR_REG_FUNC_NAME_STR   , &UOP_AGENT::ADD_LINK_OPR_REG_FUNC_NAME   )
                 .def(ADD_LINK_OPR_TREG_FUNC_NAME_STR  , &UOP_AGENT::ADD_LINK_OPR_TREG_FUNC_NAME  )

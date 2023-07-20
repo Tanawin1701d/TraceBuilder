@@ -23,6 +23,10 @@
 
 namespace traceBuilder::core {
 
+    class TRACER_BASE;
+
+    typedef TRACER_BASE* TRACER_BASE_PTR;
+
     class TRACER_BASE {
     private:
         SHARED_TRACEINFO* sharedSimEle;

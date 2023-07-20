@@ -132,7 +132,7 @@ namespace traceBuilder::core {
 
 
     void BIND_LAGACY_PIN_TRACER(py::module& m){
-        py::class_<LAGACY_PIN_TRACER, TRACE_TOOL_FRONT_END>(m, "LAGACY_PIN_TRACER")
+        py::class_<LAGACY_PIN_TRACER, TRACE_TOOL_FRONT_END, std::shared_ptr<LAGACY_PIN_TRACER>>(m, "LAGACY_PIN_TRACER")
                 .def(py::init<std::string, std::string>(),
                      py::arg("fileName_static"),
                      py::arg("fileName_dyn"),

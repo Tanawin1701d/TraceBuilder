@@ -11,30 +11,27 @@ namespace traceBuilder::model {
 ////////////////////////////////////////////////////////////////////////
 ////////////// instruction model pool
 
-    THREAD_MODEL::THREAD_MODEL() {}
+    THREAD_MODEL::THREAD_MODEL() = default;
 
-    THREAD_MODEL::~THREAD_MODEL() {
-        for (auto &e: instrPool) {
-            delete e;
-        }
-    }
+    THREAD_MODEL::~THREAD_MODEL() = default;
 
-    RT_INSTR *
+    RT_INSTR_PTR
     THREAD_MODEL::getRtInstr(uint64_t instr_id) {
         assert(instr_id < instrPool.size());
         return instrPool[instr_id];
     }
 
-    void THREAD_MODEL::decodeInstr(uint64_t instrId, MOP_AGENT *mopAgent) {
+    void THREAD_MODEL::decodeInstr(uint64_t instrId, const MOP_AGENT_PTR& mopAgent) {
         assert(instrId < instrPool.size());
         instrPool[instrId]->setMopAgent(mopAgent);
 
     }
 
+
     void
     THREAD_MODEL::onGetStTraceValue(const staticTraceData& stData) {
 
-        auto *newInstr = new RT_INSTR();
+        auto newInstr = std::make_shared<RT_INSTR>();
         /// interpret instruction
         newInstr->interpretStaticTracedData(stData.rawData);
         /// insert new instruction to instruction pool
@@ -45,7 +42,7 @@ namespace traceBuilder::model {
     }
 
     void BIND_THREAD_MODEL(py::module& m){
-        py::class_<THREAD_MODEL>(m, "THREAD_MODEL")
+        py::class_<THREAD_MODEL, std::shared_ptr<THREAD_MODEL>>(m, "THREAD_MODEL")
                 .def(py::init<>())
                 .def("getRtInstr", &THREAD_MODEL::getRtInstr)
                 .def("getAmountInstr", &THREAD_MODEL::getAmountInstr)

@@ -21,6 +21,7 @@
 #include"models/inst_model/operand.h"
 #include"models/inst_model/rt_instr.h"
 #include"models/thread_model/thread_model.h"
+#include"models/uop_model/uop_base.h"
 
 /** statPool*/
 #include"stat/statPool.h"
@@ -52,6 +53,8 @@ PYBIND11_MODULE( traceBuilder, m){
     model::BIND_RT_INSTR(m);
 
     model::BIND_THREAD_MODEL(m);
+
+    model::BIND_UOP_TYPE(m);
 
 
 

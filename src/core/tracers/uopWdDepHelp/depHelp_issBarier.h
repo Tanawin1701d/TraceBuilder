@@ -18,11 +18,11 @@ namespace traceBuilder::core {
     public:
         explicit DEP_HELP_ISS_BARIER(EXEC_UNIT_RES *_exe_unit_info);
 
-        void onPushToWd(UOP_BASE *uop, UOP_WINDOW *wd) override;
+        void onPushToWd(UOP_BASE *uop, UOP_WINDOW*  wd) override;
 
-        void onPopFromWd(UOP_BASE *uop, UOP_WINDOW *wd) override;
+        void onPopFromWd(UOP_BASE *uop, UOP_WINDOW*  wd) override;
 
-        void assignDepHelp(UOP_BASE *uop, UOP_WINDOW *wd) override;
+        void assignDepHelp(UOP_BASE *uop, UOP_WINDOW*  wd) override;
     };
 
 }

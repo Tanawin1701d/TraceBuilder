@@ -18,11 +18,11 @@ namespace traceBuilder::core {
 
     public:
 
-        virtual void onPushToWd(UOP_BASE *uop, UOP_WINDOW *wd) = 0;
+        virtual void onPushToWd(UOP_BASE *uop, UOP_WINDOW*  wd) = 0;
 
-        virtual void onPopFromWd(UOP_BASE *uop, UOP_WINDOW *wd) = 0;
+        virtual void onPopFromWd(UOP_BASE *uop, UOP_WINDOW*  wd) = 0;
 
-        virtual void assignDepHelp(UOP_BASE *uop, UOP_WINDOW *wd) = 0;
+        virtual void assignDepHelp(UOP_BASE *uop, UOP_WINDOW*  wd) = 0;
     };
 
 }

@@ -6,7 +6,7 @@
 
 namespace traceBuilder::core {
 
-    CORE::CORE(MEM_MNG *_memMng, EXEC_UNIT_RES *_execUnit_info) :
+    CORE::CORE(const std::shared_ptr<MEM_MNG>& _memMng, EXEC_UNIT_RES *_execUnit_info) :
             amountThread(0){
         assert(_memMng != nullptr);
         assert(_execUnit_info != nullptr);
@@ -17,14 +17,13 @@ namespace traceBuilder::core {
     }
 
     CORE::~CORE(){
-        delete sharedInfo.memMng;
         delete sharedInfo.execUnit_info;
     }
 
 
     void
-    CORE::addWorker(TRACE_TOOL_FRONT_END *_trace_tool,
-                    RESULT_FRONT_END *_result_frontEnd,
+    CORE::addWorker(const std::shared_ptr<TRACE_TOOL_FRONT_END>& _trace_tool,
+                    const std::shared_ptr<RESULT_FRONT_END>&     _result_frontEnd,
                     int _obsSize
     ) {
         assert(_trace_tool != nullptr);
@@ -35,8 +34,8 @@ namespace traceBuilder::core {
         auto* specificInfo = new SPECIFIC_TRACEINFO();
 
         specificInfo->tid = amountThread;
-        specificInfo->uopWindow = new UOP_WINDOW(sharedInfo.execUnit_info);
-        specificInfo->threadModel = new THREAD_MODEL();
+        specificInfo->uopWindow   = new UOP_WINDOW(sharedInfo.execUnit_info);
+        specificInfo->threadModel = std::make_shared<THREAD_MODEL>();
 
 
         specificInfo->traceToolFed = _trace_tool;
@@ -54,13 +53,13 @@ namespace traceBuilder::core {
         amountThread++;
     }
 
-    THREAD_MODEL *CORE::getThreadModel(THREAD_ID tid) {
+    std::shared_ptr<THREAD_MODEL> CORE::getThreadModel(THREAD_ID tid) {
         assert(tid >= 0 && tid < getAmtThread());
         return traceWorkers[tid]->threadModel;
     }
 
     int
-    CORE::getAmtThread() {
+    CORE::getAmtThread() const {
         return amountThread;
     }
 
@@ -82,8 +81,8 @@ namespace traceBuilder::core {
 
 
     void BIND_CORE(py::module& m){
-        py::class_<CORE>(m, "CORE")
-                .def(py::init<MEM_MNG*, EXEC_UNIT_RES*>())
+        py::class_<CORE, std::shared_ptr<CORE>>(m, "CORE")
+                .def(py::init<const std::shared_ptr<MEM_MNG>&, EXEC_UNIT_RES*>())
                 .def("addWorker", &CORE::addWorker)
                 .def("getThreadModel", &CORE::getThreadModel)
                 .def("getAmtThread", &CORE::getAmtThread)

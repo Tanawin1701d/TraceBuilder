@@ -91,7 +91,8 @@ namespace traceBuilder::core {
 
         /////// convert virtual memory address to simulated address
         assert(dyndata.rawData.fetchId < specificSimEle->threadModel->getAmountInstr());
-        auto *rt_instr = specificSimEle->threadModel->getRtInstr(dyndata.rawData.fetchId);
+        auto rt_instr = specificSimEle->threadModel->getRtInstr(dyndata.rawData.fetchId);
+
         //////////////////////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////// stat /////////
         //////////////////////////////////////////////////////////////////////////

@@ -14,7 +14,7 @@ namespace traceBuilder::model {
 
     DEP_RWD_BASE::DEP_RWD_BASE(): _depPool(nullptr), depUops(nullptr){}
 
-    bool DEP_RWD_BASE::addDep(UOP_BASE* uop, UOP_WINDOW* traceWindow) {
+    bool DEP_RWD_BASE::addDep(UOP_BASE* uop, UOP_WINDOW*  traceWindow) {
         assert(uop != nullptr);
         assert(traceWindow != nullptr);
         //////// incase we need to add to dep pool [optimize]
@@ -29,7 +29,7 @@ namespace traceBuilder::model {
         return false;
     }
 
-    bool DEP_RWD_BASE::isThereDep(UOP_BASE* uop, UOP_WINDOW* traceWindow){
+    bool DEP_RWD_BASE::isThereDep(UOP_BASE* uop, UOP_WINDOW*  traceWindow){
         assert(uop != nullptr);
         assert(traceWindow != nullptr);
         size_t idxInWd =  traceWindow->getLastPushSeqNum() - uop->getSeqNum();
@@ -41,14 +41,14 @@ namespace traceBuilder::model {
 ////////////////////////////////////
 
 
-    bool DEP_ULS_BASE::addDep(UOP_BASE *uop, UOP_WINDOW *traceWindow) {
+    bool DEP_ULS_BASE::addDep(UOP_BASE *uop, UOP_WINDOW*  traceWindow) {
         assert(uop != nullptr);
         _depUops[_depCnt++] = uop;
         assert(_depCnt <= UOP_WINDOW_SIZE);
         return true;
     }
 
-    bool DEP_ULS_BASE::isThereDep(UOP_BASE* uop, UOP_WINDOW* traceWindow){
+    bool DEP_ULS_BASE::isThereDep(UOP_BASE* uop, UOP_WINDOW*  traceWindow){
         assert(uop != nullptr);
         for (size_t idx = 0; idx < _depCnt; idx++){
             if (_depUops[idx] == uop){

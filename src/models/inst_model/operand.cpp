@@ -56,7 +56,7 @@ namespace traceBuilder::model {
 
     void BIND_OPERAND(py::module& m){
         /** bind operand base*/
-        py::class_<OPERAND>(m, "OPERAND")
+        py::class_<OPERAND, std::shared_ptr<OPERAND>>(m, "OPERAND")
                 .def(py::init<OPR_TYPE, size_t>(),
                         py::arg("oprType"),
                         py::arg("idxInPool"),
@@ -64,21 +64,21 @@ namespace traceBuilder::model {
                 .def("getOPR_TYPE", &OPERAND::getOPTYPE)
                 .def("getMcSideIdx", &OPERAND::getMcSideIdx);
         /** bind operand reg*/
-        py::class_<OPR_REG, OPERAND>(m, "OPR_REG")
+        py::class_<OPR_REG, OPERAND, std::shared_ptr<OPR_REG>>(m, "OPR_REG")
                 .def(py::init<AREGNUM, size_t>(),
                         py::arg("oprType"),
                         py::arg("idxInPool"),
                         "reg Opr initializer")
                 .def(GET_DATA_FUNCNAME_STR, &OPR_REG::GET_DATA_FUNCNAME);
         /** bind operand treg*/
-        py::class_<OPR_TREG, OPERAND>(m, "OPR_TREG")
+        py::class_<OPR_TREG, OPERAND, std::shared_ptr<OPR_TREG>>(m, "OPR_TREG")
                 .def(py::init<TREGNUM>(),
                      py::arg("tregId"),
                      "treg id initializer"
                      )
                  .def(GET_DATA_FUNCNAME_STR, &OPR_TREG::GET_DATA_FUNCNAME);
         /** bind operand mem*/
-        py::class_<OPR_MEM, OPERAND>(m, "OPR_MEM")
+        py::class_<OPR_MEM, OPERAND, std::shared_ptr<OPR_MEM>>(m, "OPR_MEM")
                 .def(py::init<MEM_META, OPR_TYPE, size_t>(),
                         py::arg("memMeta"),
                         py::arg("oprType"),
@@ -87,7 +87,7 @@ namespace traceBuilder::model {
                      )
                  .def(GET_DATA_FUNCNAME_STR, &OPR_MEM::GET_DATA_FUNCNAME);
         /** bind operand imm*/
-        py::class_<OPR_IMM, OPERAND>(m, "OPR_IMM")
+        py::class_<OPR_IMM, OPERAND,std::shared_ptr<OPR_IMM>>(m, "OPR_IMM")
                 .def(py::init<IMM, size_t>(),
                         py::arg("immValue"),
                         py::arg("idxInPool"),

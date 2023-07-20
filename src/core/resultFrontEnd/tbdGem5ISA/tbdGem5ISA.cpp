@@ -21,7 +21,7 @@ namespace traceBuilder::core{
         desFileStream->write(header);
     }
 
-    void TBD_GEM5_ISA::onGetUopsResult(std::vector<UOP_BASE*>& result, RT_INSTR* rt_instr) {
+    void TBD_GEM5_ISA::onGetUopsResult(std::vector<UOP_BASE*>& result, RT_INSTR_PTR rt_instr) {
         /** sanity check*/
         assert(rt_instr != nullptr);
         /** create instr record*/
@@ -195,7 +195,7 @@ namespace traceBuilder::core{
 
 
     void BIND_RESULT_FRONT_END_TBDGEMISA(py::module& m){
-        py::class_<TBD_GEM5_ISA, RESULT_FRONT_END>(m, "TBD_GEM5_ISA")
+        py::class_<TBD_GEM5_ISA, RESULT_FRONT_END, std::shared_ptr<TBD_GEM5_ISA>>(m, "TBD_GEM5_ISA")
                 .def(py::init<const std::string&>());
     }
 

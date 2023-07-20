@@ -18,11 +18,13 @@ namespace traceBuilder::model {
 
     typedef int THREAD_ID;
 
+    class THREAD_MODEL;
+    typedef std::shared_ptr<THREAD_MODEL> THREAD_MODEL_PTR;
     class THREAD_MODEL {
 
     private:
 
-        std::vector<RT_INSTR*> instrPool;
+        std::vector<RT_INSTR_PTR> instrPool;
 
 
     public:
@@ -32,12 +34,11 @@ namespace traceBuilder::model {
 
         /////// get runtime instruction that not decoded to generate micro-op or added with
         ////////////// runtime data
-        RT_INSTR* getRtInstr(uint64_t instr_id);
+        RT_INSTR_PTR getRtInstr(uint64_t instr_id);
 
         uint64_t getAmountInstr(){return instrPool.size();}
 
-        void decodeInstr(uint64_t instrId, MOP_AGENT* mopAgent);
-
+        void decodeInstr(uint64_t instrId, const MOP_AGENT_PTR& mopAgent);
         //////// when tracer collect raw static instruction token which we will decoded it
         void onGetStTraceValue(const staticTraceData& stData); // for only per instruction
 

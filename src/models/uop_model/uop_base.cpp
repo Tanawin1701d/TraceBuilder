@@ -53,4 +53,14 @@ namespace traceBuilder::model {
 
     }
 
+    void BIND_UOP_TYPE(py::module& m){
+        py::enum_<UOP_TYPE>(m, "UOP_TYPE")
+        .value("UOP_COMP", UOP_TYPE::UOP_COMP)
+        .value("UOP_LOAD", UOP_TYPE::UOP_LOAD)
+        .value("UOP_STORE",UOP_TYPE::UOP_STORE)
+        .value("UOP_IMM",  UOP_TYPE::UOP_IMM)
+        .value("UOP_DUMMY",UOP_TYPE::UOP_DUMMY)
+        .export_values();
+    }
+
 }

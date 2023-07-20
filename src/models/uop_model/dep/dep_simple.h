@@ -15,7 +15,7 @@ namespace traceBuilder::model {
     /** register dependency*/
     class REG_DEP : public DEP_RWD_BASE {
     public:
-        void doDepenCheck(UOP_BASE* uop, UOP_WINDOW *traceWindow) override;
+        void doDepenCheck(UOP_BASE* uop, UOP_WINDOW*  traceWindow) override;
     };
     ///////////////////////////////////////////////////////////////////////
 
@@ -27,7 +27,7 @@ namespace traceBuilder::model {
         /** for successor depend on mem*/
         virtual bool isdependOnMem(UOP_BASE* uop, ADAS suc_adas, bool isLoad);
         /** for asking procedure to get dep */
-        void doDepenCheck(UOP_BASE* uop, UOP_WINDOW *traceWindow) override;
+        void doDepenCheck(UOP_BASE* uop, UOP_WINDOW*  traceWindow) override;
     };
     ///////////////////////////////////////////////////////////////////////
 
@@ -35,7 +35,7 @@ namespace traceBuilder::model {
     class TEM_DEP : public DEP_ULS_BASE {
     public:
         /** for asking procedure to get dep */
-        void doDepenCheck(UOP_BASE* uop, UOP_WINDOW *traceWindow) override;
+        void doDepenCheck(UOP_BASE* uop, UOP_WINDOW*  traceWindow) override;
     };
     ///////////////////////////////////////////////////////////////////////
 
@@ -43,7 +43,7 @@ namespace traceBuilder::model {
     class EXEC_UNIT_DEP : public DEP_RWD_BASE {
     public:
         /** for asking procedure to get dep */
-        void doDepenCheck(UOP_BASE* uop, UOP_WINDOW *traceWindow) override;
+        void doDepenCheck(UOP_BASE* uop, UOP_WINDOW*  traceWindow) override;
 
     };
     ///////////////////////////////////////////////////////////////////////

@@ -82,7 +82,7 @@ namespace traceBuilder::model {
         /** dep class operation*/
             /// return that dep is newly added or not
         template<DEP_CLASS dep_class_enum>
-        bool addDep(UOP_BASE* uop, UOP_WINDOW* uop_window){
+        bool addDep(UOP_BASE* uop, UOP_WINDOW*  uop_window){
                 auto dep = getDepClassPtr<dep_class_enum>();
                 return dep->addDep(uop, uop_window);
         }
@@ -93,12 +93,12 @@ namespace traceBuilder::model {
         }
 
         template<DEP_CLASS dep_class_enum>
-        void doDepenCheck(UOP_WINDOW* traceWindow){
+        void doDepenCheck(UOP_WINDOW*  traceWindow){
             auto depPtr = getDepClassPtr<dep_class_enum>();
             depPtr->doDepenCheck(this, traceWindow);
         }
 
-        void doAllDepenCheck(UOP_WINDOW* traceWindow){
+        void doAllDepenCheck(UOP_WINDOW*  traceWindow){
             doDepenCheck<DEP_MREG>(traceWindow);
             doDepenCheck<DEP_MEM>(traceWindow);
             doDepenCheck<DEP_TEMP>(traceWindow);
@@ -106,6 +106,9 @@ namespace traceBuilder::model {
 
         }
     };
+
+    namespace py = pybind11;
+    void BIND_UOP_TYPE(py::module& m);
 
 }
 

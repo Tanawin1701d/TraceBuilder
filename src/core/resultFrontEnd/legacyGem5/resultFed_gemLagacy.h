@@ -21,7 +21,7 @@ namespace traceBuilder::core {
         ProtoOutputStream* instrProtoStream;
         uint64_t       lastTick;
         EXEC_UNIT_RES* execUnit_info;
-        MEM_MNG*       mng;
+        std::shared_ptr<MEM_MNG>       mng;
 
     public:
 
@@ -33,7 +33,7 @@ namespace traceBuilder::core {
         ~RESULT_FRONT_END_GEM_LAGACY();
 
         void onGetUopsResult(std::vector<UOP_BASE *> &uops,
-                             RT_INSTR *rt_instr
+                             RT_INSTR_PTR rt_instr
         ) override;
 
         void setRes(CORE* _core, SHARED_TRACEINFO* _sharedInfo, SPECIFIC_TRACEINFO* _specificInfo) override;

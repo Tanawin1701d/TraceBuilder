@@ -12,7 +12,7 @@ namespace traceBuilder::core {
         assert(_exe_unit_info != nullptr);
     }
 
-    void DEP_HELP_ISS_BARIER::onPushToWd(UOP_BASE *uop, UOP_WINDOW *wd) {
+    void DEP_HELP_ISS_BARIER::onPushToWd(UOP_BASE *uop, UOP_WINDOW*  wd) {
         assert(uop != nullptr);
         EXEC_UNIT_ID execId = uop->getExecUnit();
         if (execId == DUMMY_EXEC_UNIT_ID) return;
@@ -21,7 +21,7 @@ namespace traceBuilder::core {
         units[execId].push_front(uop);
     }
 
-    void DEP_HELP_ISS_BARIER::onPopFromWd(UOP_BASE *uop, UOP_WINDOW *wd) {
+    void DEP_HELP_ISS_BARIER::onPopFromWd(UOP_BASE *uop, UOP_WINDOW*  wd) {
         assert(uop != nullptr);
         EXEC_UNIT_ID execId = uop->getExecUnit();
         if (execId == DUMMY_EXEC_UNIT_ID) return;
@@ -31,7 +31,7 @@ namespace traceBuilder::core {
         units[execId].pop_back();
     }
 
-    void DEP_HELP_ISS_BARIER::assignDepHelp(UOP_BASE *uop, UOP_WINDOW *wd) {
+    void DEP_HELP_ISS_BARIER::assignDepHelp(UOP_BASE *uop, UOP_WINDOW*  wd) {
         assert(uop != nullptr);
         EXEC_UNIT_ID execId = uop->getExecUnit();
         if (execId == DUMMY_EXEC_UNIT_ID) return;

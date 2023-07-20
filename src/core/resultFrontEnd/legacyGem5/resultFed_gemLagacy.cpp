@@ -38,7 +38,7 @@ namespace traceBuilder::core {
     void
     RESULT_FRONT_END_GEM_LAGACY::onGetUopsResult(
             std::vector<UOP_BASE *> &uops,
-            RT_INSTR *rt_instr
+            RT_INSTR_PTR rt_instr
     ) {
 #ifdef debug
         std::cout << "current instruction is " << rt_instr->getDebugName() << std::endl;
@@ -178,7 +178,7 @@ namespace traceBuilder::core {
     }
 
     void BIND_RESULT_FRONT_END_GEM_LAGACY(py::module& m){
-        py::class_<RESULT_FRONT_END_GEM_LAGACY, RESULT_FRONT_END>(m, "RESULT_FRONT_END_GEM_LAGACY")
+        py::class_<RESULT_FRONT_END_GEM_LAGACY, RESULT_FRONT_END, std::shared_ptr<RESULT_FRONT_END_GEM_LAGACY>>(m, "RESULT_FRONT_END_GEM_LAGACY")
                 .def(py::init<std::string&, std::string&, const int, const int>());
     }
 

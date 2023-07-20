@@ -10,7 +10,7 @@ namespace traceBuilder::model {
 
     /** register dependency*/
     void
-    REG_DEP::doDepenCheck(UOP_BASE *uop, UOP_WINDOW *traceWindow) {
+    REG_DEP::doDepenCheck(UOP_BASE *uop, UOP_WINDOW*  traceWindow) {
         traceWindow->assignRegDep(uop);
     }
 
@@ -37,7 +37,7 @@ namespace traceBuilder::model {
         return scanOverlap(suc_adas, memStMeta);
     }
 
-    void MEM_DEP::doDepenCheck(UOP_BASE * my_uop, UOP_WINDOW *traceWindow) {
+    void MEM_DEP::doDepenCheck(UOP_BASE * my_uop, UOP_WINDOW*  traceWindow) {
         assert(traceWindow != nullptr);
         auto uopWindow_ptr = traceWindow->getUopwindow();
         auto my_ldMetaGrpPtr = my_uop->getMetaPtr<META_CLASS::META_SRC_MEM, MEM_META>();
@@ -71,11 +71,11 @@ namespace traceBuilder::model {
 
     /** temporary register dependency*/
 
-    void TEM_DEP::doDepenCheck(UOP_BASE *uop, UOP_WINDOW *traceWindow) {}
+    void TEM_DEP::doDepenCheck(UOP_BASE *uop, UOP_WINDOW*  traceWindow) {}
 
     /** execUnit dependency*/
 
-    void EXEC_UNIT_DEP::doDepenCheck(UOP_BASE *uop, UOP_WINDOW *traceWindow) {
+    void EXEC_UNIT_DEP::doDepenCheck(UOP_BASE *uop, UOP_WINDOW*  traceWindow) {
         traceWindow->assignExecDep(uop);
     }
 }

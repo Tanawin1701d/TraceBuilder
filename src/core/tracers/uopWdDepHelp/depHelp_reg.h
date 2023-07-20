@@ -17,11 +17,11 @@ namespace traceBuilder::core {
     public:
         DEP_HELP_REG();
 
-        void onPushToWd(UOP_BASE *uop, UOP_WINDOW *wd) override;
+        void onPushToWd(UOP_BASE *uop, UOP_WINDOW*  wd) override;
 
-        void onPopFromWd(UOP_BASE *uop, UOP_WINDOW *wd) override;
+        void onPopFromWd(UOP_BASE *uop,  UOP_WINDOW* wd) override;
 
-        void assignDepHelp(UOP_BASE *uop, UOP_WINDOW *wd) override;
+        void assignDepHelp(UOP_BASE *uop, UOP_WINDOW*  wd) override;
     };
 
 }

@@ -15,13 +15,13 @@ namespace traceBuilder::core {
 
     class TBD_GEM5_ISA : public RESULT_FRONT_END {
     private:
-        ProtoOutputStream* desFileStream;
-        uint64_t           curInstrNum;
-        MEM_MNG*           memMng;
+        ProtoOutputStream*       desFileStream;
+        uint64_t                 curInstrNum;
+        std::shared_ptr<MEM_MNG> memMng;
 
     protected:
 
-        void onGetUopsResult(std::vector<UOP_BASE*>& result, RT_INSTR* rt_instr) override;
+        void onGetUopsResult(std::vector<UOP_BASE*>& result, RT_INSTR_PTR rt_instr) override;
 
         void setRes(CORE* core,
                     SHARED_TRACEINFO* sharedInfo,
