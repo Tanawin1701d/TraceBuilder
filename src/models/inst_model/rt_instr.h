@@ -7,9 +7,11 @@
 
 
 ////// runtime instr it like dynamic instruction in gem5
+#include <pybind11/stl_bind.h>
 #include <pybind11/stl.h>
 #include "operand.h"
 
+#include "base/refVec/refVec.h"
 #include "core/tracerFrontEnd/staticTraceVar.h"
 #include "core/tracerFrontEnd/dynTraceVar.h"
 #include "models/res_model/memMng/MemMng.h"
@@ -18,27 +20,26 @@
 #include "models/inst_model/operand.h"
 #include "models/uop_model/agent/mop_agent.h"
 
-
 namespace traceBuilder::model {
 
 
 
         /** pybind  function*/
-#define GET_RT_INSTR_SRC_REG_OPR_FN  getSrcRegOperands
-#define GET_RT_INSTR_SRC_MEM_OPR_FN  getSrcLdOperands
-#define GET_RT_INSTR_SRC_IMM_OPR_FN  getSrcImmOperands
-#define GET_RT_INSTR_SRC_POOL_OPR_FN getSrcMacroPoolOperands
-#define GET_RT_INSTR_DES_REG_OPR_FN  getDesRegOperands
-#define GET_RT_INSTR_DES_MEM_OPR_FN  getDesStOperands
-#define GET_RT_INSTR_DES_POOL_OPR_FN getDesMacroPoolOperands
+#define GET_RT_INSTR_SRC_REG_OPR_FN  getSrcRegOperandsPtr
+#define GET_RT_INSTR_SRC_MEM_OPR_FN  getSrcLdOperandsPtr
+#define GET_RT_INSTR_SRC_IMM_OPR_FN  getSrcImmOperandsPtr
+#define GET_RT_INSTR_SRC_POOL_OPR_FN getSrcMacroPoolOperandsPtr
+#define GET_RT_INSTR_DES_REG_OPR_FN  getDesRegOperandsPtr
+#define GET_RT_INSTR_DES_MEM_OPR_FN  getDesStOperandsPtr
+#define GET_RT_INSTR_DES_POOL_OPR_FN getDesMacroPoolOperandsPtr
 
-#define GET_RT_INSTR_SRC_REG_OPR_FN_STR  "getSrcRegOperands"
-#define GET_RT_INSTR_SRC_MEM_OPR_FN_STR  "getSrcLdOperands"
-#define GET_RT_INSTR_SRC_IMM_OPR_FN_STR  "getSrcImmOperands"
-#define GET_RT_INSTR_SRC_POOL_OPR_FN_STR "getSrcMacroPoolOperands"
-#define GET_RT_INSTR_DES_REG_OPR_FN_STR  "getDesRegOperands"
-#define GET_RT_INSTR_DES_MEM_OPR_FN_STR  "getDesStOperands"
-#define GET_RT_INSTR_DES_POOL_OPR_FN_STR "getDesMacroPoolOperands"
+#define GET_RT_INSTR_SRC_REG_OPR_FN_STR  "getSrcRegOpr"
+#define GET_RT_INSTR_SRC_MEM_OPR_FN_STR  "getSrcLdOper"
+#define GET_RT_INSTR_SRC_IMM_OPR_FN_STR  "getSrcImmOpr"
+#define GET_RT_INSTR_SRC_POOL_OPR_FN_STR "getSrcPoolOpr"
+#define GET_RT_INSTR_DES_REG_OPR_FN_STR  "getDesRegOpr"
+#define GET_RT_INSTR_DES_MEM_OPR_FN_STR  "getDesStOpr"
+#define GET_RT_INSTR_DES_POOL_OPR_FN_STR "getDesPoolOpr"
 
         typedef uint64_t RT_INSTR_ID;
         typedef std::shared_ptr<RT_INSTR> RT_INSTR_PTR;
@@ -73,13 +74,22 @@ namespace traceBuilder::model {
             std::vector<OPR_REG> srcRegOperands;
             std::vector<OPR_MEM> srcLdOperands;
             std::vector<OPR_IMM> srcImmOperands;
-            /////// pool operand to allow macro-op access in correct order
-            std::vector<OPERAND_PTR> srcMacroPoolOperands; /// pool the  src operand for macroop will get it and fill into micro-op
+
             /////// des operand data and metadata
             /// for now we assume that order is matter to classify instruction and micro-op
             std::vector<OPR_REG> desRegOperands;
             std::vector<OPR_MEM> desStOperands;
+
+
+            std::vector<OPR_REG_PTR> srcRegOperandsPtr;
+            std::vector<OPR_MEM_PTR> srcLdOperandsPtr;
+            std::vector<OPR_IMM_PTR> srcImmOperandsPtr;
+            std::vector<OPERAND_PTR> srcMacroPoolOperands; /// pool the  src operand for macroop will get it and fill into micro-op
+            /** pool operand ensure your order that get from tracerTool*/
+
             /////// pool operand to allow macro-op access in correct order
+            std::vector<OPR_REG_PTR> desRegOperandsPtr;
+            std::vector<OPR_MEM_PTR> desStOperandsPtr;
             std::vector<OPERAND_PTR> desMacroPoolOperands;/// pool the  des operand for macroop will get it and fill into micro-op
             /** mop agent for generate microop*/
             MOP_AGENT_PTR _mopAgentPtr;
@@ -142,15 +152,20 @@ namespace traceBuilder::model {
 
 
             ////// get method
-            std::vector<OPR_REG>&   GET_RT_INSTR_SRC_REG_OPR_FN()  { return srcRegOperands;};
-            std::vector<OPR_MEM>&   GET_RT_INSTR_SRC_MEM_OPR_FN() { return srcLdOperands; };
-            std::vector<OPR_IMM>&   GET_RT_INSTR_SRC_IMM_OPR_FN() { return srcImmOperands; };
-            std::vector<OPERAND_PTR>& GET_RT_INSTR_SRC_POOL_OPR_FN() { return srcMacroPoolOperands; };
-            std::vector<OPR_REG>&   GET_RT_INSTR_DES_REG_OPR_FN() { return desRegOperands; };
-            std::vector<OPR_MEM>&   GET_RT_INSTR_DES_MEM_OPR_FN() { return desStOperands; };
-            std::vector<OPERAND_PTR>& GET_RT_INSTR_DES_POOL_OPR_FN() { return desMacroPoolOperands; };
+            std::vector<OPR_REG>&     getSrcRegOperands()       { return srcRegOperands;};
+            std::vector<OPR_MEM>&     getSrcLdOperands()        { return srcLdOperands; };
+            std::vector<OPR_IMM>&     getSrcImmOperands()       { return srcImmOperands; };
+            std::vector<OPR_REG>&     getDesRegOperands()       { return desRegOperands; };
+            std::vector<OPR_MEM>&     getDesStOperands()        { return desStOperands; };
 
-
+            /** get method <for referencing>*/
+            std::vector<OPR_REG_PTR>& GET_RT_INSTR_SRC_REG_OPR_FN()  {return srcRegOperandsPtr;    }
+            std::vector<OPR_MEM_PTR>& GET_RT_INSTR_SRC_MEM_OPR_FN()  {return srcLdOperandsPtr;     }
+            std::vector<OPR_IMM_PTR>& GET_RT_INSTR_SRC_IMM_OPR_FN()  {return srcImmOperandsPtr;    }
+            std::vector<OPERAND_PTR>& GET_RT_INSTR_SRC_POOL_OPR_FN() {return srcMacroPoolOperands; }
+            std::vector<OPR_REG_PTR>& GET_RT_INSTR_DES_REG_OPR_FN()  {return desRegOperandsPtr;    }
+            std::vector<OPR_MEM_PTR>& GET_RT_INSTR_DES_MEM_OPR_FN()  {return desStOperandsPtr;     }
+            std::vector<OPERAND_PTR>& GET_RT_INSTR_DES_POOL_OPR_FN() {return desMacroPoolOperands; }
 
             ////// count method
             int countSrcRegOperands() const { return (int) srcRegOperands.size(); };
@@ -167,6 +182,8 @@ namespace traceBuilder::model {
     void BIND_RT_INSTR(py::module& m);
 
 }
+
+
 
 
 #endif //TRACEBUILDER_RT_INSTR_H

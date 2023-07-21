@@ -21,7 +21,7 @@ namespace traceBuilder::model {
         return instrPool[instr_id];
     }
 
-    void THREAD_MODEL::decodeInstr(uint64_t instrId, const MOP_AGENT_PTR& mopAgent) {
+    void THREAD_MODEL::addDecodedInstr(uint64_t instrId, const MOP_AGENT_PTR& mopAgent) {
         assert(instrId < instrPool.size());
         instrPool[instrId]->setMopAgent(mopAgent);
 
@@ -46,7 +46,7 @@ namespace traceBuilder::model {
                 .def(py::init<>())
                 .def("getRtInstr", &THREAD_MODEL::getRtInstr)
                 .def("getAmountInstr", &THREAD_MODEL::getAmountInstr)
-                .def("decodeInstr", &THREAD_MODEL::decodeInstr);
+                .def("addDecodedInstr", &THREAD_MODEL::addDecodedInstr);
     }
 
 }

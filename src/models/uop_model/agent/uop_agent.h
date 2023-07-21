@@ -13,13 +13,13 @@
 #define ADD_LINK_OPR_TREG_FUNC_NAME addLink_OPR_TREG
 #define ADD_LINK_OPR_MEMREG_FUNC_NAME addLink_OPR_MEM
 #define ADD_LINK_OPR_IMM_FUNC_NAME addLink_OPR_IMM
-#define ADD_LINK_UOP_TEMP_FUNC_NAME addLink_Uop
+#define ADD_DEP_UOP_TEMP_FUNC_NAME addLink_Uop
 
 #define ADD_LINK_OPR_REG_FUNC_NAME_STR    "addLink_OPR_REG"
 #define ADD_LINK_OPR_TREG_FUNC_NAME_STR   "addLink_OPR_TREG"
 #define ADD_LINK_OPR_MEMREG_FUNC_NAME_STR "addLink_OPR_MEM"
 #define ADD_LINK_OPR_IMM_FUNC_NAME_STR    "addLink_OPR_IMM"
-#define ADD_LINK_UOP_TEMP_FUNC_NAME_STR   "addLink_Uop"
+#define ADD_DEP_UOP_TEMP_FUNC_NAME_STR   "addLink_Uop"
 
 
 
@@ -87,7 +87,7 @@ namespace traceBuilder::model {
         void ADD_LINK_OPR_TREG_FUNC_NAME(OPR_TREG* opr, bool isSrc);
         void ADD_LINK_OPR_MEMREG_FUNC_NAME(OPR_MEM* opr, int startByte, int stopByte, bool isSrc);
         void ADD_LINK_OPR_IMM_FUNC_NAME(OPR_IMM* opr);
-        void ADD_LINK_UOP_TEMP_FUNC_NAME(UOP_AGENT_PTR uopAgent);
+        void ADD_DEP_UOP_TEMP_FUNC_NAME(UOP_AGENT_PTR uopAgent);
 
         /** uop base management*/
         UOP_BASE* genUop();

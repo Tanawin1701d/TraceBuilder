@@ -91,6 +91,24 @@ namespace traceBuilder::model {
             }
         }
 
+        /**make all operand referencable*/
+        /** pool operand is not counted here because we add them for each interpret already*/
+        srcRegOperandsPtr  = cvtToSharedRef<OPR_REG>(srcRegOperands);
+        srcLdOperandsPtr   = cvtToSharedRef<OPR_MEM>(srcLdOperands);
+        srcImmOperandsPtr  = cvtToSharedRef<OPR_IMM>(srcImmOperands);
+        /**check the answer*/
+        assert(srcRegOperandsPtr.size() + srcLdOperandsPtr.size() + srcImmOperandsPtr.size() == srcMacroPoolOperands.size());
+
+        desRegOperandsPtr  = cvtToSharedRef<OPR_REG>(desRegOperands);
+        desStOperandsPtr   = cvtToSharedRef<OPR_MEM>(desStOperands);
+        /**check the answer*/
+        assert(desRegOperandsPtr.size() + desStOperandsPtr.size() == desMacroPoolOperands.size());
+        /*************************************************************************************/
+
+
+
+
+
     }
 
 
@@ -272,6 +290,7 @@ namespace traceBuilder::model {
     }
 
     void BIND_RT_INSTR(py::module& m){
+
         py::class_<RT_INSTR, std::shared_ptr<RT_INSTR>>(m, "INSTR")
                 .def(py::init<>())
                 .def(GET_RT_INSTR_SRC_REG_OPR_FN_STR , &RT_INSTR::GET_RT_INSTR_SRC_REG_OPR_FN  )

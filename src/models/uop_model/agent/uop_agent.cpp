@@ -102,7 +102,7 @@ namespace traceBuilder::model{
         oprImmLinker.push_back({opr});
     }
 
-    void UOP_AGENT::ADD_LINK_UOP_TEMP_FUNC_NAME(UOP_AGENT_PTR uopAgent) {
+    void UOP_AGENT::ADD_DEP_UOP_TEMP_FUNC_NAME(UOP_AGENT_PTR uopAgent) {
         assert(uopAgent != nullptr);
         tempDeps.push_back(uopAgent);
     }
@@ -141,7 +141,7 @@ namespace traceBuilder::model{
                 .def(ADD_LINK_OPR_TREG_FUNC_NAME_STR  , &UOP_AGENT::ADD_LINK_OPR_TREG_FUNC_NAME  )
                 .def(ADD_LINK_OPR_MEMREG_FUNC_NAME_STR, &UOP_AGENT::ADD_LINK_OPR_MEMREG_FUNC_NAME)
                 .def(ADD_LINK_OPR_IMM_FUNC_NAME_STR   , &UOP_AGENT::ADD_LINK_OPR_IMM_FUNC_NAME   )
-                .def(ADD_LINK_UOP_TEMP_FUNC_NAME_STR  , &UOP_AGENT::ADD_LINK_UOP_TEMP_FUNC_NAME  )
+                .def(ADD_DEP_UOP_TEMP_FUNC_NAME_STR   , &UOP_AGENT::ADD_DEP_UOP_TEMP_FUNC_NAME  )
                 ;
     }
 

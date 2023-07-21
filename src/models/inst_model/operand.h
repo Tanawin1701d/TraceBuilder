@@ -48,6 +48,8 @@ namespace traceBuilder::model {
 
     };
 
+    class OPR_REG;
+    typedef std::shared_ptr<OPR_REG> OPR_REG_PTR;
     /// register operand it is used at src and des operand
     class OPR_REG : public OPERAND {
     private:
@@ -65,6 +67,8 @@ namespace traceBuilder::model {
 
     };
 
+    class OPR_TREG;
+    typedef std::shared_ptr<OPR_TREG> OPR_TREG_PTR;
     class OPR_TREG : public OPERAND {
     private:
         TREGNUM regId;
@@ -83,7 +87,8 @@ namespace traceBuilder::model {
     };
 
 /// memory operand
-
+    class OPR_MEM;
+    typedef std::shared_ptr<OPR_MEM> OPR_MEM_PTR;
     class OPR_MEM : public OPERAND {
     private:
         const uint8_t MAX_BYTE_PER_MICROOP = 8;
@@ -106,7 +111,9 @@ namespace traceBuilder::model {
         void setVirAddr(ADDR virAddr){_meta.v_area.addr = virAddr;}
     };
 
-/// immediate operand
+    class OPR_IMM;
+    typedef std::shared_ptr<OPR_IMM> OPR_IMM_PTR;
+    /// immediate operand
     class OPR_IMM : public OPERAND {
         // imm operand
     private:

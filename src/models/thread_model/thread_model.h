@@ -38,7 +38,7 @@ namespace traceBuilder::model {
 
         uint64_t getAmountInstr(){return instrPool.size();}
 
-        void decodeInstr(uint64_t instrId, const MOP_AGENT_PTR& mopAgent);
+        void addDecodedInstr(uint64_t instrId, const MOP_AGENT_PTR& mopAgent);
         //////// when tracer collect raw static instruction token which we will decoded it
         void onGetStTraceValue(const staticTraceData& stData); // for only per instruction
 

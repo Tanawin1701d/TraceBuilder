@@ -44,13 +44,13 @@ for i in range(threadModel.getAmountInstr()):
     rt_instr = threadModel.getRtInstr(i)
     uop      = tbd.UOP(tbd.UOP_TYPE.UOP_COMP, 1)
     #print(type(rt_instr))
-    for opr in rt_instr.getSrcRegOperands():
+    for opr in rt_instr.getSrcRegOpr():
         uop.addLink_OPR_REG(opr, 0, True)
-    for opr in rt_instr.getSrcLdOperands():
+    for opr in rt_instr.getSrcLdOper():
         uop.addLink_OPR_MEM(opr, 0, 8, True)
-    for opr in rt_instr.getDesRegOperands():
+    for opr in rt_instr.getDesRegOpr():
         uop.addLink_OPR_REG(opr, 0, False)
-    for opr in rt_instr.getDesStOperands():
+    for opr in rt_instr.getDesStOpr():
         uop.addLink_OPR_MEM(opr, 0, 8, False)
     mop      = tbd.MOP(rt_instr)
     mop.addUopAgents([uop])

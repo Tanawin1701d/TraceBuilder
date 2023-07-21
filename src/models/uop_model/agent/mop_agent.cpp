@@ -12,10 +12,17 @@ namespace traceBuilder::model{
         assert(owner != nullptr);
     }
 
-    OPR_TREG* MOP_AGENT::createAndAddTempOpr(int tRegId) {
-        auto oprTemp = new OPR_TREG(tRegId);
-        tempOperands.push_back(oprTemp);
+    OPR_TREG_PTR MOP_AGENT::createAndAddTempOpr(int tRegId) {
+        auto oprTemp = std::make_shared<OPR_TREG>(tRegId);
+        tempOperandsPtr.push_back(oprTemp);
         return oprTemp;
+    }
+
+    OPR_REG_PTR MOP_AGENT::createAndAddRegOpr(int archRegId, int maxSubRegId) {
+        AREGNUM reg = {archRegId, maxSubRegId};
+        auto oprReg = std::make_shared<OPR_REG>(reg, -1);
+        regOperandsPtr.push_back(oprReg);
+        return oprReg;
     }
 
     void MOP_AGENT::addUopAgent(const UOP_AGENT_PTR& uopAgentPtr) {
@@ -49,7 +56,7 @@ namespace traceBuilder::model{
     {
         auto clonedMopAgent = std::make_shared<MOP_AGENT>(_owner);
         /** tempOperand we use same as old agent because it are created uniq for each instruction*/
-        clonedMopAgent->tempOperands = tempOperands;
+        clonedMopAgent->tempOperandsPtr = tempOperandsPtr;
         for (const auto& uopAgentPtr: _uopAgents){
             clonedMopAgent->_uopAgents.push_back(uopAgentPtr->UOP_AGENT_CLONE());
         }
@@ -61,7 +68,8 @@ namespace traceBuilder::model{
                 .def(py::init<RT_INSTR*>(),
                      py::arg("runtimeInstr"),
                      "mop agent initializer")
-                .def("buildTOpr", &MOP_AGENT::createAndAddTempOpr)
+                .def("buildTempOpr"  , &MOP_AGENT::createAndAddTempOpr)
+                .def("buildRegOpr", &MOP_AGENT::createAndAddRegOpr)
                 .def("addUopAgent", &MOP_AGENT::addUopAgent)
                 .def("addUopAgents", &MOP_AGENT::addUopAgents);
     }

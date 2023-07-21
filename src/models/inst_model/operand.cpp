@@ -97,6 +97,4 @@ namespace traceBuilder::model {
 
     }
 
-
-
 }
