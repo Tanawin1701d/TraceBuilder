@@ -55,6 +55,8 @@ PYBIND11_MODULE( traceBuilder, m){
     model::BIND_THREAD_MODEL(m);
 
     model::BIND_UOP_TYPE(m);
+    model::BIND_META_TYPE(m);
+    model::BIND_REG_TYPE(m);
 
 
 

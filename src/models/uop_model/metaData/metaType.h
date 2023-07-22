@@ -32,6 +32,9 @@ namespace traceBuilder::model {
 
     };
 
+    namespace py = pybind11;
+    void BIND_META_TYPE(py::module& m);
+
 }
 
 #endif //TRACEBUILDER_METATYPE_H

@@ -12,17 +12,25 @@ namespace traceBuilder::model{
         assert(owner != nullptr);
     }
 
-    OPR_TREG_PTR MOP_AGENT::createAndAddTempOpr(int tRegId) {
-        auto oprTemp = std::make_shared<OPR_TREG>(tRegId);
-        tempOperandsPtr.push_back(oprTemp);
-        return oprTemp;
+//    OPR_TREG_PTR MOP_AGENT::createAndAddTempOpr(int tRegId) {
+//        auto oprTemp = std::make_shared<OPR_TREG>(tRegId);
+//        tempOperandsPtr.push_back(oprTemp);
+//        return oprTemp;
+//    }
+//
+//    OPR_REG_PTR MOP_AGENT::createAndAddRegOpr(int archRegId, int maxSubRegId) {
+//        AREGNUM reg = {archRegId, maxSubRegId};
+//        auto oprReg = std::make_shared<OPR_REG>(reg, -1);
+//        regOperandsPtr.push_back(oprReg);
+//        return oprReg;
+//    }
+
+    void MOP_AGENT::addOprReg(const OPR_REG_PTR& regOpr) {
+        regOperandsPtr.push_back(regOpr);
     }
 
-    OPR_REG_PTR MOP_AGENT::createAndAddRegOpr(int archRegId, int maxSubRegId) {
-        AREGNUM reg = {archRegId, maxSubRegId};
-        auto oprReg = std::make_shared<OPR_REG>(reg, -1);
-        regOperandsPtr.push_back(oprReg);
-        return oprReg;
+    void MOP_AGENT::addOprTemp(const OPR_TREG_PTR& tregOpr) {
+        tempOperandsPtr.push_back(tregOpr);
     }
 
     void MOP_AGENT::addUopAgent(const UOP_AGENT_PTR& uopAgentPtr) {
@@ -52,6 +60,8 @@ namespace traceBuilder::model{
         return results;
     }
 
+
+
     MOP_AGENT_PTR MOP_AGENT::MOP_AGENT_CLONE()
     {
         auto clonedMopAgent = std::make_shared<MOP_AGENT>(_owner);
@@ -68,8 +78,10 @@ namespace traceBuilder::model{
                 .def(py::init<RT_INSTR*>(),
                      py::arg("runtimeInstr"),
                      "mop agent initializer")
-                .def("buildTempOpr"  , &MOP_AGENT::createAndAddTempOpr)
-                .def("buildRegOpr", &MOP_AGENT::createAndAddRegOpr)
+                //.def("buildTempOpr"  , &MOP_AGENT::createAndAddTempOpr)
+                //.def("buildRegOpr", &MOP_AGENT::createAndAddRegOpr)
+                .def("addOprReg", &MOP_AGENT::addOprReg)
+                .def("addOprTemp", &MOP_AGENT::addOprTemp)
                 .def("addUopAgent", &MOP_AGENT::addUopAgent)
                 .def("addUopAgents", &MOP_AGENT::addUopAgents);
     }

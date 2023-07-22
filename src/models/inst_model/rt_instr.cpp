@@ -293,6 +293,7 @@ namespace traceBuilder::model {
 
         py::class_<RT_INSTR, std::shared_ptr<RT_INSTR>>(m, "INSTR")
                 .def(py::init<>())
+                .def(GET_RT_INSTR_MNEMONIC_FN_STR    , &RT_INSTR::GET_RT_INSTR_MNEMONIC_FN     )
                 .def(GET_RT_INSTR_SRC_REG_OPR_FN_STR , &RT_INSTR::GET_RT_INSTR_SRC_REG_OPR_FN  )
                 .def(GET_RT_INSTR_SRC_MEM_OPR_FN_STR , &RT_INSTR::GET_RT_INSTR_SRC_MEM_OPR_FN  )
                 .def(GET_RT_INSTR_SRC_IMM_OPR_FN_STR , &RT_INSTR::GET_RT_INSTR_SRC_IMM_OPR_FN  )

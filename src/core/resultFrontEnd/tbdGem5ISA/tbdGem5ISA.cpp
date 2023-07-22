@@ -196,7 +196,9 @@ namespace traceBuilder::core{
 
     void BIND_RESULT_FRONT_END_TBDGEMISA(py::module& m){
         py::class_<TBD_GEM5_ISA, RESULT_FRONT_END, std::shared_ptr<TBD_GEM5_ISA>>(m, "TBD_GEM5_ISA")
-                .def(py::init<const std::string&>());
+                .def(py::init<const std::string&>())
+                .def("test", &TBD_GEM5_ISA::test)
+                ;
     }
 
 

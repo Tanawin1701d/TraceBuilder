@@ -25,6 +25,8 @@ namespace traceBuilder::model {
 
 
         /** pybind  function*/
+
+#define GET_RT_INSTR_MNEMONIC_FN     getMnemonic
 #define GET_RT_INSTR_SRC_REG_OPR_FN  getSrcRegOperandsPtr
 #define GET_RT_INSTR_SRC_MEM_OPR_FN  getSrcLdOperandsPtr
 #define GET_RT_INSTR_SRC_IMM_OPR_FN  getSrcImmOperandsPtr
@@ -33,8 +35,9 @@ namespace traceBuilder::model {
 #define GET_RT_INSTR_DES_MEM_OPR_FN  getDesStOperandsPtr
 #define GET_RT_INSTR_DES_POOL_OPR_FN getDesMacroPoolOperandsPtr
 
+#define GET_RT_INSTR_MNEMONIC_FN_STR     "getMnemonic"
 #define GET_RT_INSTR_SRC_REG_OPR_FN_STR  "getSrcRegOpr"
-#define GET_RT_INSTR_SRC_MEM_OPR_FN_STR  "getSrcLdOper"
+#define GET_RT_INSTR_SRC_MEM_OPR_FN_STR  "getSrcLdOpr"
 #define GET_RT_INSTR_SRC_IMM_OPR_FN_STR  "getSrcImmOpr"
 #define GET_RT_INSTR_SRC_POOL_OPR_FN_STR "getSrcPoolOpr"
 #define GET_RT_INSTR_DES_REG_OPR_FN_STR  "getDesRegOpr"

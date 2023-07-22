@@ -36,6 +36,8 @@ namespace traceBuilder::core {
         explicit TBD_GEM5_ISA(const std::string& machProtoFilePath);
         ~TBD_GEM5_ISA(){ delete desFileStream;}
 
+        void test() override {std::cout << "deriveClass" << std::endl;}
+
     };
 
     namespace py = pybind11;

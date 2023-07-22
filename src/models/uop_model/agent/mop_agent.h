@@ -28,10 +28,12 @@ namespace traceBuilder::model{
     public:
         explicit      MOP_AGENT(RT_INSTR* owner);
         MOP_AGENT_PTR MOP_AGENT_CLONE();
-        OPR_TREG_PTR  createAndAddTempOpr(int tRegId);
-        OPR_REG_PTR   createAndAddRegOpr(int archRegId, int maxSubRegId);
+        //OPR_TREG_PTR  createAndAddTempOpr(int tRegId);
+        //OPR_REG_PTR   createAndAddRegOpr(int archRegId, int maxSubRegId);
         void          addUopAgent(const UOP_AGENT_PTR& uopAgentPtr);
         void          addUopAgents(const std::vector<UOP_AGENT_PTR>& uopAgents);
+        void          addOprReg(const OPR_REG_PTR& regOpr);
+        void          addOprTemp(const OPR_TREG_PTR& tregOpr);
         std::vector<UOP_BASE*> genUops();
         int           getUopCount(){return _uopAgents.size();};
     };

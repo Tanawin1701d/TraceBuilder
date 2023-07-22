@@ -55,6 +55,9 @@ namespace traceBuilder::model {
     AREGNUM regMapAutoAdd(const std::string &regName);
     MREGNUM archRegToMReg(AREGNUM reg, int subIdx);
 
+    namespace py = pybind11;
+    void BIND_REG_TYPE(py::module& m);
+
 }
 
 #endif //TRACEBUILDER_REGMAPPER_H

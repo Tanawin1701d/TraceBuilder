@@ -8,8 +8,16 @@ class MODEL_USAGE_ERR(Exception):
 
 
 pendingUops = dict() #### dict of key = threadId  value = list() of uop
+pendingReg  = dict() #### dict of key = threadId value = list() of reg operand
+pendingTReg = dict() #### dict of key = threadId value = list() of treg operand
 
 class MODEL:
+
+    def initialAutoAddedStructure(self):
+        tid = sysVal.getThreadId()
+        pendingUops[tid] = list()
+        pendingReg[tid]  = list()
+        pendingTReg[tid] = list()
 
     def addAutoUopToMop(self, mop: tbd.MOP):
         tid = sysVal.getThreadId()
@@ -20,11 +28,39 @@ class MODEL:
             print("[TBD FED][MODEL BASE] warning modeler got 0 uop for mop")
         mop.addUopAgents(toAddUops)
 
+    def addAutoRegOprToMop(self, mop: tbd.MOP):
+        tid = sysVal.getThreadId()
+        if tid not in pendingReg:
+            raise MODEL_USAGE_ERR("can't find auto reg opr list to add to system")
+        toAddRegOprs = pendingReg[tid]
+        for opr in toAddRegOprs:
+            mop.addOprReg(opr)
+
+    def addAutoTregOprToMop(self, mop: tbd.MOP):
+        tid = sysVal.getThreadId()
+        if tid not in pendingTReg:
+            raise MODEL_USAGE_ERR("can't find auto treg opr list to add to system")
+        toAddTregOprs = pendingTReg[tid]
+        for opr in toAddTregOprs:
+            mop.addOprTemp(opr)
+
     def clearAutoAddedUop(self):
         tid = sysVal.getThreadId()
         if tid not in pendingUops:
-            raise MODEL_USAGE_ERR("can't find auto uop list to add to system")
+            raise MODEL_USAGE_ERR("can't find auto uop list that is added to system")
         pendingUops.pop(tid)
+
+    def clearAutoAdded_OPR_REG(self):
+        tid = sysVal.getThreadId()
+        if tid not in pendingReg:
+            raise MODEL_USAGE_ERR("can't clear auto reg opr that is added to system")
+        pendingReg.pop(tid)
+
+    def clearAutoAdded_OPR_TREG(self):
+        tid = sysVal.getThreadId()
+        if tid not in pendingTReg:
+            raise MODEL_USAGE_ERR("can't clear auto treg opr that is added to system")
+        pendingTReg.pop(tid)
 
     def decode(self, rt_instr, mop):
         ######## you must return list
@@ -40,8 +76,8 @@ class MODEL:
         for instrId in range(amtInstr):
             ##### runtime instr
             rt_instr = tmd.getRtInstr(instrId)
-            ##### prepare storeage for auto add uop
-            pendingUops[tid] = list()
+            ##### prepare storage for auto add uop
+            self.initialAutoAddedStructure()
             ##### mop
             mop = tbd.MOP(rt_instr)
             ##### send to decoder
@@ -50,8 +86,42 @@ class MODEL:
             self.addAutoUopToMop(mop)
             ##### clear auto uop
             self.clearAutoAddedUop()
+            self.clearAutoAdded_OPR_REG()
+            self.clearAutoAdded_OPR_TREG()
             ##### send mop to cxx to save model
             tmd.addDecodedInstr(instrId, mop)
+
+    def getSrcOprs(self, instr: tbd.INSTR):
+        amt = len(instr.getSrcPoolOpr())
+        preRet = [None for _ in range(amt)]
+        for opr in instr.getSrcRegOpr():
+            idx = opr.getMcSideIdx()
+            preRet[idx] = opr
+        for opr in instr.getSrcLdOpr():
+            idx = opr.getMcSideIdx()
+            preRet[idx] = opr
+        for opr in instr.getSrcImmOpr():
+            idx = opr.getMcSideIdx()
+            preRet[idx] = opr
+        if None in preRet:
+            raise MODEL_USAGE_ERR(f"get SrcUop error from rt: {instr.getSrcPoolOpr} got : {preRet}")
+        return preRet
+
+    def getDesOprs(self, instr: tbd.INSTR):
+        amt = len(instr.getDesPoolOpr())
+        preRet = [None for _ in range(amt)]
+        for opr in instr.getDesRegOpr():
+            idx = opr.getMcSideIdx()
+            preRet[idx] = opr
+        for opr in instr.getDesStOpr():
+            idx = opr.getMcSideIdx()
+            preRet[idx] = opr
+
+        if None in preRet:
+            raise MODEL_USAGE_ERR(f"get DesUop error from rt: {instr.getDesPoolOpr} got : {preRet}")
+        return preRet
+
+
 
 
 class UOP:
@@ -91,3 +161,23 @@ class UOP:
             if arg not in kwargs:
                 raise MODEL_USAGE_ERR(f"{arg} not in Args")
         return
+
+class OPR_REG:
+    def __init__(self, archRegId: int, idxInPool: int = -1, addToCxx: bool = True):
+        self.reg = tbd.OPR_REG(archRegId, idxInPool)
+        if addToCxx:
+            tid = sysVal.getThreadId()
+            pendingReg[tid].append(self.reg)
+
+    def getData(self):
+        self.reg.getData()
+
+class OPR_TREG:
+    def __init__(self, tregId: int, addToCxx: bool = True):
+        self.treg = tbd.OPR_TREG(tregId)
+        if addToCxx:
+            tid = sysVal.getThreadId()
+            pendingReg[tid].append(self.treg)
+
+    def getData(self):
+        self.treg.getData()

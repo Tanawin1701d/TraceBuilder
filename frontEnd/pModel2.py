@@ -34,6 +34,7 @@ pinFed        = tbd.LAGACY_PIN_TRACER(PinStaticPath, PinDynPath)
 ###### gem5 result frontend
 gem5dynPath   = os.path.join(projectPath, "pin/TbOutput/{workLoad}/DynTbdIsa_testNewPy").format(workLoad = cmd)
 gem5Fed       = tbd.TBD_GEM5_ISA(gem5dynPath)
+gem5Fed.test()
 ###################################################
 
 session = core.SESSION("testSession", mem_mng, exec_res)

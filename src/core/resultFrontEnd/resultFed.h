@@ -33,6 +33,8 @@ namespace traceBuilder::core {
                             SHARED_TRACEINFO* _sharedInfo,
                             SPECIFIC_TRACEINFO* _specificInfo) {assert(false);};
 
+        virtual void test(){std::cout << "baseClass" << std::endl;}
+
     };
 
     ////////////////////////////////////////////////////////////////////////////////////////
