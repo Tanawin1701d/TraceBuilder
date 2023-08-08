@@ -4,6 +4,7 @@
 
 #include "mop_agent.h"
 #include "models/inst_model/rt_instr.h"
+#include "stat/statPool.h"
 
 
 namespace traceBuilder::model{
@@ -33,6 +34,10 @@ namespace traceBuilder::model{
         tempOperandsPtr.push_back(tregOpr);
     }
 
+    void MOP_AGENT::addOprImm(const OPR_IMM_PTR& immOpr){
+        immOperandPtr.push_back(immOpr);
+    }
+
     void MOP_AGENT::addUopAgent(const UOP_AGENT_PTR& uopAgentPtr) {
         assert(uopAgentPtr != nullptr);
         _uopAgents.push_back(uopAgentPtr);
@@ -47,6 +52,8 @@ namespace traceBuilder::model{
     }
 
     std::vector<UOP_BASE*> MOP_AGENT::genUops() {
+
+
         std::vector<UOP_BASE*> results;
         /** start generate*/
         results.reserve(_uopAgents.size());
@@ -57,6 +64,10 @@ namespace traceBuilder::model{
         for (const auto& uopAgentPtr: _uopAgents){
             uopAgentPtr->cleanAgent();
         }
+        /////////////////// statistic collection
+        stat::MAIN_STAT["MOP" + std::string(isWeakDecoded ? "_WEAK": "")]["COUNT"][_owner->getDecodeKey()].asUINT()++;
+        stat::MAIN_STAT["MOP" + std::string(isWeakDecoded ? "_WEAK": "")]["UOPCNT"][_owner->getDecodeKey()].asUINT() = results.size();
+        stat::MAIN_STAT["MOP" + std::string(isWeakDecoded ? "_WEAK": "")]["TOTAL"].asUINT()++;
         return results;
     }
 
@@ -82,7 +93,9 @@ namespace traceBuilder::model{
                 //.def("buildRegOpr", &MOP_AGENT::createAndAddRegOpr)
                 .def("addOprReg", &MOP_AGENT::addOprReg)
                 .def("addOprTemp", &MOP_AGENT::addOprTemp)
+                .def("addOprImm", &MOP_AGENT::addOprImm)
                 .def("addUopAgent", &MOP_AGENT::addUopAgent)
-                .def("addUopAgents", &MOP_AGENT::addUopAgents);
+                .def("addUopAgents", &MOP_AGENT::addUopAgents)
+                .def("setWeakDecode", &MOP_AGENT::setWeakDecode);
     }
 }

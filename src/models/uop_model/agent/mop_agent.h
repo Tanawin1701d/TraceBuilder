@@ -19,12 +19,15 @@ namespace traceBuilder::model{
     class RT_INSTR;
     class MOP_AGENT;
     typedef  std::shared_ptr<MOP_AGENT> MOP_AGENT_PTR;
+
     class MOP_AGENT{
     private:
         RT_INSTR* _owner;
         std::vector<OPR_TREG_PTR>   tempOperandsPtr;
         std::vector<OPR_REG_PTR>    regOperandsPtr;
+        std::vector<OPR_IMM_PTR>    immOperandPtr;
         std::vector<UOP_AGENT_PTR> _uopAgents;
+        bool isWeakDecoded  = false;
     public:
         explicit      MOP_AGENT(RT_INSTR* owner);
         MOP_AGENT_PTR MOP_AGENT_CLONE();
@@ -34,8 +37,10 @@ namespace traceBuilder::model{
         void          addUopAgents(const std::vector<UOP_AGENT_PTR>& uopAgents);
         void          addOprReg(const OPR_REG_PTR& regOpr);
         void          addOprTemp(const OPR_TREG_PTR& tregOpr);
+        void          addOprImm(const OPR_IMM_PTR& immOpr);
         std::vector<UOP_BASE*> genUops();
-        int           getUopCount(){return _uopAgents.size();};
+        int           getUopCount(){return (int)_uopAgents.size();};
+        void          setWeakDecode(){isWeakDecoded = true;}
     };
 
 

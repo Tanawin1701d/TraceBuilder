@@ -3,12 +3,14 @@ cmake_minimum_required(VERSION 3.23)
 project(traceBuilder)
 set(CMAKE_CXX_STANDARD 17)
 
-
-#add_definitions(-Ddebug)
-add_definitions(-DX86)
 #add_definitions(-DMINI_GEN)
 #set(CMAKE_BUILD_TYPE Debug)
 add_compile_options(-O3)
+
+#add_definitions(-Ddebug)
+add_definitions(-DX86)
+#add_definitions(-DenDepTrack)
+
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-unused-attributes")
 set(CMAKE_INTERPROCEDURAL_OPTIMIZATION TRUE)

@@ -50,7 +50,8 @@ namespace traceBuilder::core{
             machRec->set_funcunit(execUnit);
             stat::MAIN_STAT["EXEC_UNIT"][std::to_string(execUnit)].asUINT()++;
             if (skip) {
-                stat::MAIN_STAT["EXEC_UNIT"]["skip"].asUINT()++;
+                stat::MAIN_STAT["EXEC_UNIT"]["skip"]["amount"].asUINT()++;
+                stat::MAIN_STAT["EXEC_UNIT"]["skip"]["instrName"][rt_instr->getDecodeKey()].asUINT()++;
             }
             auto uopType = uop_base->getUopType();
             machRec->set_rectype(skip ? ProtoMessage::machRecord_RecordType::machRecord_RecordType_UOP_COMP :
@@ -134,7 +135,7 @@ namespace traceBuilder::core{
         /**insert*/
         for (auto tregNum : *regMetaPtr){
             stat::MAIN_STAT["DEP_TEMP"][std::to_string(tregNum)].asUINT()++;
-            (machRec->*inseter)(tregNum);
+            (machRec->*inseter)(tregNum + START_TREGID);
         }
     }
 

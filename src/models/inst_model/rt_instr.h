@@ -7,7 +7,6 @@
 
 
 ////// runtime instr it like dynamic instruction in gem5
-#include <pybind11/stl_bind.h>
 #include <pybind11/stl.h>
 #include "operand.h"
 
@@ -30,19 +29,21 @@ namespace traceBuilder::model {
 #define GET_RT_INSTR_SRC_REG_OPR_FN  getSrcRegOperandsPtr
 #define GET_RT_INSTR_SRC_MEM_OPR_FN  getSrcLdOperandsPtr
 #define GET_RT_INSTR_SRC_IMM_OPR_FN  getSrcImmOperandsPtr
-#define GET_RT_INSTR_SRC_POOL_OPR_FN getSrcMacroPoolOperandsPtr
+#define GET_RT_INSTR_SRC_CNT         countSrcPoolOperands
 #define GET_RT_INSTR_DES_REG_OPR_FN  getDesRegOperandsPtr
 #define GET_RT_INSTR_DES_MEM_OPR_FN  getDesStOperandsPtr
-#define GET_RT_INSTR_DES_POOL_OPR_FN getDesMacroPoolOperandsPtr
+#define GET_RT_INSTR_DES_CNT         countDesPoolOperands
 
 #define GET_RT_INSTR_MNEMONIC_FN_STR     "getMnemonic"
 #define GET_RT_INSTR_SRC_REG_OPR_FN_STR  "getSrcRegOpr"
 #define GET_RT_INSTR_SRC_MEM_OPR_FN_STR  "getSrcLdOpr"
 #define GET_RT_INSTR_SRC_IMM_OPR_FN_STR  "getSrcImmOpr"
-#define GET_RT_INSTR_SRC_POOL_OPR_FN_STR "getSrcPoolOpr"
+#define GET_RT_INSTR_SRC_CNT_STR         "getSrcCount"
+
+
 #define GET_RT_INSTR_DES_REG_OPR_FN_STR  "getDesRegOpr"
 #define GET_RT_INSTR_DES_MEM_OPR_FN_STR  "getDesStOpr"
-#define GET_RT_INSTR_DES_POOL_OPR_FN_STR "getDesPoolOpr"
+#define GET_RT_INSTR_DES_CNT_STR         "getDesCount"
 
         typedef uint64_t RT_INSTR_ID;
         typedef std::shared_ptr<RT_INSTR> RT_INSTR_PTR;
@@ -87,13 +88,13 @@ namespace traceBuilder::model {
             std::vector<OPR_REG_PTR> srcRegOperandsPtr;
             std::vector<OPR_MEM_PTR> srcLdOperandsPtr;
             std::vector<OPR_IMM_PTR> srcImmOperandsPtr;
-            std::vector<OPERAND_PTR> srcMacroPoolOperands; /// pool the  src operand for macroop will get it and fill into micro-op
+            //std::vector<OPERAND_PTR> srcMacroPoolOperands; /// pool the  src operand for macroop will get it and fill into micro-op
             /** pool operand ensure your order that get from tracerTool*/
 
             /////// pool operand to allow macro-op access in correct order
             std::vector<OPR_REG_PTR> desRegOperandsPtr;
             std::vector<OPR_MEM_PTR> desStOperandsPtr;
-            std::vector<OPERAND_PTR> desMacroPoolOperands;/// pool the  des operand for macroop will get it and fill into micro-op
+            //std::vector<OPERAND_PTR> desMacroPoolOperands;/// pool the  des operand for macroop will get it and fill into micro-op
             /** mop agent for generate microop*/
             MOP_AGENT_PTR _mopAgentPtr;
 
@@ -165,17 +166,20 @@ namespace traceBuilder::model {
             std::vector<OPR_REG_PTR>& GET_RT_INSTR_SRC_REG_OPR_FN()  {return srcRegOperandsPtr;    }
             std::vector<OPR_MEM_PTR>& GET_RT_INSTR_SRC_MEM_OPR_FN()  {return srcLdOperandsPtr;     }
             std::vector<OPR_IMM_PTR>& GET_RT_INSTR_SRC_IMM_OPR_FN()  {return srcImmOperandsPtr;    }
-            std::vector<OPERAND_PTR>& GET_RT_INSTR_SRC_POOL_OPR_FN() {return srcMacroPoolOperands; }
+            //std::vector<OPERAND_PTR>& GET_RT_INSTR_SRC_POOL_OPR_FN() {return srcMacroPoolOperands; }
             std::vector<OPR_REG_PTR>& GET_RT_INSTR_DES_REG_OPR_FN()  {return desRegOperandsPtr;    }
             std::vector<OPR_MEM_PTR>& GET_RT_INSTR_DES_MEM_OPR_FN()  {return desStOperandsPtr;     }
-            std::vector<OPERAND_PTR>& GET_RT_INSTR_DES_POOL_OPR_FN() {return desMacroPoolOperands; }
+            //std::vector<OPERAND_PTR>& GET_RT_INSTR_DES_POOL_OPR_FN() {return desMacroPoolOperands; }
 
             ////// count method
             int countSrcRegOperands() const { return (int) srcRegOperands.size(); };
             int countSrcLdOpeands()   const { return (int) srcLdOperands.size(); };
             int countSrcImmOperands() const { return (int) srcImmOperands.size(); };
+            int GET_RT_INSTR_SRC_CNT()const {return countSrcRegOperands() + countSrcLdOpeands() + countSrcImmOperands();}
+
             int countDesRegOperands() const { return (int) desRegOperands.size(); };
             int countDesStOperands()  const { return (int) desStOperands.size(); };
+            int GET_RT_INSTR_DES_CNT()const {return countDesRegOperands() + countDesStOperands();}
 
         };
 

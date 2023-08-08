@@ -35,6 +35,10 @@ namespace mystat  = traceBuilder::stat;
 
 PYBIND11_MODULE( traceBuilder, m){
     model::BIND_CORE(m);
+
+    model::BIND_UOP_TYPE(m);
+    model::BIND_META_TYPE(m);
+    model::BIND_REG_TYPE(m);
     /////// core trace tool
     core::BIND_TRACE_TOOL_FRONT_END(m);
     core::BIND_LAGACY_PIN_TRACER(m);
@@ -54,9 +58,7 @@ PYBIND11_MODULE( traceBuilder, m){
 
     model::BIND_THREAD_MODEL(m);
 
-    model::BIND_UOP_TYPE(m);
-    model::BIND_META_TYPE(m);
-    model::BIND_REG_TYPE(m);
+
 
 
 

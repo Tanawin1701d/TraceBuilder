@@ -8,6 +8,7 @@
 #include <iostream>
 #include <map>
 #include <string>
+#include <pybind11/stl.h>
 #include<boost/algorithm/string.hpp>
 #include"stat/statPool.h"
 
@@ -16,9 +17,14 @@ namespace traceBuilder::model {
 
     typedef int TREGNUM; ///// temporal reg number
 
-    struct AREGNUM{ //// architecture register
+    class AREGNUM{ //// architecture register
+    public:
         int archRegId = -1;
         int maxSubRegId = -1;
+
+
+        AREGNUM(): archRegId(-1), maxSubRegId(-1) {}
+        AREGNUM(int inp_arcRegId, int inp_maxSubRegId): archRegId(inp_arcRegId), maxSubRegId(inp_maxSubRegId){}
 
         bool operator == (const AREGNUM& rhs) const{
             return archRegId == rhs.archRegId && maxSubRegId == rhs.archRegId;
@@ -27,6 +33,8 @@ namespace traceBuilder::model {
         bool operator != (const AREGNUM& rhs) const{
             return !(*this == rhs);
         }
+
+
 
     };
 

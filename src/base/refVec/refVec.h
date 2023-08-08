@@ -15,10 +15,15 @@
 namespace traceBuilder {
 
     template<typename T>
+    struct noDeleteSharedPtrPolicy{
+        void operator()(T*) const{}
+    };
+
+    template<typename T>
     std::vector<std::shared_ptr<T>> cvtToSharedRef(std::vector<T>& src) {
         std::vector<std::shared_ptr<T>> results;
         for (auto& ele: src) {
-            results.push_back(std::shared_ptr<T>(&ele));
+            results.push_back(std::shared_ptr<T>(&ele, noDeleteSharedPtrPolicy<T>()  ));
         }
         return results;
     }

@@ -55,6 +55,18 @@ namespace traceBuilder::model {
 
 
     void BIND_OPERAND(py::module& m){
+        /** bind operand type*/
+
+        py::enum_<OPR_TYPE>(m, "OPR_TYPE")
+        .value("O_REG"   , OPR_TYPE::O_REG)
+        .value("O_TEMP"  , OPR_TYPE::O_TEMP)
+        .value("O_MEM_LD", OPR_TYPE::O_MEM_LD)
+        .value("O_MEM_ST", OPR_TYPE::O_MEM_ST)
+        .value("O_IMM"   , OPR_TYPE::O_IMM)
+        .value("O_DUMMY" , OPR_TYPE::O_DUMMY)
+        .export_values();
+
+
         /** bind operand base*/
         py::class_<OPERAND, std::shared_ptr<OPERAND>>(m, "OPERAND")
                 .def(py::init<OPR_TYPE, size_t>(),
@@ -65,9 +77,8 @@ namespace traceBuilder::model {
                 .def("getMcSideIdx", &OPERAND::getMcSideIdx);
         /** bind operand reg*/
         py::class_<OPR_REG, OPERAND, std::shared_ptr<OPR_REG>>(m, "OPR_REG")
-                .def(py::init<AREGNUM, size_t>(),
-                        py::arg("oprType"),
-                        py::arg("idxInPool"),
+                .def(py::init<AREGNUM>(),
+                        py::arg("archReg"),
                         "reg Opr initializer")
                 .def(GET_DATA_FUNCNAME_STR, &OPR_REG::GET_DATA_FUNCNAME);
         /** bind operand treg*/
@@ -88,10 +99,8 @@ namespace traceBuilder::model {
                  .def(GET_DATA_FUNCNAME_STR, &OPR_MEM::GET_DATA_FUNCNAME);
         /** bind operand imm*/
         py::class_<OPR_IMM, OPERAND,std::shared_ptr<OPR_IMM>>(m, "OPR_IMM")
-                .def(py::init<IMM, size_t>(),
-                        py::arg("immValue"),
-                        py::arg("idxInPool"),
-                        "imm Opr initializer"
+                .def(py::init<>(),
+                        "imm Opr initializer dummy"
                         )
                 .def(GET_DATA_FUNCNAME_STR, &OPR_IMM::GET_DATA_FUNCNAME);
 

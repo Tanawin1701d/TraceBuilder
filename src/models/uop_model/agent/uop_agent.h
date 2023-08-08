@@ -36,22 +36,22 @@ namespace traceBuilder::model {
     class UOP_AGENT {
         /** store link argument template for generate meta data*/
         struct OPR_REG_ARGS{
-            OPR_REG* opr;
+            OPR_REG_PTR opr;
             int subRegIdx;
             bool isSrc;
         };
         struct OPR_TREG_ARGS{
-            OPR_TREG* opr;
+            OPR_TREG_PTR opr;
             bool isSrc;
         };
         struct OPR_MEM_ARGS{
-            OPR_MEM* opr;
+            OPR_MEM_PTR opr;
             int startByte;
             int stopByte;
             bool isSrc;
         };
         struct OPR_IMM_ARGS{
-            OPR_IMM* opr;
+            OPR_IMM_PTR opr;
         };
         /** store hub*/
         std::vector<OPR_REG_ARGS>  oprRegLinker;
@@ -83,10 +83,10 @@ namespace traceBuilder::model {
 
 
 
-        void ADD_LINK_OPR_REG_FUNC_NAME(OPR_REG* opr, int subRegIdx, bool isSrc);
-        void ADD_LINK_OPR_TREG_FUNC_NAME(OPR_TREG* opr, bool isSrc);
-        void ADD_LINK_OPR_MEMREG_FUNC_NAME(OPR_MEM* opr, int startByte, int stopByte, bool isSrc);
-        void ADD_LINK_OPR_IMM_FUNC_NAME(OPR_IMM* opr);
+        void ADD_LINK_OPR_REG_FUNC_NAME(OPR_REG_PTR opr   , int subRegIdx, bool isSrc);
+        void ADD_LINK_OPR_TREG_FUNC_NAME(OPR_TREG_PTR opr , bool isSrc);
+        void ADD_LINK_OPR_MEMREG_FUNC_NAME(OPR_MEM_PTR opr, int startByte, int stopByte, bool isSrc);
+        void ADD_LINK_OPR_IMM_FUNC_NAME(OPR_IMM_PTR opr);
         void ADD_DEP_UOP_TEMP_FUNC_NAME(UOP_AGENT_PTR uopAgent);
 
         /** uop base management*/

@@ -34,7 +34,10 @@ namespace traceBuilder::core {
 
     public:
         explicit TBD_GEM5_ISA(const std::string& machProtoFilePath);
-        ~TBD_GEM5_ISA(){ delete desFileStream;}
+        ~TBD_GEM5_ISA(){
+            delete desFileStream;
+            std::cout << "[TBD_GEM_FED] saved the tracing file" << std::endl;
+        }
 
         void test() override {std::cout << "deriveClass" << std::endl;}
 

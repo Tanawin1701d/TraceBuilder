@@ -57,7 +57,7 @@ class x86_model(MODEL):
         return (resultTempOpr, tempId) #### return the result value of mem loading and tempId is next tempId
 
     def initLdImmToTemp(self, IMM: tbd.OPR_IMM, isFlt: bool, tempId: int):
-
+        IMM
 
 
     def getMemOpClass(self, isLoad : bool, isFlt: bool = False):

@@ -38,6 +38,8 @@ namespace traceBuilder::core {
     public:
         UOP_WINDOW(EXEC_UNIT_RES *exeUnit_pool);
 
+        ~UOP_WINDOW();
+
         void addUop(UOP_BASE *newUop);
 
         std::deque<UOP_BASE*>* getUopwindow() { return &uop_window; }

@@ -21,6 +21,21 @@ namespace traceBuilder::core {
 
     }
 
+    UOP_WINDOW::~UOP_WINDOW() {
+
+        /** clear uop window*/
+        for (auto uop_ptr: uop_window){
+            delete uop_ptr;
+
+        }
+        uop_window.clear();
+        /** clear depHelper*/
+        for (auto dhelp: depHelperPool){
+            delete dhelp;
+        }
+    }
+
+
     void
     UOP_WINDOW::tryPopFromQ() {
         if (!uop_window.empty()) {
@@ -66,6 +81,8 @@ namespace traceBuilder::core {
         uop_window.push_front(newUop);
 
     }
+
+
 
 
 }

@@ -9,7 +9,7 @@
 #include <cstdint>
 #include <climits>
 /// metadata storage limit in each class of each microop
-#define MAX_SIZE_METADATA 5
+#define MAX_SIZE_METADATA 15
 #define UOP_WINDOW_SIZE 256
 #define PY_MODULE_NAME traceBuilder
 const   int AMT_BIT_UINT64   = sizeof(uint64_t) * CHAR_BIT;

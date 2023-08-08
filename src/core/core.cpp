@@ -17,7 +17,14 @@ namespace traceBuilder::core {
     }
 
     CORE::~CORE(){
-        delete sharedInfo.execUnit_info;
+
+        for (auto iter : traceWorkers){
+            auto specInfoPtr = iter.second;
+            delete specInfoPtr->tracer;
+            delete specInfoPtr->uopWindow;
+            delete specInfoPtr;
+        }
+
     }
 
 

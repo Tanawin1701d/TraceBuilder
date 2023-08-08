@@ -29,39 +29,13 @@ namespace traceBuilder::model {
             desStOperands(host.desStOperands),
             //// mopAgent
             _mopAgentPtr(nullptr)
-            {
-
-        //////// macro pool operand need index from self operand class
-        /// build src macroPool Operands
-        //// IMM operand is ignored due to it is not necessary
-        srcMacroPoolOperands.resize(host.srcMacroPoolOperands.size());
-        for (auto& oprPtr: srcRegOperands) {
-            srcMacroPoolOperands[oprPtr.getMcSideIdx()] = std::shared_ptr<OPERAND>(&oprPtr);
-        }
-        for (auto &oprPtr: srcLdOperands) {
-            srcMacroPoolOperands[oprPtr.getMcSideIdx()] = std::shared_ptr<OPERAND>(&oprPtr);
-        }
-        for (auto &oprPtr: srcImmOperands) {
-            srcMacroPoolOperands[oprPtr.getMcSideIdx()] = std::shared_ptr<OPERAND>(&oprPtr);
-        }
-        /// build des macrPool operand
-        desMacroPoolOperands.resize(host.desMacroPoolOperands.size());
-        for (auto &oprPtr: desRegOperands) {
-            desMacroPoolOperands[oprPtr.getMcSideIdx()] = std::shared_ptr<OPERAND>(&oprPtr);
-        }
-        for (auto &oprPtr: desStOperands) {
-            desMacroPoolOperands[oprPtr.getMcSideIdx()] = std::shared_ptr<OPERAND>(&oprPtr);
-        }
-        ///////////////////////////////////////////////////////////////////////
-
-    }
+            {}
 
     RT_INSTR::RT_INSTR() {
         //// we might use dummy opcode
     }
 
     RT_INSTR::~RT_INSTR(){
-        std::cout<< "dec rt instrt";
     }
 
     void
@@ -96,13 +70,9 @@ namespace traceBuilder::model {
         srcRegOperandsPtr  = cvtToSharedRef<OPR_REG>(srcRegOperands);
         srcLdOperandsPtr   = cvtToSharedRef<OPR_MEM>(srcLdOperands);
         srcImmOperandsPtr  = cvtToSharedRef<OPR_IMM>(srcImmOperands);
-        /**check the answer*/
-        assert(srcRegOperandsPtr.size() + srcLdOperandsPtr.size() + srcImmOperandsPtr.size() == srcMacroPoolOperands.size());
 
         desRegOperandsPtr  = cvtToSharedRef<OPR_REG>(desRegOperands);
         desStOperandsPtr   = cvtToSharedRef<OPR_MEM>(desStOperands);
-        /**check the answer*/
-        assert(desRegOperandsPtr.size() + desStOperandsPtr.size() == desMacroPoolOperands.size());
         /*************************************************************************************/
 
 
@@ -157,11 +127,9 @@ namespace traceBuilder::model {
         //std::shared_ptr<OPERAND>((OPERAND*)(&oprPtr));
         if (isSrc) {
             srcRegOperands.emplace_back(newRegName, lstSrcMacroIdx++);
-            srcMacroPoolOperands.push_back(OPERAND_PTR(&(*srcRegOperands.rbegin())));
             srcDecodeKey.push_back(DEC_REG_OPR);
         } else if (isDes) {
             desRegOperands.emplace_back(newRegName, lstDesMacroIdx++);
-            desMacroPoolOperands.push_back(OPERAND_PTR(&(*desRegOperands.rbegin())));
             desDecodeKey.push_back(DEC_REG_OPR);
         } else {
             throw std::invalid_argument(
@@ -210,12 +178,10 @@ namespace traceBuilder::model {
         if (isLoad) {
 
             srcLdOperands.emplace_back(memMeta, O_MEM_LD, lstSrcMacroIdx++);
-            srcMacroPoolOperands.push_back(OPERAND_PTR(&(*srcLdOperands.rbegin())));
             srcDecodeKey.push_back(DEC_LD_OPR);
 
         } else { // store
             desStOperands.emplace_back(memMeta, O_MEM_ST, lstDesMacroIdx++);
-            desMacroPoolOperands.push_back(OPERAND_PTR(&(*desStOperands.rbegin())));
             desDecodeKey.push_back(DEC_ST_OPR);
         }
     }
@@ -248,7 +214,6 @@ namespace traceBuilder::model {
         IMM imm = stoull(tokens[ST_IDX_IMM_IMM]);
 
         srcImmOperands.emplace_back(imm, lstSrcMacroIdx++);
-        srcMacroPoolOperands.push_back(OPERAND_PTR(&(*srcImmOperands.rbegin())));
         srcDecodeKey.push_back(DEC_IMM_OPR);
 
 
@@ -297,10 +262,12 @@ namespace traceBuilder::model {
                 .def(GET_RT_INSTR_SRC_REG_OPR_FN_STR , &RT_INSTR::GET_RT_INSTR_SRC_REG_OPR_FN  )
                 .def(GET_RT_INSTR_SRC_MEM_OPR_FN_STR , &RT_INSTR::GET_RT_INSTR_SRC_MEM_OPR_FN  )
                 .def(GET_RT_INSTR_SRC_IMM_OPR_FN_STR , &RT_INSTR::GET_RT_INSTR_SRC_IMM_OPR_FN  )
-                .def(GET_RT_INSTR_SRC_POOL_OPR_FN_STR, &RT_INSTR::GET_RT_INSTR_SRC_POOL_OPR_FN )
+                .def(GET_RT_INSTR_SRC_CNT_STR        , &RT_INSTR::GET_RT_INSTR_SRC_CNT         )
+
                 .def(GET_RT_INSTR_DES_REG_OPR_FN_STR , &RT_INSTR::GET_RT_INSTR_DES_REG_OPR_FN  )
                 .def(GET_RT_INSTR_DES_MEM_OPR_FN_STR , &RT_INSTR::GET_RT_INSTR_DES_MEM_OPR_FN  )
-                .def(GET_RT_INSTR_DES_POOL_OPR_FN_STR, &RT_INSTR::GET_RT_INSTR_DES_POOL_OPR_FN );
+                .def(GET_RT_INSTR_DES_CNT_STR        , &RT_INSTR::GET_RT_INSTR_DES_CNT         )
+                .def("getDecodeKey", &RT_INSTR::getDecodeKey);
     }
 
 }

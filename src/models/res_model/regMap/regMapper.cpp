@@ -97,7 +97,9 @@ namespace traceBuilder::model {
 
 
     void BIND_REG_TYPE(py::module& m){
-        py::class_<AREGNUM>(m,"AREGNUM")
+
+        py::class_<AREGNUM, std::shared_ptr<AREGNUM>>(m,"AREGNUM")
+                .def(py::init<int, int>())
                 .def_readwrite("archRegId", &AREGNUM::archRegId)
                 .def_readwrite("maxSubRegId", &AREGNUM::maxSubRegId);
     }

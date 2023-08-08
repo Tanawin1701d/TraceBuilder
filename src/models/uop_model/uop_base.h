@@ -99,10 +99,12 @@ namespace traceBuilder::model {
         }
 
         void doAllDepenCheck(UOP_WINDOW*  traceWindow){
+#ifdef enDepTrack
             doDepenCheck<DEP_MREG>(traceWindow);
             doDepenCheck<DEP_MEM>(traceWindow);
             doDepenCheck<DEP_TEMP>(traceWindow);
             doDepenCheck<DEP_EXEC_UNIT>(traceWindow);
+#endif
 
         }
     };

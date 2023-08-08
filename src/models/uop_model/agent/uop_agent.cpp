@@ -80,24 +80,24 @@ namespace traceBuilder::model{
 
     /** add link for uop generation*/
 
-    void UOP_AGENT::ADD_LINK_OPR_REG_FUNC_NAME(OPR_REG *opr, int subRegIdx, bool isSrc) {
+    void UOP_AGENT::ADD_LINK_OPR_REG_FUNC_NAME(OPR_REG_PTR opr, int subRegIdx, bool isSrc) {
         assert(opr != nullptr);
         assert(subRegIdx >= 0);
         oprRegLinker.push_back({opr, subRegIdx, isSrc});
     }
 
-    void UOP_AGENT::ADD_LINK_OPR_TREG_FUNC_NAME(OPR_TREG *opr, bool isSrc) {
+    void UOP_AGENT::ADD_LINK_OPR_TREG_FUNC_NAME(OPR_TREG_PTR opr, bool isSrc) {
         assert(opr != nullptr);
         oprTRegLinker.push_back({opr, isSrc});
     }
 
-    void UOP_AGENT::ADD_LINK_OPR_MEMREG_FUNC_NAME(OPR_MEM *opr, int startByte, int stopByte, bool isSrc) {
+    void UOP_AGENT::ADD_LINK_OPR_MEMREG_FUNC_NAME(OPR_MEM_PTR opr, int startByte, int stopByte, bool isSrc) {
         assert(opr != nullptr);
         assert(startByte < stopByte);
         oprMemLinker.push_back({opr, startByte, stopByte, isSrc});
     }
 
-    void UOP_AGENT::ADD_LINK_OPR_IMM_FUNC_NAME(OPR_IMM *opr) {
+    void UOP_AGENT::ADD_LINK_OPR_IMM_FUNC_NAME(OPR_IMM_PTR opr) {
         assert(opr != nullptr);
         oprImmLinker.push_back({opr});
     }

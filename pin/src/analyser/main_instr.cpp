@@ -230,11 +230,11 @@ VOID MAIN_instrument(INS ins, VOID* v)
     preWrite += " ";
     preWrite += std::to_string(instrSize);
     preWrite += " ";
-    if (simdMeta.isSimd){
-        preWrite += simdMeta.mnemonic;
-    }else{
-        preWrite += INS_Mnemonic(ins);
-    }
+    // if (simdMeta.isSimd){
+    //     preWrite += simdMeta.mnemonic;
+    // }else{
+    preWrite += INS_Mnemonic(ins);
+    // }
     
     preWrite += "\n";
     /** write seperator*/

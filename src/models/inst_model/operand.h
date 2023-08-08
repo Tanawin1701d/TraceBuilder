@@ -5,6 +5,7 @@
 #ifndef TRACEBUILDER_OPERAND_H
 #define TRACEBUILDER_OPERAND_H
 
+#include <pybind11/stl.h>
 #include "models/res_model/regMap/regMapper.h"
 #include "models/res_model/memMng/MemMng.h"
 #include "models/uop_model/metaData/metaType.h"
@@ -59,6 +60,10 @@ namespace traceBuilder::model {
         OPR_REG(AREGNUM _reg, size_t _mcArgSIdx) :
                 OPERAND(O_REG, _mcArgSIdx),
                 reg(_reg){};
+
+        OPR_REG(AREGNUM _reg):
+            OPERAND(O_REG, -1),
+            reg(_reg){};
 
         /////// get meta data of the operand that is fundamental of uop
         AREGNUM GET_DATA_FUNCNAME() const {return reg;};
@@ -123,6 +128,9 @@ namespace traceBuilder::model {
                 OPERAND(O_IMM, _mcArgSIdx),
                 imm(_imm)
              {};
+        OPR_IMM() :
+                OPERAND(O_IMM, -1),
+                imm(0){};
 
         IMM GET_DATA_FUNCNAME() const {return imm;};
         IMM_META GET_META_FUNCNAME() const;
