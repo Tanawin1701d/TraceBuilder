@@ -1,6 +1,19 @@
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio, WebStorm and Rider
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
 
+src/models/arch/pyMach/.idea
+pin/obj-intel64
+pin/pin-3.25-98650-g8f6168173-gcc-linux
+pin/pin-3.25-98650-g8f6168173-gcc-linux.tar.gz
+pin/pin.log
+
+pin/PinOutput/*
+pin/TbOutput/*
+pin/TestProgram/*
+pin/src/*.o
+
+*.pyc
+
 # User-specific stuff
 .idea/**/workspace.xml
 .idea/**/tasks.xml
@@ -75,3 +88,5 @@ fabric.properties
 
 # Android studio 3.1+ serialized cache file
 .idea/caches/build_file_checksums.ser
+
+*.vscode

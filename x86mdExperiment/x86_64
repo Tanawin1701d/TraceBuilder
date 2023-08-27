@@ -1,0 +1,277 @@
+ADC              mem,reg64                X86_64,LONG,LOCK
+ADC              reg64,reg64              X86_64,LONG
+ADC              reg64,mem                X86_64,LONG
+ADC              reg64,reg64              X86_64,LONG
+ADC              rm64,imm8                X86_64,LONG,LOCK
+ADC              reg_rax,sbytedword       X86_64,LONG,ND
+ADC              reg_rax,imm              X86_64,LONG
+ADC              rm64,sbytedword          X86_64,LONG,LOCK,ND
+ADC              rm64,imm                 X86_64,LONG,LOCK
+/////////////////////////////////////////////////////////////////////////
+ADD              mem,reg64                X86_64,LONG,LOCK
+ADD              reg64,reg64              X86_64,LONG
+ADD              reg64,mem                X86_64,LONG
+ADD              reg64,reg64              X86_64,LONG
+ADD              rm64,imm8                X86_64,LONG,LOCK
+ADD              reg_rax,sbytedword       X86_64,LONG,ND
+ADD              reg_rax,imm              X86_64,LONG
+ADD              rm64,sbytedword          X86_64,LONG,LOCK,ND
+ADD              rm64,imm                 X86_64,LONG,LOCK
+//////////////////////////////////////////////////////////////////////
+AND              mem,reg64                X86_64,LONG,LOCK
+AND              reg64,reg64              X86_64,LONG
+AND              reg64,mem                X86_64,LONG
+AND              reg64,reg64              X86_64,LONG
+AND              rm64,imm8                X86_64,LONG,LOCK
+AND              reg_rax,sbytedword       X86_64,LONG,ND
+AND              reg_rax,imm              X86_64,LONG
+AND              rm64,sbytedword          X86_64,LONG,LOCK,ND
+AND              rm64,imm                 X86_64,LONG,LOCK
+//////////////////////////////////////////////////////////////////////
+BSF              reg64,mem                X86_64,LONG
+BSF              reg64,reg64              X86_64,LONG
+BSR              reg64,mem                X86_64,LONG
+BSR              reg64,reg64              X86_64,LONG
+BSWAP            reg64                    X86_64,LONG
+BT               mem,reg64                X86_64,LONG
+BT               reg64,reg64              X86_64,LONG
+BT               rm64,imm8                X86_64,LONG
+BTC              mem,reg64                X86_64,LONG,LOCK
+BTC              reg64,reg64              X86_64,LONG
+BTC              rm64,imm8                X86_64,LONG,LOCK
+BTR              mem,reg64                X86_64,LONG,LOCK
+BTR              reg64,reg64              X86_64,LONG
+BTR              rm64,imm8                X86_64,LONG,LOCK
+BTS              mem,reg64                X86_64,LONG,LOCK
+BTS              reg64,reg64              X86_64,LONG
+BTS              rm64,imm8                X86_64,LONG,LOCK
+//////////////////////////////////////////////////////////////////////
+CALL             imm64                    X86_64,LONG,BND
+CALL             imm64|near               X86_64,LONG,ND,BND
+CALL             mem|far                  X86_64,LONG
+CALL             mem64|far                X86_64,LONG
+CALL             rm64|near                X86_64,LONG,ND,BND
+CALL             rm64                     X86_64,LONG,BND
+//////////////////////////////////////////////////////////////////////
+CDQE                                      X86_64,LONG
+//////////////////////////////////////////////////////////////////////
+CMP              mem,reg64                X86_64,LONG
+CMP              reg64,reg64              X86_64,LONG
+CMP              reg64,mem                X86_64,LONG
+CMP              reg64,reg64              X86_64,LONG
+CMP              rm64,imm8                X86_64,LONG
+CMP              reg_rax,sbytedword       X86_64,LONG,ND
+CMP              reg_rax,imm              X86_64,LONG
+CMP              rm64,sbytedword          X86_64,LONG,ND
+CMP              rm64,imm                 X86_64,LONG
+CMPSQ                                     X86_64,LONG
+CMPXCHG          mem,reg64                X86_64,LONG,LOCK
+CMPXCHG          reg64,reg64              X86_64,LONG
+CMPXCHG16B       mem128                   X86_64,LONG,LOCK
+//////////////////////////////////////////////////////////////////////
+CQO                                       X86_64,LONG
+//////////////////////////////////////////////////////////////////////
+DEC              rm64                     X86_64,LONG,LOCK
+//////////////////////////////////////////////////////////////////////
+DIV              rm64                     X86_64,LONG
+IDIV             rm64                     X86_64,LONG
+//////////////////////////////////////////////////////////////////////
+IMUL             rm64                     X86_64,LONG
+IMUL             reg64,mem                X86_64,LONG
+IMUL             reg64,reg64              X86_64,LONG
+IMUL             reg64,mem,imm8           X86_64,LONG
+IMUL             reg64,mem,sbytedword     X86_64,LONG,ND
+IMUL             reg64,mem,imm32          X86_64,LONG
+IMUL             reg64,mem,imm            X86_64,LONG,ND
+IMUL             reg64,reg64,imm8         X86_64,LONG
+IMUL             reg64,reg64,sbytedword   X86_64,LONG,ND
+IMUL             reg64,reg64,imm32        X86_64,LONG
+IMUL             reg64,reg64,imm          X86_64,LONG,ND
+IMUL             reg64,imm8               X86_64,LONG
+IMUL             reg64,sbytedword         X86_64,LONG,ND
+IMUL             reg64,imm32              X86_64,LONG
+IMUL             reg64,imm                X86_64,LONG,ND
+INC              rm64                     X86_64,LONG,LOCK
+//SKIP INVLPGA          reg_ax,reg_ecx           X86_64,AMD,NOLONG
+//SKIP INVLPGA          reg_eax,reg_ecx          X86_64,AMD
+//SKIP INVLPGA          reg_rax,reg_ecx          X86_64,LONG,AMD
+//SKIP INVLPGA                                   X86_64,AMD
+//IRETQ                                     X86_64,LONG
+//JRCXZ            imm                      X86_64,LONG
+JMP              imm64                    X86_64,LONG,BND
+JMP              imm64|near               X86_64,LONG,ND,BND
+JMP              mem|far                  X86_64,LONG
+JMP              mem64|far                X86_64,LONG
+JMP              rm64|near                X86_64,LONG,ND,BND
+JMP              rm64                     X86_64,LONG,BND
+LAR              reg16,reg64              X86_64,LONG,PROT,ND
+LAR              reg32,reg64              X86_64,LONG,PROT,ND
+LAR              reg64,mem                X86_64,LONG,PROT,SW
+LAR              reg64,reg16              X86_64,LONG,PROT
+LAR              reg64,reg32              X86_64,LONG,PROT
+LAR              reg64,reg64              X86_64,LONG,PROT
+LEA              reg64,mem                X86_64,LONG,ANYSIZE
+LEA              reg64,imm                X86_64,LONG,ND,ANYSIZE
+LFENCE                                    X86_64,LONG,AMD
+LFS              reg64,mem                X86_64,LONG
+LGS              reg64,mem                X86_64,LONG
+LODSQ                                     X86_64,LONG
+LOOP             imm,reg_rcx              X86_64,LONG
+LOOPE            imm,reg_rcx              X86_64,LONG
+LOOPNE           imm,reg_rcx              X86_64,LONG
+LOOPNZ           imm,reg_rcx              X86_64,LONG
+LOOPZ            imm,reg_rcx              X86_64,LONG
+LSL              reg16,reg64              X86_64,LONG,PROT,ND
+LSL              reg32,reg64              X86_64,LONG,PROT,ND
+LSL              reg64,mem                X86_64,LONG,PROT,SW
+LSL              reg64,reg16              X86_64,LONG,PROT
+LSL              reg64,reg32              X86_64,LONG,PROT
+LSL              reg64,reg64              X86_64,LONG,PROT
+LSS              reg64,mem                X86_64,LONG
+MFENCE                                    X86_64,LONG,AMD
+MONITOR          reg_rax,reg_ecx,reg_edx  X86_64,LONG,ND
+MONITORX         reg_rax,reg_ecx,reg_edx  X86_64,LONG,AMD,ND
+MOV              reg64,reg_sreg           X86_64,LONG,OPT,ND
+MOV              rm64,reg_sreg            X86_64,LONG
+MOV              reg_sreg,reg64           X86_64,LONG,OPT,ND
+MOV              reg_sreg,rm64            X86_64,LONG
+MOV              reg_rax,mem_offs         X86_64,LONG
+MOV              mem_offs,reg_rax         X86_64,LONG,NOHLE
+MOV              reg64,reg_creg           X86_64,LONG,PRIV
+MOV              reg_creg,reg64           X86_64,LONG,PRIV
+MOV              reg64,reg_dreg           X86_64,LONG,PRIV
+MOV              reg_dreg,reg64           X86_64,LONG,PRIV
+MOV              mem,reg64                X86_64,LONG
+MOV              reg64,reg64              X86_64,LONG
+MOV              reg64,mem                X86_64,LONG
+MOV              reg64,reg64              X86_64,LONG
+MOV              reg64,udword             X86_64,LONG,OPT,ND
+MOV              reg64,sdword             X86_64,LONG,OPT,ND
+MOV              reg64,imm                X86_64,LONG
+MOV              rm64,imm                 X86_64,LONG
+MOV              rm64,imm32               X86_64,LONG
+MOVD             mmxreg,rm64              X86_64,LONG,MMX,SX,ND
+MOVD             rm64,mmxreg              X86_64,LONG,MMX,SX,ND
+MOVQ             mmxreg,rm64              X86_64,LONG,MMX
+MOVQ             rm64,mmxreg              X86_64,LONG,MMX
+MOVSQ                                     X86_64,LONG
+MOVSX            reg64,rm8                X86_64,LONG
+MOVSX            reg64,rm16               X86_64,LONG
+MOVSXD           reg64,rm32               X86_64,LONG
+MOVSX            reg64,rm32               X86_64,LONG,ND
+MOVZX            reg64,rm8                X86_64,LONG
+MOVZX            reg64,rm16               X86_64,LONG
+MUL              rm64                     X86_64,LONG
+NEG              rm64                     X86_64,LONG,LOCK
+NOP              rm64                     X86_64,LONG
+NOT              rm64                     X86_64,LONG,LOCK
+OR               mem,reg64                X86_64,LONG,LOCK
+OR               reg64,reg64              X86_64,LONG
+OR               reg64,mem                X86_64,LONG
+OR               reg64,reg64              X86_64,LONG
+OR               rm64,imm8                X86_64,LONG,LOCK
+OR               reg_rax,sbytedword       X86_64,LONG,ND
+OR               reg_rax,imm              X86_64,LONG
+OR               rm64,sbytedword          X86_64,LONG,LOCK,ND
+OR               rm64,imm                 X86_64,LONG,LOCK
+POP              reg64                    X86_64,LONG
+POP              rm64                     X86_64,LONG
+POPFQ                                     X86_64,LONG
+PUSH             reg64                    X86_64,LONG
+PUSH             rm64                     X86_64,LONG
+PUSH             sbytedword64             X86_64,LONG,AR0,SIZE,ND
+PUSH             imm64                    X86_64,LONG,AR0,SIZE
+PUSH             sbytedword32             X86_64,LONG,AR0,SIZE,ND
+PUSH             imm32                    X86_64,LONG,AR0,SIZE
+PUSHFQ                                    X86_64,LONG
+RCL              rm64,unity               X86_64,LONG
+RCL              rm64,reg_cl              X86_64,LONG
+RCL              rm64,imm8                X86_64,LONG
+RCR              rm64,unity               X86_64,LONG
+RCR              rm64,reg_cl              X86_64,LONG
+RCR              rm64,imm8                X86_64,LONG
+RDTSCP                                    X86_64
+RETQ                                      X86_64,LONG,BND
+RETQ             imm                      X86_64,LONG,SW,BND
+RETFQ                                     X86_64,LONG
+RETFQ            imm                      X86_64,LONG,SW
+RETNQ                                     X86_64,LONG,BND
+RETNQ            imm                      X86_64,LONG,SW,BND
+ROL              rm64,unity               X86_64,LONG
+ROL              rm64,reg_cl              X86_64,LONG
+ROL              rm64,imm8                X86_64,LONG
+ROR              rm64,unity               X86_64,LONG
+ROR              rm64,reg_cl              X86_64,LONG
+ROR              rm64,imm8                X86_64,LONG
+SAL              rm64,unity               X86_64,LONG,ND
+SAL              rm64,reg_cl              X86_64,LONG,ND
+SAL              rm64,imm8                X86_64,LONG,ND
+SAR              rm64,unity               X86_64,LONG
+SAR              rm64,reg_cl              X86_64,LONG
+SAR              rm64,imm8                X86_64,LONG
+SBB              mem,reg64                X86_64,LONG,LOCK
+SBB              reg64,reg64              X86_64,LONG
+SBB              reg64,mem                X86_64,LONG
+SBB              reg64,reg64              X86_64,LONG
+SBB              rm64,imm8                X86_64,LONG,LOCK
+SBB              reg_rax,sbytedword       X86_64,LONG,ND
+SBB              reg_rax,imm              X86_64,LONG
+SBB              rm64,sbytedword          X86_64,LONG,LOCK,ND
+SBB              rm64,imm                 X86_64,LONG,LOCK
+SCASQ                                     X86_64,LONG
+SFENCE                                    X86_64,LONG,AMD
+SHL              rm64,unity               X86_64,LONG
+SHL              rm64,reg_cl              X86_64,LONG
+SHL              rm64,imm8                X86_64,LONG
+SHLD             mem,reg64,imm            X86_64,LONG
+SHLD             reg64,reg64,imm          X86_64,LONG
+SHLD             mem,reg64,reg_cl         X86_64,LONG
+SHLD             reg64,reg64,reg_cl       X86_64,LONG
+SHR              rm64,unity               X86_64,LONG
+SHR              rm64,reg_cl              X86_64,LONG
+SHR              rm64,imm8                X86_64,LONG
+SHRD             mem,reg64,imm            X86_64,LONG
+SHRD             reg64,reg64,imm          X86_64,LONG
+SHRD             mem,reg64,reg_cl         X86_64,LONG
+SHRD             reg64,reg64,reg_cl       X86_64,LONG
+SLDT             reg64                    X86_64,LONG,ND
+SLDT             reg64                    X86_64,LONG
+SKINIT                                    X86_64,LONG
+SMSW             reg64                    X86_64,LONG
+STOSQ                                     X86_64,LONG
+STR              reg64                    X86_64,LONG
+SUB              mem,reg64                X86_64,LONG,LOCK
+SUB              reg64,reg64              X86_64,LONG
+SUB              reg64,mem                X86_64,LONG
+SUB              reg64,reg64              X86_64,LONG
+SUB              rm64,imm8                X86_64,LONG,LOCK
+SUB              reg_rax,sbytedword       X86_64,LONG,ND
+SUB              reg_rax,imm              X86_64,LONG
+SUB              rm64,sbytedword          X86_64,LONG,LOCK,ND
+SUB              rm64,imm                 X86_64,LONG,LOCK
+SWAPGS                                    X86_64,LONG
+TEST             mem,reg64                X86_64,LONG
+TEST             reg64,reg64              X86_64,LONG
+TEST             reg64,mem                X86_64,LONG
+TEST             reg_rax,imm              X86_64,LONG
+TEST             rm64,imm                 X86_64,LONG
+XADD             mem,reg64                X86_64,LONG,LOCK
+XADD             reg64,reg64              X86_64,LONG
+XCHG             reg_rax,reg64            X86_64,LONG
+XCHG             reg64,reg_rax            X86_64,LONG
+XCHG             reg64,mem                X86_64,LONG,LOCK
+XCHG             reg64,reg64              X86_64,LONG
+XCHG             mem,reg64                X86_64,LONG,LOCK
+XCHG             reg64,reg64              X86_64,LONG
+XOR              mem,reg64                X86_64,LONG,LOCK
+XOR              reg64,reg64              X86_64,LONG
+XOR              reg64,mem                X86_64,LONG
+XOR              reg64,reg64              X86_64,LONG
+XOR              rm64,imm8                X86_64,LONG,LOCK
+XOR              reg_rax,sbytedword       X86_64,LONG,ND
+XOR              reg_rax,imm              X86_64,LONG
+XOR              rm64,sbytedword          X86_64,LONG,LOCK,ND
+XOR              rm64,imm                 X86_64,LONG,LOCK
+CMOVcc           reg64,mem                X86_64,LONG
+CMOVcc           reg64,reg64              X86_64,LONG
+Jcc              imm64|near               X86_64,LONG,BND

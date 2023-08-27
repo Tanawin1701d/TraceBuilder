@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="0fef1731-8636-4a8c-8347-b5686ee0f13f" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../src/pyBind/py/pyMach/X86/model.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../src/pyBind/py/pyMach/X86/resMap.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../src/pyBind/py/pyMach/simpleModel.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/frontEnd.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/models/uop_model/pyMach/X86/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/../src/models/uop_model/pyMach/X86/model.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="2Sy2FvuHMyBzvJll67JfhxHBGCc" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "nativePyModel"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="0fef1731-8636-4a8c-8347-b5686ee0f13f" name="Changes" comment="" />
+      <created>1690104400461</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1690104400461</updated>
+    </task>
+    <servers />
+  </component>
+</project>

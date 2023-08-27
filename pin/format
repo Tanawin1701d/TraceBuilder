@@ -1,0 +1,7 @@
+R S regname
+L S segReg baseReg indexReg size memop
+I S immVal
+R S regname
+S D baseReg indexReg size
+N mnemonic$RLIR$S
+F S id virtualaddress size  name
